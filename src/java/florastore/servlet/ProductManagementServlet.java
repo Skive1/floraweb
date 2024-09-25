@@ -46,7 +46,8 @@ public class ProductManagementServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
+        String url = (String) siteMap.get(MyAppConstants.ShowProductManager.ERROR_PAGE);
+//        String url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
         String indexPage = request.getParameter("index");
         if (indexPage == null) {
             indexPage = "1";
@@ -71,12 +72,16 @@ public class ProductManagementServlet extends HttpServlet {
                     //3. Lấy list sản phẩm theo sell id
                     dao.loadListProductFromDbById(id, indexInt);
                     ArrayList<ManagerProductDTO> list = dao.getListProduct();
-
+                    dao.getListProductType();
+                    ArrayList<ProductTypeDTO> list1 = dao.getListProductType();
                     //4. Lưu vào trong attribute
                     request.setAttribute("listProduct", list);
                     request.setAttribute("endP", endPage);
+                    request.setAttribute("listType", list1);
+                     url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
                 }
             }
+           
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
