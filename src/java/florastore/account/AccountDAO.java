@@ -446,4 +446,84 @@ public class AccountDAO implements Serializable {
         }
         return list;
     }
+
+    public boolean adminDeleteAccount(String username)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean result = false;
+
+        try {
+            //1. kết nối DB
+            con = DBHelper.getConnection();
+            if (con != null) { //nếu kết nối DB được
+                //2. khởi tạo lệnh SQL
+                String sql = "DELETE FROM ACCOUNT "
+                        + "WHERE Username = ? "
+                        + "COLLATE Latin1_General_BIN";
+                //3. khởi tạo statement obj
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                //4. Execute querry
+                int affectedRows = stm.executeUpdate();
+                //5. process result
+                if (affectedRows > 0) {
+                    result = true; //nếu số dóng ảnh hưởng > 0 thì update được
+                }
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return result;
+    }
+
+    public boolean adminEditAccount(String username, String role)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean result = false;
+
+        try {
+            //1. kết nối DB
+            con = DBHelper.getConnection();
+            if (con != null) { //nếu kết nối DB được
+                //2. khởi tạo lệnh SQL
+                String sql = "UPDATE ACCOUNT "
+                        + "SET Role = ? "
+                        + "WHERE Username = ? "
+                        + "COLLATE Latin1_General_BIN";
+                //3. khởi tạo statement obj
+                stm = con.prepareStatement(sql);
+                stm.setString(1, role);
+                stm.setString(2, username);
+                //4. Execute querry
+                int affectedRows = stm.executeUpdate();
+                //5. process result
+                if (affectedRows > 0) {
+                    result = true; //nếu số dóng ảnh hưởng > 0 thì update được
+                }
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return result;
+    }
 }
