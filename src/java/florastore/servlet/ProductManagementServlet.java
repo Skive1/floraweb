@@ -8,12 +8,14 @@ package florastore.servlet;
 import florastore.account.AccountDTO;
 import florastore.managerProduct.ManagerProductDAO;
 import florastore.managerProduct.ManagerProductDTO;
+import florastore.managerProduct.ProductTypeDAO;
 import florastore.managerProduct.ProductTypeDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -63,7 +65,7 @@ public class ProductManagementServlet extends HttpServlet {
                 if (dto.getSaleId() != null) {
                     //2. Gọi method DAO
                     ManagerProductDAO dao = new ManagerProductDAO();
-
+                   
                     int count = dao.getTotalProduct();
                     int endPage = count / 5;
                     if (count % 5 != 0) {
@@ -72,12 +74,16 @@ public class ProductManagementServlet extends HttpServlet {
                     //3. Lấy list sản phẩm theo sell id
                     dao.loadListProductFromDbById(id, indexInt);
                     ArrayList<ManagerProductDTO> list = dao.getListProduct();
-                    dao.getListProductType();
-                    ArrayList<ProductTypeDTO> list1 = dao.getListProductType();
+                    
+                    ProductTypeDAO typeDao = new ProductTypeDAO();
+                    typeDao.loadListProductType();
+                    ArrayList<ProductTypeDTO> listCategory = typeDao.getListCategory();
+                   
                     //4. Lưu vào trong attribute
+                    request.setAttribute("listType", listCategory);
                     request.setAttribute("listProduct", list);
                     request.setAttribute("endP", endPage);
-                    request.setAttribute("listType", list1);
+                   
                      url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
                 }
             }

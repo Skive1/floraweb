@@ -27,9 +27,9 @@ public class ManagerProductDAO implements Serializable {
         return listProduct;
     }
 
-    private ArrayList<ProductTypeDTO> listProductType;
+    private ArrayList<CategoryDTO> listProductType;
 
-    public ArrayList<ProductTypeDTO> getListProductType() {
+    public ArrayList<CategoryDTO> getListProductType() {
         return listProductType;
     }
 
@@ -204,15 +204,11 @@ public class ManagerProductDAO implements Serializable {
                 //2. Create stm obj
                 stm = con.prepareStatement(sql);
                 stm.setString(1, id);
-
                 //3. Excute Query
                 rs = stm.executeQuery();
                 while (rs.next()) {
-                    String productId = rs.getString("StoreId");
-
                     String type = rs.getString("ProductType");
-
-                    ProductTypeDTO dto = new ProductTypeDTO(productId, type);
+                    CategoryDTO dto = new CategoryDTO(type);
                     if (this.listProductType == null) {
                         listProductType = new ArrayList<>();
                     }//end if list is empty

@@ -62,5 +62,6 @@ public class MyAppConstants {
          public static final String INVALID_PAGE = "homePage";
          public static final String STORE_PAGE = "managerPage";
          public static final String ERROR_PAGE = "error404";
+         
     }
 }
