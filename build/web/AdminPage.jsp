@@ -70,9 +70,9 @@ background-color: #f2f7fb;
         <div class="row-grid">
             <div class="admin-sidebar">
                 <div class="admin-sidebar-top">
-                    <img src="" alt=""> Avatar
+                    <img src="" alt=""> Ảnh logo
     
-                </div>
+                </div> 
                 <div class="admin-sidebar-content">
                     <ul>
                         <li>
