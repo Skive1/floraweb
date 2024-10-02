@@ -101,4 +101,8 @@ public class MyAppConstants {
         public static final String MANAGE_ACCOUNT_PAGE = "manageAccount";
         public static final String ERROR_PAGE = "error404";
     }
+     public class EventFeatures {
+        public static final String EVENT_PAGE = "eventPage";
+        public static final String DETAIL_PAGE = "eventDetailPage";
+    }
 }
