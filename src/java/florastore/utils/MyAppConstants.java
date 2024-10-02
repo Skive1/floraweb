@@ -101,4 +101,12 @@ public class MyAppConstants {
         public static final String MANAGE_ACCOUNT_PAGE = "manageAccount";
         public static final String ERROR_PAGE = "error404";
     }
+
+    public class SearchFeature {
+        public static final String ERROR = "errorProcess";
+        public static final String SUCCESS = "showSearch";
+        public static final String SEARCH = "searchAction";
+        public static final String SEARCH_EXTEND = "searchExtend";
+        public static final String SEARCH_TYPE = "searchType";
+    }
 }
