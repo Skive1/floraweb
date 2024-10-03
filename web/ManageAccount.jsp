@@ -113,7 +113,7 @@
                                         ${dto.city}
                                     </td>
                                     <td>
-                                        ${dto.saleId}
+                                        <image src="${dto.img}"/>
                                     </td>
                                     <td>
                                         <input type="hidden" name="currentPage" value="${currentPage}"/>
