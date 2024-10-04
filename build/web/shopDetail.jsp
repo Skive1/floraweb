@@ -78,7 +78,7 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">Cart</a>
+                                    <a href="cartPage" class="dropdown-item">Cart</a>
                                     <a href="chackout.html" class="dropdown-item">Checkout</a>
                                     <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                                     <a href="404.html" class="dropdown-item">404 Page</a>
@@ -104,7 +104,7 @@
                         </div>
                         <div class="d-flex m-3 me-0">
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-third"></i></button>
-                            <a href="#" class="position-relative me-4 my-auto">
+                            <a href="cartPage" class="position-relative me-4 my-auto">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
                                 <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                             </a>
@@ -182,6 +182,8 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                                <form action="cartAddItem">
+                                    <input type="hidden" name="page" value="DETAIL_PAGE">
                                 <h4 class="fw-bold mb-3">${detail.productName}</h4>
                                 <p class="mb-3">Flower Type: ${detail.productType}</p>
                                 <p class="mb-3">Flower Condition: ${detail.productCondition}</p>
@@ -195,21 +197,42 @@
                                 </div>
                                 <p class="mb-4">${detail.productDetail}</p>
                                 <p class="mb-4">Quantity: ${detail.productQuantity}</p>
+                                
                                 <div class="input-group quantity mb-5" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                            <i class="fa fa-minus"></i>
-                                        </button>
+                                        <div class="input-group-btn">
+                                            <button type="button" id="btn-minus" class="btn btn-sm btn-minus rounded-circle bg-light border"
+                                                    >
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+
+
+                                        <input type="text" name="itemQuantity" id="itemQuantity" class="form-control form-control-sm text-center border-0" value="1" />
+
+
+                                        <div class="input-group-btn">
+                                            <button type="button" id="btn-plus" class="btn btn-sm btn-plus rounded-circle bg-light border"
+                                                    >
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-third"><i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart</a>
+
+
+
+
+                                    <input type="hidden" name="imageURL" value="${detail.imageURL}">
+                                    <input type="hidden" name="productName" value="${detail.productName}">
+                                    <input type="hidden" name="productPrice" value="${detail.productPrice}">
+                                    <input type="hidden" name="productQuantity" value="${detail.productQuantity}">
+
+
+                                    <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-third">
+                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                    </button>
+                                </form>
                             </div>
+                                    
                             <div class="col-lg-12">
                                 <nav>
                                     <div class="nav nav-tabs mb-3">

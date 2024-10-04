@@ -508,4 +508,49 @@ public class FlowerProductsDAO implements Serializable {
         }
         return products;
     }
+    
+    public int getProductQuantityByName(String productName)
+            throws SQLException, NamingException {
+        
+        int quantity = 0;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "SELECT ProductQuantity "
+                        + "FROM FlowerProducts "
+                        + "Where ProductName = ?";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, productName);
+                
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    
+                    quantity  = rs.getInt("ProductQuantity");
+                    
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return quantity;
+    }
 }
