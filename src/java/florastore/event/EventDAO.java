@@ -125,4 +125,55 @@ public class EventDAO implements Serializable {
         }
         return products;
     }
+    
+    public EventProductDTO getFlowerDetail(int id)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        EventProductDTO dto = null;
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String 
+                String sql = "Select EventEventId, EPId, EPName, EPType, EPCondition, EPDetail, Img, EPQuantity, EPPrice "
+                        + "From EventProduct "
+                        + "Where EPId = ?";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, id);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    int EPId = rs.getInt("EPId");
+                    String EPName = rs.getString("EPName");
+                    String EPType = rs.getString("EPType");
+                    String EPCondition = rs.getString("EPCondition");
+                    String EPDetail = rs.getString("EPDetail");
+                    String Img = rs.getString("Img");
+                    int EPQuantity = rs.getInt("EPQuantity");
+                    double EPPrice = rs.getDouble("EPPrice");
+                    //set data to DTO properties
+                    dto
+                            = new EventProductDTO(EPId, EPName, EPType, EPCondition, EPDetail, Img, EPQuantity, EPPrice);
+                }//flower detail is loaded
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return dto;
+    }
 }

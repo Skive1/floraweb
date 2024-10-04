@@ -37,9 +37,6 @@ public class EventProductDTO implements Serializable {
     }
 
 
-
-    
-
     /**
      * @return the eventProductId
      */

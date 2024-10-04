@@ -156,11 +156,11 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Shop</h1>
+            <h1 class="text-center text-white display-6">Event Detail</h1>
             <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                <li class="breadcrumb-item active text-white">Shop</li>
+                <li class="breadcrumb-item"><a href="home">Home</a></li>
+                <li class="breadcrumb-item"><a href="event">Event</a></li>
+                <li class="breadcrumb-item active text-white">Event Detail</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -340,9 +340,9 @@
                                                             ${flower.eventProductType} 
                                                         </div>
                                                         <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                            <c:url var="urlRewriting" value="productDetail">
+                                                            <c:url var="urlRewriting" value="flowerDetail">
                                                                 <c:param name="productId" value="${flower.eventProductId}"/>
-                                                                <c:param name="productType" value="${flower.eventProductType}"/>
+                                                                <c:param name="eventId" value="${requestScope.EVENT_ID}"/>
                                                             </c:url>
                                                             <a href="${urlRewriting}">
                                                                 <h4>${flower.eventProductName}</h4>
