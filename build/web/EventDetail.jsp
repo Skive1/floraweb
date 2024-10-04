@@ -154,7 +154,6 @@
         <!-- Modal Search End -->
 
 
-
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">Shop</h1>
@@ -328,56 +327,62 @@
                             </div>
                             <div class="col-lg-9">
                                 <div class="row g-4 justify-content-center">
-                                    <c:forEach var="product" items="${requestScope.products}">
-                                        <div class="col-md-6 col-lg-6 col-xl-4">
-                                            <form action="cartAddItem">
-                                                <div class="rounded position-relative fruite-item">
-                                                    <div class="fruite-img">
-                                                        <img src="${product.imageURL}" class="img-fluid w-100 rounded-top" alt="${product.productName}">
-                                                    </div>
-                                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-                                                        ${product.productType} 
-                                                    </div>
-                                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                        <c:url var="urlRewriting" value="productDetail">
-                                                            <c:param name="productId" value="${product.productId}"/>
-                                                            <c:param name="productType" value="${product.productType}"/>
-                                                        </c:url>
-                                                        <a href="${urlRewriting}">
-                                                            <h4>${product.productName}</h4>
-                                                        </a>
-                                                        <p>${product.productDetail}</p>
-                                                        <div class="d-flex justify-content-between flex-lg-wrap">
-                                                            <p class="text-dark fs-5 fw-bold mb-0">
-                                                                <fmt:formatNumber value="${product.productPrice}" type="number" groupingUsed="true"/>đ
-                                                            </p>
-                                                            <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                                            </button>
+                                    <c:set var="products" value="${requestScope.FLOWER_LIST}"/>
+                                    <c:if test="${not empty products}">
+                                        <c:forEach var="flower" items="${requestScope.PRODUCTS}">
+                                            <div class="col-md-6 col-lg-6 col-xl-4">
+                                                <form action="cartAddItem">
+                                                    <div class="rounded position-relative fruite-item">
+                                                        <div class="fruite-img">
+                                                            <img src="${flower.eventProductImg}" class="img-fluid w-100 rounded-top" alt="${flower.eventProductName}">
+                                                        </div>
+                                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
+                                                            ${flower.eventProductType} 
+                                                        </div>
+                                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                            <c:url var="urlRewriting" value="productDetail">
+                                                                <c:param name="productId" value="${flower.eventProductId}"/>
+                                                                <c:param name="productType" value="${flower.eventProductType}"/>
+                                                            </c:url>
+                                                            <a href="${urlRewriting}">
+                                                                <h4>${flower.eventProductName}</h4>
+                                                            </a>
+                                                            <p>${product.productDetail}</p>
+                                                            <div class="d-flex justify-content-between flex-lg-wrap">
+                                                                <p class="text-dark fs-5 fw-bold mb-0">
+                                                                    <fmt:formatNumber value="${flower.eventProductPrice}" type="number" groupingUsed="true"/>đ
+                                                                </p>
+                                                                <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                    <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </c:forEach>
+                                                </form>
+                                            </div>
+                                        </c:forEach>
+                                    </c:if>
+                                    <c:if test="${empty products}">
+                                        Sản phẩm của Event này đang không tồn tại!!!
+                                    </c:if>
                                     <div class="col-12">
                                         <nav aria-label="Page navigation">
                                             <ul class="pagination d-flex justify-content-center mt-5">
                                                 <c:if test="${currentPage > 1}">
                                                     <li class="page-item">
-                                                        <a class="page-link" href="shoppingAction?page=${currentPage - 1}" aria-label="Previous">
+                                                        <a class="page-link" href="eventDetail?eventId=${requestScope.EVENT_ID}&page=${currentPage - 1}" aria-label="Previous">
                                                             <span aria-hidden="true">&laquo;</span>
                                                         </a>
                                                     </li>
                                                 </c:if>
                                                 <c:forEach var="i" begin="1" end="${totalPages}">
                                                     <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                                        <a class="page-link" href="shoppingAction?page=${i}">${i}</a>
+                                                        <a class="page-link" href="eventDetail?eventId=${requestScope.EVENT_ID}&page=${i}">${i}</a>
                                                     </li>
                                                 </c:forEach>
                                                 <c:if test="${currentPage < totalPages}">
                                                     <li class="page-item">
-                                                        <a class="page-link" href="shoppingAction?page=${currentPage + 1}" aria-label="Next">
+                                                        <a class="page-link" href="eventDetail?eventId=${requestScope.EVENT_ID}&page=${currentPage + 1}" aria-label="Next">
                                                             <span aria-hidden="true">&raquo;</span>
                                                         </a>
                                                     </li>
@@ -406,12 +411,6 @@
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                         <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
-                    </div>
-                    <div class="col-md-6 my-auto text-center text-md-end text-white">
-                        <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
-                        <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
-                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a class="border-bottom" href="https://themewagon.com">ThemeWagon</a>
                     </div>
                 </div>
             </div>
