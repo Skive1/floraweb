@@ -15,7 +15,6 @@ import florastore.account.AccountDAO;
 
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
@@ -59,49 +58,6 @@ public class DeleteAccountServlet extends HttpServlet {
         String username = request.getParameter("txtUsername");
         String page = request.getParameter("page");
         boolean result = false;
-
-
-//        try {
-//            HttpSession session = request.getSession(false);
-//            if (session != null) {
-//                //1. Lấy id từ session Scope
-//                AccountDTO dto = (AccountDTO) session.getAttribute("USER");
-//                String id = dto.getSaleId();
-//                if (dto.getSaleId() != null) {
-//                    //2. Gọi method DAO
-//                    ManagerProductDAO dao = new ManagerProductDAO();
-//                   
-//                    int count = dao.getTotalProduct();
-//                    int endPage = count / 5;
-//                    if (count % 5 != 0) {
-//                        endPage++;
-//                    }
-//                    //3. Lấy list sản phẩm theo sell id
-//                    dao.loadListProductFromDbById(id, indexInt);
-//                    ArrayList<ManagerProductDTO> list = dao.getListProduct();
-//                    
-//                    ProductTypeDAO typeDao = new ProductTypeDAO();
-//                    typeDao.loadListProductType();
-//                    ArrayList<ProductTypeDTO> listCategory = typeDao.getListCategory();
-//                   
-//                    //4. Lưu vào trong attribute
-//                    request.setAttribute("listType", listCategory);
-//                    request.setAttribute("listProduct", list);
-//                    request.setAttribute("endP", endPage);
-//                   
-//                     url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
-//                }
-//            }
-//           
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        } catch (NamingException ex) {
-//            ex.printStackTrace();
-//        } finally {
-//            RequestDispatcher rd = request.getRequestDispatcher(url);
-//            rd.forward(request, response);
-//        }
-
         try {
             //2. Call DAO/Models
             AccountDAO dao = new AccountDAO();

@@ -5,6 +5,9 @@
 <<<<<<< HEAD
         <group/>
 =======
+<<<<<<< HEAD
+        <group/>
+=======
         <group>
             <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/EFdetail.jsp</file>
             <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/WEB-INF/siteMap.properties</file>
@@ -12,5 +15,6 @@
             <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/src/java/florastore/servlet/EventFlowerDetailServlet.java</file>
         </group>
 >>>>>>> 80c4cd83e14e5cf8c35874667861b8bd8f26d5ca
+>>>>>>> main
     </open-files>
 </project-private>
