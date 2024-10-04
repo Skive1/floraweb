@@ -10,8 +10,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceLayer {
-    
-        public List<ProductDTO> getOtherColor(List<ProductDTO> list) {
+
+    public List<ProductDTO> getSingleColor(List<ProductDTO> list, String color) {
+        List<ProductDTO> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getProductDetail().toLowerCase().contains(color)) {
+                result.add(list.get(i));
+            }
+        }
+        if ("red".equals(color)) {
+            for (int i = 0; i < result.size(); i++) {
+                if (result.get(i).getProductDetail().toLowerCase().contains("multy")
+                        && result.get(i).getProductDetail().toLowerCase().contains("color")) {
+                    result.remove(list.get(i));
+                    i--;
+                }
+            }
+        }
+        return result;
+    }
+
+    public List<ProductDTO> getMultyColor(List<ProductDTO> list) {
+        List<ProductDTO> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getProductDetail().toLowerCase().contains("multy")
+                    && list.get(i).getProductDetail().toLowerCase().contains("color")) {
+                result.add(list.get(i));
+            }
+        }
+        return result;
+    }
+
+    public List<ProductDTO> getOtherColor(List<ProductDTO> list) {
         String[] defaultColor = {"red", "blue", "white", "orange", "magenta",
             "yellow", "pink", "purple", "brown", "green", "black"};
         List<ProductDTO> result = new ArrayList<>();
@@ -38,7 +68,7 @@ public class ServiceLayer {
         }
         return result;
     }
-    
+
     public int getPage(int page, String pageIsActive, String goBack, String goForward) {
         if (pageIsActive == null) {
             page = 1;                                                       //lần đầu in ra sản phẩm pageNumber mặc định luôn là 1

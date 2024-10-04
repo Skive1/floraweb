@@ -80,7 +80,6 @@ public class FindErrorServlet extends HttpServlet {
             
             //find error here
         } finally {
-            System.out.println("FindError switch");
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

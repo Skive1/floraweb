@@ -152,7 +152,6 @@ public class SearchExtendServlet extends HttpServlet {
         } catch (NamingException ex) {
             Logger.getLogger(SearchExtendServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            System.out.println("Extend active");
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
