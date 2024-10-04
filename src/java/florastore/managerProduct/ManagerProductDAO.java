@@ -27,10 +27,37 @@ public class ManagerProductDAO implements Serializable {
         return listProduct;
     }
 
-    private ArrayList<ProductTypeDTO> listProductType;
+    private ArrayList<CategoryDTO> listProductType;
 
-    public ArrayList<ProductTypeDTO> getListProductType() {
+    public ArrayList<CategoryDTO> getListProductType() {
         return listProductType;
+    }
+
+    public String getStoreId(String username) throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String id = null;
+        try {
+            con = DBHelper.getConnection();
+            if (con != null) {
+                String sql = "SELECT StoreID "
+                        + "From FlowerStore"
+                        + "Where AccountUsername = 'trader'";
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return id;
     }
 
     public void loadListProductFromDbById(String id, int index) throws SQLException, NamingException {
@@ -41,7 +68,7 @@ public class ManagerProductDAO implements Serializable {
             //1. Get connection
             con = DBHelper.getConnection();
             if (con != null) {
-                String sql = "SELECT ProductId, StoreId, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, ImageURL "
+                String sql = "SELECT ProductId, FlowerStoreStoreID, ProductType, ProductName, ProductCondition, ProductDetail, Img, ProductQuantity, ProductPrice, CategoryCategoryId "
                         + "FROM FlowerProducts "
                         + "WHERE StoreId = ? "
                         + "Order by ProductId "
@@ -204,15 +231,11 @@ public class ManagerProductDAO implements Serializable {
                 //2. Create stm obj
                 stm = con.prepareStatement(sql);
                 stm.setString(1, id);
-
                 //3. Excute Query
                 rs = stm.executeQuery();
                 while (rs.next()) {
-                    String productId = rs.getString("StoreId");
-
                     String type = rs.getString("ProductType");
-
-                    ProductTypeDTO dto = new ProductTypeDTO(productId, type);
+                    CategoryDTO dto = new CategoryDTO(type);
                     if (this.listProductType == null) {
                         listProductType = new ArrayList<>();
                     }//end if list is empty

@@ -13,9 +13,8 @@ import java.io.Serializable;
  */
 public class ProductTypeDTO implements Serializable {
 
-   private String storeId;
+    private String storeId;
     private String type;
-
 
     public ProductTypeDTO() {
     }
@@ -53,5 +52,4 @@ public class ProductTypeDTO implements Serializable {
         this.type = type;
     }
 
-    
 }

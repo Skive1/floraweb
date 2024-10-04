@@ -5,11 +5,24 @@
  */
 package florastore.servlet;
 
+<<<<<<< HEAD:src/java/florastore/servlet/ProductManagementServlet.java
+import florastore.account.AccountDTO;
+import florastore.managerProduct.ManagerProductDAO;
+import florastore.managerProduct.ManagerProductDTO;
+import florastore.managerProduct.ProductTypeDAO;
+import florastore.managerProduct.ProductTypeDTO;
+=======
 import florastore.account.AccountDAO;
+>>>>>>> 80c4cd83e14e5cf8c35874667861b8bd8f26d5ca:src/java/florastore/servlet/DeleteAccountServlet.java
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+<<<<<<< HEAD:src/java/florastore/servlet/ProductManagementServlet.java
+import java.util.ArrayList;
+import java.util.List;
+=======
+>>>>>>> 80c4cd83e14e5cf8c35874667861b8bd8f26d5ca:src/java/florastore/servlet/DeleteAccountServlet.java
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -49,6 +62,48 @@ public class DeleteAccountServlet extends HttpServlet {
         String page = request.getParameter("page");
         boolean result = false;
 
+<<<<<<< HEAD:src/java/florastore/servlet/ProductManagementServlet.java
+//        try {
+//            HttpSession session = request.getSession(false);
+//            if (session != null) {
+//                //1. Lấy id từ session Scope
+//                AccountDTO dto = (AccountDTO) session.getAttribute("USER");
+//                String id = dto.getSaleId();
+//                if (dto.getSaleId() != null) {
+//                    //2. Gọi method DAO
+//                    ManagerProductDAO dao = new ManagerProductDAO();
+//                   
+//                    int count = dao.getTotalProduct();
+//                    int endPage = count / 5;
+//                    if (count % 5 != 0) {
+//                        endPage++;
+//                    }
+//                    //3. Lấy list sản phẩm theo sell id
+//                    dao.loadListProductFromDbById(id, indexInt);
+//                    ArrayList<ManagerProductDTO> list = dao.getListProduct();
+//                    
+//                    ProductTypeDAO typeDao = new ProductTypeDAO();
+//                    typeDao.loadListProductType();
+//                    ArrayList<ProductTypeDTO> listCategory = typeDao.getListCategory();
+//                   
+//                    //4. Lưu vào trong attribute
+//                    request.setAttribute("listType", listCategory);
+//                    request.setAttribute("listProduct", list);
+//                    request.setAttribute("endP", endPage);
+//                   
+//                     url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
+//                }
+//            }
+//           
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        } catch (NamingException ex) {
+//            ex.printStackTrace();
+//        } finally {
+//            RequestDispatcher rd = request.getRequestDispatcher(url);
+//            rd.forward(request, response);
+//        }
+=======
         try {
             //2. Call DAO/Models
             AccountDAO dao = new AccountDAO();
@@ -67,6 +122,7 @@ public class DeleteAccountServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
+>>>>>>> 80c4cd83e14e5cf8c35874667861b8bd8f26d5ca:src/java/florastore/servlet/DeleteAccountServlet.java
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
