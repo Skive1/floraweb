@@ -56,46 +56,46 @@ public class ProductManagementServlet extends HttpServlet {
         }
         int indexInt = Integer.parseInt(indexPage);
 
-        try {
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                //1. Lấy id từ session Scope
-                AccountDTO dto = (AccountDTO) session.getAttribute("USER");
-                String id = dto.getSaleId();
-                if (dto.getSaleId() != null) {
-                    //2. Gọi method DAO
-                    ManagerProductDAO dao = new ManagerProductDAO();
-                   
-                    int count = dao.getTotalProduct();
-                    int endPage = count / 5;
-                    if (count % 5 != 0) {
-                        endPage++;
-                    }
-                    //3. Lấy list sản phẩm theo sell id
-                    dao.loadListProductFromDbById(id, indexInt);
-                    ArrayList<ManagerProductDTO> list = dao.getListProduct();
-                    
-                    ProductTypeDAO typeDao = new ProductTypeDAO();
-                    typeDao.loadListProductType();
-                    ArrayList<ProductTypeDTO> listCategory = typeDao.getListCategory();
-                   
-                    //4. Lưu vào trong attribute
-                    request.setAttribute("listType", listCategory);
-                    request.setAttribute("listProduct", list);
-                    request.setAttribute("endP", endPage);
-                   
-                     url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
-                }
-            }
-           
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } catch (NamingException ex) {
-            ex.printStackTrace();
-        } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
-        }
+//        try {
+//            HttpSession session = request.getSession(false);
+//            if (session != null) {
+//                //1. Lấy id từ session Scope
+//                AccountDTO dto = (AccountDTO) session.getAttribute("USER");
+//                String id = dto.getSaleId();
+//                if (dto.getSaleId() != null) {
+//                    //2. Gọi method DAO
+//                    ManagerProductDAO dao = new ManagerProductDAO();
+//                   
+//                    int count = dao.getTotalProduct();
+//                    int endPage = count / 5;
+//                    if (count % 5 != 0) {
+//                        endPage++;
+//                    }
+//                    //3. Lấy list sản phẩm theo sell id
+//                    dao.loadListProductFromDbById(id, indexInt);
+//                    ArrayList<ManagerProductDTO> list = dao.getListProduct();
+//                    
+//                    ProductTypeDAO typeDao = new ProductTypeDAO();
+//                    typeDao.loadListProductType();
+//                    ArrayList<ProductTypeDTO> listCategory = typeDao.getListCategory();
+//                   
+//                    //4. Lưu vào trong attribute
+//                    request.setAttribute("listType", listCategory);
+//                    request.setAttribute("listProduct", list);
+//                    request.setAttribute("endP", endPage);
+//                   
+//                     url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
+//                }
+//            }
+//           
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        } catch (NamingException ex) {
+//            ex.printStackTrace();
+//        } finally {
+//            RequestDispatcher rd = request.getRequestDispatcher(url);
+//            rd.forward(request, response);
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -42,7 +42,7 @@ public class ManagerProductDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 String sql = "SELECT StoreID "
-                        + "From FlowerStore "
+                        + "From FlowerStore"
                         + "Where AccountUsername = 'trader'";
             }
 
