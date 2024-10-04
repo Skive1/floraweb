@@ -10,7 +10,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceLayer {
+    
+        public List<ProductDTO> getOtherColor(List<ProductDTO> list) {
+        String[] defaultColor = {"red", "blue", "white", "orange", "magenta",
+            "yellow", "pink", "purple", "brown", "green", "black"};
+        List<ProductDTO> result = new ArrayList<>();
 
+        for (int i = 0; i < list.size(); i++) {
+            boolean flag = false;
+            for (int j = 0; j < defaultColor.length; j++) {
+                if (list.get(i).getProductDetail().toLowerCase().contains(defaultColor[j])) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                result.add(list.get(i));
+            }
+        }
+
+        for (int i = 0; i < result.size(); i++) {
+            if (result.get(i).getProductDetail().toLowerCase().contains("multy")
+                    && result.get(i).getProductDetail().toLowerCase().contains("color")) {
+                result.remove(i);
+                i--;
+            }
+        }
+        return result;
+    }
+    
     public int getPage(int page, String pageIsActive, String goBack, String goForward) {
         if (pageIsActive == null) {
             page = 1;                                                       //lần đầu in ra sản phẩm pageNumber mặc định luôn là 1

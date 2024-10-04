@@ -34,15 +34,18 @@ public class PageChangerServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH);
 
         HttpSession session = request.getSession();
-        try {                                                                   //do search và searchExtend xài chung jsp nên phân luồng để chạy
-                                                                                //lúc chuyển trang
-            if (session.getAttribute("Search") != null) {
+        try {                                                                   //phân luồng để chạy lúc chuyển trang
+            //do search all, search price, search type, search color xài chung 1 trang jsp
+            if (session.getAttribute("search") != null) {
                 url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH);
-            }
-            if (session.getAttribute("SearchExtend") != null) {
+            } else if (session.getAttribute("searchExtend") != null) {
                 url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_EXTEND);
+            } else if (session.getAttribute("searchForType") != null) {
+                url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_TYPE);
+            } else if (session.getAttribute("searchForColor") != null) {
+                url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_COLOR);
             }
-            
+
             //find error here
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

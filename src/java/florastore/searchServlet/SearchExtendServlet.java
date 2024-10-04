@@ -57,29 +57,25 @@ public class SearchExtendServlet extends HttpServlet {
         int[] categories = null;
 
         HttpSession session = request.getSession();
-        String searchErrorExist = (String) session.getAttribute("ErrorToExtend");
-        String checkPageActive = (String) session.getAttribute("checkPageExtendActive");
+        String searchErrorExist = (String) session.getAttribute("errorExist");
+        String checkPageActive = (String) session.getAttribute("pageIsActive");
 
-        List<ProductDTO> totalProduct = (List<ProductDTO>) session.getAttribute("TOTAL_PRODUCT");
+        List<ProductDTO> totalProduct = (List<ProductDTO>) session.getAttribute("totalProduct");       //SORT
         List<ProductDTO> divideResult = new ArrayList<>();
 
-//        String priceFromActive = (String) session.getAttribute("PriceFromActive");
         try {
             ProductDAO dao = new ProductDAO();
             ServiceLayer service = new ServiceLayer();
             pageIsActive = service.checkPagination(pageIsActive, goBack, goForward);
             
-            if (checkPageActive != null) {
+            if (checkPageActive != null && searchErrorExist != null) {
                 pageIsActive = checkPageActive;
                 session.removeAttribute("checkPageExtendActive");
             }
 
             session.removeAttribute("pageIsActive");
-            session.setAttribute("pageExtendIsActive", pageIsActive);
+            session.setAttribute("pageIsActive", pageIsActive);
 
-            //if (paramPriceFrom != null && paramPriceTo != null || priceFromActive != null) {               //search product price from X to Y
-//            session.removeAttribute("PriceFromActive");
-//            session.setAttribute("PriceFromActive", "Active");
             if (pageIsActive == null && searchErrorExist == null) {
                 priceFrom = Integer.parseInt(paramPriceFrom);
                 priceTo = Integer.parseInt(paramPriceTo);
@@ -90,7 +86,7 @@ public class SearchExtendServlet extends HttpServlet {
             session.removeAttribute("PriceFrom");
             session.removeAttribute("PriceTo");
             if (searchErrorExist != null) {
-                session.removeAttribute("ErrorToExtend");
+                session.removeAttribute("errorExist");
                 session.setAttribute("PriceFrom", paramPriceFrom);              //show error input
                 session.setAttribute("PriceTo", paramPriceTo);
             } else {
@@ -113,20 +109,20 @@ public class SearchExtendServlet extends HttpServlet {
             if (pageSize == 0) {
                 pageSize = 1;
             }
-            session.removeAttribute("PAGE_SIZE");
-            session.setAttribute("PAGE_SIZE", pageSize);
+            session.removeAttribute("pageSize");
+            session.setAttribute("pageSize", pageSize);
 
             categories = service.getCategories(divideResult);
 
-            session.removeAttribute("FRESHFLOWER");
-            session.removeAttribute("POTTEDFLOWER");
-            session.removeAttribute("DRYFLOWER");
-            session.removeAttribute("OTHERFLOWER");
+            session.removeAttribute("freshFlower");
+            session.removeAttribute("pottedFlower");
+            session.removeAttribute("dryFlower");
+            session.removeAttribute("otherType");
 
-            session.setAttribute("FRESHFLOWER", categories[0]);
-            session.setAttribute("POTTEDFLOWER", categories[1]);
-            session.setAttribute("DRYFLOWER", categories[2]);
-            session.setAttribute("OTHERFLOWER", categories[3]);
+            session.setAttribute("freshFlower", categories[0]);
+            session.setAttribute("pottedFlower", categories[1]);
+            session.setAttribute("dryFlower", categories[2]);
+            session.setAttribute("otherType", categories[3]);
 
             page = service.getPage(page, pageIsActive, goBack, goForward);
             range = service.getPageRange(page);
@@ -135,26 +131,28 @@ public class SearchExtendServlet extends HttpServlet {
             dao.searchTotalProduct("", true);                                   //giữ cho categories luôn cập nhật sản phẩm mới
             List<ProductDTO> categoryUpdate = dao.getTotalProduct();
 
-            request.removeAttribute("NEWPRODUCT");
-            request.setAttribute("NEWPRODUCT", service.getNewProduct(categoryUpdate));
+            request.removeAttribute("requestNewProduct");
+            request.setAttribute("requestNewProduct", service.getNewProduct(categoryUpdate));
 
-            request.removeAttribute("RESULT_LIST");
-            request.setAttribute("RESULT_LIST", productList);                   //9 sản phẩm đã vào attribute result chuẩn bị được show
+            request.removeAttribute("requestResultList");
+            request.setAttribute("requestResultList", productList);                   //9 sản phẩm đã vào attribute result chuẩn bị được show
 
-            session.removeAttribute("CURRENTPAGE");
+            session.removeAttribute("currentPage");
             if (pageIsActive == null) {
-                session.setAttribute("CURRENTPAGE", 1);                   //sau khi search hoặc nhấn Shop thì button trang 1 sẽ sáng
+                session.setAttribute("currentPage", 1);                   //sau khi search hoặc nhấn Shop thì button trang 1 sẽ sáng
             } else {
-                session.setAttribute("CURRENTPAGE", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
+                session.setAttribute("currentPage", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
             }
-            session.removeAttribute("Search");
-            session.setAttribute("SearchExtend", "searchExtend active");
+            session.removeAttribute("search");
+            session.removeAttribute("searchForType");
+            session.removeAttribute("searchForColor");
+            session.setAttribute("searchExtend", "searchExtend active");
         } catch (SQLException ex) {
             Logger.getLogger(SearchExtendServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NamingException ex) {
             Logger.getLogger(SearchExtendServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            System.out.println("SearchExtend finished");
+            System.out.println("Extend active");
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

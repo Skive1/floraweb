@@ -33,48 +33,20 @@ public class SearchErrorProcessServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.SearchFeature.ERROR);
 
         HttpSession session = request.getSession();
-
-        String checkSearch = (String) session.getAttribute("Search");
-        String pageActive = (String) session.getAttribute("pageIsActive");
-        String navbar = (String) session.getAttribute("navbar");
-        String search = (String) session.getAttribute("searchValue");
-
-        String checkSearchExtend = (String) session.getAttribute("SearchExtend");
-        String pageExtendActive = (String) session.getAttribute("pageExtendIsActive");
         try {
             //search extend
-            
-            if (checkSearch != null) {
-                session.setAttribute("ErrorToExtend", "exist");
-                
-                if (pageActive != null) {
-                    session.setAttribute("checkPageActive", pageActive);
-                    session.removeAttribute("pageIsActive");
-                }
-                if (navbar != null) {
-                    session.setAttribute("checkNavbar", navbar);
-                    session.removeAttribute("navbar");
-                }
-                if (search != null) {
-                    session.setAttribute("checkSearch", search);
-                    session.removeAttribute("searchValue");
-                }
+            session.setAttribute("errorExist", "exist");
+            if (session.getAttribute("search") != null) {
                 url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH);
-            }
-            if (checkSearchExtend != null) {
-                session.setAttribute("ErrorToExtend", "exist");
-
-                if (pageExtendActive != null) {
-                    session.setAttribute("checkPageExtendActive", pageExtendActive);
-                    session.removeAttribute("pageIsActive");
-                }
-                
+            } else if (session.getAttribute("searchExtend") != null) {
                 url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_EXTEND);
+            } else if (session.getAttribute("searchForType") != null) {
+                url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_TYPE);
+            } else if (session.getAttribute("searchForColor") != null) {
+                url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_COLOR);
             }
-        } catch (StackOverflowError ex) {
-            System.out.println("huhu");
+
         } finally {
-            System.out.println("ErrorProcess finished");
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

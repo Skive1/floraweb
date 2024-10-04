@@ -151,7 +151,7 @@
                             <div class="col-xl-3">
                                 <form action="SearchServlet" method="POST">
                                     <div class="input-group w-100 mx-auto d-flex">
-                                        <input type="search" name="txtSearchValue" value="${sessionScope.LASTSEARCH}" 
+                                        <input type="search" name="txtSearchValue" value="${sessionScope.lastSearch}" 
                                                class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
                                         <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
                                     </div>
@@ -180,42 +180,42 @@
                                                 <form id="categoriesForm" action="SearchForTypeServlet" method="POST">
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name">
-                                                            <input type="hidden" id="freshFlower" name="freshFlower"/>
-                                                            <a href="#" onclick="document.getElementById('freshFlower').value = 'freshFlower';
-                                                               document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
+                                                            <input type="hidden" id="categories" name="categories"/>
+                                                            <a href="#" onclick="document.getElementById('categories').value = 'Fresh Flower';
+                                                                    document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
                                                                 Fresh Flower
                                                             </a>
-                                                            <span>(${sessionScope.FRESHFLOWER})</span>
+                                                            <span>(${sessionScope.freshFlower})</span>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name">
-                                                            <input type="hidden" id="pottedFlower" name="pottedFlower"/>
-                                                            <a href="#" onclick="document.getElementById('pottedFlower').value = 'pottedFlower';
-                                                               document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
+                                                            <input type="hidden" id="categories" name="categories"/>
+                                                            <a href="#" onclick="document.getElementById('categories').value = 'Potted Plant';
+                                                                    document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
                                                                 Potted Plant
                                                             </a>
-                                                            <span>(${sessionScope.POTTEDFLOWER})</span>
+                                                            <span>(${sessionScope.pottedFlower})</span>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name">
-                                                            <input type="hidden" id="dryFlower" name="dryFlower"/>
-                                                            <a href="#" onclick="document.getElementById('dryFlower').value = 'dryFlower';
-                                                               document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
+                                                            <input type="hidden" id="categories" name="categories"/>
+                                                            <a href="#" onclick="document.getElementById('categories').value = 'Dried Flower';
+                                                                    document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
                                                                 Dried Flower
                                                             </a>
-                                                            <span>(${sessionScope.DRYFLOWER})</span>
+                                                            <span>(${sessionScope.dryFlower})</span>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name">
-                                                            <input type="hidden" id="otherFlower" name="otherFlower"/>
-                                                            <a href="#" onclick="document.getElementById('otherFlower').value = 'otherFlower';
-                                                               document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
+                                                            <input type="hidden" id="categories" name="categories"/>
+                                                            <a href="#" onclick="document.getElementById('categories').value = 'Other Flower';
+                                                                    document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
                                                                 Other type
                                                             </a>
-                                                            <span>(${sessionScope.OTHERFLOWER})</span>
+                                                            <span>(${sessionScope.otherType})</span>
                                                         </div>
                                                     </li>
                                                 </form>
@@ -254,30 +254,22 @@
                                         </form>
                                     </div>
                                     <div class="col-lg-12">
-                                        <form id="searchColor" action="fixthis" method="POST">
-                                            <div class="mb-3">
-                                                <h4>Search for color (later)</h4>
-                                                <div class="mb-2">
-                                                    <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
-                                                    <label for="Categories-1"> Red</label>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
-                                                    <label for="Categories-2"> Yellow</label>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
-                                                    <label for="Categories-3"> Purple</label>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <input type="radio" class="me-2" id="Categories-4" name="Categories-1" value="Beverages">
-                                                    <label for="Categories-4"> White</label>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <input type="radio" class="me-2" id="Categories-5" name="Categories-1" value="Beverages">
-                                                    <label for="Categories-5"> Other</label>
-                                                </div>
-                                            </div>
+                                        <form id="searchColor" action="SearchForColorServlet" method="POST">
+                                            <select class="form-control" name="txtColor" id="searchColor" >
+                                                <option value="multi-color" selected>Multi color</option>
+                                                <option value="red">Red</option>
+                                                <option value="blue">Blue</option>
+                                                <option value="white ">White </option>
+                                                <option value="orange">Orange</option>
+                                                <option value="magenta">Magenta</option>
+                                                <option value="yellow">Yellow</option>
+                                                <option value="pink">Pink</option>
+                                                <option value="purple ">Purple</option>
+                                                <option value="brown">Brown</option>
+                                                <option value="green">Green</option>
+                                                <option value="black">Black</option>
+                                                <option value="other">Other</option>
+                                            </select>
                                             <div class="d-flex justify-content-center my-4">
                                                 <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100" 
                                                    onclick="document.getElementById('searchColor').submit()">Search</a>
@@ -287,7 +279,7 @@
                                     <%--Top new--%>
                                     <div class="col-lg-12">
                                         <h4 class="mb-3">Featured products</h4>
-                                        <c:set var="newIncome" value="${requestScope.NEWPRODUCT}"/>
+                                        <c:set var="newIncome" value="${requestScope.requestNewProduct}"/>
                                         <c:forEach var="dto" items="${newIncome}">
                                             <div class="d-flex align-items-center justify-content-start">
                                                 <div class="rounded me-4" style="width: 100px; height: 100px;">
@@ -326,7 +318,7 @@
                             </div>
                             <div class="col-lg-9">
                                 <div class="row g-4 justify-content-center">
-                                    <c:set var="result" value="${requestScope.RESULT_LIST}"/>
+                                    <c:set var="result" value="${requestScope.requestResultList}"/>
                                     <c:forEach var="dto" items="${result}">
                                         <div class="col-md-6 col-lg-6 col-xl-4">
                                             <div class="rounded position-relative fruite-item">
@@ -355,7 +347,7 @@
                                     <%--img/Ame.jpg--%>
                                     <div class="col-12" >
                                         <div class="pagination d-flex justify-content-center mt-5">
-                                            <c:if test="${sessionScope.CURRENTPAGE == 1}"> 
+                                            <c:if test="${sessionScope.currentPage == 1}"> 
                                                 <form>
                                                     <a href="#" class="rounded" style="margin: 1; 
                                                        background-color: gray; color: white; pointer-events: none; opacity: 0.6;">
@@ -363,11 +355,11 @@
                                                     </a>
                                                 </form>
                                             </c:if>
-                                            <c:if test="${sessionScope.CURRENTPAGE != 1}"> 
+                                            <c:if test="${sessionScope.currentPage != 1}"> 
                                                 <form id="backForm" action="PageChangerServlet" method="POST">
                                                     <input type="hidden" id="pageBack" name="pageBack"/>
                                                     <a href="#" class="rounded" style="margin: 1"
-                                                       onclick="document.getElementById('pageBack').value = '${sessionScope.CURRENTPAGE}';
+                                                       onclick="document.getElementById('pageBack').value = '${sessionScope.currentPage}';
                                                                document.getElementById('backForm').submit();">
                                                         &laquo;
                                                     </a>
@@ -375,14 +367,14 @@
                                             </c:if>
                                             <form id="paginationForm" action="PageChangerServlet" method="POST">
                                                 <input type="hidden" id="pageNo" name="pageNo">
-                                                <c:forEach var="i" begin="1" end="${sessionScope.PAGE_SIZE}">
-                                                    <c:if test="${sessionScope.CURRENTPAGE == i}">
+                                                <c:forEach var="i" begin="1" end="${sessionScope.pageSize}">
+                                                    <c:if test="${sessionScope.currentPage == i}">
                                                         <a href="#" class="active rounded" 
                                                            onclick="document.getElementById('pageNo').value = '${i}';
                                                                    document.getElementById('paginationForm').submit();
                                                                    return false;" style="margin: 0">${i}</a>
                                                     </c:if>
-                                                    <c:if test="${sessionScope.CURRENTPAGE != i}">
+                                                    <c:if test="${sessionScope.currentPage != i}">
                                                         <a href="#" class="rounded" 
                                                            onclick="document.getElementById('pageNo').value = '${i}';
                                                                    document.getElementById('paginationForm').submit();
@@ -390,17 +382,17 @@
                                                     </c:if>
                                                 </c:forEach>
                                             </form>
-                                            <c:if test="${sessionScope.CURRENTPAGE != sessionScope.PAGE_SIZE}"> 
+                                            <c:if test="${sessionScope.currentPage != sessionScope.pageSize}"> 
                                                 <form id="forwardForm" action="PageChangerServlet" method="POST">
                                                     <input type="hidden" id="pageForward" name="pageForward"/>
                                                     <a href="#" class="rounded" style="margin: 1"
-                                                       onclick="document.getElementById('pageForward').value = '${sessionScope.CURRENTPAGE}';
+                                                       onclick="document.getElementById('pageForward').value = '${sessionScope.currentPage}';
                                                                document.getElementById('forwardForm').submit();">
                                                         &raquo;
                                                     </a>
                                                 </form>
                                             </c:if>
-                                            <c:if test="${sessionScope.CURRENTPAGE == sessionScope.PAGE_SIZE}"> 
+                                            <c:if test="${sessionScope.currentPage == sessionScope.pageSize}"> 
                                                 <form>
                                                     <a href="#" class="rounded" style="margin: 1; 
                                                        background-color: gray; color: white; pointer-events: none; opacity: 0.6;">

@@ -25,8 +25,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author ASUS
  */
-@WebServlet(name = "SearchForTypeServlet", urlPatterns = {"/SearchForTypeServlet"})
-public class SearchForTypeServlet extends HttpServlet {
+@WebServlet(name = "SearchForColorServlet", urlPatterns = {"/SearchForColorServlet"})
+public class SearchForColorServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -36,7 +36,7 @@ public class SearchForTypeServlet extends HttpServlet {
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.SearchFeature.SUCCESS);
 
-        String getCategories = request.getParameter("categories");
+        String getColor = request.getParameter("txtColor");
 
         String paramPriceFrom = request.getParameter("txtPriceFrom");
         String paramPriceTo = request.getParameter("txtPriceTo");
@@ -51,9 +51,9 @@ public class SearchForTypeServlet extends HttpServlet {
         int[] categories = null;
 
         HttpSession session = request.getSession();
-        String oldCategories = (String) session.getAttribute("oldCategories");
+        String oldColor = (String) session.getAttribute("oldColor");
         String searchErrorExist = (String) session.getAttribute("errorExist");
-        String checkPageActive = (String) session.getAttribute("oldCurrentPage");
+        String checkPageActive = (String) session.getAttribute("oldCurrentPage");       //có bug ở RED
 
         List<ProductDTO> totalProduct = (List<ProductDTO>) session.getAttribute("totalProduct");       //SORT + cải tiến search price sau khi search Type
         List<ProductDTO> divideResult = new ArrayList<>();
@@ -64,14 +64,14 @@ public class SearchForTypeServlet extends HttpServlet {
 
             if (checkPageActive != null && searchErrorExist != null) {
                 pageIsActive = checkPageActive;
-                session.removeAttribute("oldCurrentPage");
+                session.removeAttribute("oldColor");
             }
 
-            session.removeAttribute("oldCurrentPage");
-            session.setAttribute("oldCurrentPage", pageIsActive);
+            session.removeAttribute("oldColor");
+            session.setAttribute("oldColor", pageIsActive);
 
-            if (oldCategories != null && getCategories == null) {                          //lấy type cũ khi user chuyển trang hoặc search lỗi
-                getCategories = oldCategories;
+            if (oldColor != null && getColor == null) {                          //lấy type cũ khi user chuyển trang hoặc search lỗi
+                getColor = oldColor;
             }
 
             session.removeAttribute("PriceFrom");
@@ -83,20 +83,21 @@ public class SearchForTypeServlet extends HttpServlet {
                 session.setAttribute("PriceTo", paramPriceTo);
             }
             session.removeAttribute("oldCategories");
-            session.setAttribute("oldCategories", getCategories);                       //dùng để search lại giá trị cũ - sửa thành giá trị getCategories
+            session.setAttribute("oldCategories", getColor);                       //dùng để search lại giá trị cũ - sửa thành giá trị getCategories
 
             for (ProductDTO category : totalProduct) {
-                if (getCategories.equals(category.getProductType())) {
+                if (category.getProductDetail().toLowerCase().contains(getColor)) {
                     divideResult.add(category);                             //thực hiện add các sản phẩm có type = getCategopries
-                } else if ("Other Flower".equals(getCategories)) {
-                    if (!"Fresh Flower".equals(category.getProductType())
-                            && !"Potted Plant".equals(category.getProductType())
-                            && !"Dried Flower".equals(category.getProductType())) {
+                } else if ("multi-color".equals(getColor)) {
+                    if (category.getProductDetail().toLowerCase().contains("multy")
+                            && category.getProductDetail().toLowerCase().contains("color")) {
                         divideResult.add(category);
                     }
+                } else if ("other".equals(getColor)) {
+                    divideResult = service.getOtherColor(totalProduct);
                 }
             }
-            
+
             pageSize = service.getPage(divideResult.size());                    //làm thanh << 1 2 3 4 >>
             if (pageSize == 0) {
                 pageSize = 1;
@@ -137,8 +138,8 @@ public class SearchForTypeServlet extends HttpServlet {
             }
             session.removeAttribute("search");
             session.removeAttribute("searchExtend");
-            session.removeAttribute("searchForColor");
-            session.setAttribute("searchForType", "SearchForType active");
+            session.removeAttribute("searchForType");
+            session.setAttribute("searchForColor", "searchForColor active");
 
         } catch (SQLException ex) {
             Logger.getLogger(SearchForTypeServlet.class.getName()).log(Level.SEVERE, null, ex);

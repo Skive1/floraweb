@@ -55,29 +55,29 @@ public class SearchServlet extends HttpServlet {
         double list = 0;
 
         HttpSession session = request.getSession();
-        String lastSearchValue = (String) session.getAttribute("LASTSEARCH");
-        String searchErrorExist = (String) session.getAttribute("ErrorToExtend");
+        String lastSearchValue = (String) session.getAttribute("lastSearch");
+        String searchErrorExist = (String) session.getAttribute("errorExist");
         
-        String checkPageActive = (String) session.getAttribute("checkPageActive");
-        String checkNavbar = (String) session.getAttribute("checkNavbar");
-        String checkSearch = (String) session.getAttribute("checkSearch");
+        String checkPageActive = (String) session.getAttribute("pageIsActive");
+        String checkNavbar = (String) session.getAttribute("navbar");
+        String checkSearch = (String) session.getAttribute("searchValue");
 
         try {                                                                   //nhớ tối ưu hóa như cách create error và chech Note
             ProductDAO dao = new ProductDAO();
             ServiceLayer service = new ServiceLayer();
             pageIsActive = service.checkPagination(pageIsActive, goBack, goForward);
 
-            if (checkPageActive != null) {
+            if (checkPageActive != null && searchErrorExist != null) {
                 pageIsActive = checkPageActive;
-                session.removeAttribute("checkPageActive");
+                session.removeAttribute("pageIsActive");
             }
-            if (checkNavbar != null) {
+            if (checkNavbar != null && searchErrorExist != null) {
                 navbar = checkNavbar;
-                session.removeAttribute("checkNavbar");
+                session.removeAttribute("navbar");
             }
-            if (checkSearch != null) {
+            if (checkSearch != null && searchErrorExist != null) {
                 searchValue = checkSearch;
-                session.removeAttribute("checkSearch");
+                session.removeAttribute("searchValue");
             }
 
             session.removeAttribute("pageIsActive");
@@ -92,18 +92,18 @@ public class SearchServlet extends HttpServlet {
             }
 
             if (navbar != null || searchValue == null) {
-                session.removeAttribute("LASTSEARCH");                          //xóa attribute để không bị nhảy sai
+                session.removeAttribute("lastSearch");                          //xóa attribute để không bị nhảy sai
                 dao.searchTotalProduct(searchValue, true);               //get total product founded
                 
             } else if (searchValue != null) {             //user search → show 9 sản phẩm đầu tiên được tìm thấy
-                session.removeAttribute("LASTSEARCH");                          //xóa attribute ghi lại cái mới (ghi nhiều lần mà ko xóa sẽ gây quá tải)
-                session.setAttribute("LASTSEARCH", searchValue);                //ghi attribute lastSearch với chuỗi lấy được từ search bar
+                session.removeAttribute("lastSearch");                          //xóa attribute ghi lại cái mới (ghi nhiều lần mà ko xóa sẽ gây quá tải)
+                session.setAttribute("lastSearch", searchValue);                //ghi attribute lastSearch với chuỗi lấy được từ search bar
                 dao.searchTotalProduct(searchValue, false);
                 
             }
             
             if (searchErrorExist != null) {
-                session.removeAttribute("ErrorToExtend");
+                session.removeAttribute("errorExist");
                 session.setAttribute("PriceFrom", paramPriceFrom);              //show error input
                 session.setAttribute("PriceTo", paramPriceTo);
             } else {
@@ -118,43 +118,46 @@ public class SearchServlet extends HttpServlet {
             if (pageSize == 0) {
                 pageSize = 1;
             }
-            session.removeAttribute("PAGE_SIZE");
-            session.setAttribute("PAGE_SIZE", pageSize);                 //gán size để làm button trang 1 → 9
+            session.removeAttribute("pageSize");
+            session.setAttribute("pageSize", pageSize);                 //gán size để làm button trang 1 → 9
             //show 9 sản phẩm đầu tiên
             page = service.getPage(page, pageIsActive, goBack, goForward);
             range = service.getPageRange(page);                                 //lấy phạm vi sản phẩm để show
 
             List<ProductDTO> productList = service.getNine(totalProduct, range);               //đã lấy được 9 sản phẩm để show trang chính
-            request.removeAttribute("RESULT_LIST");
-            request.setAttribute("RESULT_LIST", productList);                   //9 sản phẩm đã vào attribute result chuẩn bị được show
-            session.removeAttribute("TOTAL_PRODUCT");
-            session.setAttribute("TOTAL_PRODUCT", totalProduct);                //Dùng cho SearchEctendServlet
+            request.removeAttribute("requestResultList");
+            request.setAttribute("requestResultList", productList);                   //9 sản phẩm đã vào attribute result chuẩn bị được show
+            
+            session.removeAttribute("totalProduct");
+            session.setAttribute("totalProduct", totalProduct);                //Dùng để search theo giá
 
             categories = service.getCategories(totalProduct);                   //để gán số lượng cho categories dựa trên phân loại từ tổng sản phẩm tìm thấy
-            session.removeAttribute("FRESHFLOWER");
-            session.removeAttribute("POTTEDFLOWER");
-            session.removeAttribute("DRYFLOWER");
-            session.removeAttribute("OTHERFLOWER");
+            session.removeAttribute("freshFlower");
+            session.removeAttribute("pottedFlower");
+            session.removeAttribute("dryFlower");
+            session.removeAttribute("otherType");
 
-            session.setAttribute("FRESHFLOWER", categories[0]);
-            session.setAttribute("POTTEDFLOWER", categories[1]);
-            session.setAttribute("DRYFLOWER", categories[2]);
-            session.setAttribute("OTHERFLOWER", categories[3]);
+            session.setAttribute("freshFlower", categories[0]);
+            session.setAttribute("pottedFlower", categories[1]);
+            session.setAttribute("dryFlower", categories[2]);
+            session.setAttribute("otherType", categories[3]);
 
-            session.removeAttribute("CURRENTPAGE");
+            session.removeAttribute("currentPage");
             if (pageIsActive == null) {
-                session.setAttribute("CURRENTPAGE", 1);                   //sau khi search hoặc nhấn Shop thì button trang 1 sẽ sáng
+                session.setAttribute("currentPage", 1);                   //sau khi search hoặc nhấn Shop thì button trang 1 sẽ sáng
             } else {
-                session.setAttribute("CURRENTPAGE", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
+                session.setAttribute("currentPage", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
             }
 
             //dao.searchTotalProduct("", true);                                   //giữ cho categories luôn cập nhật sản phẩm mới
             List<ProductDTO> newIncome = service.getNewProduct(totalProduct);
-            request.removeAttribute("NEWPRODUCT");                              //giữ cho categories luôn cập nhật
-            request.setAttribute("NEWPRODUCT", newIncome);
+            request.removeAttribute("requestNewProduct");                              //giữ cho categories luôn cập nhật
+            request.setAttribute("requestNewProduct", newIncome);
 
-            session.removeAttribute("SearchExtend");                            //phân luồng để PageChanger chạy
-            session.setAttribute("Search", "is active");
+            session.removeAttribute("searchExtend");                            //phân luồng để PageChanger chạy
+            session.removeAttribute("searchForType");
+            session.removeAttribute("searchForColor");
+            session.setAttribute("search", "search is active");
         } catch (SQLException ex) {
             log("SearchServlet _ SQL _ " + ex.getMessage());
         } catch (NamingException ex) {
