@@ -93,7 +93,7 @@ public class SearchForColorServlet extends HttpServlet {
             } else {
                 divideResult = service.getSingleColor(totalProduct, getColor);                           //thực hiện add các sản phẩm có color = getColor
             }
-            //}
+            //} 
 
             pageSize = service.getPage(divideResult.size());                    //làm thanh << 1 2 3 4 >>
             if (pageSize == 0) {
