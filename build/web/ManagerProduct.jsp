@@ -25,7 +25,7 @@
                 width: 200px;
                 height: 120px;                
             }
-
+            
         </style>
     <body>
         <div class="container">
@@ -41,9 +41,6 @@
                         </div>
                     </div>
                 </div>
-                <c:set var="currentP" value="${param.pageNum != null ? param.pageNum : 1}">
-
-                </c:set>
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
@@ -61,20 +58,17 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        
                         <c:forEach items="${listProduct}" begin="0" end="5" var="o" varStatus="counter">
-                            <param name ="IdStore" value="${o.storeId}">
-                            <c:set var="lastIdStore" value="${o.storeId}" scope="page"/> 
                             <tr>
                                 <td>
                                     <span class="custom-checkbox">
                                         <input type="checkbox" id="checkbox1" name="options[]" value="1">
                                         <label for="checkbox1"></label>
                                     </span>
-                                    <!--                                EDIT SẢN PHẨM TẠI ĐÂY-->
+<!--                                EDIT SẢN PHẨM TẠI ĐÂY-->
                                 </td>
                                 <td>${counter.count}</td>
-                                <td>${o.storeId}</td>
                                 <td>${o.name}</td>
                                 <td>
                                     <img src="${o.imageURL}">
@@ -82,30 +76,24 @@
                                 <td>${o.price} VNĐ</td>
                                 <td>
                                     <a href="#editEmployeeModal"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                    <a href="DelProManagementServlet?proId=${o.productId}&page=${currentP}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                    <a href="DelProManagementServlet?proId=${o.productId}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
-
-                <div class="clearfix">
+                
+                    <div class="clearfix">
                     <div class="hint-text">Showing all</div>
                     <ul class="pagination">
                         <li class="page-item disabled"><a href="#">Previous</a></li>
-                            <c:forEach begin="1" end="${endP}" var="i">
-                            
-
-                            <li class="page-item" ><a href="ProductManagementServlet?index=${i}" class="active rounded" >${i}</a></li>  
-
-
-
-
+                        <c:forEach begin="1" end="${endP}" var="i">
+                        <li class="page-item"><a href="ProductManagementServlet?index=${i}" class="page-link">${i}</a></li>  
                         </c:forEach>
                         <li class="page-item"><a href="#" class="page-link">Last</a></li>
                     </ul>
                 </div>
-
+                
 
             </div>
             <a href="#"><button type="button" class="btn btn-primary">BACK TO STORE</button>
@@ -120,37 +108,32 @@
                             <h4 class="modal-title">Add Product</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label>${lastIdStore}</label>
-                                <input name="id" type="text" class="form-control" required>
-                                
-                            </div>
+                        <div class="modal-body">					
                             <div class="form-group">
                                 <label>Name</label>
                                 <input name="name" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Condition</label>
-                                <input name="type" type="text" class="form-control" required>
+                                <label>Image</label>
+                                <input name="image" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Price</label>
                                 <input name="price" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Quantity</label>
-                                <textarea name="quantity" class="form-control" required></textarea>
+                                <label>Title</label>
+                                <textarea name="title" class="form-control" required></textarea>
                             </div>
                             <div class="form-group">
-                                <label>Image Link</label>
-                                <textarea name="imageURL" class="form-control" required></textarea>
+                                <label>Description</label>
+                                <textarea name="description" class="form-control" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Category</label>
-                                <select name="type" class="form-select" aria-label="Default select example">
-                                    <c:forEach items="${listType}" var="o">
-                                        <option value="${o.type}">${o.type}</option>
+                                <select name="category" class="form-select" aria-label="Default select example">
+                                    <c:forEach items="${listType}" var="a">
+                                        <option value="${a.productId}">${a.type}</option>
                                     </c:forEach>
                                 </select>
                             </div>
