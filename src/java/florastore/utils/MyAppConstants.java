@@ -83,13 +83,14 @@ public class MyAppConstants {
         public static final String ERROR_PAGE = "error404";
     }
 
-    public class ShowProductManager {
+     public class ShowProductManager {
+         public static final String INVALID_PAGE = "homePage";
+         public static final String STORE_PAGE = "managerPage";
+         public static final String ERROR_PAGE = "error404";
+         
 
-        public static final String INVALID_PAGE = "homePage";
-        public static final String STORE_PAGE = "managerPage";
-        public static final String ERROR_PAGE = "error404";
-    }
-
+     }
+     
     public class AdminDeleteFeatures {
 
         public static final String MANAGE_ACCOUNT_PAGE = "manageAccount";
@@ -112,5 +113,6 @@ public class MyAppConstants {
 
         public static final String DETAIL_PAGE = "EventFlowerDetail";
         public static final String ERROR_PAGE = "error404";
+
     }
 }

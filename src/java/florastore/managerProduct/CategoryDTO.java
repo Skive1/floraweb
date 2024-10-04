@@ -11,31 +11,14 @@ import java.io.Serializable;
  *
  * @author acer
  */
-public class ProductTypeDTO implements Serializable {
-
-    private String storeId;
+public class CategoryDTO implements Serializable{
     private String type;
 
-    public ProductTypeDTO() {
+    public CategoryDTO() {
     }
 
-    public ProductTypeDTO(String storeId, String type) {
-        this.storeId = storeId;
+    public CategoryDTO(String type) {
         this.type = type;
-    }
-
-    /**
-     * @return the storeId
-     */
-    public String getStoreId() {
-        return storeId;
-    }
-
-    /**
-     * @param storeId the storeId to set
-     */
-    public void setStoreId(String storeId) {
-        this.storeId = storeId;
     }
 
     /**
@@ -51,5 +34,5 @@ public class ProductTypeDTO implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
-
+    
 }
