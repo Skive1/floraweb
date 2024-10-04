@@ -8,7 +8,6 @@ package florastore.servlet;
 import florastore.account.AccountDAO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
