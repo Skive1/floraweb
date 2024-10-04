@@ -5,17 +5,24 @@
  */
 package florastore.servlet;
 
+<<<<<<< HEAD:src/java/florastore/servlet/ProductManagementServlet.java
 import florastore.account.AccountDTO;
 import florastore.managerProduct.ManagerProductDAO;
 import florastore.managerProduct.ManagerProductDTO;
 import florastore.managerProduct.ProductTypeDAO;
 import florastore.managerProduct.ProductTypeDTO;
+=======
+import florastore.account.AccountDAO;
+>>>>>>> 80c4cd83e14e5cf8c35874667861b8bd8f26d5ca:src/java/florastore/servlet/DeleteAccountServlet.java
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+<<<<<<< HEAD:src/java/florastore/servlet/ProductManagementServlet.java
 import java.util.ArrayList;
 import java.util.List;
+=======
+>>>>>>> 80c4cd83e14e5cf8c35874667861b8bd8f26d5ca:src/java/florastore/servlet/DeleteAccountServlet.java
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -25,14 +32,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author acer
+ * @author ADMIN
  */
-@WebServlet(name = "ProductManagementServlet", urlPatterns = {"/ProductManagementServlet"})
-public class ProductManagementServlet extends HttpServlet {
+@WebServlet(name = "DeleteAccountServlet", urlPatterns = {"/DeleteAccountServlet"})
+public class DeleteAccountServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,16 +52,17 @@ public class ProductManagementServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.ShowProductManager.ERROR_PAGE);
-//        String url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
-        String indexPage = request.getParameter("index");
-        if (indexPage == null) {
-            indexPage = "1";
-        }
-        int indexInt = Integer.parseInt(indexPage);
+        String url = (String) siteMap.get(MyAppConstants.AdminDeleteFeatures.ERROR_PAGE);
 
+        //1. Get account info and page 
+        String username = request.getParameter("txtUsername");
+        String page = request.getParameter("page");
+        boolean result = false;
+
+<<<<<<< HEAD:src/java/florastore/servlet/ProductManagementServlet.java
 //        try {
 //            HttpSession session = request.getSession(false);
 //            if (session != null) {
@@ -96,6 +103,26 @@ public class ProductManagementServlet extends HttpServlet {
 //            RequestDispatcher rd = request.getRequestDispatcher(url);
 //            rd.forward(request, response);
 //        }
+=======
+        try {
+            //2. Call DAO/Models
+            AccountDAO dao = new AccountDAO();
+            result = dao.adminDeleteAccount(username);
+
+            if (result) {
+                //refresh by callling the previos function using URL Rewritring
+                url = (String) siteMap.get(MyAppConstants.AdminDeleteFeatures.MANAGE_ACCOUNT_PAGE);
+                url = url + "?page=" + page;
+            }
+        } catch (SQLException ex) {
+            log("DeleteAccountServlet _ SQL " + ex.getMessage());
+        } catch (NamingException ex) {
+            log("DeleteAccountServlet _ Naming " + ex.getMessage());
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+        }
+>>>>>>> 80c4cd83e14e5cf8c35874667861b8bd8f26d5ca:src/java/florastore/servlet/DeleteAccountServlet.java
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

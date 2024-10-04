@@ -2,7 +2,7 @@
 <Context path="/FloraRewind">
     <Resource name="MyDB" type="javax.sql.DataSource" auth="Container" 
             driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
-            url="jdbc:sqlserver://localhost:1433;databaseName=Flora_Plaform;instanceName=SQLEXPRESS" 
+            url="jdbc:sqlserver://localhost:1433;databaseName=FloraStore;instanceName=SQLEXPRESS" 
             username="sa" password="12345"/>
 </Context>
 

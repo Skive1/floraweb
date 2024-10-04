@@ -11,7 +11,8 @@ import java.io.Serializable;
  *
  * @author ADMIN
  */
-public class AccountDTO implements Serializable{
+public class AccountDTO implements Serializable {
+
     private String username;
     private String password;
     private String fullName;
@@ -21,13 +22,12 @@ public class AccountDTO implements Serializable{
     private String phone;
     private String street;
     private String city;
-    private String saleId;
-
-
+    private String img;
+    
     public AccountDTO() {
     }
 
-    public AccountDTO(String username, String password, String fullName, String role, String email, String gender, String phone, String street, String city, String saleId) {
+    public AccountDTO(String username, String password, String fullName, String role, String email, String gender, String phone, String street, String city, String img) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
@@ -37,7 +37,7 @@ public class AccountDTO implements Serializable{
         this.phone = phone;
         this.street = street;
         this.city = city;
-        this.saleId = saleId;
+        this.img = img;
     }
 
     /**
@@ -167,20 +167,16 @@ public class AccountDTO implements Serializable{
     }
 
     /**
-     * @return the saleId
+     * @param img the img to set
      */
-    public String getSaleId() {
-        return saleId;
+    public void setImg(String img) {
+        this.img = img;
     }
 
     /**
-     * @param saleId the saleId to set
+     * @return the img
      */
-    public void setSaleId(String saleId) {
-        this.saleId = saleId;
+    public String getImg() {
+        return img;
     }
-
-
-
-
 }
