@@ -47,7 +47,6 @@ public class DeleteAccountServlet extends HttpServlet {
         String username = request.getParameter("txtUsername");
         String page = request.getParameter("page");
         boolean result = false;
-
         try {
             //2. Call DAO/Models
             AccountDAO dao = new AccountDAO();
