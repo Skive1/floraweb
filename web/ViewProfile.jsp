@@ -209,263 +209,263 @@
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
                                         <select class="form-control" name="txtCity" id="city" >
-                                            <option value="unknown"  selected>Select city</option>
+                                            <option value="unknown"  selected>Chọn thành phố</option>
                                             <option value="An Giang"
                                                     <c:if test="${sessionScope.USER_INFO.city == 'An Giang'}">
                                                         selected="selected"
                                                     </c:if>>An Giang</option>
-                                            <option value="Ba Ria Vung Tau"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Ba Ria Vung Tau'}">
+                                            <option value="Bà Rịa Vũng Tàu"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Bà Rịa Vũng Tàu'}">
                                                         selected="selected"
-                                                    </c:if>>Ba Ria - Vung Tau</option>
-                                            <option value="Bac Giang"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Bac Giang'}">
+                                                    </c:if>>Bà Rịa Vũng Tàu</option>
+                                            <option value="Bắc Giang"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Bắc Giang'}">
                                                         selected="selected"
-                                                    </c:if>>Bac Giang</option>
-                                            <option value="Bac Kan"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Bac Kan'}">
+                                                    </c:if>>Bắc Giang</option>
+                                            <option value="Bắc Kạn"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Bắc Kạn'}">
                                                         selected="selected"
-                                                    </c:if>>Bac Kan</option>
-                                            <option value="Bac Lieu"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Bac Lieu'}">
+                                                    </c:if>>Bắc Kạn</option>
+                                            <option value="Bạc Liêu"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Bạc Liêu'}">
                                                         selected="selected"
-                                                    </c:if>>Bac Lieu</option>
-                                            <option value="Bac Ninh"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Bac Ninh'}">
+                                                    </c:if>>Bạc Liêu</option>
+                                            <option value="Bắc Ninh"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Bắc Ninh'}">
                                                         selected="selected"
-                                                    </c:if>>Bac Ninh</option>
-                                            <option value="Ben Tre"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Ben Tre'}">
+                                                    </c:if>>Bắc Ninh</option>
+                                            <option value="Bến Tre"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Bến Tre'}">
                                                         selected="selected"
-                                                    </c:if>>Ben Tre</option>
-                                            <option value="Binh Dinh"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Binh Dinh'}">
+                                                    </c:if>>Bến Tre</option>
+                                            <option value="Bình Định"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Bình Định'}">
                                                         selected="selected"
-                                                    </c:if>>Binh Dinh</option>
-                                            <option value="Binh Duong"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Binh Duong'}">
+                                                    </c:if>>Bình Định</option>
+                                            <option value="Bình Dương"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Bình Dương'}">
                                                         selected="selected"
-                                                    </c:if>>Binh Duong</option>
-                                            <option value="Binh Phuoc"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Binh Phuoc'}">
+                                                    </c:if>>Bình Dương</option>
+                                            <option value="Bình Phước"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Bình Phước'}">
                                                         selected="selected"
-                                                    </c:if>>Binh Phuoc</option>
-                                            <option value="Binh Thuan"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Binh Thuan'}">
+                                                    </c:if>>Bình Phước</option>
+                                            <option value="Bình Thuận"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Bình Thuận'}">
                                                         selected="selected"
-                                                    </c:if>>Binh Thuan</option>
-                                            <option value="Ca Mau"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Ca Mau'}">
+                                                    </c:if>>Bình Thuận</option>
+                                            <option value="Cà Mau"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Cà Mau'}">
                                                         selected="selected"
-                                                    </c:if>>Ca Mau</option>
-                                            <option value="Can Tho"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Can Tho'}">
+                                                    </c:if>>Cà Mau</option>
+                                            <option value="Cần Thơ"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Cần Thơ'}">
                                                         selected="selected"
-                                                    </c:if>>Can Tho</option>
-                                            <option value="Cao Bang"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Cao Bang'}">
+                                                    </c:if>>Cần Thơ</option>
+                                            <option value="Cao Bằng"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Cao Bằng'}">
                                                         selected="selected"
-                                                    </c:if>>Cao Bang</option>
-                                            <option value="Da Nang"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Da Nang'}">
+                                                    </c:if>>Cao Bằng</option>
+                                            <option value="Đà Nẵng"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Đà Nẵng'}">
                                                         selected="selected"
-                                                    </c:if>>Da Nang</option>
-                                            <option value="Dak Lak"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Dak Lak'}">
+                                                    </c:if>>Đà Nẵng</option>
+                                            <option value="Đắk Lắk"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Đắk Lắk'}">
                                                         selected="selected"
-                                                    </c:if>>Dak Lak</option>
-                                            <option value="Dak Nong"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Dak Nong'}">
+                                                    </c:if>>Đắk Lắk</option>
+                                            <option value="Đắk Nông"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Đắk Nông'}">
                                                         selected="selected"
-                                                    </c:if>>Dak Nong</option>
-                                            <option value="Dien Bien"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Dien Bien'}">
+                                                    </c:if>>Đắk Nông</option>
+                                            <option value="Điện Biên"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Điện Biên'}">
                                                         selected="selected"
-                                                    </c:if>>Dien Bien</option>
-                                            <option value="Dong Nai"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Dong Nai'}">
+                                                    </c:if>>Điện Biên</option>
+                                            <option value="Đồng Nai"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Đồng Nai'}">
                                                         selected="selected"
-                                                    </c:if>>Dong Nai</option>
-                                            <option value="Dong Thap"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Dong Thap'}">
+                                                    </c:if>>Đồng Nai</option>
+                                            <option value="Đồng Tháp"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Đồng Tháp'}">
                                                         selected="selected"
-                                                    </c:if>>Dong Thap</option>
+                                                    </c:if>>Đồng Tháp</option>
                                             <option value="Gia Lai"
                                                     <c:if test="${sessionScope.USER_INFO.city == 'Gia Lai'}">
                                                         selected="selected"
                                                     </c:if>>Gia Lai</option>
-                                            <option value="Ha Giang"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Ha Giang'}">
+                                            <option value="Hà Giang"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hà Giang'}">
                                                         selected="selected"
-                                                    </c:if>>Ha Giang</option>
-                                            <option value="Ha Nam"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Ha Nam'}">
+                                                    </c:if>>Hà Giang</option>
+                                            <option value="Hà Nam"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hà Nam'}">
                                                         selected="selected"
-                                                    </c:if>>Ha Nam</option>
-                                            <option value="Ha Noi"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Ha Noi'}">
+                                                    </c:if>>Hà Nam</option>
+                                            <option value="Hà Nội"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hà Nội'}">
                                                         selected="selected"
-                                                    </c:if>>Ha Noi</option>
-                                            <option value="Ha Tinh"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Ha Tinh'}">
+                                                    </c:if>>Hà Nội</option>
+                                            <option value="Hà Tĩnh"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hà Tĩnh'}">
                                                         selected="selected"
-                                                    </c:if>>Ha Tinh</option>
-                                            <option value="Hai Duong"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hai Duong'}">
+                                                    </c:if>>Hà Tĩnh</option>
+                                            <option value="Hải Dương"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hải Dương'}">
                                                         selected="selected"
-                                                    </c:if>>Hai Duong</option>
-                                            <option value="Hai Phong"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hai Phong'}">
+                                                    </c:if>>Hải Dương</option>
+                                            <option value="Hải Phòng"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hải Phòng'}">
                                                         selected="selected"
-                                                    </c:if>>Hai Phong</option>
-                                            <option value="Hau Giang"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hau Giang'}">
+                                                    </c:if>>Hải Phòng</option>
+                                            <option value="Hậu Giang"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hậu Giang'}">
                                                         selected="selected"
-                                                    </c:if>>Hau Giang</option>
-                                            <option value="Ho Chi Minh"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Ho Chi Minh'}">
+                                                    </c:if>>Hậu Giang</option>
+                                            <option value="Hồ Chí Minh"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hồ Chí Minh'}">
                                                         selected="selected"
-                                                    </c:if>>Ho Chi Minh</option>
-                                            <option value="Hoa Binh"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hoa Binh'}">
+                                                    </c:if>>Hồ Chí Minh</option>
+                                            <option value="Hòa Bình"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hòa Bình'}">
                                                         selected="selected"
-                                                    </c:if>>Hoa Binh</option>
-                                            <option value="Hung Yen"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hung Yen'}">
+                                                    </c:if>>Hòa Bình</option>
+                                            <option value="Hưng Yên"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Hưng Yên'}">
                                                         selected="selected"
-                                                    </c:if>>Hung Yen</option>
-                                            <option value="Khanh Hoa"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Khanh Hoa'}">
+                                                    </c:if>>Hưng Yên</option>
+                                            <option value="Khánh Hòa"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Khánh Hòa'}">
                                                         selected="selected"
-                                                    </c:if>>Khanh Hoa</option>
-                                            <option value="Kien Giang"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Kien Giang'}">
+                                                    </c:if>>Khánh Hòa</option>
+                                            <option value="Kiên Giang"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Kiên Giang'}">
                                                         selected="selected"
-                                                    </c:if>>Kien Giang</option>
+                                                    </c:if>>Kiên Giang</option>
                                             <option value="Kon Tum"
                                                     <c:if test="${sessionScope.USER_INFO.city == 'Kon Tum'}">
                                                         selected="selected"
                                                     </c:if>>Kon Tum</option>
-                                            <option value="Lai Chau"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Lai Chau'}">
+                                            <option value="Lai Châu"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Lai Châu'}">
                                                         selected="selected"
-                                                    </c:if>>Lai Chau</option>
-                                            <option value="Lam Dong"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Lam Dong'}">
+                                                    </c:if>>Lai Châu</option>
+                                            <option value="Lâm Đồng"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Lâm Đồng'}">
                                                         selected="selected"
-                                                    </c:if>>Lam Dong</option>
-                                            <option value="Lang Son"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Lang Son'}">
+                                                    </c:if>>Lâm Đồng</option>
+                                            <option value="Lạng Sơn"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Lạng Sơn'}">
                                                         selected="selected"
-                                                    </c:if>>Lang Son</option>
-                                            <option value="Lao Cai"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Lao Cai'}">
+                                                    </c:if>>Lạng Sơn</option>
+                                            <option value="Lào Cai"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Lào Cai'}">
                                                         selected="selected"
-                                                    </c:if>>Lao Cai</option>
+                                                    </c:if>>Lào Cai</option>
                                             <option value="Long An"
                                                     <c:if test="${sessionScope.USER_INFO.city == 'Long An'}">
                                                         selected="selected"
                                                     </c:if>>Long An</option>
-                                            <option value="Nam Dinh"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Nam Dinh'}">
+                                            <option value="Nam Định"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Nam Định'}">
                                                         selected="selected"
-                                                    </c:if>>Nam Dinh</option>
-                                            <option value="Nghe An"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Nghe An'}">
+                                                    </c:if>>Nam Định</option>
+                                            <option value="Nghệ An"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Nghệ An'}">
                                                         selected="selected"
-                                                    </c:if>>Nghe An</option>
-                                            <option value="Ninh Binh"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Ninh Binh'}">
+                                                    </c:if>>Nghệ An</option>
+                                            <option value="Ninh Bình"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Ninh Bình'}">
                                                         selected="selected"
-                                                    </c:if>>Ninh Binh</option>
-                                            <option value="Ninh Thuan"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Ninh Thuan'}">
+                                                    </c:if>>Ninh Bình</option>
+                                            <option value="Ninh Thuận"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Ninh Thuận'}">
                                                         selected="selected"
-                                                    </c:if>>Ninh Thuan</option>
-                                            <option value="Phu Tho"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Phu Tho'}">
+                                                    </c:if>>Ninh Thuận</option>
+                                            <option value="Phú Thọ"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Phú Thọ'}">
                                                         selected="selected"
-                                                    </c:if>>Phu Tho</option>
-                                            <option value="Phu Yen"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Phu Yen'}">
+                                                    </c:if>>Phú Thọ</option>
+                                            <option value="Phú Yên"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Phú Yên'}">
                                                         selected="selected"
-                                                    </c:if>>Phu Yen</option>
-                                            <option value="Quang Binh"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Quang Binh'}">
+                                                    </c:if>>Phú Yên</option>
+                                            <option value="Quảng Bình"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Quảng Bình'}">
                                                         selected="selected"
-                                                    </c:if>>Quang Binh</option>
-                                            <option value="Quang Nam"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Quang Nam'}">
+                                                    </c:if>>Quảng Bình</option>
+                                            <option value="Quảng Nam"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Quảng Nam'}">
                                                         selected="selected"
-                                                    </c:if>>Quang Nam</option>
-                                            <option value="Quang Ngai"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Quang Ngai'}">
+                                                    </c:if>>Quảng Nam</option>
+                                            <option value="Quảng Ngãi"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Quảng Ngãi'}">
                                                         selected="selected"
-                                                    </c:if>>Quang Ngai</option>
-                                            <option value="Quang Ninh"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Quang Ninh'}">
+                                                    </c:if>>Quảng Ngãi</option>
+                                            <option value="Quảng Ninh"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Quảng Ninh'}">
                                                         selected="selected"
-                                                    </c:if>>Quang Ninh</option>
-                                            <option value="Quang Tri"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Quang Tri'}">
+                                                    </c:if>>Quảng Ninh</option>
+                                            <option value="Quảng Trị"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Quảng Trị'}">
                                                         selected="selected"
-                                                    </c:if>>Quang Tri</option>
-                                            <option value="Soc Trang"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Soc Trang'}">
+                                                    </c:if>>Quảng Trị</option>
+                                            <option value="Sóc Trăng"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Sóc Trăng'}">
                                                         selected="selected"
-                                                    </c:if>>Soc Trang</option>
-                                            <option value="Son La"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Son La'}">
+                                                    </c:if>>Sóc Trăng</option>
+                                            <option value="Sơn La"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Sơn La'}">
                                                         selected="selected"
-                                                    </c:if>>Son La</option>
-                                            <option value="Tay Ninh"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Tay Ninh'}">
+                                                    </c:if>>Sơn La</option>
+                                            <option value="Tây Ninh"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Tây Ninh'}">
                                                         selected="selected"
-                                                    </c:if>>Tay Ninh</option>
-                                            <option value="Thai Binh"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Thai Binh'}">
+                                                    </c:if>>Tây Ninh</option>
+                                            <option value="Thái Bình"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Thái Bình'}">
                                                         selected="selected"
-                                                    </c:if>>Thai Binh</option>
-                                            <option value="Thai Nguyen"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Thai Nguyen'}">
+                                                    </c:if>>Thái Bình</option>
+                                            <option value="Thái Nguyên"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Thái Nguyên'}">
                                                         selected="selected"
-                                                    </c:if>>Thai Nguyen</option>
-                                            <option value="Thanh Hoa"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Thanh Hoa'}">
+                                                    </c:if>>Thái Nguyên</option>
+                                            <option value="Thanh Hóa"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Thanh Hóa'}">
                                                         selected="selected"
-                                                    </c:if>>Thanh Hoa</option>
-                                            <option value="Thu Duc"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Thu Duc'}">
+                                                    </c:if>>Thanh Hóa</option>
+                                            <option value="Thủ Đức"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Thủ Đức'}">
                                                         selected="selected"
-                                                    </c:if>>Thu Duc</option>
-                                            <option value="Thua Thien Hue"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Thua Thien Hue'}">
+                                                    </c:if>>Thủ Đức</option>
+                                            <option value="Thừa Thiên Huế"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Thừa Thiên Huế'}">
                                                         selected="selected"
-                                                    </c:if>>Thua Thien - Hue</option>
-                                            <option value="Tien Giang"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Tien Giang'}">
+                                                    </c:if>>Thừa Thiên - Huế</option>
+                                            <option value="Tiền Giang"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Tiền Giang'}">
                                                         selected="selected"
-                                                    </c:if>>Tien Giang</option>
-                                            <option value="Tra Vinh"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Tra Vinh'}">
+                                                    </c:if>>Tiền Giang</option>
+                                            <option value="Trà Vinh"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Trà Vinh'}">
                                                         selected="selected"
-                                                    </c:if>>Tra Vinh</option>
-                                            <option value="Tuyen Quang"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Tuyen Quang'}">
+                                                    </c:if>>Trà Vinh</option>
+                                            <option value="Tuyên Quang"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Tuyên Quang'}">
                                                         selected="selected"
-                                                    </c:if>>Tuyen Quang</option>
-                                            <option value="Vinh Long"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Vinh Long'}">
+                                                    </c:if>>Tuyên Quang</option>
+                                            <option value="Vĩnh Long"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Vĩnh Long'}">
                                                         selected="selected"
-                                                    </c:if>>Vinh Long</option>
-                                            <option value="Vinh Phuc"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Vinh Phuc'}">
+                                                    </c:if>>Vĩnh Long</option>
+                                            <option value="Vĩnh Phúc"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Vĩnh Phúc'}">
                                                         selected="selected"
-                                                    </c:if>>Vinh Phuc</option>
-                                            <option value="Yen Bai"
-                                                    <c:if test="${sessionScope.USER_INFO.city == 'Yen Bai'}">
+                                                    </c:if>>Vĩnh Phúc</option>
+                                            <option value="Yên Bái"
+                                                    <c:if test="${sessionScope.USER_INFO.city == 'Yên Bái'}">
                                                         selected="selected"
-                                                    </c:if>>Yen Bai</option>
+                                                    </c:if>>Yên Bái</option>
                                         </select>
                                         <label for="city" class="form-label">City</label>
                                     </div>
@@ -473,30 +473,30 @@
                                 <div class="col-12">
                                     <label class="form-label text-secondary">Gender:</label>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" value="Male" name="txtGender" id="male" required
-                                               <c:if test="${sessionScope.USER_INFO.gender == 'Male'}">
+                                        <input class="form-check-input" type="radio" value="Nam" name="txtGender" id="male" required
+                                               <c:if test="${sessionScope.USER_INFO.gender == 'Nam'}">
                                                    checked="checked"
                                                </c:if> />
                                         <label class="form-check-label text-secondary" for="male">
-                                            Male
+                                            Nam
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" value="Female" name="txtGender" id="female" required
-                                               <c:if test="${sessionScope.USER_INFO.gender == 'Female'}">
+                                        <input class="form-check-input" type="radio" value="Nữ" name="txtGender" id="female" required
+                                               <c:if test="${sessionScope.USER_INFO.gender == 'Nữ'}">
                                                    checked="checked"
                                                </c:if> />
                                         <label class="form-check-label text-secondary" for="female">
-                                            Female
+                                            Nữ
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" value="Hidden" name="txtGender" id="hidden" required
-                                               <c:if test="${sessionScope.USER_INFO.gender == 'Hidden'}">
+                                        <input class="form-check-input" type="radio" value="Ẩn" name="txtGender" id="hidden" required
+                                               <c:if test="${sessionScope.USER_INFO.gender == 'Ẩn'}">
                                                    checked="checked"
                                                </c:if> />
                                         <label class="form-check-label text-secondary" for="hidden">
-                                            Hidden
+                                            Ẩn
                                         </label>
                                     </div>
                                 </div>
