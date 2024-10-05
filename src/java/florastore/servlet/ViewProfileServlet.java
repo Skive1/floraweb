@@ -40,6 +40,7 @@ public class ViewProfileServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         
         //1. Get Username from session
         HttpSession session = request.getSession(false);

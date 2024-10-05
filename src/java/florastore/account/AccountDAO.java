@@ -265,7 +265,7 @@ public class AccountDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2.Create SQL String
-                String sql = "SELECT Fullname, Email, Gender, Phone, Street, City, Img"
+                String sql = "SELECT Fullname, Email, Gender, Phone, Street, City, Img "
                         + "FROM Account "
                         + "WHERE Username = ? "
                         + "COLLATE Latin1_General_BIN";
@@ -326,8 +326,7 @@ public class AccountDAO implements Serializable {
 //              2. khởi tạo lệnh SQL
                 String sql = "UPDATE Account "
                         + "SET Phone = ?, Street = ?, City = ?, Gender = ? "
-                        + "WHERE Username = ? "
-                        + "COLLATE Latin1_General_BIN";
+                        + "WHERE Username = ? ";
                 //3. khởi tạo statement obj
                 stm = con.prepareStatement(sql);
                 stm.setString(1, phone);

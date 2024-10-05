@@ -33,6 +33,33 @@ public class ManagerProductDAO implements Serializable {
         return listProductType;
     }
 
+    public String getStoreId(String username) throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String id = null;
+        try {
+            con = DBHelper.getConnection();
+            if (con != null) {
+                String sql = "SELECT StoreID "
+                        + "From FlowerStore"
+                        + "Where AccountUsername = 'trader'";
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return id;
+    }
+
     public void loadListProductFromDbById(String id, int index) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -41,7 +68,7 @@ public class ManagerProductDAO implements Serializable {
             //1. Get connection
             con = DBHelper.getConnection();
             if (con != null) {
-                String sql = "SELECT ProductId, StoreId, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, ImageURL "
+                String sql = "SELECT ProductId, FlowerStoreStoreID, ProductType, ProductName, ProductCondition, ProductDetail, Img, ProductQuantity, ProductPrice, CategoryCategoryId "
                         + "FROM FlowerProducts "
                         + "WHERE StoreId = ? "
                         + "Order by ProductId "
