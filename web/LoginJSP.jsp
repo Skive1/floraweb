@@ -81,7 +81,8 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <input type="password" id="myPassword" name="txtPassword" value="" class="form-control">
+                                                    <input type="password" id="myPassword" name="txtPassword" value="" class="form-control" placeholder="Password" required/>
+                                                    <label for="password" class="form-label">Password</label>
                                                         <i class="fa fa-eye" onclick="togglePassword()"></i>
                                                 </div>
                                             </div>
