@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,12 +8,14 @@ package florastore.servlet;
 import florastore.account.AccountDTO;
 import florastore.managerProduct.ManagerProductDAO;
 import florastore.managerProduct.ManagerProductDTO;
+import florastore.managerProduct.ProductTypeDAO;
 import florastore.managerProduct.ProductTypeDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -47,7 +48,8 @@ public class ProductManagementServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
+        String url = (String) siteMap.get(MyAppConstants.ShowProductManager.ERROR_PAGE);
+//        String url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
         String indexPage = request.getParameter("index");
         if (indexPage == null) {
             indexPage = "1";
@@ -59,11 +61,11 @@ public class ProductManagementServlet extends HttpServlet {
             if (session != null) {
                 //1. Lấy id từ session Scope
                 AccountDTO dto = (AccountDTO) session.getAttribute("USER");
-                String id = dto.getUsername();
-                if (dto.getUsername()!= null) {
+                String id = dto.getSaleId();
+                if (dto.getSaleId() != null) {
                     //2. Gọi method DAO
                     ManagerProductDAO dao = new ManagerProductDAO();
-
+                   
                     int count = dao.getTotalProduct();
                     int endPage = count / 5;
                     if (count % 5 != 0) {
@@ -72,12 +74,20 @@ public class ProductManagementServlet extends HttpServlet {
                     //3. Lấy list sản phẩm theo sell id
                     dao.loadListProductFromDbById(id, indexInt);
                     ArrayList<ManagerProductDTO> list = dao.getListProduct();
-
+                    
+                    ProductTypeDAO typeDao = new ProductTypeDAO();
+                    typeDao.loadListProductType();
+                    ArrayList<ProductTypeDTO> listCategory = typeDao.getListCategory();
+                   
                     //4. Lưu vào trong attribute
+                    request.setAttribute("listType", listCategory);
                     request.setAttribute("listProduct", list);
                     request.setAttribute("endP", endPage);
+                   
+                     url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
                 }
             }
+           
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {

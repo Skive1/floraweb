@@ -1,3 +1,4 @@
+
 const menuLi = document.querySelectorAll('.admin-sidebar-content > ul > li > a');
 
 for (let index = 0; index < menuLi.length; index++) {
@@ -23,3 +24,13 @@ for (let index = 0; index < menuLi.length; index++) {
     }
   });
 }
+
+
+
+// Trong file JavaScript của productList.html:
+const activeTab = localStorage.getItem('activeTab');
+const activeLink = document.querySelector(`a:contains("${activeTab}")`);
+if (activeLink) {
+  activeLink.classList.add('active');
+}
+
