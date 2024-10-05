@@ -61,8 +61,8 @@ public class ProductManagementServlet extends HttpServlet {
             if (session != null) {
                 //1. Lấy id từ session Scope
                 AccountDTO dto = (AccountDTO) session.getAttribute("USER");
-                String id = dto.getSaleId();
-                if (dto.getSaleId() != null) {
+                String id = dto.getUsername();
+                if (dto.getUsername()!= null) {
                     //2. Gọi method DAO
                     ManagerProductDAO dao = new ManagerProductDAO();
                    
