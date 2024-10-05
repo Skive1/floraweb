@@ -50,7 +50,9 @@ public class ViewProductDetailServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ViewProductDetailFeatures.ERROR_PAGE);
-
+        
+        //initial quantity
+        int itemQuantity = 1;
         try {
             //2. Call DAO/Model
             FlowerProductsDAO dao = new FlowerProductsDAO();
@@ -69,6 +71,7 @@ public class ViewProductDetailServlet extends HttpServlet {
                 request.setAttribute("PRODUCT_DETAIL", flowerDetail);
                 request.setAttribute("CATEGORIES_TOP", topCategories);
                 request.setAttribute("RELATED_PRODUCTS", relatedProducts);
+                request.setAttribute("ITEM_QUANTITY", itemQuantity);
             }//check flower in detail is available
         } catch (SQLException ex) {
             log("ViewProductDetailServlet _SQL_ " + ex.getMessage());

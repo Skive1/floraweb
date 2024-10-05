@@ -74,15 +74,6 @@
                             <a href="home" class="nav-item nav-link active">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">Cart</a>
-                                    <a href="chackout.html" class="dropdown-item">Checkout</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
-                                </div>
-                            </div>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
@@ -105,16 +96,21 @@
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
                                 <i class="fas fa-search text-third"></i>
                             </button>
-                            <a href="#" class="position-relative me-4">
-                                <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
-                            </a>
+
                             <c:if test="${empty sessionScope.USER}">
+                                <a href="loginPage" class="position-relative me-4">
+                                    <i class="fa fa-shopping-bag fa-2x"></i>
+                                    <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                                </a>
                                 <a href="loginPage" class="my-auto">
                                     <i class="fas fa-user fa-2x"></i>
                                 </a>
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
+                                <a href="cartPage" class="position-relative me-4">
+                                    <i class="fa fa-shopping-bag fa-2x"></i>
+                                    <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                                </a>
                                 <div class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
@@ -351,6 +347,13 @@
                                                             <p class="text-dark fs-5 fw-bold mb-0">
                                                                 <fmt:formatNumber value="${product.productPrice}" type="number" groupingUsed="true"/>đ
                                                             </p>
+                                                            <!-- Hidden inputs to pass product details to the servlet -->
+                                                            <input type="hidden" name="imageURL" value="${product.imageURL}">
+                                                            <input type="hidden" name="productName" value="${product.productName}">
+                                                            <input type="hidden" name="productPrice" value="${product.productPrice}">
+                                                            <input type="hidden" name="productQuantity" value="${product.productQuantity}">
+                                                            <input type="hidden" name="itemQuantity" value="1">
+                                                            
                                                             <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
                                                                 <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
                                                             </button>

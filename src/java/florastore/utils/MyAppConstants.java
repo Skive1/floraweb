@@ -115,4 +115,18 @@ public class MyAppConstants {
         public static final String ERROR_PAGE = "error404";
 
     }
+    
+    public class CartAddItemFeatures {
+        public static final String SHOP_VIEW = "shoppingAction";
+        public static final String VIEW_CART_PAGE = "cartPage";
+        public static final String ERROR_PAGE = "insufficient.html";
+    }
+    
+    public class CartFeatures {
+        public static final String VIEW_CART_PAGE = "cartPage";
+        public static final String REMOVE_ITEM_FROM_CART_ACTION = "cartDeleteItemAction";
+        public static final String SHOP_VIEW = "shoppingAction";
+        public static final String CART_VIEW = "UpdateCartServlet";
+        public static final String ERROR_PAGE = "error404";
+    }
 }
