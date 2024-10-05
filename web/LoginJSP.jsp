@@ -81,8 +81,8 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <input type="password" name="txtPassword" value="" class="form-control" id="password" placeholder="Password" required/>
-                                                    <label for="password" class="form-label">Password</label>
+                                                    <input type="password" id="myPassword" name="txtPassword" value="" class="form-control">
+                                                        <i class="fa fa-eye" onclick="togglePassword()"></i>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -137,7 +137,7 @@
         </main>
 
         <!-- Script JS -->
-        <script src="./js/script.js"></script>
+        <script src="js/javascript.js"></script>
         <!--$%analytics%$-->
     </body>
 </html>
