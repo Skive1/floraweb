@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -71,18 +72,9 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link">Event</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">Cart</a>
-                                    <a href="chackout.html" class="dropdown-item">Checkout</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
-                                </div>
-                            </div>
+                            <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
@@ -105,18 +97,27 @@
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
                                 <i class="fas fa-search text-third"></i>
                             </button>
-                            <a href="#" class="position-relative me-4">
-                                <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
-                            </a>
                             <c:if test="${empty sessionScope.USER}">
+                                <a href="loginPage" class="position-relative me-4">
+                                    <i class="fa fa-shopping-bag fa-2x"></i>
+                                </a>
                                 <a href="loginPage" class="my-auto">
                                     <i class="fas fa-user fa-2x"></i>
                                 </a>
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a href="" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                        <i class="fa fa-shopping-bag fa-2x"></i>
+                                    </a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="cartPage" class="dropdown-item">Cart</a>
+                                        <a href="eventCart" class="dropdown-item">Event Cart</a>
+                                    </div>
+                                </div>
+
+                                <div class="nav-item dropdown">
+                                    <a href="" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -232,7 +233,7 @@
                                                             <p>Địa điểm: ${eventList.eventLocation}, ${eventList.eventCity}</p>
                                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                                 <p class="text-dark fs-5 fw-bold mb-0">
-                                                                    Thời gian: ${eventList.startDate} - ${eventList.endDate}
+                                                                    Thời gian: <fmt:formatDate value="${eventList.startDate}" pattern="dd/MM/yyyy HH:mm" /> - <fmt:formatDate value="${eventList.endDate}" pattern="dd/MM/yyyy HH:mm" />
                                                                 </p>
                                                             </div>
                                                         </div>

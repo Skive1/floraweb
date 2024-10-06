@@ -38,13 +38,22 @@
         <link href="css/style.css" rel="stylesheet">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
+
+        <style>
+            /* Đảm bảo ghi đè toàn bộ kiểu mặc định của input readonly */
+            input[readonly] {
+                background-color: white !important;  /* Nền trắng */
+                pointer-events: none;                /* Ngăn thay đổi */
+                cursor: none;
+            }
+        </style>
     </head>
 
     <body>
 
         <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-            <div class="spinner-grow text-primary" role="status"></div>
+            <div class="spinner-grow text-third" role="status"></div>
         </div>
         <!-- Spinner End -->
 
@@ -72,24 +81,15 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link">Event</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">Cart</a>
-                                    <a href="chackout.html" class="dropdown-item">Checkout</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
-                                </div>
-                            </div>
+                            <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
-                                    <a href="#" class="nav-item nav-link">Manage Product</a>
+                                    <a href="manageAccount" class="nav-item nav-link">Manage Account</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
@@ -97,29 +97,38 @@
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
-                                    <a href="#" class="nav-item nav-link">Manage Shop</a>
+                                    <a href="ProductManagementAction" class="nav-item nav-link">Manage Shop</a>
                                 </c:if>
                             </c:if>
 
                         </div>
-                        <div class="d-flex m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-third"></i></button>
-                            <a href="#" class="position-relative me-4 my-auto">
-                                <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
-                            </a>
-                            <c:if test="${empty sessionScope.USER}">
-                                <a href="loginPage" class="my-auto">
-                                    <i class="fas fa-user fa-2x">
+                        <div class="d-flex align-items-center justify-content-center m-3 me-0">
+                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
+                                <i class="fas fa-search text-third"></i>
+                            </button>
 
-                                    </i>
+                            <c:if test="${empty sessionScope.USER}">
+                                <a href="loginPage" class="position-relative me-4">
+                                    <i class="fa fa-shopping-bag fa-2x"></i>
+                                </a>
+                                <a href="loginPage" class="my-auto">
+                                    <i class="fas fa-user fa-2x"></i>
                                 </a>
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                        <i class="fas fa-user fa-2x">
-                                        </i>
+                                    <a href="" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                        <i class="fa fa-shopping-bag fa-2x"></i>
+                                    </a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="cartPage" class="dropdown-item">Cart</a>
+                                        <a href="eventCart" class="dropdown-item">Event Cart</a>
+                                    </div>
+                                </div>
+
+                                <div class="nav-item dropdown">
+                                    <a href="" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                         <a href="viewProfileAction" class="dropdown-item">My Profile</a>
@@ -159,12 +168,12 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Product Detail</h1>
+            <h1 class="text-center text-white display-6">Event Product Detail</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
                 <li class="breadcrumb-item"><a href="event">Event</a></li>
                 <li class="breadcrumb-item"><a href="eventDetail?eventId=${requestScope.EVENT_ID}">Event Detail</a></li>
-                <li class="breadcrumb-item active text-white">Product Detail</li>
+                <li class="breadcrumb-item active text-white">Event Product Detail</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -176,40 +185,60 @@
                 <div class="row g-4 mb-5">
                     <div class="col-lg-8 col-xl-9">
                         <div class="row g-4">
-                            <c:set var="detail" value="${requestScope.PRODUCT_DETAIL}"/>
+                            <c:set var="detail" value="${requestScope.EPRODUCT_DETAIL}"/>
                             <div class="col-lg-6">
                                 <div class="border rounded">
                                     <img src="${detail.eventProductImg}" class="img-fluid rounded" alt="Image">
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <h4 class="fw-bold mb-3">${detail.eventProductName}</h4>
-                                <p class="mb-3">Flower Type: ${detail.eventProductType}</p>
-                                <p class="mb-3">Flower Condition: ${detail.eventProductCondition}</p>
-                                <h5 class="fw-bold mb-3"><fmt:formatNumber value="${detail.eventProductPrice}" type="number" groupingUsed="true"/>đ</h5>
-                                <div class="d-flex mb-4">
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <p class="mb-4">${detail.eventProductDetail}</p>
-                                <p class="mb-4">Quantity: ${detail.eventProductQuantity}</p>
-                                <div class="input-group quantity mb-5" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                            <i class="fa fa-minus"></i>
-                                        </button>
+                                <form action="cartAddEventItem">
+                                    <input type="hidden" name="page" value="EProduct_detail">
+                                    <h4 class="fw-bold mb-3">${detail.eventProductName}</h4>
+                                    <p class="mb-3">Flower Type: ${detail.eventProductType}</p>
+                                    <p class="mb-3">Flower Condition: ${detail.eventProductCondition}</p>
+                                    <h5 class="fw-bold mb-3"><fmt:formatNumber value="${detail.eventProductPrice}" type="number" groupingUsed="true"/>đ</h5>
+                                    <div class="d-flex mb-4">
+                                        <i class="fa fa-star text-secondary"></i>
+                                        <i class="fa fa-star text-secondary"></i>
+                                        <i class="fa fa-star text-secondary"></i>
+                                        <i class="fa fa-star text-secondary"></i>
+                                        <i class="fa fa-star"></i>
                                     </div>
-                                    <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
+                                    <p class="mb-4">${detail.eventProductDetail}</p>
+                                    <p class="mb-4">Quantity: ${detail.eventProductQuantity}</p>
+                                    <div class="input-group quantity mb-5" style="width: 100px;">
+                                        <div class="input-group-btn">
+                                            <button type="button" id="btnMinus" class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <input type="text" name="itemQuantity" id="itemQuantity" class="form-control form-control-sm text-center border-0" value="1" readonly/>
+                                        <div class="input-group-btn">
+                                            <button type="button" id="btnPlus" class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                                <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-third"><i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart</a>
+
+                                    <input type="hidden" name="eventId" value="${EVENT_ID}">
+                                    <input type="hidden" name="productId" value="${detail.eventProductId}">
+                                    <input type="hidden" name="imageURL" value="${detail.eventProductImg}">
+                                    <input type="hidden" name="productName" value="${detail.eventProductName}">
+                                    <input type="hidden" name="productPrice" value="${detail.eventProductPrice}">
+                                    <input type="hidden" name="productQuantity" value="${detail.eventProductQuantity}">
+
+                                    <c:if test="${not empty sessionScope.USER}">
+                                        <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
+                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${empty sessionScope.USER}">
+                                        <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
+                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                        </a>
+                                    </c:if>
+                                </form>
                             </div>
                             <div class="col-lg-12">
                                 <nav>

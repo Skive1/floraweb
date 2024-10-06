@@ -10,11 +10,10 @@ import florastore.cart.CartItem;
 import florastore.flowerProducts.FlowerProductsDAO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.util.List;
+import java.util.Map;
 import javax.naming.NamingException;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,68 +41,76 @@ public class UpdateCartServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+//        ServletContext context = request.getServletContext();
+//        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = MyAppConstants.CartFeatures.VIEW_CART_PAGE;
         String action = request.getParameter("action");
 
         try {
-            HttpSession session = request.getSession(false); // Use false to not create a new session if none exists
-            if (session != null) { // Proceed only if session exists
-                CartBean cart = (CartBean) session.getAttribute("CART");
+            HttpSession cartSession = request.getSession(false); // Use false to not create a new session if none exists
+            if (cartSession != null) { // Proceed only if session exists
+                CartBean cart = (CartBean) cartSession.getAttribute("CART");
                 if (cart != null) {
-                    // Get the item index from the query string
-                    String itemIndexStr = request.getParameter("itemIndex");
-                    int itemIndex = Integer.parseInt(itemIndexStr);  // Convert it to int
-
-                    FlowerProductsDAO dao = new FlowerProductsDAO();
-
-                    CartItem item = (CartItem) cart.getItems().values().toArray()[itemIndex - 1];
-
-                    if (item != null) {
+                    Map<String, List<CartItem>> items = cart.getItems();
+                    if (items != null) {
                         String removeBt = request.getParameter("removeButton");
                         if (removeBt != null) {
-                            cart.getItems().remove(item.getName());
+                            String key = request.getParameter("key");
+                            String name = request.getParameter("name");
+                            cart.removeItemFromCart(key, name);
                         } else {
-
+                            String productName = request.getParameter("productName");
+                            String storeName = request.getParameter("storeName");
                             String newQuantityStr = request.getParameter("quantity"); // Get the updated quantity from the form
-                            log("Received new quantity: " + newQuantityStr);
+                            List<CartItem> itemList = items.get(storeName);
+                            if (itemList != null) {
+                                for (CartItem item : itemList) {
+                                    if (item.getName().equals(productName)) {
+//                                        log("Received new quantity: " + newQuantityStr);
+                                        FlowerProductsDAO dao = new FlowerProductsDAO();
+                                        // Fetch the stock quantity from the database for this product
+                                        int stockQuantity = dao.getProductQuantityByName(productName);
 
-                            // Fetch the stock quantity from the database for this product
-                            int stockQuantity = dao.getProductQuantityByName(item.getName());
+                                        if (newQuantityStr != null && !newQuantityStr.isEmpty() && !newQuantityStr.equals("NaN")) {
 
-                            if (newQuantityStr != null && !newQuantityStr.isEmpty() && !newQuantityStr.equals("NaN")) {
+                                            int newQuantity = Integer.parseInt(newQuantityStr); // Parse the new quantity
+//                                            log("Parsed new quantity: " + newQuantity);
+                                            // Validate the quantity within stock limits
+                                            if (newQuantity > 0 && newQuantity <= stockQuantity) {
+                                                item.setQuantity(newQuantity); // Set the new quantity from the user input
+                                            } else {
+//                                                log("Invalid quantity: " + newQuantityStr);
+                                                // Handle invalid quantity input (e.g., redirect to an error page)
+                                            }
+                                        } else {
+                                            // Handle button actions only if quantity input is not provided
 
-                                int newQuantity = Integer.parseInt(newQuantityStr); // Parse the new quantity
-                                log("Parsed new quantity: " + newQuantity);
-                                // Validate the quantity within stock limits
-                                if (newQuantity > 0 && newQuantity <= stockQuantity) {
-                                    item.setQuantity(newQuantity); // Set the new quantity from the user input
-                                } else {
-                                    log("Invalid quantity: " + newQuantityStr);
-                                    // Handle invalid quantity input (e.g., redirect to an error page)
-                                }
-                            } else {
-                                // Handle button actions only if quantity input is not provided
-
-                                if (action != null && !action.isEmpty()) {
-                                    log("Received action: " + action);
-                                    int currentQuantity = item.getQuantity();
-                                    if ("plus".equals(action)) {
-                                        // Only increase if the current quantity is less than stock
-                                        if (currentQuantity < stockQuantity) {
-                                            item.setQuantity(currentQuantity + 1);
-                                        }
-                                    } else if ("minus".equals(action)) {
-                                        // Decrease quantity, but remove item if it reaches 0
-                                        if (currentQuantity > 1) {
-                                            item.setQuantity(currentQuantity - 1);
+                                            if (action != null && !action.isEmpty()) {
+//                                                log("Received action: " + action);
+                                                int currentQuantity = item.getQuantity();
+                                                if ("plus".equals(action)) {
+                                                    // Only increase if the current quantity is less than stock
+                                                    if (currentQuantity < stockQuantity) {
+                                                        item.setQuantity(currentQuantity + 1);
+                                                    }
+                                                } else if ("minus".equals(action)) {
+                                                    // Decrease quantity, but remove item if it reaches 0
+                                                    if (currentQuantity > 1) {
+                                                        item.setQuantity(currentQuantity - 1);
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
                     }
-
-                    session.setAttribute("CART", cart);
+                    int pendingItems = cart.getUniqueItemCount();
+                    double total = cart.calculateTotal();
+                    cartSession.setAttribute("CART", cart);
+                    cartSession.setAttribute("TOTAL", total);
+                    cartSession.setAttribute("PENDING_ITEMS", pendingItems);
                 }
             }
         } catch (SQLException ex) {
@@ -113,7 +120,6 @@ public class UpdateCartServlet extends HttpServlet {
         } catch (NumberFormatException ex) {
             log("UpdateCartSerlet_NumberFormat_" + ex.getMessage());
         } finally {
-
             response.sendRedirect(url);
         }
     }

@@ -2,19 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/EFdetail.jsp</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/WEB-INF/siteMap.properties</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/EventDetail.jsp</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/src/java/florastore/servlet/EventFlowerDetailServlet.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/src/java/florastore/event/EventProductDTO.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/shop.jsp</file>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/src/java/florastore/servlet/CartAddItemServlet.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/Event.jsp</file>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/src/java/florastore/cart/CartBean.java</file>
         </group>
->>>>>>> 80c4cd83e14e5cf8c35874667861b8bd8f26d5ca
->>>>>>> main
     </open-files>
 </project-private>

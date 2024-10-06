@@ -102,23 +102,31 @@
 
                         </div>
                         <div class="d-flex m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-third"></i></button>
-                            <a href="#" class="position-relative me-4 my-auto">
-                                <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
-                            </a>
+                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
+                                <i class="fas fa-search text-third"></i>
+                            </button>
                             <c:if test="${empty sessionScope.USER}">
+                                <a href="loginPage" class="position-relative me-4">
+                                    <i class="fa fa-shopping-bag fa-2x"></i>
+                                </a>
                                 <a href="loginPage" class="my-auto">
-                                    <i class="fas fa-user fa-2x">
-
-                                    </i>
+                                    <i class="fas fa-user fa-2x"></i>
                                 </a>
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                        <i class="fas fa-user fa-2x">
-                                        </i>
+                                    <a href="" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                        <i class="fa fa-shopping-bag fa-2x"></i>
+                                    </a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="cartPage" class="dropdown-item">Cart</a>
+                                        <a href="eventCart" class="dropdown-item">Event Cart</a>
+                                    </div>
+                                </div>
+
+                                <div class="nav-item dropdown">
+                                    <a href="" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                         <a href="viewProfileAction" class="dropdown-item">My Profile</a>
@@ -211,17 +219,17 @@
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
 
-        
-    <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/lightbox/js/lightbox.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
     </body>
 
 </html>

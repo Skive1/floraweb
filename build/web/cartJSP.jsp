@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,6 +38,14 @@
         <link href="css/style.css" rel="stylesheet">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
+        <style>
+            /* Đảm bảo ghi đè toàn bộ kiểu mặc định của input readonly */
+            input[readonly] {
+                background-color: white !important;  /* Nền trắng */
+                pointer-events: none;                /* Ngăn thay đổi */
+                cursor: none;
+            }
+        </style>
     </head>
 
     <body>
@@ -71,7 +80,7 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
@@ -100,19 +109,24 @@
                             <c:if test="${empty sessionScope.USER}">
                                 <a href="loginPage" class="position-relative me-4">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
-                                    <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                                 </a>
                                 <a href="loginPage" class="my-auto">
                                     <i class="fas fa-user fa-2x"></i>
                                 </a>
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
-                                <a href="cartPage" class="position-relative me-4">
-                                    <i class="fa fa-shopping-bag fa-2x"></i>
-                                    <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
-                                </a>
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a href="" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                        <i class="fa fa-shopping-bag fa-2x"></i>
+                                    </a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="cartPage" class="dropdown-item">Cart</a>
+                                        <a href="eventCart" class="dropdown-item">Event Cart</a>
+                                    </div>
+                                </div>
+
+                                <div class="nav-item dropdown">
+                                    <a href="" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -154,8 +168,7 @@
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">Cart</h1>
             <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item"><a href="home">Home</a></li>
                 <li class="breadcrumb-item active text-white">Cart</li>
             </ol>
         </div>
@@ -168,111 +181,121 @@
                 <div class="table-responsive">
                     <c:set var="cart" value="${sessionScope.CART}" />
                     <c:if test="${not empty cart && not empty cart.items}">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Products</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Total</th>
-                                    <th scope="col">Handle</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="entry" items="${cart.items}" varStatus="counter">
-                                    <c:set var="item" value="${entry.value}" />
+                        <c:forEach var="entry" items="${cart.items}">
+                            <c:set var="storeId" value="${entry.key}"/>
+                            <c:set var="storeItems" value="${entry.value}"/>
+                            <h3>Shop: ${storeId}</h3>
+                            <table class="table">
+                                <thead>
                                     <tr>
-                                        <th scope="row">
-                                            <div class="d-flex align-items-center">
-                                                <img src="${item.imageURL}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
-                                            </div>
-                                        </th>
-                                        <td>
-                                            <p class="mb-0 mt-4">${item.name}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0 mt-4 price-per-unit">${item.unitPrice} đ</p>
-                                        </td>
-
-                                        <td>
-                                            <div class="input-group quantity mt-4" style="width: 100px;">
-                                                <form action="cartView?itemIndex=${counter.count}" method="POST">
-                                                    <input type="hidden" name="action" id="action">
-                                                    <div class="input-group">   
-                                                        <div class="input-group-btn">
-                                                            <button type="button" id="btn-minus" class="btn btn-sm btn-minus rounded-circle bg-light border"
-                                                                    <c:if test="${item.quantity <= 1}">disabled</c:if>>
-                                                                        <i class="fa fa-minus"></i>
-                                                                    </button>
-                                                            </div>
-                                                            <input type="text" name="quantity" class="form-control form-control-sm text-center border-0"
-                                                                   value="${item.quantity}">
-                                                        <div class="input-group-btn">
-                                                            <button type="button" id="btn-plus" name="action" value="plus" class="btn btn-sm btn-plus rounded-circle bg-light border"
-                                                                    <c:if test="${item.quantity >= item.stockQuantity}">disabled</c:if>>
-                                                                        <i class="fa fa-plus"></i>
-                                                                    </button>
-                                                            </div>  
-                                                        </div>
-                                                    </form>
+                                        <th scope="col">Sản phẩm</th>
+                                        <th scope="col">Tên</th>
+                                        <th scope="col">Đơn Giá</th>
+                                        <th scope="col">Số lượng</th>
+                                        <th scope="col">Thành tiền</th>
+                                        <th scope="col">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="item" items="${storeItems}" varStatus="counter">
+                                        <tr>
+                                            <th scope="row">
+                                                <div class="d-flex align-items-center">
+                                                    <img src="${item.imageURL}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
                                                 </div>
+                                            </th>
+                                            <td>
+                                                <p class="mb-0 mt-4">${item.name}</p>
                                             </td>
                                             <td>
-                                                <p class="mb-0 mt-4 total-price">${item.quantity * item.unitPrice} đ</p>
-                                        </td>
-                                        <td>      
-                                            <form action="cartView?itemIndex=${counter.count}" method="POST">
-                                                <button type="submit" name="removeButton" value="delete" class="btn btn-md rounded-circle bg-light border mt-4">
-                                                    <i class="fa fa-times text-danger"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
+                                                <p class="mb-0 mt-4 price-per-unit"><fmt:formatNumber value="${item.unitPrice}" type="number" groupingUsed="true"/>đ</p>
+                                            </td>
+
+                                            <td>
+                                                <div class="input-group quantity mt-4" style="width: 100px;">
+                                                    <form action="cartView" method="POST">
+                                                        <input type="hidden" name="action" id="action">
+                                                        <input type="hidden" name="productName" value="${item.name}"/>
+                                                        <input type="hidden" name="storeName" value="${storeId}"/>
+                                                        <div class="input-group">   
+                                                            <div class="input-group-btn">
+                                                                <button type="submit" id="btn-minus" class="btn btn-sm btn-minus rounded-circle bg-light border"
+                                                                        <c:if test="${item.quantity <= 1}">disabled</c:if>>
+                                                                            <i class="fa fa-minus"></i>
+                                                                        </button>
+                                                                </div>
+                                                                <input type="text" name="quantity" class="form-control form-control-sm text-center border-0"
+                                                                       value="${item.quantity}" readonly="">
+                                                            <div class="input-group-btn">
+                                                                <button type="submit" id="btn-plus" name="action" value="plus" class="btn btn-sm btn-plus rounded-circle bg-light border"
+                                                                        <c:if test="${item.quantity >= item.stockQuantity}">disabled</c:if>>
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                </div>  
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0 mt-4 total-price"><fmt:formatNumber value="${item.quantity * item.unitPrice}" type="number" groupingUsed="true"/>đ</p>
+                                            </td>
+                                            <td>      
+                                                <form action="cartView" method="POST">
+                                                    <input type="hidden" name="key" value="${storeId}" />
+                                                    <input type="hidden" name="name" value="${item.name}" />
+                                                    <button type="submit" name="removeButton" value="delete" class="btn btn-md rounded-circle bg-light border mt-4">
+                                                        <i class="fa fa-times text-danger"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:forEach>
                     </c:if>
                     <c:if test="${empty cart || empty cart.items}">
-                        <p>Your cart is empty.</p>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <h3>Your cart is empty</h3>
+                        </div>
+
                     </c:if>
                 </div>
                 <div class="mt-5">
-                    <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
-                    <button class="btn border-secondary rounded-pill px-4 py-3 text-third" type="button">Apply Coupon</button>
-                </div>
-                <div class="row g-4 justify-content-end">
-                    <div class="col-8"></div>
-                    <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                        <div class="bg-light rounded">
-                            <div class="p-4">
-                                <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
-                                <div class="d-flex justify-content-between mb-4">
-                                    <h5 class="mb-0 me-4">Subtotal:</h5>
-                                    <p class="mb-0">${item.quantity * item.unitPrice} đ</p>
+                    <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code" <c:if test="${empty cart || empty cart.items}">readonly=""</c:if>>
+                    <button class="btn border-secondary rounded-pill px-4 py-3 text-third" type="button" <c:if test="${empty cart || empty cart.items}">disabled="disabled"</c:if>>Apply Coupon</button>
+                    </div>
+                    <div class="row g-4 justify-content-end">
+                        <div class="col-8"></div>
+                        <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
+                            <div class="bg-light rounded">
+                                <div class="p-4">
+                                    <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
+                                    <div class="d-flex justify-content-between mb-4">
+                                        <h5 class="mb-0 me-4">Subtotal:</h5>
+                                        <p class="mb-0"><fmt:formatNumber value="${sessionScope.TOTAL}" type="number" groupingUsed="true"/>đ</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <h5 class="mb-0 me-4">Shipping</h5>
+                                    <h5 class="mb-0 me-4">Discount:</h5>
                                     <div class="">
-                                        <p class="mb-0">Flat rate: $3.00</p>
+                                        <p class="mb-0"></p>
                                     </div>
                                 </div>
-                                <p class="mb-0 text-end">Shipping to Ukraine.</p>
                             </div>
                             <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                                 <h5 class="mb-0 ps-4 me-4">Total</h5>
-                                <p class="mb-0 pe-4">$99.00</p>
+                                <p class="mb-0 pe-4"></p>
                             </div>
-                            <button class="btn border-secondary rounded-pill px-4 py-3 text-third text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                            <button class="btn border-secondary rounded-pill px-4 py-3 text-third text-uppercase mb-4 ms-4" type="submit" <c:if test="${empty cart || empty cart.items}">disabled="disabled"</c:if>>Proceed Checkout</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Cart Page End -->
+            <!-- Cart Page End -->
 
 
-        <!-- Footer Start -->
+            <!-- Footer Start -->
         <jsp:include page="footer.jsp"></jsp:include>
         <!-- Footer End -->
 
