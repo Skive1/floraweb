@@ -40,9 +40,9 @@ public class UpdateCartServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
-//        ServletContext context = request.getServletContext();
-//        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = MyAppConstants.CartFeatures.VIEW_CART_PAGE;
         String action = request.getParameter("action");
 
@@ -55,8 +55,8 @@ public class UpdateCartServlet extends HttpServlet {
                     if (items != null) {
                         String removeBt = request.getParameter("removeButton");
                         if (removeBt != null) {
-                            String key = request.getParameter("key");
-                            String name = request.getParameter("name");
+                            String key = (String) request.getParameter("key");
+                            String name = (String) request.getParameter("name");
                             cart.removeItemFromCart(key, name);
                         } else {
                             String productName = request.getParameter("productName");

@@ -57,7 +57,7 @@ public class EventCartBean implements Serializable {
         }
     }
 
-    public void removeItemFromCart(String eventName, String epName) {
+    public void removeEItemFromCart(String eventName, String epName) {
         if (this.items == null || !this.items.containsKey(eventName)) {
             return; // If there is no event with that name in the cart, exit.
         }

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -73,7 +74,7 @@ public class CartAddEventItemServlet extends HttpServlet {
             // Forward to the correct page
             if (page != null && !page.isEmpty()) {
                 if (page.equals("eventDetail")) {
-                    url = ((String) MyAppConstants.EventCartAddItemFeatures.EVENT_VIEW) + "?eventId=" + eventId + "&page=" + pageIndex;
+                    url = MyAppConstants.EventCartAddItemFeatures.EVENT_VIEW + "?eventId=" + eventId + "&page=" + pageIndex;
                 } else if (page.equals("EProduct_detail")) {
                     if (itemQuantity > stockQuantity) {
                         url = MyAppConstants.EventCartAddItemFeatures.ERROR_PAGE;

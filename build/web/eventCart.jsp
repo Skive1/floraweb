@@ -214,12 +214,11 @@
                                             <td>
                                                 <div class="input-group quantity mt-4" style="width: 100px;">
                                                     <form action="eventCartView" method="POST">
-                                                        <input type="hidden" name="action" id="action">
                                                         <input type="hidden" name="eventProductName" value="${item.epName}"/>
                                                         <input type="hidden" name="eventName" value="${eventId}"/>
                                                         <div class="input-group">   
                                                             <div class="input-group-btn">
-                                                                <button type="submit" id="btn-minus" class="btn btn-sm btn-minus rounded-circle bg-light border"
+                                                                <button type="submit" name="action" value="minus" id="btn-minus" class="btn btn-sm btn-minus rounded-circle bg-light border"
                                                                         <c:if test="${item.quantity <= 1}">disabled</c:if>>
                                                                             <i class="fa fa-minus"></i>
                                                                         </button>
@@ -243,7 +242,7 @@
                                                 <form action="eventCartView" method="POST">
                                                     <input type="hidden" name="ekey" value="${eventId}" />
                                                     <input type="hidden" name="ename" value="${item.epName}" />
-                                                    <button type="submit" name="removeButton" value="delete" class="btn btn-md rounded-circle bg-light border mt-4">
+                                                    <button type="submit" name="rmvButton" value="delete" class="btn btn-md rounded-circle bg-light border mt-4">
                                                         <i class="fa fa-times text-danger"></i>
                                                     </button>
                                                 </form>

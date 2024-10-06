@@ -40,10 +40,10 @@ public class UpdateEventCartServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
-//        ServletContext context = request.getServletContext();
-//        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = MyAppConstants.EventCartFeatures.VIEW_CART_PAGE;
+        String url = MyAppConstants.EventCartFeatures.CART_PAGE;
         String action = request.getParameter("action");
 
         try {
@@ -53,15 +53,14 @@ public class UpdateEventCartServlet extends HttpServlet {
                 if (cart != null) {
                     Map<String, List<EventCartItem>> items = cart.getItems();
                     if (items != null) {
-                        String removeBt = request.getParameter("removeButton");
-                        if (removeBt != null) {
-                            String key = request.getParameter("ekey");
-                            String name = request.getParameter("ename");
-                            cart.removeItemFromCart(key, name);
-                        } else {
+                        String removeBt = request.getParameter("rmvButton");
+                        if (removeBt != null && "delete".equals(removeBt)) {
+                            String key = (String) request.getParameter("ekey");
+                            String name = (String) request.getParameter("ename");
+                            cart.removeEItemFromCart(key, name);
+                        } else if (action != null && !action.isEmpty()) {
                             String productName = request.getParameter("eventProductName");
                             String eventName = request.getParameter("eventName");
-                            String newQuantityStr = request.getParameter("quantity"); // Get the updated quantity from the form
                             List<EventCartItem> itemList = items.get(eventName);
                             if (itemList != null) {
                                 for (EventCartItem item : itemList) {
@@ -70,32 +69,17 @@ public class UpdateEventCartServlet extends HttpServlet {
                                         EventProductDAO dao = new EventProductDAO();
                                         // Fetch the stock quantity from the database for this product
                                         int stockQuantity = dao.getProductQuantityByName(productName);
+                                        int currentQuantity = item.getQuantity();
 
-                                        if (newQuantityStr != null && !newQuantityStr.isEmpty() && !newQuantityStr.equals("NaN")) {
-
-                                            int newQuantity = Integer.parseInt(newQuantityStr); // Parse the new quantity
-//                                            log("Parsed new quantity: " + newQuantity);
-                                            // Validate the quantity within stock limits
-                                            if (newQuantity > 0 && newQuantity <= stockQuantity) {
-                                                item.setQuantity(newQuantity); // Set the new quantity from the user input
+                                        if ("plus".equals(action)) {
+                                            // Only increase if the current quantity is less than stock
+                                            if (currentQuantity < stockQuantity) {
+                                                item.setQuantity(currentQuantity + 1);
                                             }
-                                        } else {
-                                            // Handle button actions only if quantity input is not provided
-
-                                            if (action != null && !action.isEmpty()) {
-//                                                log("Received action: " + action);
-                                                int currentQuantity = item.getQuantity();
-                                                if ("plus".equals(action)) {
-                                                    // Only increase if the current quantity is less than stock
-                                                    if (currentQuantity < stockQuantity) {
-                                                        item.setQuantity(currentQuantity + 1);
-                                                    }
-                                                } else if ("minus".equals(action)) {
-                                                    // Decrease quantity, but remove item if it reaches 0
-                                                    if (currentQuantity > 1) {
-                                                        item.setQuantity(currentQuantity - 1);
-                                                    }
-                                                }
+                                        } else if ("minus".equals(action)) {
+                                            // Decrease quantity, but remove item if it reaches 0
+                                            if (currentQuantity > 1) {
+                                                item.setQuantity(currentQuantity - 1);
                                             }
                                         }
                                     }

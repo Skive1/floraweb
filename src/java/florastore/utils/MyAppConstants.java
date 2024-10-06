@@ -133,6 +133,6 @@ public class MyAppConstants {
     }
     
     public class EventCartFeatures {
-        public static final String VIEW_CART_PAGE = "eventCart";
+        public static final String CART_PAGE = "eventCart";
     }
 }

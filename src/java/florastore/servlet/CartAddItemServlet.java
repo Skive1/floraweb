@@ -74,7 +74,7 @@ public class CartAddItemServlet extends HttpServlet {
             // Forward to the correct page
             if (page != null && !page.isEmpty()) {
                 if (page.equals("shop")) {
-                    url = ((String) MyAppConstants.CartAddItemFeatures.SHOP_VIEW) + "?page=" + pageIndex;
+                    url = MyAppConstants.CartAddItemFeatures.SHOP_VIEW + "?page=" + pageIndex;
                 } else if (page.equals("DETAIL_PAGE")) {
                     if (itemQuantity > stockQuantity) {
                         url = MyAppConstants.CartAddItemFeatures.ERROR_PAGE;
