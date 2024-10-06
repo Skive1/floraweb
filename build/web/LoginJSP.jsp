@@ -75,14 +75,15 @@
                                         <div class="row gy-3 overflow-hidden">
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <input type="text" name="txtUsername" value="" class="form-control" id="username" placeholder="Username" required/>
+                                                    <input type="text" name="txtUsername" value="admin" class="form-control" id="username" placeholder="Username" required/>
                                                     <label for="username" class="form-label">Username</label>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <input type="password" name="txtPassword" value="" class="form-control" id="password" placeholder="Password" required/>
+                                                    <input type="password" id="myPassword" name="txtPassword" value="123" class="form-control" placeholder="Password" required/>
                                                     <label for="password" class="form-label">Password</label>
+                                                        <i class="fa fa-eye" onclick="togglePassword()"></i>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -137,7 +138,7 @@
         </main>
 
         <!-- Script JS -->
-        <script src="./js/script.js"></script>
+        <script src="js/javascript.js"></script>
         <!--$%analytics%$-->
     </body>
 </html>

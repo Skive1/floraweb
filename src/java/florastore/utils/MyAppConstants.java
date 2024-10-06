@@ -88,6 +88,7 @@ public class MyAppConstants {
         public static final String INVALID_PAGE = "homePage";
         public static final String STORE_PAGE = "managerPage";
         public static final String ERROR_PAGE = "error404";
+
     }
 
     public class AdminDeleteFeatures {
@@ -103,11 +104,29 @@ public class MyAppConstants {
     }
 
     public class SearchFeature {
+
         public static final String ERROR = "errorProcess";
         public static final String SUCCESS = "showSearch";
         public static final String SEARCH = "searchAction";
         public static final String SEARCH_EXTEND = "searchExtend";
         public static final String SEARCH_TYPE = "searchType";
         public static final String SEARCH_COLOR = "searchColor";
+    }
+
+    public class EventFeatures {
+
+        public static final String EVENT_PAGE = "eventPage";
+        public static final String DETAIL_PAGE = "eventDetailPage";
+    }
+
+    public class EventFlowerFeatures {
+
+        public static final String DETAIL_PAGE = "EventFlowerDetail";
+        public static final String ERROR_PAGE = "error404";
+    }
+
+    public class ManageEventFeatures {
+        public static final String EVENT_PAGE = "eventPage";
+        public static final String DETAIL_PAGE = "eventDetailPage";
     }
 }

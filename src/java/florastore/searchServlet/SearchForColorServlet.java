@@ -85,16 +85,18 @@ public class SearchForColorServlet extends HttpServlet {
             session.removeAttribute("oldCategories");
             session.setAttribute("oldCategories", getColor);                       //dùng để search lại giá trị cũ - sửa thành giá trị getCategories
 
-            //for (ProductDTO category : totalProduct) {
-             if ("multi-color".equals(getColor)) {
+            if ("multi-color".equals(getColor)) {
                 divideResult = service.getMultyColor(totalProduct);
             } else if ("other".equals(getColor)) {
                 divideResult = service.getOtherColor(totalProduct);
             } else {
                 divideResult = service.getSingleColor(totalProduct, getColor);                           //thực hiện add các sản phẩm có color = getColor
             }
-            //} 
-
+            
+            session.removeAttribute("CurrentColor");
+            session.setAttribute("CurrentColor", getColor);
+            
+            
             pageSize = service.getPage(divideResult.size());                    //làm thanh << 1 2 3 4 >>
             if (pageSize == 0) {
                 pageSize = 1;

@@ -5,11 +5,21 @@
  */
 package florastore.servlet;
 
+import florastore.account.AccountDTO;
+import florastore.managerProduct.ManagerProductDAO;
+import florastore.managerProduct.ManagerProductDTO;
+import florastore.managerProduct.ProductTypeDAO;
+import florastore.managerProduct.ProductTypeDTO;
+
 import florastore.account.AccountDAO;
+
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -48,7 +58,6 @@ public class DeleteAccountServlet extends HttpServlet {
         String username = request.getParameter("txtUsername");
         String page = request.getParameter("page");
         boolean result = false;
-
         try {
             //2. Call DAO/Models
             AccountDAO dao = new AccountDAO();
@@ -67,6 +76,7 @@ public class DeleteAccountServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

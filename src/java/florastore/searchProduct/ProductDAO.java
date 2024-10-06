@@ -41,13 +41,13 @@ public class ProductDAO {
                 //String sql = "SELECT * FROM FlowerProducts WHERE ProductName LIKE ?";
                 String sql = null;
                 if (searchAll == true) {
-                    sql = "SELECT ProductId, StoreId, ProductName, ProductType, ProductCondition, ProductDetail, "
-                            + "ProductPrice, ProductQuantity, ImageURL "
+                    sql = "SELECT ProductId, FlowerStoreStoreId, ProductName, ProductType, ProductCondition, ProductDetail, "
+                            + "ProductPrice, ProductQuantity, Img, CategoryCategoryId "
                             + "FROM FlowerProducts";
                     stm = con.prepareStatement(sql);
                 } else {
-                    sql = "SELECT ProductId, StoreId, ProductName, ProductType, ProductCondition, ProductDetail, "
-                            + "ProductPrice, ProductQuantity, ImageURL "
+                    sql = "SELECT ProductId, FLowerStoreStoreId, ProductName, ProductType, ProductCondition, ProductDetail, "
+                            + "ProductPrice, ProductQuantity, Img, CategoryCategoryId "
                             + "FROM FlowerProducts WHERE ProductName LIKE ?";
                     stm = con.prepareStatement(sql);
                     stm.setString(1, "%" + searchValue + "%");
@@ -56,17 +56,18 @@ public class ProductDAO {
                 while (rs.next()) {
                     //get data from result set
                     int ProductId = rs.getInt("ProductId");
-                    int StoreId = rs.getInt("StoreId");
+                    int StoreId = rs.getInt("FlowerStoreStoreId");
                     String ProductName = rs.getString("ProductName");
                     String ProductType = rs.getString("ProductType");
                     String ProductCondition = rs.getString("ProductCondition");
                     String ProductDetail = rs.getString("ProductDetail");
                     int ProductPrice = rs.getInt("ProductPrice");
                     int ProductQuantity = rs.getInt("ProductQuantity");
-                    String ImageURL = rs.getString("ImageURL");
+                    String ImageURL = rs.getString("Img");
+                    int categoryID = rs.getInt("CategoryCategoryId");
                     //set data to DTO properties
                     ProductDTO dto = new ProductDTO(ProductId, StoreId, ProductName, ProductType,
-                            ProductCondition, ProductDetail, ProductPrice, ProductQuantity, ImageURL);
+                            ProductCondition, ProductDetail, ProductPrice, ProductQuantity, ImageURL, categoryID);
                     if (this.productSplit == null) {                                //add total
                         this.productSplit = new ArrayList<>();
                     }

@@ -42,6 +42,7 @@ public class UpdateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
         //1. Get user information
         String username = request.getParameter("txtUsername");

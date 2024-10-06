@@ -5,7 +5,6 @@
  */
 package florastore.account;
 
-import static com.sun.activation.registries.LogSupport.log;
 import florastore.utils.DBHelper;
 import java.io.Serializable;
 import java.sql.Connection;
@@ -33,7 +32,7 @@ public class AccountDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2.Create SQL String
-                String sql = "SELECT Fullname, Role, Email, Gender, Phone, Street, City, SaleId "
+                String sql = "SELECT Fullname, Role, Email, Gender, Phone, Street, City, Img "
                         + "FROM Account "
                         + "WHERE Username = ? "
                         + "COLLATE Latin1_General_BIN "
@@ -54,8 +53,8 @@ public class AccountDAO implements Serializable {
                     String phone = rs.getString("Phone");
                     String street = rs.getString("Street");
                     String city = rs.getString("City");
-                    String saleId = rs.getString("SaleId");
-                    dto = new AccountDTO(username, password, fullName, role, email, gender, phone, street, city, saleId);
+                    String img = rs.getString("Img");
+                    dto = new AccountDTO(username, password, fullName, role, email, gender, phone, street, city, img);
                 }//username and password are verified
             }//connection has been available
         } finally {
@@ -132,7 +131,7 @@ public class AccountDAO implements Serializable {
             conn = DBHelper.getConnection();
             if (conn != null) {
                 // Prepare SQL statement for querying the Account table by email
-                String sql = "SELECT Email, Username, Fullname, Role, Gender, Phone, Street, City, SaleId "
+                String sql = "SELECT Email, Username, Fullname, Role, Gender, Phone, Street, City, Img "
                         + "FROM Account "
                         + "WHERE Email = ?";
 
@@ -152,8 +151,8 @@ public class AccountDAO implements Serializable {
                     String phone = rs.getString("Phone");
                     String street = rs.getString("Street");
                     String city = rs.getString("City");
-                    String saleId = rs.getString("SaleId");
-                    user = new AccountDTO(username, "", fullname, role, email, gender, phone, street, city, saleId);
+                    String img = rs.getString("Img");
+                    user = new AccountDTO(username, "", fullname, role, email, gender, phone, street, city, img);
                 }
             }
         } finally {
@@ -266,7 +265,7 @@ public class AccountDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2.Create SQL String
-                String sql = "SELECT Fullname, Email, Gender, Phone, Street, City "
+                String sql = "SELECT Fullname, Email, Gender, Phone, Street, City, Img "
                         + "FROM Account "
                         + "WHERE Username = ? "
                         + "COLLATE Latin1_General_BIN";
@@ -283,7 +282,8 @@ public class AccountDAO implements Serializable {
                     String phone = rs.getString("Phone");
                     String street = rs.getString("Street");
                     String city = rs.getString("City");
-                    dto = new AccountDTO(username, "", fullName, "", email, gender, phone, street, city, null);
+                    String img = rs.getString("Img");
+                    dto = new AccountDTO(username, "", fullName, "", email, gender, phone, street, city, img);
                 }//username and password are verified
             }//connection has been available
         } finally {
@@ -326,8 +326,7 @@ public class AccountDAO implements Serializable {
 //              2. khởi tạo lệnh SQL
                 String sql = "UPDATE Account "
                         + "SET Phone = ?, Street = ?, City = ?, Gender = ? "
-                        + "WHERE Username = ? "
-                        + "COLLATE Latin1_General_BIN";
+                        + "WHERE Username = ? ";
                 //3. khởi tạo statement obj
                 stm = con.prepareStatement(sql);
                 stm.setString(1, phone);
@@ -406,7 +405,7 @@ public class AccountDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String
-                String sql = "SELECT Username, Fullname, Gender, Role, Email, Phone, Street, City, SaleId "
+                String sql = "SELECT Username, Fullname, Gender, Role, Email, Phone, Street, City, Img "
                         + "FROM Account "
                         + "ORDER BY Username "
                         + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
@@ -427,9 +426,9 @@ public class AccountDAO implements Serializable {
                     String Phone = rs.getString("Phone");
                     String Street = rs.getString("Street");
                     String City = rs.getString("City");
-                    String SaleId = rs.getString("SaleId");
+                    String Img = rs.getString("Img");
                     AccountDTO account
-                            = new AccountDTO(Username, "", Fullname, Role, Email, Gender, Phone, Street, City, SaleId);
+                            = new AccountDTO(Username, "", Fullname, Role, Email, Gender, Phone, Street, City, Img);
                     list.add(account);
                 }//process each record in resultset  
             }//connection has been available 

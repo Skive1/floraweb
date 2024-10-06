@@ -20,9 +20,9 @@ public class ServiceLayer {
         }
         if ("red".equals(color)) {
             for (int i = 0; i < result.size(); i++) {
-                if (result.get(i).getProductDetail().toLowerCase().contains("multy")
+                if (result.get(i).getProductDetail().toLowerCase().contains("multi")
                         && result.get(i).getProductDetail().toLowerCase().contains("color")) {
-                    result.remove(list.get(i));
+                    result.remove(i);
                     i--;
                 }
             }
@@ -33,7 +33,7 @@ public class ServiceLayer {
     public List<ProductDTO> getMultyColor(List<ProductDTO> list) {
         List<ProductDTO> result = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getProductDetail().toLowerCase().contains("multy")
+            if (list.get(i).getProductDetail().toLowerCase().contains("multi")
                     && list.get(i).getProductDetail().toLowerCase().contains("color")) {
                 result.add(list.get(i));
             }
@@ -60,7 +60,7 @@ public class ServiceLayer {
         }
 
         for (int i = 0; i < result.size(); i++) {
-            if (result.get(i).getProductDetail().toLowerCase().contains("multy")
+            if (result.get(i).getProductDetail().toLowerCase().contains("multi")
                     && result.get(i).getProductDetail().toLowerCase().contains("color")) {
                 result.remove(i);
                 i--;

@@ -256,19 +256,19 @@
                                     <div class="col-lg-12">
                                         <form id="searchColor" action="SearchForColorServlet" method="POST">
                                             <select class="form-control" name="txtColor" id="searchColor" >
-                                                <option value="multi-color" selected>Multi color</option>
-                                                <option value="red">Red</option>
-                                                <option value="blue">Blue</option>
-                                                <option value="white ">White </option>
-                                                <option value="orange">Orange</option>
-                                                <option value="magenta">Magenta</option>
-                                                <option value="yellow">Yellow</option>
-                                                <option value="pink">Pink</option>
-                                                <option value="purple ">Purple</option>
-                                                <option value="brown">Brown</option>
-                                                <option value="green">Green</option>
-                                                <option value="black">Black</option>
-                                                <option value="other">Other</option>
+                                                <option value="multi-color" ${session.CurrentColor == 'multi-color' ? 'selected' : ''}>Multi color</option>
+                                                <option value="red" ${session.CurrentColor == 'red' ? 'selected' : ''}>Red</option>
+                                                <option value="blue" ${session.CurrentColor == 'blue' ? 'selected' : ''}>Blue</option>
+                                                <option value="white" ${session.CurrentColor == 'white' ? 'selected' : ''}>White</option>
+                                                <option value="orange" ${session.CurrentColor == 'orange' ? 'selected' : ''}>Orange</option>
+                                                <option value="magenta" ${session.CurrentColor == 'magenta' ? 'selected' : ''}>Magenta</option>
+                                                <option value="yellow" ${session.CurrentColor == 'yellow' ? 'selected' : ''}>Yellow</option>
+                                                <option value="pink" ${session.CurrentColor == 'pink' ? 'selected' : ''}>Pink</option>
+                                                <option value="purple" ${session.CurrentColor == 'purple' ? 'selected' : ''}>Purple</option>
+                                                <option value="brown" ${session.CurrentColor == 'brown' ? 'selected' : ''}>Brown</option>
+                                                <option value="green" ${session.CurrentColor == 'green' ? 'selected' : ''}>Green</option>
+                                                <option value="black" ${session.CurrentColor == 'black' ? 'selected' : ''}>Black</option>
+                                                <option value="other" ${session.CurrentColor == 'other' ? 'selected' : ''}>Other</option>
                                             </select>
                                             <div class="d-flex justify-content-center my-4">
                                                 <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100" 

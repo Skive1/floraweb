@@ -38,7 +38,7 @@ public class FlowerProductsDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String 
-                String sql = "Select TOP 8 ProductId, StoreId, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, ImageURL "
+                String sql = "Select TOP 8 ProductId, FlowerStoreStoreID, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, Img "
                         + "From FlowerProducts "
                         + "ORDER BY ProductId";
                 //3. Create Statement Object
@@ -50,14 +50,14 @@ public class FlowerProductsDAO implements Serializable {
                     //. map
                     //get data from Result Set
                     int productId = rs.getInt("ProductId");
-                    int storeId = rs.getInt("StoreId");
+                    int storeId = rs.getInt("FlowerStoreStoreID");
                     String productName = rs.getString("ProductName");
                     String productType = rs.getString("ProductType");
                     String productCondition = rs.getString("ProductCondition");
                     String productDetail = rs.getString("ProductDetail");
                     double productPrice = rs.getDouble("ProductPrice");
                     int productQuantity = rs.getInt("ProductQuantity");
-                    String imageURL = rs.getString("ImageURL");
+                    String imageURL = rs.getString("Img");
                     //set data to DTO properties
                     FlowerProductsDTO dto
                             = new FlowerProductsDTO(productId, storeId, productName, productType, productCondition, productDetail, productPrice, productQuantity, imageURL);
@@ -97,7 +97,7 @@ public class FlowerProductsDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String 
-                String sql = "Select TOP 5 ProductId, StoreId, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, ImageURL "
+                String sql = "Select TOP 5 ProductId, FlowerStoreStoreID, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, Img "
                         + "From FlowerProducts "
                         + "ORDER BY ProductId DESC";
                 //3. Create Statement Object
@@ -109,14 +109,14 @@ public class FlowerProductsDAO implements Serializable {
                     //. map
                     //get data from Result Set
                     int productId = rs.getInt("ProductId");
-                    int storeId = rs.getInt("StoreId");
+                    int storeId = rs.getInt("FlowerStoreStoreID");
                     String productName = rs.getString("ProductName");
                     String productType = rs.getString("ProductType");
                     String productCondition = rs.getString("ProductCondition");
                     String productDetail = rs.getString("ProductDetail");
                     double productPrice = rs.getDouble("ProductPrice");
                     int productQuantity = rs.getInt("ProductQuantity");
-                    String imageURL = rs.getString("ImageURL");
+                    String imageURL = rs.getString("Img");
                     //set data to DTO properties
                     FlowerProductsDTO dto
                             = new FlowerProductsDTO(productId, storeId, productName, productType, productCondition, productDetail, productPrice, productQuantity, imageURL);
@@ -151,7 +151,7 @@ public class FlowerProductsDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String 
-                String sql = "Select ProductId, StoreId, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, ImageURL "
+                String sql = "Select ProductId, FlowerStoreStoreID, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, Img "
                         + "From FlowerProducts "
                         + "Where ProductId = ?";
                 //3. Create Statement Object
@@ -164,14 +164,14 @@ public class FlowerProductsDAO implements Serializable {
                     //. map
                     //get data from Result Set
                     int productId = rs.getInt("ProductId");
-                    int storeId = rs.getInt("StoreId");
+                    int storeId = rs.getInt("FlowerStoreStoreID");
                     String productName = rs.getString("ProductName");
                     String productType = rs.getString("ProductType");
                     String productCondition = rs.getString("ProductCondition");
                     String productDetail = rs.getString("ProductDetail");
                     double productPrice = rs.getDouble("ProductPrice");
                     int productQuantity = rs.getInt("ProductQuantity");
-                    String imageURL = rs.getString("ImageURL");
+                    String imageURL = rs.getString("Img");
                     //set data to DTO properties
                     dto
                             = new FlowerProductsDTO(productId, storeId, productName, productType, productCondition, productDetail, productPrice, productQuantity, imageURL);
@@ -203,7 +203,7 @@ public class FlowerProductsDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String 
-                String sql = "Select TOP 1 ProductId, StoreId, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, ImageURL "
+                String sql = "Select TOP 1 ProductId, FlowerStoreStoreID, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, Img "
                         + "From FlowerProducts "
                         + "ORDER BY ProductPrice ASC";
                 //3. Create Statement Object
@@ -215,14 +215,14 @@ public class FlowerProductsDAO implements Serializable {
                     //. map
                     //get data from Result Set
                     int productId = rs.getInt("ProductId");
-                    int storeId = rs.getInt("StoreId");
+                    int storeId = rs.getInt("FlowerStoreStoreID");
                     String productName = rs.getString("ProductName");
                     String productType = rs.getString("ProductType");
                     String productCondition = rs.getString("ProductCondition");
                     String productDetail = rs.getString("ProductDetail");
                     double productPrice = rs.getDouble("ProductPrice");
                     int productQuantity = rs.getInt("ProductQuantity");
-                    String imageURL = rs.getString("ImageURL");
+                    String imageURL = rs.getString("Img");
                     //set data to DTO properties
                     dto
                             = new FlowerProductsDTO(productId, storeId, productName, productType, productCondition, productDetail, productPrice, productQuantity, imageURL);
@@ -255,7 +255,7 @@ public class FlowerProductsDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String 
-                String sql = "SELECT ProductId, StoreId, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, ImageURL "
+                String sql = "SELECT ProductId, FlowerStoreStoreID, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, Img "
                         + "FROM FlowerProducts "
                         + "WHERE productId = ?";
                 //3. Create Statement Object
@@ -268,14 +268,14 @@ public class FlowerProductsDAO implements Serializable {
                     //. map
                     //get data from Result Set
                     int productId = rs.getInt("ProductId");
-                    int storeId = rs.getInt("StoreId");
+                    int storeId = rs.getInt("FlowerStoreStoreID");
                     String productName = rs.getString("ProductName");
                     String productType = rs.getString("ProductType");
                     String productCondition = rs.getString("ProductCondition");
                     String productDetail = rs.getString("ProductDetail");
                     double productPrice = rs.getDouble("ProductPrice");
                     int productQuantity = rs.getInt("ProductQuantity");
-                    String imageURL = rs.getString("ImageURL");
+                    String imageURL = rs.getString("Img");
                     product
                             = new FlowerProductsDTO(productId, storeId, productName, productType, productCondition, productDetail, productPrice, productQuantity, imageURL);
                 }//process each record in resultset  
@@ -308,7 +308,7 @@ public class FlowerProductsDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String
-                String sql = "SELECT ProductId, StoreId, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, ImageURL "
+                String sql = "SELECT ProductId, FlowerStoreStoreID, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, Img "
                         + "FROM FlowerProducts";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
@@ -319,14 +319,14 @@ public class FlowerProductsDAO implements Serializable {
                     //. map
                     //get data from Result Set
                     int productId = rs.getInt("ProductId");
-                    int storeId = rs.getInt("StoreId");
+                    int storeId = rs.getInt("FlowerStoreStoreID");
                     String productName = rs.getString("ProductName");
                     String productType = rs.getString("ProductType");
                     String productCondition = rs.getString("ProductCondition");
                     String productDetail = rs.getString("ProductDetail");
                     double productPrice = rs.getDouble("ProductPrice");
                     int productQuantity = rs.getInt("ProductQuantity");
-                    String imageURL = rs.getString("ImageURL");
+                    String imageURL = rs.getString("Img");
                     FlowerProductsDTO product
                             = new FlowerProductsDTO(productId, storeId, productName, productType, productCondition, productDetail, productPrice, productQuantity, imageURL);
                     products.add(product);
@@ -359,7 +359,7 @@ public class FlowerProductsDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String
-                String sql = "SELECT ProductId, StoreId, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, ImageURL "
+                String sql = "SELECT ProductId, FlowerStoreStoreID, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, Img "
                         + "FROM FlowerProducts "
                         + "Where ProductType = ?";
                 //3. Create Statement Object
@@ -372,14 +372,14 @@ public class FlowerProductsDAO implements Serializable {
                     //. map
                     //get data from Result Set
                     int productId = rs.getInt("ProductId");
-                    int storeId = rs.getInt("StoreId");
+                    int storeId = rs.getInt("FlowerStoreStoreID");
                     String productName = rs.getString("ProductName");
                     String productType = rs.getString("ProductType");
                     String productCondition = rs.getString("ProductCondition");
                     String productDetail = rs.getString("ProductDetail");
                     double productPrice = rs.getDouble("ProductPrice");
                     int productQuantity = rs.getInt("ProductQuantity");
-                    String imageURL = rs.getString("ImageURL");
+                    String imageURL = rs.getString("Img");
                     FlowerProductsDTO product
                             = new FlowerProductsDTO(productId, storeId, productName, productType, productCondition, productDetail, productPrice, productQuantity, imageURL);
                     products.add(product);
@@ -464,7 +464,7 @@ public class FlowerProductsDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String
-                String sql = "SELECT TOP 5 ProductId, StoreId, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, ImageURL "
+                String sql = "SELECT TOP 5 ProductId, FlowerStoreStoreID, ProductName, ProductType, ProductCondition, ProductDetail, ProductPrice, ProductQuantity, Img "
                         + "FROM FlowerProducts "
                         + "Where ProductType = ? "
                         + "AND ProductId <> ?";
@@ -479,14 +479,14 @@ public class FlowerProductsDAO implements Serializable {
                     //. map
                     //get data from Result Set
                     int productId = rs.getInt("ProductId");
-                    int storeId = rs.getInt("StoreId");
+                    int storeId = rs.getInt("FlowerStoreStoreID");
                     String productName = rs.getString("ProductName");
                     String productType = rs.getString("ProductType");
                     String productCondition = rs.getString("ProductCondition");
                     String productDetail = rs.getString("ProductDetail");
                     double productPrice = rs.getDouble("ProductPrice");
                     int productQuantity = rs.getInt("ProductQuantity");
-                    String imageURL = rs.getString("ImageURL");
+                    String imageURL = rs.getString("Img");
                     FlowerProductsDTO dto
                             = new FlowerProductsDTO(productId, storeId, productName, productType, productCondition, productDetail, productPrice, productQuantity, imageURL);
                     if (this.related == null) {

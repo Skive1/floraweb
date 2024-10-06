@@ -72,8 +72,12 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link active">Home</a>
+
                             <a href="SearchServlet" class="nav-item nav-link">Shop</a>
                             <a href="shop-detail.html" class="nav-item nav-link">Product Detail</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Shop</a>
+                            <a href="event" class="nav-item nav-link">Event</a>
+
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -88,7 +92,7 @@
                             <c:if test="${not empty sessionScope.USER}">
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
-                                    <a href="#" class="nav-item nav-link">Manage Product</a>
+                                    <a href="manageAccount" class="nav-item nav-link">Manage Account</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
@@ -96,29 +100,28 @@
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
-                                    <a href="#" class="nav-item nav-link">Manage Shop</a>
+                                    <a href="ProductManagementAction" class="nav-item nav-link">Manage Shop</a>
                                 </c:if>
                             </c:if>
 
                         </div>
-                        <div class="d-flex m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-third"></i></button>
-                            <a href="#" class="position-relative me-4 my-auto">
+                        <div class="d-flex align-items-center justify-content-center m-3 me-0">
+                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
+                                <i class="fas fa-search text-third"></i>
+                            </button>
+                            <a href="#" class="position-relative me-4">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
                                 <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                             </a>
                             <c:if test="${empty sessionScope.USER}">
                                 <a href="loginPage" class="my-auto">
-                                    <i class="fas fa-user fa-2x">
-
-                                    </i>
+                                    <i class="fas fa-user fa-2x"></i>
                                 </a>
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                        <i class="fas fa-user fa-2x">
-                                        </i>
+                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                         <a href="viewProfileAction" class="dropdown-item">My Profile</a>
@@ -153,6 +156,7 @@
             </div>
         </div>
         <!-- Modal Search End -->
+
 
 
         <!-- Single Page Header start -->
@@ -361,7 +365,6 @@
                                         </div>
                                     </c:forEach>
                                     <div class="col-12">
-
                                         <nav aria-label="Page navigation">
                                             <ul class="pagination d-flex justify-content-center mt-5">
                                                 <c:if test="${currentPage > 1}">
