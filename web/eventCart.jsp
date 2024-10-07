@@ -166,10 +166,10 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Event Cart</h1>
+            <h1 class="text-center text-white display-6">Giỏ hàng sự kiện</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
-                <li class="breadcrumb-item active text-white">Event Cart</li>
+                <li class="breadcrumb-item active text-white">Giỏ hàng</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -179,7 +179,7 @@
         <div class="container-fluid py-5">
             <div class="container py-5">
                 <div class="table-responsive">
-                    <c:set var="ecart" value="${sessionScope.ECART}" />
+                    <c:set var="ecart" value="${sessionScope.ECART}"/>
                     <c:if test="${not empty ecart && not empty ecart.items}">
                         <c:forEach var="entry" items="${ecart.items}">
                             <c:set var="eventId" value="${entry.key}"/>
@@ -264,29 +264,33 @@
                     <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code" <c:if test="${empty ecart || empty ecart.items}">readonly=""</c:if>>
                     <button class="btn border-secondary rounded-pill px-4 py-3 text-third" type="button" <c:if test="${empty ecart || empty ecart.items}">disabled="disabled"</c:if>>Apply Coupon</button>
                     </div>
+
                     <div class="row g-4 justify-content-end">
                         <div class="col-8"></div>
                         <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                            <div class="bg-light rounded">
-                                <div class="p-4">
-                                    <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
-                                    <div class="d-flex justify-content-between mb-4">
-                                        <h5 class="mb-0 me-4">Subtotal:</h5>
-                                        <p class="mb-0"><fmt:formatNumber value="${sessionScope.ETOTAL}" type="number" groupingUsed="true"/>đ</p>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="mb-0 me-4">Discount:</h5>
-                                    <div class="">
-                                        <p class="mb-0"></p>
+                            <form action="checkout" method="POST">
+                                <div class="bg-light rounded">
+                                    <div class="p-4">
+                                        <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
+                                        <div class="d-flex justify-content-between mb-4">
+                                            <h5 class="mb-0 me-4">Subtotal:</h5>
+                                            <p class="mb-0"><fmt:formatNumber value="${sessionScope.ETOTAL}" type="number" groupingUsed="true"/>đ</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="mb-0 me-4">Discount:</h5>
+                                        <div class="">
+                                            <p class="mb-0"></p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                                <h5 class="mb-0 ps-4 me-4">Total</h5>
-                                <p class="mb-0 pe-4"></p>
-                            </div>
-                            <button class="btn border-secondary rounded-pill px-4 py-3 text-third text-uppercase mb-4 ms-4" type="submit" <c:if test="${empty ecart || empty ecart.items}">disabled="disabled"</c:if>>Proceed Checkout</button>
-                            </div>
+                                <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                                    <h5 class="mb-0 ps-4 me-4">Total</h5>
+                                    <p class="mb-0 pe-4"><fmt:formatNumber value="${sessionScope.ETOTAL}" type="number" groupingUsed="true"/>đ</p>
+                                    <input type="hidden" name="total" value="${sessionScope.ETOTAL}"/>
+                                </div>
+                                <button class="btn border-secondary rounded-pill px-4 py-3 text-third text-uppercase mb-4 ms-4" type="submit" <c:if test="${empty ecart || empty ecart.items}">disabled="disabled"</c:if>>Mua Hàng</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

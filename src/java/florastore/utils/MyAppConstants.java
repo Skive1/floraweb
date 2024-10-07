@@ -83,14 +83,14 @@ public class MyAppConstants {
         public static final String ERROR_PAGE = "error404";
     }
 
-     public class ShowProductManager {
-         public static final String INVALID_PAGE = "homePage";
-         public static final String STORE_PAGE = "managerPage";
-         public static final String ERROR_PAGE = "error404";
-         
+    public class ShowProductManager {
 
-     }
-     
+        public static final String INVALID_PAGE = "homePage";
+        public static final String STORE_PAGE = "managerPage";
+        public static final String ERROR_PAGE = "error404";
+
+    }
+
     public class AdminDeleteFeatures {
 
         public static final String MANAGE_ACCOUNT_PAGE = "manageAccount";
@@ -115,24 +115,33 @@ public class MyAppConstants {
         public static final String ERROR_PAGE = "error404";
 
     }
-    
+
     public class CartAddItemFeatures {
+
         public static final String SHOP_VIEW = "shoppingAction";
         public static final String VIEW_CART_PAGE = "cartPage";
         public static final String ERROR_PAGE = "insufficient.html";
     }
-    
+
     public class CartFeatures {
+
         public static final String VIEW_CART_PAGE = "cartPage";
     }
-    
+
     public class EventCartAddItemFeatures {
+
         public static final String EVENT_VIEW = "eventDetail";
         public static final String VIEW_ECART_PAGE = "eventCart";
         public static final String ERROR_PAGE = "insufficient.html";
     }
-    
+
     public class EventCartFeatures {
+
         public static final String CART_PAGE = "eventCart";
+    }
+
+    public class CheckoutFeatures {
+        public static final String ERROR_PAGE = "error404";
+        public static final String CHECKOUT = "checkoutPage";
     }
 }
