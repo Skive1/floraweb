@@ -51,14 +51,14 @@ public class yearlyRevenueDAO implements Serializable {
                         + "GROUP BY fp.ProductId, fp.ProductName, od.UnitPrice, o.OrderDate "
                         + ") AS Subquery "
                         + "GROUP BY MONTH(OrderDate) "
-                        + "ORDER BY MONTH(OrderDate) ASC;";
+                        + "ORDER BY MONTH(OrderDate) ASC";
                 //2. Create stm obj
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, year);
                 //3. Excute Query
                 rs = stm.executeQuery();
                 while (rs.next()) {
-                    int allMonth = rs.getInt("Month");                 
+                    int allMonth = rs.getInt("Month");
                     float total = rs.getFloat("TotalAmountPerMonth");
                     yearlyRevenueDTO items = new yearlyRevenueDTO(allMonth, total);
                     if (this.getMonthList == null) {
@@ -67,7 +67,6 @@ public class yearlyRevenueDAO implements Serializable {
                     getMonthList.add(items);
                 } //end while loop
             } //end if connection is success
-
         } finally {
             if (rs != null) {
                 rs.close();
