@@ -42,7 +42,7 @@ public class CartBean implements Serializable {
 
         CartItem existingItem = null;
         for (CartItem item : storeItems) {
-            if (item.getName().equals(name)) {
+            if (item.getProductId() == productId) {
                 existingItem = item; // Lưu sản phẩm đã tồn tại
                 break;
             }
@@ -57,7 +57,7 @@ public class CartBean implements Serializable {
         }
     }
 
-    public void removeItemFromCart(String storeName, String name) {
+    public void removeItemFromCart(String storeName, int id) {
         if (this.items == null || !this.items.containsKey(storeName)) {
             return; // If there is no store with that name in the cart, exit.
         }
@@ -71,7 +71,7 @@ public class CartBean implements Serializable {
         CartItem itemToRemove = null;
         // Find the item with the matching name
         for (CartItem item : storeItems) {
-            if (item.getName().equals(name)) {
+            if (item.getProductId() == id) {
                 itemToRemove = item;
                 break;
             }

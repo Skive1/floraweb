@@ -42,7 +42,7 @@ public class EventCartBean implements Serializable {
 
         EventCartItem existingItem = null;
         for (EventCartItem item : eventItems) {
-            if (item.getEpName().equals(epName)) {
+            if (item.getEpId() == epId) {
                 existingItem = item; // Lưu sản phẩm đã tồn tại
                 break;
             }
@@ -57,7 +57,7 @@ public class EventCartBean implements Serializable {
         }
     }
 
-    public void removeEItemFromCart(String eventName, String epName) {
+    public void removeEItemFromCart(String eventName, int epId) {
         if (this.items == null || !this.items.containsKey(eventName)) {
             return; // If there is no event with that name in the cart, exit.
         }
@@ -71,7 +71,7 @@ public class EventCartBean implements Serializable {
         EventCartItem itemToRemove = null;
         // Find the item with the matching name
         for (EventCartItem item : eventItems) {
-            if (item.getEpName().equals(epName)) {
+            if (item.getEpId() == epId) {
                 itemToRemove = item;
                 break;
             }

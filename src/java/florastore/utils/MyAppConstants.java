@@ -144,4 +144,9 @@ public class MyAppConstants {
         public static final String ERROR_PAGE = "error404";
         public static final String CHECKOUT = "checkoutPage";
     }
+    
+    public class PlaceOrderFeatures {
+        public static final String ERROR_PAGE = "error404";
+        public static final String BILL_PAGE = "confirmCheckoutPage";
+    }
 }

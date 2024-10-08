@@ -56,8 +56,8 @@ public class UpdateCartServlet extends HttpServlet {
                         String removeBt = request.getParameter("removeButton");
                         if (removeBt != null) {
                             String key = (String) request.getParameter("key");
-                            String name = (String) request.getParameter("name");
-                            cart.removeItemFromCart(key, name);
+                            int id = Integer.parseInt(request.getParameter("Id"));
+                            cart.removeItemFromCart(key, id);
                         } else {
                             String productName = request.getParameter("productName");
                             String storeName = request.getParameter("storeName");

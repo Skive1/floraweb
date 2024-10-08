@@ -181,24 +181,24 @@
         <div class="container-fluid py-5">
             <div class="container py-5">
                 <h1 class="mb-4">Thông tin thanh toán</h1>
-                <form action="">
+                <form action="checkouts" method="POST">
                     <div class="row g-5">
                         <div class="col-md-12 col-lg-6 col-xl-6">
                             <div class="form-item">
                                 <label class="form-label my-3">Họ và Tên<sup class="red">*</sup></label>
-                                <input type="text" value="${sessionScope.USER.fullName}" class="form-control" required="">
+                                <input type="text" name="fullname" value="${sessionScope.USER.fullName}" class="form-control" required="">
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Số điện thoại<sup class="red">*</sup></label>
-                                <input type="text" value="${sessionScope.USER.phone}" class="form-control" required="">
+                                <input type="text" name="phone" value="${sessionScope.USER.phone}" class="form-control" required="">
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Địa chỉ <sup class="red">*</sup></label>
-                                <input type="text" value="${sessionScope.USER.street}" class="form-control" required="">
+                                <input type="text" name="address" value="${sessionScope.USER.street}" class="form-control" required="">
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Thành phố<sup class="red">*</sup></label>
-                                <select class="form-control" name="txtCity" id="city" style="background-color: #ffffff" required="">
+                                <select class="form-control" name="city" id="city" style="background-color: #ffffff" required="">
                                     <option value=""  selected disabled>Chọn thành phố</option>
                                     <option value="An Giang"
                                             <c:if test="${sessionScope.USER.city == 'An Giang'}">
@@ -460,14 +460,14 @@
                             </div>
 
                             <hr>
-                            <h3>Phương thức giao hàng</h3>
+                            <h3>Phương thức vận chuyển</h3>
                             <div class="form-item">
                                 <label class="form-control radio-shipping" style="background-color: #ffffff">
-                                    <input type="radio" name="shipping" value="" class="radio radio-inline">
-                                    Giao hàng nhanh
+                                    <input type="radio" name="shipping" value="delivery" class="radio radio-inline" required="" checked="">
+                                    Giao hàng tận nơi
                                 </label>
                                 <label class="form-control radio-shipping" style="background-color: #ffffff">
-                                    <input type="radio" name="shipping" value="" class="radio radio-inline">
+                                    <input type="radio" name="shipping" value="pickUp" class="radio radio-inline" required="">
                                     Lấy tại điểm bán
                                 </label>
                             </div>
@@ -475,11 +475,11 @@
                             <h3>Phương thức thanh toán</h3>
                             <div class="form-item">
                                 <label class="form-control radio-shipping" style="background-color: #ffffff">
-                                    <input type="radio" name="payment" value=COD"" class="radio radio-inline">
+                                    <input type="radio" name="payment" value="COD" class="radio radio-inline" required="" checked="">
                                     <i class="fa-solid fa-money-bill"></i> Thanh toán khi nhận hàng (COD)
                                 </label>
                                 <label class="form-control radio-shipping" style="background-color: #ffffff">
-                                    <input type="radio" name="payment" value="ONLINE" class="radio radio-inline">
+                                    <input type="radio" name="payment" value="ONLINE" class="radio radio-inline" required="">
                                     <i class="fa-solid fa-credit-card"></i> Thanh toán trực tuyến (VN Pay)
                                 </label>
                             </div>
@@ -559,6 +559,7 @@
                                             <td class="py-5">
                                                 <div class="py-3 border-bottom border-top">
                                                     <p class="mb-0 text-dark"><fmt:formatNumber value="${requestScope.TOTAL_AMOUNT}" type="number" groupingUsed="true"/>đ</p>
+                                                    <input type="hidden" name="totalamount" value="${requestScope.TOTAL_AMOUNT}" />
                                                 </div>
                                             </td>
                                         </tr>

@@ -242,7 +242,7 @@
                                             <td>      
                                                 <form action="cartView" method="POST">
                                                     <input type="hidden" name="key" value="${storeId}" />
-                                                    <input type="hidden" name="name" value="${item.name}" />
+                                                    <input type="hidden" name="Id" value="${item.productId}" />
                                                     <button type="submit" name="removeButton" value="delete" class="btn btn-md rounded-circle bg-light border mt-4">
                                                         <i class="fa fa-times text-danger"></i>
                                                     </button>

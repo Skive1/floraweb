@@ -241,7 +241,7 @@
                                             <td>      
                                                 <form action="eventCartView" method="POST">
                                                     <input type="hidden" name="ekey" value="${eventId}" />
-                                                    <input type="hidden" name="ename" value="${item.epName}" />
+                                                    <input type="hidden" name="eId" value="${item.epId}" />
                                                     <button type="submit" name="rmvButton" value="delete" class="btn btn-md rounded-circle bg-light border mt-4">
                                                         <i class="fa fa-times text-danger"></i>
                                                     </button>

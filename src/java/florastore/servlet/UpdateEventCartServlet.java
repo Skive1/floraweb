@@ -56,8 +56,8 @@ public class UpdateEventCartServlet extends HttpServlet {
                         String removeBt = request.getParameter("rmvButton");
                         if (removeBt != null && "delete".equals(removeBt)) {
                             String key = (String) request.getParameter("ekey");
-                            String name = (String) request.getParameter("ename");
-                            cart.removeEItemFromCart(key, name);
+                            int id = Integer.parseInt(request.getParameter("eId"));
+                            cart.removeEItemFromCart(key, id);
                         } else if (action != null && !action.isEmpty()) {
                             String productName = request.getParameter("eventProductName");
                             String eventName = request.getParameter("eventName");
