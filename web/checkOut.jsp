@@ -63,8 +63,8 @@
             <div class="container topbar bg-primary d-none d-lg-block">
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
-                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="https://hcmuni.fpt.edu.vn/" class="text-white">FPT University, HCM</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
                         <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
@@ -502,7 +502,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <c:set var="totalEvent" value="0"/>
                                             <c:forEach var="item" items="${eventItems}" varStatus="counter">
+                                                <c:set var="totalEvent" value="${totalEvent + (item.unitPrice * item.quantity)}"/>
                                                 <tr>
                                                     <th scope="row">
                                                         <div class="d-flex align-items-center mt-2">
@@ -513,8 +515,22 @@
                                                     <td class="py-5"><fmt:formatNumber value="${item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
                                                     <td class="py-5">${item.quantity}</td>
                                                     <td class="py-5"><fmt:formatNumber value="${item.quantity * item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
-                                                </tr>           
-                                            </c:forEach>
+                                                </tr>      
+                                            </c:forEach>                                
+                                            <tr>
+                                                <th scope="row">
+                                                </th>
+                                                <td class="py-5">
+                                                    <p class="mb-0 text-dark py-3">Tổng số tiền:</p>
+                                                </td>
+                                                <td class="py-5"></td>
+                                                <td class="py-5"></td>
+                                                <td class="py-5">
+                                                    <div class="py-2 border-bottom border-top">
+                                                        <p class="mb-0 text-dark"><fmt:formatNumber value="${totalEvent}" type="number" groupingUsed="true"/>đ</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </c:forEach>
@@ -523,13 +539,13 @@
                                         <tr>
                                             <th scope="row">
                                             </th>
-                                            <td class="py-5"></td>
-                                            <td class="py-5"></td>
                                             <td class="py-5">
-                                                <p class="mb-0 text-dark py-3">Subtotal:</p>
+                                                <p class="mb-0 text-dark py-3">Tổng tiền hàng:</p>
                                             </td>
+                                            <td class="py-5"></td>
+                                            <td class="py-5"></td>
                                             <td class="py-5">
-                                                <div class="py-3 border-bottom border-top">
+                                                <div class="py-2 border-bottom border-top">
                                                     <p class="mb-0 text-dark"><fmt:formatNumber value="${requestScope.TOTAL_AMOUNT}" type="number" groupingUsed="true"/>đ</p>
                                                 </div>
                                             </td>
@@ -537,13 +553,13 @@
                                         <tr>
                                             <th scope="row">
                                             </th>
-                                            <td class="py-5"></td>
-                                            <td class="py-5"></td>
                                             <td class="py-5">
                                                 <p class="mb-0 text-dark py-3">Discount:</p>
                                             </td>
+                                            <td class="py-5"></td>
+                                            <td class="py-5"></td>
                                             <td class="py-5">
-                                                <div class="py-3 border-bottom border-top">
+                                                <div class="py-2 border-bottom border-top">
                                                     <p class="mb-0 text-dark">10%</p>
                                                 </div>
                                             </td>
@@ -552,13 +568,13 @@
                                             <th scope="row">
                                             </th>
                                             <td class="py-5">
-                                                <p class="mb-0 text-dark text-uppercase py-3">Total:</p>
+                                                <h3 class="mb-0 text-dark text-uppercase py-3">Tổng thanh toán:</h3>
                                             </td>
                                             <td class="py-5"></td>
                                             <td class="py-5"></td>
                                             <td class="py-5">
-                                                <div class="py-3 border-bottom border-top">
-                                                    <p class="mb-0 text-dark"><fmt:formatNumber value="${requestScope.TOTAL_AMOUNT}" type="number" groupingUsed="true"/>đ</p>
+                                                <div class="py-2 border-bottom border-top">
+                                                    <h3 class="mb-0 text-dark"><fmt:formatNumber value="${requestScope.TOTAL_AMOUNT}" type="number" groupingUsed="true"/>đ</h3>
                                                     <input type="hidden" name="totalamount" value="${requestScope.TOTAL_AMOUNT}" />
                                                 </div>
                                             </td>

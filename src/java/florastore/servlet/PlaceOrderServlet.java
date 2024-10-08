@@ -66,7 +66,7 @@ public class PlaceOrderServlet extends HttpServlet {
         String shipping = request.getParameter("shipping");
         String payment = request.getParameter("payment");
         Timestamp deliveryDate = null;
-        double total = 0;
+        
 
         try {
             //2. Cust goes to his/her cart place
@@ -79,6 +79,7 @@ public class PlaceOrderServlet extends HttpServlet {
                     Map<String, List<EventCartItem>> items = cart.getItems();
                     if (items != null) {
                         for (Map.Entry<String, List<EventCartItem>> entry : items.entrySet()) {
+                            double total = 0;
                             List<EventCartItem> itemList = entry.getValue();
                             //Get eventId of each Event
                             for(EventCartItem eventItem : itemList){
@@ -86,7 +87,7 @@ public class PlaceOrderServlet extends HttpServlet {
                                 break;
                             }
                             for(EventCartItem eventItem : itemList){
-                                total =+ eventItem.getQuantity() * eventItem.getUnitPrice();
+                                total = total + (eventItem.getQuantity() * eventItem.getUnitPrice());
                             }
                             EventOrderDTO orderInfo = new EventOrderDTO(username, eventId, fullname, phone, address, city, deliveryDate, shipping, payment, "To Do", total, false);
                             //Call DAO/Model   

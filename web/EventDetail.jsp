@@ -53,8 +53,8 @@
             <div class="container topbar bg-primary d-none d-lg-block">
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
-                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="https://hcmuni.fpt.edu.vn/" class="text-white">FPT University, HCM</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
                         <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
@@ -312,7 +312,7 @@
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-center my-4">
-                                            <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-third w-100">Vew More</a>
+                                            <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-third w-100">View More</a>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -349,7 +349,7 @@
                                                             <a href="${urlRewriting}">
                                                                 <h4>${flower.eventProductName}</h4>
                                                             </a>
-                                                            <p>${product.productDetail}</p>
+                                                            <p>${flower.eventProductDetail}</p>
                                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                                 <p class="text-dark fs-5 fw-bold mb-0">
                                                                     <fmt:formatNumber value="${flower.eventProductPrice}" type="number" groupingUsed="true"/>đ
@@ -365,9 +365,16 @@
                                                                 <input type="hidden" name="itemQuantity" value="1">
 
                                                                 <c:if test="${not empty sessionScope.USER}">
-                                                                    <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                                                    </button>
+                                                                    <c:if test="${flower.eventProductQuantity > 0}">
+                                                                        <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                                                        </button>
+                                                                    </c:if>
+                                                                    <c:if test="${flower.eventProductQuantity == 0}">
+                                                                        <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third" disabled="">
+                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                                        </button>
+                                                                    </c:if>
                                                                 </c:if>
                                                                 <c:if test="${empty sessionScope.USER}">
                                                                     <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">

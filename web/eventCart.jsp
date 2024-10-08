@@ -12,7 +12,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Fruitables - Vegetable Website Template</title>
+        <title>Flora Rewind | Buy and sell on the website</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -62,8 +62,8 @@
             <div class="container topbar bg-primary d-none d-lg-block">
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
-                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="https://hcmuni.fpt.edu.vn/" class="text-white">FPT University, HCM</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
                         <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
@@ -82,7 +82,7 @@
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link">Event</a>
+                            <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
@@ -273,19 +273,19 @@
                                     <div class="p-4">
                                         <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
                                         <div class="d-flex justify-content-between mb-4">
-                                            <h5 class="mb-0 me-4">Subtotal:</h5>
-                                            <p class="mb-0"><fmt:formatNumber value="${sessionScope.ETOTAL}" type="number" groupingUsed="true"/>đ</p>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <h5 class="mb-0 me-4">Discount:</h5>
-                                        <div class="">
-                                            <p class="mb-0"></p>
+                                            <h5 class="mb-0 me-4">Tổng tiền hàng:</h5>
+                                            <p class="mb-0"><c:if test="${not empty ecart || not empty ecart.items}"><fmt:formatNumber value="${sessionScope.ETOTAL}" type="number" groupingUsed="true"/>đ</c:if></p>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <h5 class="mb-0 me-4">Discount:</h5>
+                                            <div class="">
+                                                <p class="mb-0"></p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                                    <h5 class="mb-0 ps-4 me-4">Total</h5>
-                                    <p class="mb-0 pe-4"><fmt:formatNumber value="${sessionScope.ETOTAL}" type="number" groupingUsed="true"/>đ</p>
+                                    <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                                        <h5 class="mb-0 ps-4 me-4">Tổng thanh toán:</h5>
+                                        <p class="mb-0 pe-4"><c:if test="${not empty ecart || not empty ecart.items}"><fmt:formatNumber value="${sessionScope.ETOTAL}" type="number" groupingUsed="true"/>đ</c:if></p>
                                     <input type="hidden" name="total" value="${sessionScope.ETOTAL}"/>
                                 </div>
                                 <button class="btn border-secondary rounded-pill px-4 py-3 text-third text-uppercase mb-4 ms-4" type="submit" <c:if test="${empty ecart || empty ecart.items}">disabled="disabled"</c:if>>Mua Hàng</button>
