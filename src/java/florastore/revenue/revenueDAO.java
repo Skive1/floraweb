@@ -85,13 +85,19 @@ public class revenueDAO implements Serializable {
             //1. Get connection
             con = DBHelper.getConnection();
             if (con != null) {
-                String sql = "SELECT Top 5 Cast(o.OrderDate as DATE) as OrderDate,fp.ProductId, fp.ProductName, od.UnitPrice, SUM(od.Quantity) as Sold, SUM(od.Total) as TotalAmount "
+                String sql = "SELECT TOP 5 "
+                        + "CAST(o.OrderDate AS DATE) AS OrderDate, "
+                        + "fp.ProductId, "
+                        + "fp.ProductName, "
+                        + "od.UnitPrice, "
+                        + "SUM(od.Quantity) AS Sold, "
+                        + "SUM(od.Total) AS TotalAmount "
                         + "FROM FlowerProducts fp "
-                        + "JOIN OrderDetail od ON fp.ProductId = od.FlowerProductsID "
-                        + "JOIN [Order] o ON od.OrderOrderId = o.OrderId "
-                        + "WHERE Month(OrderDate) = ? and year(OrderDate)= ? "
-                        + "GROUP BY fp.ProductName, fp.ProductId, od.UnitPrice, OrderDate "
-                        + "ORDER BY OrderDate asc";
+                        + "INNER JOIN OrderDetail od ON fp.ProductId = od.FlowerProductsID "
+                        + "INNER JOIN [Order] o ON od.OrderOrderId = o.OrderId "
+                        + "WHERE MONTH(OrderDate) = ? and YEAR(OrderDate) = ? "
+                        + "GROUP BY fp.ProductId, fp.ProductName, od.UnitPrice, OrderDate "
+                        + "ORDER BY SUM(od.Total) DESC;";
                 //2. Create stm obj
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, month);
@@ -116,9 +122,8 @@ public class revenueDAO implements Serializable {
         }
         return 0;
     }
-    
-    
-       public List<revenueDTO> getSalesByMonthAndYear(int month, int year) throws SQLException, NamingException {
+
+    public List<revenueDTO> getSalesByMonthAndYear(int month, int year) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -141,19 +146,18 @@ public class revenueDAO implements Serializable {
                 rs = stm.executeQuery();
                 List<revenueDTO> salesList = new ArrayList<>();
                 while (rs.next()) {
-                    revenueDTO sale = new revenueDTO( rs.getDate("OrderDate"),
-                        rs.getInt("ProductId"),
-                        rs.getString("ProductName"),
-                        rs.getDouble("UnitPrice"),
-                        rs.getInt("Sold"),
-                        rs.getFloat("TotalAmount"));
+                    revenueDTO sale = new revenueDTO(rs.getDate("OrderDate"),
+                            rs.getInt("ProductId"),
+                            rs.getString("ProductName"),
+                            rs.getDouble("UnitPrice"),
+                            rs.getInt("Sold"),
+                            rs.getFloat("TotalAmount"));
                     salesList.add(sale);
                 } //end while loop
-                
-            return salesList;   
+
+                return salesList;
             } //end if connection is success
 
-        return null;
         } finally {
             if (rs != null) {
                 rs.close();
@@ -165,5 +169,8 @@ public class revenueDAO implements Serializable {
                 con.close();
             }
         }
-       }     
+        return null;
+    }
+
+   
 }

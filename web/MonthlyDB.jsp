@@ -80,6 +80,9 @@
                         <c:if test="${empty requestScope.MonthList}">
                             <p>Không có sản phẩm được bán trong tháng này</p>
                         </c:if>
+                        <c:if test="${empty requestScope.allMonth}">
+                            <p>Không có allMonth sản phẩm được bán trong tháng này</p>
+                        </c:if>    
                         <h1 style="text-align: center;">Dashboard</h1>
                         
                         <h3 class="mb-0 text-center">
@@ -124,10 +127,12 @@
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             datasets: [{
                     label: 'My First Dataset',
-                    data: [65, 59, 80, 81, 56, 55, 40],
+                    data: [${requestScope.month1.total}, ${requestScope.month2.total}, ${requestScope.month3.total}, ${requestScope.month4.total}, ${requestScope.month5.total}
+                        , ${requestScope.month6.total}, ${requestScope.month7.total}, ${requestScope.month8.total}, ${requestScope.month9.total}, ${requestScope.month10.total}
+                        , ${requestScope.month11.total}, ${requestScope.month12.total}],
                     fill: false,
                     borderColor: 'rgb(75, 192, 192)',
                     tension: 0.1

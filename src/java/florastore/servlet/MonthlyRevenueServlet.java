@@ -7,6 +7,8 @@ package florastore.servlet;
 
 import florastore.revenue.revenueDAO;
 import florastore.revenue.revenueDTO;
+import florastore.revenue.yearlyRevenueDAO;
+import florastore.revenue.yearlyRevenueDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -66,21 +68,37 @@ public class MonthlyRevenueServlet extends HttpServlet {
         try {
             //1. Lấy id từ session Scope
             revenueDAO dao = new revenueDAO();
-            List<revenueDTO> saleList1;
-            saleList1 = dao.getSalesByMonthAndYear(10, year);
             //2. Call method
             dao.loadAmountByMonth(month, year);
 //            //3. Get list
             ArrayList<revenueDTO> list = dao.getMonthList();
+
+            yearlyRevenueDAO yearDao = new yearlyRevenueDAO();
+            yearDao.loadTotalAmountOfAllMonthByYear(year);
+            ArrayList<yearlyRevenueDTO> listYear = yearDao.getAllMonthList();
             //4. Lưu vào trong attribute
-             request.setAttribute("pro1", list.get(0));
+            request.setAttribute("pro1", list.get(0));
             request.setAttribute("pro2", list.get(1));
             request.setAttribute("pro3", list.get(2));
             request.setAttribute("pro4", list.get(3));
             request.setAttribute("pro5", list.get(4));
             request.setAttribute("MonthList", list);
-            
-            
+            //Attribute chứa tổng giá của 12 tháng
+
+            request.setAttribute("month1", listYear.get(0));
+            request.setAttribute("month2", listYear.get(1));
+            request.setAttribute("month3", listYear.get(2));
+            request.setAttribute("month4", listYear.get(3));
+            request.setAttribute("month5", listYear.get(4));
+            request.setAttribute("month6", listYear.get(5));
+            request.setAttribute("month7", listYear.get(6));
+            request.setAttribute("month8", listYear.get(7));
+            request.setAttribute("month9", listYear.get(8));
+            request.setAttribute("month10", listYear.get(9));
+            request.setAttribute("month11", listYear.get(10));
+            request.setAttribute("month12", listYear.get(11));
+            request.setAttribute("allMonth", listYear);
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
