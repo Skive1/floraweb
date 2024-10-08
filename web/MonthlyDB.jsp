@@ -78,13 +78,9 @@
                     </div> 
                     <div class="admin-content-main">
                         <c:if test="${empty requestScope.MonthList}">
-                            <p>Không có sản phẩm được bán trong tháng này</p>
-                        </c:if>
-                        <c:if test="${empty requestScope.allMonth}">
-                            <p>Không có allMonth sản phẩm được bán trong tháng này</p>
-                        </c:if>    
-                        <h1 style="text-align: center;">Dashboard</h1>
-                        
+                            <p>Không có sản phẩm được bán trong tháng/năm này</p>
+                        </c:if>                      
+                        <h1 style="text-align: center;">Dashboard</h1>                    
                         <h3 class="mb-0 text-center">
                             <strong>Revenue by month</strong>
                             <form id="f1" method="get" action="monthlyRevenue">
@@ -129,7 +125,7 @@
         data: {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             datasets: [{
-                    label: 'My First Dataset',
+                    label: 'Biểu đồ doanh thu tổng của cả năm',
                     data: [${requestScope.month1.total}, ${requestScope.month2.total}, ${requestScope.month3.total}, ${requestScope.month4.total}, ${requestScope.month5.total}
                         , ${requestScope.month6.total}, ${requestScope.month7.total}, ${requestScope.month8.total}, ${requestScope.month9.total}, ${requestScope.month10.total}
                         , ${requestScope.month11.total}, ${requestScope.month12.total}],
@@ -153,8 +149,10 @@
         data: {
             labels: xValues,
             datasets: [{
+                    label: 'Biểu đồ Top 5 sản phẩm bán chạy theo tháng',
                     backgroundColor: barColors,
-                    data: yValues
+                    data: yValues,
+                    borderColor: 'rgb(75, 192, 192)'
                 }]
         },
         options: {
@@ -166,10 +164,7 @@
         }
     });
 
-    function getYear(obj) {
-        var year = obj.value;
-        document.getElementById("f1").submit();
-    }
+ 
 </script>
 <script src="js/javascript.js"></script>
 </body>
