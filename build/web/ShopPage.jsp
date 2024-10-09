@@ -252,13 +252,18 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <h4 class="mb-2">Price</h4>
-                                        <form id="searchRange" action="searchFindError" method="POST">
+                                    <form id="searchRangeAndColor" action="searchFindError" method="POST">
+                                        <div class="col-lg-12">
+                                            <c:if test="${sessionScope.PriceFromSave == null && sessionScope.PriceToSave == null}">
+                                                <h4 class="mb-2">Price: </h4>
+                                            </c:if>
+                                            <c:if test="${sessionScope.PriceFromSave != null && sessionScope.PriceToSave != null}">
+                                                <h4 class="mb-2">Price: (${sessionScope.PriceFromSave} - ${sessionScope.PriceToSave})</h4>
+                                            </c:if>
                                             <div class="d-flex align-items-center justify-content-between mb-3">
-                                                <input type="search" name="txtPriceFrom" value="${sessionScope.PriceFrom}" 
+                                                <input type="search" name="txtPriceFrom" value="" 
                                                        class="form-control p-3" placeholder="From" style="width: 125px">
-                                                <input type="search" name="txtPriceTo" value="${sessionScope.PriceTo}" 
+                                                <input type="search" name="txtPriceTo" value="" 
                                                        class="form-control p-3" placeholder="To" style="width: 125px">
                                             </div>
                                             <c:set var="errors" value="${requestScope.PRICE_ERROR}"/>
@@ -277,15 +282,11 @@
                                                 ${errors.priceRangeError}
                                                 </font> <br/>
                                             </c:if>
-                                            <div class="d-flex justify-content-center my-4">
-                                                <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-third w-100" 
-                                                   onclick="document.getElementById('searchRange').submit()">Search</a>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <form id="searchColor" action="SearchForColorServlet" method="POST">
-                                            <select class="form-control" name="txtColor" id="searchColor" onchange="this.form.submit()">
+
+                                        </div>
+                                        <div class="col-lg-12">
+
+                                            <select class="form-control" name="txtColor" id="searchRangeAndColor">
                                                 <option disabled>Choose color:</option>
                                                 <c:forEach var="color" items="${requestScope.requestColor}">
                                                     <c:if test="${color == sessionScope.currentColor}">
@@ -298,10 +299,11 @@
                                             </select>
                                             <div class="d-flex justify-content-center my-4">
                                                 <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-third w-100" 
-                                                   onclick="document.getElementById('searchColor').submit()">Search</a>
+                                                   onclick="document.getElementById('searchRangeAndColor').submit()">Search</a>
                                             </div>
-                                        </form>
-                                    </div>
+
+                                        </div>
+                                    </form>
                                     <%--Top new--%>
                                     <div class="col-lg-12">
                                         <h4 class="mb-3">Featured products</h4>

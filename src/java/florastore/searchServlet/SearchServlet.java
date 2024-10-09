@@ -107,8 +107,6 @@ public class SearchServlet extends HttpServlet {
             
             if (searchErrorExist != null) {
                 session.removeAttribute("errorExist");
-                session.setAttribute("PriceFrom", paramPriceFrom);              //show error input
-                session.setAttribute("PriceTo", paramPriceTo);
             } else {
                 session.removeAttribute("PriceFrom");
                 session.removeAttribute("PriceTo");
@@ -139,6 +137,10 @@ public class SearchServlet extends HttpServlet {
             session.setAttribute("productOrdered", totalProduct);               //dùng để in theo giá giảm/tăng
             
             categories = service.getCategories(totalProduct);                   //để gán số lượng cho categories dựa trên phân loại từ tổng sản phẩm tìm thấy
+            
+            session.removeAttribute("PriceFromSave");
+            session.removeAttribute("PriceToSave");
+            
             session.removeAttribute("allType");
             session.removeAttribute("freshFlower");
             session.removeAttribute("pottedFlower");

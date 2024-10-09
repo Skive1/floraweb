@@ -85,8 +85,6 @@ public class ShowOrderedByServlet extends HttpServlet {
 
             if (searchErrorExist != null) {
                 session.removeAttribute("errorExist");
-                session.setAttribute("PriceFrom", paramPriceFrom);              //show error input
-                session.setAttribute("PriceTo", paramPriceTo);
             } else {
                 session.removeAttribute("PriceFrom");
                 session.removeAttribute("PriceTo");

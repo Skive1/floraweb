@@ -81,8 +81,6 @@ public class SearchForTypeServlet extends HttpServlet {
 
             if (searchErrorExist != null) {
                 session.removeAttribute("errorExist");
-                session.setAttribute("PriceFrom", paramPriceFrom);              //show error input
-                session.setAttribute("PriceTo", paramPriceTo);
             } else {
                 session.removeAttribute("currentColor");
                 session.removeAttribute("PriceFrom");

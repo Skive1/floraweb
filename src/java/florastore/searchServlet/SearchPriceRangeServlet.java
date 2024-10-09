@@ -38,10 +38,10 @@ public class SearchPriceRangeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        
+
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.SearchFeature.SUCCESS);
+        String url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_COLOR);
 
         String paramPriceFrom = request.getParameter("txtPriceFrom");
         String paramPriceTo = request.getParameter("txtPriceTo");
@@ -65,107 +65,108 @@ public class SearchPriceRangeServlet extends HttpServlet {
         List<ProductDTO> divideResult = new ArrayList<>();
 
         try {
-            ProductDAO dao = new ProductDAO();
-            ServiceLayer service = new ServiceLayer();
-            pageIsActive = service.checkPagination(pageIsActive, goBack, goForward);
-            
-            if (checkPageActive != null && searchErrorExist != null) {
-                pageIsActive = checkPageActive;
-                session.removeAttribute("checkPageExtendActive");
-            }
+//            if (request.getAttribute("txtColor") != null && paramPriceFrom.isEmpty()        //nếu ko có valueSearch và ko có lỗi
+//                    && paramPriceTo.isEmpty() && searchErrorExist == null) {                //tức là 
+                ProductDAO dao = new ProductDAO();
+                ServiceLayer service = new ServiceLayer();
+                pageIsActive = service.checkPagination(pageIsActive, goBack, goForward);
 
-            session.removeAttribute("pageIsActive");
-            session.setAttribute("pageIsActive", pageIsActive);
-
-            if (pageIsActive == null && searchErrorExist == null) {
-                priceFrom = Integer.parseInt(paramPriceFrom);
-                priceTo = Integer.parseInt(paramPriceTo);
-            } else {
-                priceFrom = (int) session.getAttribute("PriceFromSave");
-                priceTo = (int) session.getAttribute("PriceToSave");
-            }
-            session.removeAttribute("PriceFrom");
-            session.removeAttribute("PriceTo");
-            if (searchErrorExist != null) {
-                session.removeAttribute("errorExist");
-                session.setAttribute("PriceFrom", paramPriceFrom);              //show error input
-                session.setAttribute("PriceTo", paramPriceTo);
-            } else {
-                session.setAttribute("PriceFrom", priceFrom);                   //show latest correct input
-                session.setAttribute("PriceTo", priceTo);
-                session.removeAttribute("currentColor");
-            }
-
-            session.removeAttribute("PriceFromSave");
-            session.removeAttribute("PriceToSave");
-            session.setAttribute("PriceFromSave", priceFrom);                       //dùng để search lại giá trị cũ
-            session.setAttribute("PriceToSave", priceTo);
-            
-            for (ProductDTO category : totalProduct) {
-                if (priceFrom <= category.getProductPrice() && category.getProductPrice() <= priceTo) {
-                    divideResult.add(category);                             //thực hiện add các phần tử có giá từ A đến B
+                if (checkPageActive != null && searchErrorExist != null) {
+                    pageIsActive = checkPageActive;
+                    session.removeAttribute("checkPageExtendActive");
                 }
-            }
-            
-            session.removeAttribute("productOrdered");
-            session.setAttribute("productOrdered", divideResult);               //dùng để in theo giá giảm/tăng
-            
-            pageSize = service.getPage(divideResult.size());
-            if (pageSize == 0) {
-                pageSize = 1;
-            }
-            session.removeAttribute("pageSize");
-            session.setAttribute("pageSize", pageSize);
 
-            categories = service.getCategories(divideResult);
+                session.removeAttribute("pageIsActive");
+                session.setAttribute("pageIsActive", pageIsActive);
 
-            session.removeAttribute("allType");
-            session.removeAttribute("freshFlower");
-            session.removeAttribute("pottedFlower");
-            session.removeAttribute("dryFlower");
-            session.removeAttribute("otherType");
+                if (pageIsActive == null && searchErrorExist == null) {
+                    priceFrom = Integer.parseInt(paramPriceFrom);
+                    priceTo = Integer.parseInt(paramPriceTo);
+                } else {
+                    priceFrom = (int) session.getAttribute("PriceFromSave");
+                    priceTo = (int) session.getAttribute("PriceToSave");
+                }
+                session.removeAttribute("PriceFrom");
+                session.removeAttribute("PriceTo");
+                if (searchErrorExist != null) {
+                    session.removeAttribute("errorExist");
+                } else {
+                    session.setAttribute("PriceFrom", priceFrom);                   //show latest correct input
+                    session.setAttribute("PriceTo", priceTo);
+                    session.removeAttribute("currentColor");
+                }
 
-            session.setAttribute("allType", categories[0]);
-            session.setAttribute("freshFlower", categories[1]);
-            session.setAttribute("pottedFlower", categories[2]);
-            session.setAttribute("dryFlower", categories[3]);
-            session.setAttribute("otherType", categories[4]);
-            
-            session.removeAttribute("totalProductPrice");
-            session.setAttribute("totalProductPrice", divideResult);
+                session.removeAttribute("PriceFromSave");
+                session.removeAttribute("PriceToSave");
+                session.setAttribute("PriceFromSave", priceFrom);                       //dùng để search lại giá trị cũ
+                session.setAttribute("PriceToSave", priceTo);
 
-            page = service.getPage(page, pageIsActive, goBack, goForward);
-            range = service.getPageRange(page);
+                for (ProductDTO category : totalProduct) {
+                    if (priceFrom <= category.getProductPrice() && category.getProductPrice() <= priceTo) {
+                        divideResult.add(category);                             //thực hiện add các phần tử có giá từ A đến B
+                    }
+                }
 
-            List<ProductDTO> productList = service.getNine(divideResult, range);
-            dao.searchTotalProduct("", true);                                   //giữ cho categories luôn cập nhật sản phẩm mới
-            List<ProductDTO> categoryUpdate = dao.getTotalProduct();
+                session.removeAttribute("productOrdered");
+                session.setAttribute("productOrdered", divideResult);               //dùng để in theo giá giảm/tăng
 
-            request.setAttribute("requestColor", service.chooseColor());
-            
-            request.removeAttribute("requestNewProduct");
-            request.setAttribute("requestNewProduct", service.getNewProduct(categoryUpdate));
+                pageSize = service.getPage(divideResult.size());
+                if (pageSize == 0) {
+                    pageSize = 1;
+                }
+                session.removeAttribute("pageSize");
+                session.setAttribute("pageSize", pageSize);
 
-            request.removeAttribute("requestResultList");
-            request.setAttribute("requestResultList", productList);                   //9 sản phẩm đã vào attribute result chuẩn bị được show
+                categories = service.getCategories(divideResult);
 
-            session.removeAttribute("currentPage");
-            if (pageIsActive == null) {
-                session.setAttribute("currentPage", 1);                   //sau khi search hoặc nhấn Shop thì button trang 1 sẽ sáng
-            } else {
-                session.setAttribute("currentPage", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
-            }
-            
-            session.removeAttribute("txtOrderBy");
-            session.setAttribute("txtOrderBy", "default");
-            
-            session.removeAttribute("search");
-            session.removeAttribute("searchForType");
-            session.removeAttribute("searchForColor");
-            session.removeAttribute("showOrderBy");
-            session.removeAttribute("searchColorLastActive");
-            session.setAttribute("searchExtend", "searchExtend active");        //phân luồng cho pageController nếu user chuyển trang/nhập lỗi
-            session.setAttribute("searchPriceLastActive", "search price last active");  //vẫn hiển thị price from/to nếu user dùng tính năng ordered by
+                session.removeAttribute("allType");
+                session.removeAttribute("freshFlower");
+                session.removeAttribute("pottedFlower");
+                session.removeAttribute("dryFlower");
+                session.removeAttribute("otherType");
+
+                session.setAttribute("allType", categories[0]);
+                session.setAttribute("freshFlower", categories[1]);
+                session.setAttribute("pottedFlower", categories[2]);
+                session.setAttribute("dryFlower", categories[3]);
+                session.setAttribute("otherType", categories[4]);
+
+                session.removeAttribute("totalProductPrice");
+                session.setAttribute("totalProductPrice", divideResult);
+
+                page = service.getPage(page, pageIsActive, goBack, goForward);
+                range = service.getPageRange(page);
+
+                List<ProductDTO> productList = service.getNine(divideResult, range);
+                dao.searchTotalProduct("", true);                                   //giữ cho categories luôn cập nhật sản phẩm mới
+                List<ProductDTO> categoryUpdate = dao.getTotalProduct();
+
+                request.setAttribute("requestColor", service.chooseColor());
+
+                request.removeAttribute("requestNewProduct");
+                request.setAttribute("requestNewProduct", service.getNewProduct(categoryUpdate));
+
+                request.removeAttribute("requestResultList");
+                request.setAttribute("requestResultList", productList);                   //9 sản phẩm đã vào attribute result chuẩn bị được show
+
+                session.removeAttribute("currentPage");
+                if (pageIsActive == null) {
+                    session.setAttribute("currentPage", 1);                   //sau khi search hoặc nhấn Shop thì button trang 1 sẽ sáng
+                } else {
+                    session.setAttribute("currentPage", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
+                }
+
+                session.removeAttribute("txtOrderBy");
+                session.setAttribute("txtOrderBy", "default");
+
+                session.removeAttribute("search");
+                session.removeAttribute("searchForType");
+                session.removeAttribute("searchForColor");
+                session.removeAttribute("showOrderBy");
+                session.removeAttribute("searchColorLastActive");
+                session.setAttribute("searchExtend", "searchExtend active");        //phân luồng cho pageController nếu user chuyển trang/nhập lỗi
+                session.setAttribute("searchPriceLastActive", "search price last active");  //vẫn hiển thị price from/to nếu user dùng tính năng ordered by
+//            }
         } catch (SQLException ex) {
             Logger.getLogger(SearchPriceRangeServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NamingException ex) {

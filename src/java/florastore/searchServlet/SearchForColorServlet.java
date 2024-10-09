@@ -70,7 +70,7 @@ public class SearchForColorServlet extends HttpServlet {
             session.removeAttribute("oldCurrentPage");
             session.setAttribute("oldCurrentPage", pageIsActive);
 
-            if (oldColor != null && getColor == null) {                          //lấy type cũ khi user chuyển trang hoặc search lỗi
+            if (oldColor != null && searchErrorExist != null) {                          //lấy type cũ khi user chuyển trang hoặc search lỗi
                 getColor = oldColor;
             }
 
@@ -79,8 +79,6 @@ public class SearchForColorServlet extends HttpServlet {
 
             if (searchErrorExist != null) {
                 session.removeAttribute("errorExist");
-                session.setAttribute("PriceFrom", paramPriceFrom);              //show error input
-                session.setAttribute("PriceTo", paramPriceTo);
             } else {
                 session.removeAttribute("PriceFrom");
                 session.removeAttribute("PriceTo");
@@ -90,7 +88,7 @@ public class SearchForColorServlet extends HttpServlet {
                     session.setAttribute("PriceTo", session.getAttribute("PriceToSave"));
                 }
             }
-
+            System.out.println(oldColor);
             session.removeAttribute("oldColor");
             session.setAttribute("oldColor", getColor);                       //dùng để search lại giá trị cũ - sửa thành giá trị getCategories
             if ("All type".equals(getColor)) {

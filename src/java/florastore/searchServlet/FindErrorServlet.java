@@ -35,13 +35,13 @@ public class FindErrorServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_PRICE_RANGE);
+        String url = (String) siteMap.get(MyAppConstants.SearchFeature.ERROR);
 
         HttpSession session = request.getSession();
-//        List<ProductDTO> totalProduct = (List<ProductDTO>) session.getAttribute("TOTAL_PRODUCT");
 
         String paramPriceFrom = request.getParameter("txtPriceFrom");
         String paramPriceTo = request.getParameter("txtPriceTo");
+        String txtColor = request.getParameter("txtColor");
 
         int priceFrom = 0;
         int priceTo = 0;
@@ -49,7 +49,8 @@ public class FindErrorServlet extends HttpServlet {
         boolean foundError = false;                                             //cờ dò lỗi
         try {
             SearchCreateError errors = new SearchCreateError();
-            if (paramPriceFrom.trim().isEmpty() || paramPriceTo.trim().isEmpty()) {         //empty
+            if (paramPriceFrom.trim().isEmpty() && !paramPriceTo.trim().isEmpty()
+                    || !paramPriceFrom.trim().isEmpty() && paramPriceTo.trim().isEmpty()) {         //empty 1 bên
                 foundError = true;
                 errors.setPriceEmpty("You have to enter the valid number into both of this!");
             } else if (!paramPriceFrom.trim().matches("[0-9]+") || !paramPriceTo.trim().matches("[0-9]+")) {        //not number
@@ -64,20 +65,20 @@ public class FindErrorServlet extends HttpServlet {
                     errors.setPriceRangeError("Please input a valid range!");
                 }
             }
-
-            if (foundError) {                                               //tìm ra lỗi
+            if (paramPriceFrom.trim().isEmpty() && paramPriceTo.trim().isEmpty()) {     //nếu empty 2 bên là user search color
+                url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_COLOR);  //txtColor không thể null vì default luôn là tìm toàn bộ
+            } else if (foundError) {                                                //tìm ra lỗi thì trả về trang cũ
                 request.setAttribute("PRICE_ERROR", errors);
                 url = (String) siteMap.get(MyAppConstants.SearchFeature.PAGE_CONTROL);
-            }
-
+            } else if (!foundError) {                                               //price range valid
+                url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_PRICE_RANGE);    //sau khi search price xong sẽ chuyển sang search color
+            }                                                                                   //nếu user chỉ search price thì dù có qua search color cũng 
+                                                                                                //không bị sai data vì txtColor là tìm toàn bộ
+            System.out.println(paramPriceFrom + " " + paramPriceTo + " " + txtColor);
             session.removeAttribute("PriceFrom");
             session.removeAttribute("PriceTo");
             session.setAttribute("PriceFrom", paramPriceFrom);
             session.setAttribute("PriceTo", paramPriceTo);
-
-//            session.removeAttribute("CURRENTPAGE");
-            
-            //find error here
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
