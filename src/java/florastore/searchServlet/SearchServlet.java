@@ -33,6 +33,9 @@ public class SearchServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.SearchFeature.SUCCESS);
@@ -109,6 +112,7 @@ public class SearchServlet extends HttpServlet {
             } else {
                 session.removeAttribute("PriceFrom");
                 session.removeAttribute("PriceTo");
+                session.removeAttribute("currentColor");
             }
             
             List<ProductDTO> totalProduct = dao.getTotalProduct();              //lấy tổng sản phẩm trong kho
@@ -125,22 +129,29 @@ public class SearchServlet extends HttpServlet {
             range = service.getPageRange(page);                                 //lấy phạm vi sản phẩm để show
 
             List<ProductDTO> productList = service.getNine(totalProduct, range);               //đã lấy được 9 sản phẩm để show trang chính
-            request.removeAttribute("requestResultList");
+//            request.removeAttribute("requestResultList");
             request.setAttribute("requestResultList", productList);                   //9 sản phẩm đã vào attribute result chuẩn bị được show
             
             session.removeAttribute("totalProduct");
             session.setAttribute("totalProduct", totalProduct);                //Dùng để search theo giá
-
+            
+            session.removeAttribute("productOrdered");
+            session.setAttribute("productOrdered", totalProduct);               //dùng để in theo giá giảm/tăng
+            
             categories = service.getCategories(totalProduct);                   //để gán số lượng cho categories dựa trên phân loại từ tổng sản phẩm tìm thấy
+            session.removeAttribute("allType");
             session.removeAttribute("freshFlower");
             session.removeAttribute("pottedFlower");
             session.removeAttribute("dryFlower");
             session.removeAttribute("otherType");
 
-            session.setAttribute("freshFlower", categories[0]);
-            session.setAttribute("pottedFlower", categories[1]);
-            session.setAttribute("dryFlower", categories[2]);
-            session.setAttribute("otherType", categories[3]);
+            request.setAttribute("requestColor", service.chooseColor());
+            
+            session.setAttribute("allType", categories[0]);
+            session.setAttribute("freshFlower", categories[1]);
+            session.setAttribute("pottedFlower", categories[2]);
+            session.setAttribute("dryFlower", categories[3]);
+            session.setAttribute("otherType", categories[4]);
 
             session.removeAttribute("currentPage");
             if (pageIsActive == null) {
@@ -153,15 +164,21 @@ public class SearchServlet extends HttpServlet {
             List<ProductDTO> newIncome = service.getNewProduct(totalProduct);
             request.removeAttribute("requestNewProduct");                              //giữ cho categories luôn cập nhật
             request.setAttribute("requestNewProduct", newIncome);
-
+            
+            session.removeAttribute("txtOrderBy");
+            session.setAttribute("txtOrderBy", "default");
+            
             session.removeAttribute("searchExtend");                            //phân luồng để PageChanger chạy
             session.removeAttribute("searchForType");
             session.removeAttribute("searchForColor");
+            session.removeAttribute("showOrderBy");
+            session.removeAttribute("searchPriceLastActive");
+            session.removeAttribute("searchColorLastActive");
             session.setAttribute("search", "search is active");
         } catch (SQLException ex) {
-            log("SearchServlet _ SQL _ " + ex.getMessage());
+            log("ViewProfileServlet _ SQL " + ex.getMessage());
         } catch (NamingException ex) {
-            log("SearchServlet _ Naming _ " + ex.getMessage());
+            log("ViewProfileServlet _ Naming " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

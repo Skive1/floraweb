@@ -105,12 +105,14 @@ public class MyAppConstants {
 
     public class SearchFeature {
 
-        public static final String ERROR = "errorProcess";
+        public static final String ERROR = "error404";
+        public static final String PAGE_CONTROL = "searchPageChange";
         public static final String SUCCESS = "showSearch";
         public static final String SEARCH = "searchAction";
-        public static final String SEARCH_EXTEND = "searchExtend";
+        public static final String SEARCH_PRICE_RANGE = "searchPriceRange";
         public static final String SEARCH_TYPE = "searchType";
         public static final String SEARCH_COLOR = "searchColor";
+        public static final String ORDER_BY = "orderBy";
     }
 
     public class EventFeatures {

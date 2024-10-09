@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>g PAGE</title>
+        <title>Search product</title>
         <%--<title>Fruitables - Vegetable Website Template</title>--%>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
@@ -34,7 +36,7 @@
 
         <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-            <div class="spinner-grow text-primary" role="status"></div>
+            <div class="spinner-grow text-third" role="status"></div>
         </div>
         <!-- Spinner End -->
 
@@ -56,9 +58,9 @@
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="HomePageJSP.jsp" class="navbar-brand"><h1 class="text-primary display-6">Fruitables</h1></a>
+                    <a href="HomePageJSP.jsp" class="navbar-brand"><h1 class="text-third display-6">Fruitables</h1></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="fa fa-bars text-primary"></span>
+                        <span class="fa fa-bars text-third"></span>
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
@@ -80,7 +82,7 @@
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="d-flex m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
+                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-third"></i></button>
                             <a href="#" class="position-relative me-4 my-auto">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
                                 <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
@@ -110,7 +112,7 @@
                                 <input type="search" name="txtSearchValue" value="" 
                                        class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
                                 <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                                    <%--thanh search n�y s? ko ?? value c? ?? t?o s? kh�c bi?t gi?a 2 thanh--%>
+                                    <%--thanh search này s? ko ?? value c? ?? t?o s? khác bi?t gi?a 2 thanh--%>
                             </div>
                         </div>
                     </div>
@@ -157,16 +159,34 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="col-6"></div>
-                            <div class="col-xl-3">
-                                <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
-                                    <label for="fruits">Default Sorting (later):</label>
-                                    <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3" form="fruitform">
-                                        <option value="volvo">Nothing</option>
-                                        <option value="saab">Popularity</option>
-                                        <option value="opel">Organic</option>
-                                        <option value="audi">Fantastic</option>
-                                    </select>
+                            <div class="col-7"></div>
+                            <div class="col-xl-2">
+                                <div class="bg-light ps-3 py-3 rounded d-flex justify-content-center mb-4">
+                                    <label for="fruits" >Sort price:</label>
+                                    <form id="orderByForm" action="orderBy" method="POST">
+                                        <input type="hidden" id="txtOrderBy" name="txtOrderBy"/>
+                                        <c:if test="${sessionScope.txtOrderBy == 'default'}">
+                                            <button type="submit" style="border: 0; background: none;" class="bg-light" 
+                                                    onclick="document.getElementById('txtOrderBy').value = 'default';
+                                                            document.getElementById('orderByForm').submit();">
+                                                <span style="color: black;">&uarr;</span><span style="color: black;">&darr;</span>
+                                            </button>
+                                        </c:if>
+                                        <c:if test="${sessionScope.txtOrderBy == 'ascending'}">
+                                            <button type="submit" style="border: 0; background: none;" class="bg-light" 
+                                                    onclick="document.getElementById('txtOrderBy').value = 'ascending';
+                                                            document.getElementById('orderByForm').submit();">
+                                                <span style="color: red;">&uarr;</span><span style="color: black;">&darr;</span>
+                                            </button>
+                                        </c:if>
+                                        <c:if test="${sessionScope.txtOrderBy == 'descending'}">
+                                            <button type="submit" style="border: 0; background: none;" class="bg-light" 
+                                                    onclick="document.getElementById('txtOrderBy').value = 'descending';
+                                                            document.getElementById('orderByForm').submit();">
+                                                <span style="color: black;">&uarr;</span><span style="color: red;">&darr;</span>
+                                            </button>
+                                        </c:if>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -181,9 +201,19 @@
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name">
                                                             <input type="hidden" id="categories" name="categories"/>
-                                                            <a href="#" onclick="document.getElementById('categories').value = 'Fresh Flower';
+                                                            <a href="#" onclick="document.getElementById('categories').value = 'Toàn bộ';
                                                                     document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
-                                                                Fresh Flower
+                                                                Toàn bộ
+                                                            </a>
+                                                            <span>(${sessionScope.allType})</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="d-flex justify-content-between fruite-name">
+                                                            <input type="hidden" id="categories" name="categories"/>
+                                                            <a href="#" onclick="document.getElementById('categories').value = 'Hoa ly';
+                                                                    document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
+                                                                Hoa ly
                                                             </a>
                                                             <span>(${sessionScope.freshFlower})</span>
                                                         </div>
@@ -191,9 +221,9 @@
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name">
                                                             <input type="hidden" id="categories" name="categories"/>
-                                                            <a href="#" onclick="document.getElementById('categories').value = 'Potted Plant';
+                                                            <a href="#" onclick="document.getElementById('categories').value = 'Hoa hồng';
                                                                     document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
-                                                                Potted Plant
+                                                                Hoa hồng
                                                             </a>
                                                             <span>(${sessionScope.pottedFlower})</span>
                                                         </div>
@@ -201,9 +231,9 @@
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name">
                                                             <input type="hidden" id="categories" name="categories"/>
-                                                            <a href="#" onclick="document.getElementById('categories').value = 'Dried Flower';
+                                                            <a href="#" onclick="document.getElementById('categories').value = 'Hoa hướng dương';
                                                                     document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
-                                                                Dried Flower
+                                                                Hoa hướng dương
                                                             </a>
                                                             <span>(${sessionScope.dryFlower})</span>
                                                         </div>
@@ -224,7 +254,7 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <h4 class="mb-2">Price</h4>
-                                        <form id="searchRange" action="FindErrorServlet" method="POST">
+                                        <form id="searchRange" action="searchFindError" method="POST">
                                             <div class="d-flex align-items-center justify-content-between mb-3">
                                                 <input type="search" name="txtPriceFrom" value="${sessionScope.PriceFrom}" 
                                                        class="form-control p-3" placeholder="From" style="width: 125px">
@@ -248,30 +278,26 @@
                                                 </font> <br/>
                                             </c:if>
                                             <div class="d-flex justify-content-center my-4">
-                                                <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100" 
+                                                <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-third w-100" 
                                                    onclick="document.getElementById('searchRange').submit()">Search</a>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="col-lg-12">
                                         <form id="searchColor" action="SearchForColorServlet" method="POST">
-                                            <select class="form-control" name="txtColor" id="searchColor" >
-                                                <option value="multi-color" ${session.CurrentColor == 'multi-color' ? 'selected' : ''}>Multi color</option>
-                                                <option value="red" ${session.CurrentColor == 'red' ? 'selected' : ''}>Red</option>
-                                                <option value="blue" ${session.CurrentColor == 'blue' ? 'selected' : ''}>Blue</option>
-                                                <option value="white" ${session.CurrentColor == 'white' ? 'selected' : ''}>White</option>
-                                                <option value="orange" ${session.CurrentColor == 'orange' ? 'selected' : ''}>Orange</option>
-                                                <option value="magenta" ${session.CurrentColor == 'magenta' ? 'selected' : ''}>Magenta</option>
-                                                <option value="yellow" ${session.CurrentColor == 'yellow' ? 'selected' : ''}>Yellow</option>
-                                                <option value="pink" ${session.CurrentColor == 'pink' ? 'selected' : ''}>Pink</option>
-                                                <option value="purple" ${session.CurrentColor == 'purple' ? 'selected' : ''}>Purple</option>
-                                                <option value="brown" ${session.CurrentColor == 'brown' ? 'selected' : ''}>Brown</option>
-                                                <option value="green" ${session.CurrentColor == 'green' ? 'selected' : ''}>Green</option>
-                                                <option value="black" ${session.CurrentColor == 'black' ? 'selected' : ''}>Black</option>
-                                                <option value="other" ${session.CurrentColor == 'other' ? 'selected' : ''}>Other</option>
+                                            <select class="form-control" name="txtColor" id="searchColor" onchange="this.form.submit()">
+                                                <option disabled>Choose color:</option>
+                                                <c:forEach var="color" items="${requestScope.requestColor}">
+                                                    <c:if test="${color == sessionScope.currentColor}">
+                                                        <option value="${sessionScope.currentColor}" selected="selected">${sessionScope.currentColor}</option>
+                                                    </c:if>
+                                                    <c:if test="${color != sessionScope.currentColor}">
+                                                        <option value="${color}">${color}</option>
+                                                    </c:if>   
+                                                </c:forEach>
                                             </select>
                                             <div class="d-flex justify-content-center my-4">
-                                                <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100" 
+                                                <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-third w-100" 
                                                    onclick="document.getElementById('searchColor').submit()">Search</a>
                                             </div>
                                         </form>
@@ -290,20 +316,24 @@
                                                     <h6 class="mb-2">${dto.getProductName()}</h6>
                                                     <div class="d-flex mb-2">
                                                         <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
+                                                        <i class="fa fa-star"></i>
                                                         <i class="fa fa-star text-secondary"></i>
                                                         <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-secondary"></i>
                                                     </div>
                                                     <div class="d-flex mb-2">
-                                                        <h5 class="fw-bold me-2">${dto.getProductPrice()} vnd</h5>
-                                                        <h5 class="text-danger text-decoration-line-through">${dto.getProductPrice() + 50000} vnd</h5>
+                                                        <h5 class="fw-bold me-2">
+                                                            <fmt:formatNumber value="${dto.getProductPrice()}" pattern="#,###"/> vnd
+                                                        </h5>
+                                                        <h5 class="text-danger text-decoration-line-through">
+                                                            <fmt:formatNumber value="${(dto.getProductPrice() + 1000000)}" pattern="#,###"/> vnd
+                                                        </h5>
                                                     </div>
                                                 </div>
                                             </div>
                                         </c:forEach>
                                         <div class="d-flex justify-content-center my-4">
-                                            <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">View More</a>
+                                            <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-third w-100">View More</a>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -334,9 +364,11 @@
                                                         <h4 class="small-heading">${dto.getProductName()}</h4>
                                                         <p>${dto.getProductDetail()}</p>
                                                         <div class="d-flex justify-content-between flex-lg-wrap">
-                                                            <p class="text-dark fs-5 fw-bold mb-0" style="margin-right: 10px">${dto.getProductPrice()} vnd</p>
-                                                            <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                                                <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                            <p class="text-dark fs-5 fw-bold mb-0" style="margin-right: 10px">
+                                                                <fmt:formatNumber value="${dto.getProductPrice()}" pattern="#,###"/> vnd
+                                                            </p>
+                                                            <button type="submit" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
                                                             </button>
                                                         </div> 
                                                     </div>
@@ -356,7 +388,7 @@
                                                 </form>
                                             </c:if>
                                             <c:if test="${sessionScope.currentPage != 1}"> 
-                                                <form id="backForm" action="PageChangerServlet" method="POST">
+                                                <form id="backForm" action="searchPageChange" method="POST">
                                                     <input type="hidden" id="pageBack" name="pageBack"/>
                                                     <a href="#" class="rounded" style="margin: 1"
                                                        onclick="document.getElementById('pageBack').value = '${sessionScope.currentPage}';
@@ -365,7 +397,7 @@
                                                     </a>
                                                 </form>
                                             </c:if>
-                                            <form id="paginationForm" action="PageChangerServlet" method="POST">
+                                            <form id="paginationForm" action="searchPageChange" method="POST">
                                                 <input type="hidden" id="pageNo" name="pageNo">
                                                 <c:forEach var="i" begin="1" end="${sessionScope.pageSize}">
                                                     <c:if test="${sessionScope.currentPage == i}">
@@ -383,7 +415,7 @@
                                                 </c:forEach>
                                             </form>
                                             <c:if test="${sessionScope.currentPage != sessionScope.pageSize}"> 
-                                                <form id="forwardForm" action="PageChangerServlet" method="POST">
+                                                <form id="forwardForm" action="searchPageChange" method="POST">
                                                     <input type="hidden" id="pageForward" name="pageForward"/>
                                                     <a href="#" class="rounded" style="margin: 1"
                                                        onclick="document.getElementById('pageForward').value = '${sessionScope.currentPage}';
@@ -419,7 +451,7 @@
                     <div class="row g-4">
                         <div class="col-lg-3">
                             <a href="#">
-                                <h1 class="text-primary mb-0">Fruitables</h1>
+                                <h1 class="text-third mb-0">Fruitables</h1>
                                 <p class="text-secondary mb-0">Fresh products</p>
                             </a>
                         </div>
@@ -445,7 +477,7 @@
                             <h4 class="text-light mb-3">Why People Like us!</h4>
                             <p class="mb-4">typesetting, remaining essentially unchanged. It was 
                                 popularised in the 1960s with the like Aldus PageMaker including of Lorem Ipsum.</p>
-                            <a href="" class="btn border-secondary py-2 px-4 rounded-pill text-primary">Read More</a>
+                            <a href="" class="btn border-secondary py-2 px-4 rounded-pill text-third">Read More</a>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">

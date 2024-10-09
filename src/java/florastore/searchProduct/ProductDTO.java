@@ -22,7 +22,7 @@ public class ProductDTO implements Serializable{
     private int ProductQuantity;
     private String ImageURL;
     private int categoryID;
-
+    
     public ProductDTO(int ProductID, int StoreId, String ProductName, String ProductType, String ProductCondition, String ProductDetail, int ProductPrice, int ProductQuantity, String ImageURL, int categoryID) {
         this.ProductID = ProductID;
         this.StoreId = StoreId;

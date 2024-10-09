@@ -31,12 +31,14 @@ public class SearchForTypeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.SearchFeature.SUCCESS);
 
-        String getCategories = request.getParameter("categories");
+        String getCategory = request.getParameter("categories");
 
         String paramPriceFrom = request.getParameter("txtPriceFrom");
         String paramPriceTo = request.getParameter("txtPriceTo");
@@ -58,6 +60,9 @@ public class SearchForTypeServlet extends HttpServlet {
         List<ProductDTO> totalProduct = (List<ProductDTO>) session.getAttribute("totalProduct");       //SORT + cải tiến search price sau khi search Type
         List<ProductDTO> divideResult = new ArrayList<>();
         try {
+            if (session.getAttribute("totalProductPrice") != null) {
+                totalProduct = (List<ProductDTO>) session.getAttribute("totalProductPrice");        //trường hợp user đã search theo giá
+            }                                                                                   //thì dùng result đó để search type
             ProductDAO dao = new ProductDAO();
             ServiceLayer service = new ServiceLayer();
             pageIsActive = service.checkPagination(pageIsActive, goBack, goForward);                    //lấy trang mới nhất
@@ -70,33 +75,45 @@ public class SearchForTypeServlet extends HttpServlet {
             session.removeAttribute("oldCurrentPage");
             session.setAttribute("oldCurrentPage", pageIsActive);
 
-            if (oldCategories != null && getCategories == null) {                          //lấy type cũ khi user chuyển trang hoặc search lỗi
-                getCategories = oldCategories;
+            if (oldCategories != null && getCategory == null) {                          //lấy type cũ khi user chuyển trang hoặc search lỗi
+                getCategory = oldCategories;
             }
-
-            session.removeAttribute("PriceFrom");
-            session.removeAttribute("PriceTo");
 
             if (searchErrorExist != null) {
                 session.removeAttribute("errorExist");
                 session.setAttribute("PriceFrom", paramPriceFrom);              //show error input
                 session.setAttribute("PriceTo", paramPriceTo);
+            } else {
+                session.removeAttribute("currentColor");
+                session.removeAttribute("PriceFrom");
+                session.removeAttribute("PriceTo");
+                if (session.getAttribute("searchPriceLastActive") != null) {
+                    session.setAttribute("PriceFrom", session.getAttribute("PriceFromSave"));
+                    session.setAttribute("PriceTo", session.getAttribute("PriceToSave"));
+                }
             }
             session.removeAttribute("oldCategories");
-            session.setAttribute("oldCategories", getCategories);                       //dùng để search lại giá trị cũ - sửa thành giá trị getCategories
+            session.setAttribute("oldCategories", getCategory);                       //dùng để search lại giá trị cũ - sửa thành giá trị getCategory
 
-            for (ProductDTO category : totalProduct) {
-                if (getCategories.equals(category.getProductType())) {
-                    divideResult.add(category);                             //thực hiện add các sản phẩm có type = getCategopries
-                } else if ("Other Flower".equals(getCategories)) {
-                    if (!"Fresh Flower".equals(category.getProductType())
-                            && !"Potted Plant".equals(category.getProductType())
-                            && !"Dried Flower".equals(category.getProductType())) {
-                        divideResult.add(category);
+            if ("Toàn bộ".equals(getCategory)) {
+                divideResult = totalProduct;
+            } else {
+                for (ProductDTO category : totalProduct) {
+                    if (getCategory.equals(category.getProductType())) {
+                        divideResult.add(category);                             //thực hiện add các sản phẩm có type = getCategory
+                    } else if ("Other Flower".equals(getCategory)) {
+                        if (!"Hoa ly".equals(category.getProductType())
+                                && !"Hoa hồng".equals(category.getProductType())
+                                && !"Hoa hướng dương".equals(category.getProductType())) {
+                            divideResult.add(category);
+                        }
                     }
                 }
             }
-            
+
+            session.removeAttribute("productOrdered");
+            session.setAttribute("productOrdered", divideResult);               //dùng để in theo giá giảm/tăng
+
             pageSize = service.getPage(divideResult.size());                    //làm thanh << 1 2 3 4 >>
             if (pageSize == 0) {
                 pageSize = 1;
@@ -106,15 +123,17 @@ public class SearchForTypeServlet extends HttpServlet {
 
             categories = service.getCategories(totalProduct);
 
+            session.removeAttribute("allType");
             session.removeAttribute("freshFlower");
             session.removeAttribute("pottedFlower");
             session.removeAttribute("dryFlower");
             session.removeAttribute("otherType");
-
-            session.setAttribute("freshFlower", categories[0]);
-            session.setAttribute("pottedFlower", categories[1]);
-            session.setAttribute("dryFlower", categories[2]);
-            session.setAttribute("otherType", categories[3]);
+            
+            session.setAttribute("allType", categories[0]);
+            session.setAttribute("freshFlower", categories[1]);
+            session.setAttribute("pottedFlower", categories[2]);
+            session.setAttribute("dryFlower", categories[3]);
+            session.setAttribute("otherType", categories[4]);
 
             page = service.getPage(page, pageIsActive, goBack, goForward);
             range = service.getPageRange(page);
@@ -122,6 +141,8 @@ public class SearchForTypeServlet extends HttpServlet {
             List<ProductDTO> productList = service.getNine(divideResult, range);
             dao.searchTotalProduct("", true);                                   //giữ cho categories luôn cập nhật sản phẩm mới
             List<ProductDTO> categoryUpdate = dao.getTotalProduct();
+
+            request.setAttribute("requestColor", service.chooseColor());
 
             request.removeAttribute("requestNewProduct");
             request.setAttribute("requestNewProduct", service.getNewProduct(categoryUpdate));
@@ -135,9 +156,15 @@ public class SearchForTypeServlet extends HttpServlet {
             } else {
                 session.setAttribute("currentPage", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
             }
+
+            session.removeAttribute("txtOrderBy");
+            session.setAttribute("txtOrderBy", "default");
+
             session.removeAttribute("search");
             session.removeAttribute("searchExtend");
             session.removeAttribute("searchForColor");
+            session.removeAttribute("showOrderBy");
+            session.removeAttribute("searchColorLastActive");
             session.setAttribute("searchForType", "SearchForType active");
 
         } catch (SQLException ex) {

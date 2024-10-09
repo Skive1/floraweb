@@ -33,18 +33,19 @@ public class SearchErrorProcessServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.SearchFeature.ERROR);
 
         HttpSession session = request.getSession();
-        try {
+        try {                                                                   //sắp bị dỡ bỏ
             //search extend
-            session.setAttribute("errorExist", "exist");
-            if (session.getAttribute("search") != null) {
-                url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH);
-            } else if (session.getAttribute("searchExtend") != null) {
-                url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_EXTEND);
-            } else if (session.getAttribute("searchForType") != null) {
-                url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_TYPE);
-            } else if (session.getAttribute("searchForColor") != null) {
-                url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_COLOR);
-            }
+//            session.setAttribute("errorExist", "exist");
+//            System.out.println(request.getAttribute("PRICE_ERROR"));
+//            if (session.getAttribute("search") != null) {
+//                url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH);
+//            } else if (session.getAttribute("searchExtend") != null) {
+//                url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_EXTEND);
+//            } else if (session.getAttribute("searchForType") != null) {
+//                url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_TYPE);
+//            } else if (session.getAttribute("searchForColor") != null) {
+//                url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_COLOR);
+//            }
 
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

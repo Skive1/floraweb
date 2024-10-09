@@ -35,7 +35,7 @@ public class FindErrorServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_EXTEND);
+        String url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_PRICE_RANGE);
 
         HttpSession session = request.getSession();
 //        List<ProductDTO> totalProduct = (List<ProductDTO>) session.getAttribute("TOTAL_PRODUCT");
@@ -66,9 +66,8 @@ public class FindErrorServlet extends HttpServlet {
             }
 
             if (foundError) {                                               //tìm ra lỗi
-                request.removeAttribute("PRICE_ERROR");
                 request.setAttribute("PRICE_ERROR", errors);
-                url = (String) siteMap.get(MyAppConstants.SearchFeature.ERROR);
+                url = (String) siteMap.get(MyAppConstants.SearchFeature.PAGE_CONTROL);
             }
 
             session.removeAttribute("PriceFrom");

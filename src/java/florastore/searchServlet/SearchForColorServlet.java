@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -21,16 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author ASUS
- */
 @WebServlet(name = "SearchForColorServlet", urlPatterns = {"/SearchForColorServlet"})
 public class SearchForColorServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
@@ -53,11 +49,15 @@ public class SearchForColorServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String oldColor = (String) session.getAttribute("oldColor");
         String searchErrorExist = (String) session.getAttribute("errorExist");
-        String checkPageActive = (String) session.getAttribute("oldCurrentPage");       //có bug ở RED
+        String checkPageActive = (String) session.getAttribute("oldCurrentPage");
 
         List<ProductDTO> totalProduct = (List<ProductDTO>) session.getAttribute("totalProduct");       //SORT + cải tiến search price sau khi search Type
         List<ProductDTO> divideResult = new ArrayList<>();
         try {
+            if (session.getAttribute("totalProductPrice") != null) {
+                totalProduct = (List<ProductDTO>) session.getAttribute("totalProductPrice");        //trường hợp user đã search theo giá
+            }                                                                                   //thì dùng result đó để search type
+
             ProductDAO dao = new ProductDAO();
             ServiceLayer service = new ServiceLayer();
             pageIsActive = service.checkPagination(pageIsActive, goBack, goForward);                    //lấy trang mới nhất
@@ -67,8 +67,8 @@ public class SearchForColorServlet extends HttpServlet {
                 session.removeAttribute("oldColor");
             }
 
-            session.removeAttribute("oldColor");
-            session.setAttribute("oldColor", pageIsActive);
+            session.removeAttribute("oldCurrentPage");
+            session.setAttribute("oldCurrentPage", pageIsActive);
 
             if (oldColor != null && getColor == null) {                          //lấy type cũ khi user chuyển trang hoặc search lỗi
                 getColor = oldColor;
@@ -81,22 +81,35 @@ public class SearchForColorServlet extends HttpServlet {
                 session.removeAttribute("errorExist");
                 session.setAttribute("PriceFrom", paramPriceFrom);              //show error input
                 session.setAttribute("PriceTo", paramPriceTo);
+            } else {
+                session.removeAttribute("PriceFrom");
+                session.removeAttribute("PriceTo");
+                session.removeAttribute("currentColor");
+                if (session.getAttribute("searchPriceLastActive") != null) {
+                    session.setAttribute("PriceFrom", session.getAttribute("PriceFromSave"));
+                    session.setAttribute("PriceTo", session.getAttribute("PriceToSave"));
+                }
             }
-            session.removeAttribute("oldCategories");
-            session.setAttribute("oldCategories", getColor);                       //dùng để search lại giá trị cũ - sửa thành giá trị getCategories
 
-            if ("multi-color".equals(getColor)) {
+            session.removeAttribute("oldColor");
+            session.setAttribute("oldColor", getColor);                       //dùng để search lại giá trị cũ - sửa thành giá trị getCategories
+            if ("All type".equals(getColor)) {
+                divideResult = totalProduct;
+            } else if ("Multi color".equals(getColor)) {
                 divideResult = service.getMultyColor(totalProduct);
-            } else if ("other".equals(getColor)) {
+            } else if ("Other".equals(getColor)) {
                 divideResult = service.getOtherColor(totalProduct);
             } else {
                 divideResult = service.getSingleColor(totalProduct, getColor);                           //thực hiện add các sản phẩm có color = getColor
             }
-            
-            session.removeAttribute("CurrentColor");
-            session.setAttribute("CurrentColor", getColor);
-            
-            
+
+            session.removeAttribute("productOrdered");
+            session.setAttribute("productOrdered", divideResult);               //dùng để in theo giá giảm/tăng
+
+            request.setAttribute("requestColor", service.chooseColor());
+
+            session.setAttribute("currentColor", getColor);                     //dùng cho ordered by và show giá trị color
+
             pageSize = service.getPage(divideResult.size());                    //làm thanh << 1 2 3 4 >>
             if (pageSize == 0) {
                 pageSize = 1;
@@ -104,17 +117,19 @@ public class SearchForColorServlet extends HttpServlet {
             session.removeAttribute("pageSize");
             session.setAttribute("pageSize", pageSize);
 
-            categories = service.getCategories(totalProduct);
+            categories = service.getCategories(divideResult);
 
+            session.removeAttribute("allType");
             session.removeAttribute("freshFlower");
             session.removeAttribute("pottedFlower");
             session.removeAttribute("dryFlower");
             session.removeAttribute("otherType");
 
-            session.setAttribute("freshFlower", categories[0]);
-            session.setAttribute("pottedFlower", categories[1]);
-            session.setAttribute("dryFlower", categories[2]);
-            session.setAttribute("otherType", categories[3]);
+            session.setAttribute("allType", categories[0]);
+            session.setAttribute("freshFlower", categories[1]);
+            session.setAttribute("pottedFlower", categories[2]);
+            session.setAttribute("dryFlower", categories[3]);
+            session.setAttribute("otherType", categories[4]);
 
             page = service.getPage(page, pageIsActive, goBack, goForward);
             range = service.getPageRange(page);
@@ -123,10 +138,8 @@ public class SearchForColorServlet extends HttpServlet {
             dao.searchTotalProduct("", true);                                   //giữ cho categories luôn cập nhật sản phẩm mới
             List<ProductDTO> categoryUpdate = dao.getTotalProduct();
 
-            request.removeAttribute("requestNewProduct");
             request.setAttribute("requestNewProduct", service.getNewProduct(categoryUpdate));
 
-            request.removeAttribute("requestResultList");
             request.setAttribute("requestResultList", productList);                   //12 sản phẩm đã vào attribute result chuẩn bị được show
 
             session.removeAttribute("currentPage");
@@ -135,15 +148,21 @@ public class SearchForColorServlet extends HttpServlet {
             } else {
                 session.setAttribute("currentPage", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
             }
+
+            session.removeAttribute("txtOrderBy");
+            session.setAttribute("txtOrderBy", "default");
+
             session.removeAttribute("search");
             session.removeAttribute("searchExtend");
             session.removeAttribute("searchForType");
+            session.removeAttribute("showOrderBy");
             session.setAttribute("searchForColor", "searchForColor active");
+            session.setAttribute("searchColorLastActive", "searchForColor last active");
 
         } catch (SQLException ex) {
-            Logger.getLogger(SearchForTypeServlet.class.getName()).log(Level.SEVERE, null, ex);
+            log("ViewProfileServlet _ SQL " + ex.getMessage());
         } catch (NamingException ex) {
-            Logger.getLogger(SearchForTypeServlet.class.getName()).log(Level.SEVERE, null, ex);
+            log("ViewProfileServlet _ Naming " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
