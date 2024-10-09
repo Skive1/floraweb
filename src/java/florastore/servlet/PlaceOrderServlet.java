@@ -13,7 +13,6 @@ import florastore.eventOrderDetail.EventOrderDetailDAO;
 import florastore.eventOrderDetail.EventOrderDetailDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -112,6 +111,13 @@ public class PlaceOrderServlet extends HttpServlet {
                                 EOrderDetailDao.saveOrderDetail(orderDetail);
                             }//saving item to order detail by each event
                         }//saving order info to order by each event
+                        request.setAttribute("CUST_NAME", fullname);
+                        request.setAttribute("CUST_PHONE", phone);
+                        request.setAttribute("CUST_ADDRESS", address);
+                        request.setAttribute("CUST_CITY", city);
+                        request.setAttribute("SHIPPING", shipping);
+                        request.setAttribute("CUST_PAYMENT", payment);
+                        request.setAttribute("ORDER_ITEMS", cart);
                         url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.BILL_PAGE);
                     }//items existed
                 }//cart existed

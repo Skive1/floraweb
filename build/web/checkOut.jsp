@@ -463,11 +463,11 @@
                             <h3>Phương thức vận chuyển</h3>
                             <div class="form-item">
                                 <label class="form-control radio-shipping" style="background-color: #ffffff">
-                                    <input type="radio" name="shipping" value="delivery" class="radio radio-inline" required="" checked="">
+                                    <input type="radio" name="shipping" value="Delivery" class="radio radio-inline" required="" checked="">
                                     Giao hàng tận nơi
                                 </label>
                                 <label class="form-control radio-shipping" style="background-color: #ffffff">
-                                    <input type="radio" name="shipping" value="pickUp" class="radio radio-inline" required="">
+                                    <input type="radio" name="shipping" value="Pick Up" class="radio radio-inline" required="">
                                     Lấy tại điểm bán
                                 </label>
                             </div>
