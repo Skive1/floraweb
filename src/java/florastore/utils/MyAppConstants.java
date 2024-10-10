@@ -103,6 +103,18 @@ public class MyAppConstants {
         public static final String ERROR_PAGE = "error404";
     }
 
+    public class SearchFeature {
+
+        public static final String ERROR = "error404";
+        public static final String PAGE_CONTROL = "searchPageChange";
+        public static final String SUCCESS = "showSearch";
+        public static final String SEARCH = "searchAction";
+        public static final String SEARCH_PRICE_RANGE = "searchPriceRange";
+        public static final String SEARCH_TYPE = "searchType";
+        public static final String SEARCH_COLOR = "searchColor";
+        public static final String ORDER_BY = "orderBy";
+    }
+
     public class EventFeatures {
 
         public static final String EVENT_PAGE = "eventPage";
@@ -113,6 +125,10 @@ public class MyAppConstants {
 
         public static final String DETAIL_PAGE = "EventFlowerDetail";
         public static final String ERROR_PAGE = "error404";
+    }
 
+    public class ManageEventFeatures {
+        public static final String EVENT_PAGE = "eventPage";
+        public static final String DETAIL_PAGE = "eventDetailPage";
     }
 }

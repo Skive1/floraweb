@@ -105,9 +105,17 @@ public class LoginServlet extends HttpServlet {
                 AccountDTO validUser = null;
                 if (username.equals(username.trim()) && password.equals(password.trim())) {
                     validUser= dao.getAccountByLogin(username, password);
-                    //3. process result
+                    //3. process resultShowEventServlet
                     if (validUser != null) {//user login successful
                         url = (String) siteMap.get(MyAppConstants.LoginFeatures.HOME_PAGE);
+                        //3.1 Create new session
+                        HttpSession session = request.getSession(true);
+                        session.setAttribute("USER", validUser);
+                        session.setAttribute("USERNAME", username);
+                        session.setAttribute("PASSWORD", password);
+                    }//end if validAccount is not null
+                    if (validUser != null && "Admin".equals(validUser.getRole())) {//user login successful
+                        url = "ShowEventServlet";
                         //3.1 Create new session
                         HttpSession session = request.getSession(true);
                         session.setAttribute("USER", validUser);
