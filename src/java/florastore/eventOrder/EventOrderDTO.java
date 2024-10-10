@@ -27,6 +27,15 @@ public class EventOrderDTO implements Serializable {
     private double ammount;
     private boolean paid;
 
+    public EventOrderDTO(String fullname, String phone, String street, String city, String deliveryOptions, String paymentOptions) {
+        this.fullname = fullname;
+        this.phone = phone;
+        this.street = street;
+        this.city = city;
+        this.deliveryOptions = deliveryOptions;
+        this.paymentOptions = paymentOptions;
+    }
+
     public EventOrderDTO(String username, int eventId, String fullname, String phone, String street, String city, Timestamp deliveryDate, String deliveryOptions, String paymentOptions, String status, double ammount, boolean paid) {
         this.username = username;
         this.eventId = eventId;

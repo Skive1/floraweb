@@ -22,6 +22,17 @@
         <title>Flora Rewind | Buy and sell on the website</title>
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
+        <style>
+            .red {
+                color: red;
+            }
+            .green{
+                color :green;
+            }
+            .bold{
+                font-weight: bold;
+            }
+        </style>
     </head>
     <body>
         <div class="container mt-4 mb-4">
@@ -44,7 +55,13 @@
                                         <span class="check1"><i class="fa fa-check"></i></span> 
                                         <span class="font-weight-bold">Giao dịch thành công</span> 
                                         <small class="mt-2">Cảm ơn ${requestScope.CUST_NAME} đã mua hàng trên nền tảng chúng tôi</small> 
-                                        <a href="#" class="text-decoration-none invoice-link">Chi tiết đơn hàng</a> 
+                                        <p>Tình trạng: </p>
+                                        <c:if test="${requestScope.PAYMENT_STATUS == true}">
+                                            <p class="green bold">Đã thanh toán</p>
+                                        </c:if>
+                                        <c:if test="${requestScope.PAYMENT_STATUS == false}">
+                                            <p class="red bold">Chưa thanh toán</p>
+                                        </c:if>
                                     </div> 
                                     <a href="home" class="text-decoration-none">
                                         <button class="btn btn-success btn-block order-button">Tiếp tục mua sắm</button>
@@ -129,5 +146,14 @@
             </div>
         </div>
         <script src="js/javas.js"></script>
+        <script>
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
+                    e.preventDefault();
+                    alert('Refresh is disabled on this page.');
+                }
+            });
+        </script>
+
     </body>
 </html>

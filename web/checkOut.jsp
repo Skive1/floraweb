@@ -575,7 +575,7 @@
                                             <td class="py-5">
                                                 <div class="py-2 border-bottom border-top">
                                                     <h3 class="mb-0 text-dark"><fmt:formatNumber value="${requestScope.TOTAL_AMOUNT}" type="number" groupingUsed="true"/>đ</h3>
-                                                    <input type="hidden" name="totalamount" value="${requestScope.TOTAL_AMOUNT}" />
+                                                    <input type="hidden" name="totalamount" value="${requestScope.TOTAL_AMOUNT}"/>
                                                 </div>
                                             </td>
                                         </tr>
