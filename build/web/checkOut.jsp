@@ -117,7 +117,7 @@
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
                                         <i class="fa fa-shopping-bag fa-2x"></i>
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -186,15 +186,15 @@
                         <div class="col-md-12 col-lg-6 col-xl-6">
                             <div class="form-item">
                                 <label class="form-label my-3">Họ và Tên<sup class="red">*</sup></label>
-                                <input type="text" name="fullname" value="${sessionScope.USER.fullName}" class="form-control" required="">
+                                <input type="text" name="fullname" value="${sessionScope.USER.fullName}" id="fullname" class="form-control" required="">
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Số điện thoại<sup class="red">*</sup></label>
-                                <input type="text" name="phone" value="${sessionScope.USER.phone}" class="form-control" required="">
+                                <input type="tel" name="phone" value="${sessionScope.USER.phone}" id="phone" class="form-control" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required="">
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Địa chỉ <sup class="red">*</sup></label>
-                                <input type="text" name="address" value="${sessionScope.USER.street}" class="form-control" required="">
+                                <input type="text" name="address" value="${sessionScope.USER.street}" id="address" class="form-control" required="">
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Thành phố<sup class="red">*</sup></label>

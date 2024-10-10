@@ -377,9 +377,16 @@
                                                                     </c:if>
                                                                 </c:if>
                                                                 <c:if test="${empty sessionScope.USER}">
-                                                                    <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                                                    </a>
+                                                                    <c:if test="${flower.eventProductQuantity == 0}">
+                                                                        <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third disabled-link">
+                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                                        </a>
+                                                                    </c:if>
+                                                                    <c:if test="${flower.eventProductQuantity > 0}">
+                                                                        <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                                                        </a>
+                                                                    </c:if>
                                                                 </c:if>
                                                             </div>
                                                         </div>

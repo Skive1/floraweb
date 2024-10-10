@@ -46,6 +46,12 @@
                 pointer-events: none;                /* Ngăn thay đổi */
                 cursor: none;
             }
+            .disabled-link {
+                pointer-events: none;  /* Disable click */
+                color: gray;           /* Change appearance */
+                text-decoration: none; /* Remove underline */
+                cursor: default;       /* Change cursor to default */
+            }
         </style>
     </head>
 
@@ -206,7 +212,12 @@
                                         <i class="fa fa-star"></i>
                                     </div>
                                     <p class="mb-4">${detail.eventProductDetail}</p>
-                                    <p class="mb-4">Quantity: ${detail.eventProductQuantity}</p>
+                                    <c:if test="${detail.eventProductQuantity == 0}">
+                                        <p class="mb-4">Số lượng: Hết hàng</p>
+                                    </c:if>
+                                    <c:if test="${detail.eventProductQuantity > 0}">
+                                        <p class="mb-4">Số lượng: ${detail.eventProductQuantity}</p>
+                                    </c:if>
                                     <div class="input-group quantity mb-5" style="width: 100px;">
                                         <div class="input-group-btn">
                                             <button type="button" id="btnMinus" class="btn btn-sm btn-minus rounded-circle bg-light border">
@@ -229,14 +240,28 @@
                                     <input type="hidden" name="productQuantity" value="${detail.eventProductQuantity}">
 
                                     <c:if test="${not empty sessionScope.USER}">
-                                        <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
-                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                        </button>
+                                        <c:if test="${detail.eventProductQuantity == 0}">
+                                            <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third" disabled="">
+                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                            </button>
+                                        </c:if>
+                                        <c:if test="${detail.eventProductQuantity > 0}">
+                                            <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                            </button>
+                                        </c:if>
                                     </c:if>
                                     <c:if test="${empty sessionScope.USER}">
-                                        <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
-                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                        </a>
+                                        <c:if test="${detail.eventProductQuantity == 0}">
+                                            <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third disabled-link">
+                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${detail.eventProductQuantity > 0}">
+                                            <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                            </a>
+                                        </c:if>
                                     </c:if>
                                 </form>
                             </div>
@@ -515,41 +540,62 @@
 
         <!-- Footer Start -->
         <jsp:include page="footer.jsp"></jsp:include>
-        <!-- Footer End -->
+            <!-- Footer End -->
 
-        <!-- Copyright Start -->
-        <div class="container-fluid copyright bg-dark py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
-                    </div>
-                    <div class="col-md-6 my-auto text-center text-md-end text-white">
-                        <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
-                        <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
-                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
+            <!-- Copyright Start -->
+            <div class="container-fluid copyright bg-dark py-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+                        </div>
+                        <div class="col-md-6 my-auto text-center text-md-end text-white">
+                            <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
+                            <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
+                            <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Copyright End -->
+            <!-- Copyright End -->
 
 
 
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
 
 
-        <!-- JavaScript Libraries -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/lightbox/js/lightbox.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+            <!-- JavaScript Libraries -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="lib/easing/easing.min.js"></script>
+            <script src="lib/waypoints/waypoints.min.js"></script>
+            <script src="lib/lightbox/js/lightbox.min.js"></script>
+            <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-        <!-- Template Javascript -->
+            <!-- Template Javascript -->
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var quantityInput = document.getElementById("itemQuantity");
+                    var btnMinus = document.getElementById("btnMinus");
+                    var btnPlus = document.getElementById("btnPlus");
+
+                    btnMinus.addEventListener("click", function () {
+                        var currentValue = parseInt(quantityInput.value, 10);
+                        if (currentValue <= 1) {
+                            quantityInput.value = 1; // Ensures it doesn't go below 1
+                        }
+                    });
+
+                    btnPlus.addEventListener("click", function () {
+                        var currentValue = parseInt(quantityInput.value, 10);
+                        if (currentValue >= ${detail.eventProductQuantity}) {
+                            quantityInput.value = ${detail.eventProductQuantity}; // Ensures it doesn't go below 1
+                        }
+                    });
+                });
+        </script>
         <script src="js/main.js"></script>
     </body>
 

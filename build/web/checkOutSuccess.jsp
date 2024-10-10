@@ -70,7 +70,7 @@
                                 <div class="text-center-content">
                                     <div class="admin-left-content-left">
                                         <div class="admin-left-content-left-input">Số điện thoại liên hệ:<p>${requestScope.CUST_PHONE}</p></div>
-                                        <div class="admin-left-content-left-input">Địa chỉ liên hệ:<p>${requestScope.CUST_ADDRESS}, ${requestScope.CUST_CITY}</p></div>
+                                        <div class="admin-left-content-left-input">Địa chỉ giao hàng:<p>${requestScope.CUST_ADDRESS}, ${requestScope.CUST_CITY}</p></div>
                                     </div>
                                     <div class="admin-left-content-right">
                                         <div class="admin-left-content-right-input">Phương thức vận chuyển:<p><c:if test="${requestScope.SHIPPING == 'Delivery'}">Giao hàng bởi Flora Delivery</c:if>

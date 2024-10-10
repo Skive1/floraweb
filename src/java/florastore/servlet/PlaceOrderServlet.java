@@ -11,6 +11,7 @@ import florastore.eventOrder.EventOrderDAO;
 import florastore.eventOrder.EventOrderDTO;
 import florastore.eventOrderDetail.EventOrderDetailDAO;
 import florastore.eventOrderDetail.EventOrderDetailDTO;
+import florastore.eventProduct.EventProductDAO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -91,54 +92,51 @@ public class PlaceOrderServlet extends HttpServlet {
         String status = null;
         boolean paymentStatus = false;
         Timestamp deliveryDate = null;
-        if ("00".equals(responseCode)) {
+        if ("00".equals(responseCode)) {//Check responseCode after VNPay return
             status = "Paid";
-        }
-        log(status);
-
+        }//Check responseCode after VNPay return
         try {
-            double totalAmount = Double.parseDouble(request.getParameter("totalamount"));//ALL ORDER
-            if ("ONLINE".equals(payment) && status == null) {
-                url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.ONLINE_PAYMENT)
-                        + "?" + "totalamount=" + totalAmount
-                        + "&bankCode=VNPAY";
-                response.sendRedirect(url);
-                return;
-            }
-            if ("COD".equals(payment) || "00".equals(responseCode)) {
-                //2. Cust goes to his/her cart place
-                HttpSession ECartSession = request.getSession(false);
-                if (ECartSession != null) {
-                    //3. Cust takes his/her cart
-                    EventCartBean cart = (EventCartBean) ECartSession.getAttribute("ECART");
-                    if (cart != null) {
-                        //4. Cust gets items
-                        Map<String, List<EventCartItem>> items = cart.getItems();
-                        if (items != null) {
-                            for (Map.Entry<String, List<EventCartItem>> entry : items.entrySet()) {
+            //2. Cust goes to his/her cart place
+            HttpSession ECartSession = request.getSession(false);
+            if (ECartSession != null) {
+                //3. Cust takes his/her cart
+                EventCartBean cart = (EventCartBean) ECartSession.getAttribute("ECART");
+                if (cart != null) {
+                    //4. Cust gets items
+                    Map<String, List<EventCartItem>> items = cart.getItems();
+                    if (items != null) {
+                        if ("ONLINE".equals(payment) && status == null) {
+                            double totalAmount = Double.parseDouble(request.getParameter("totalamount"));//ALL ORDER
+                            url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.ONLINE_PAYMENT)
+                                    + "?" + "totalamount=" + totalAmount
+                                    + "&bankCode=VNPAY";
+                            response.sendRedirect(url);
+                            return;
+                        }
+                        if ("COD".equals(payment) || "00".equals(responseCode)) {
+                            for (Map.Entry<String, List<EventCartItem>> entry : items.entrySet()) {//saving order info to order by each event
                                 double total = 0;
+                                //Get ordered items of event
                                 List<EventCartItem> itemList = entry.getValue();
-                                //Get eventId of each Event
-                                for (EventCartItem eventItem : itemList) {
+                                for (EventCartItem eventItem : itemList) {//Get eventId of each Event
                                     eventId = eventItem.getEventId();
                                     break;
-                                }
-                                for (EventCartItem eventItem : itemList) {
+                                }//Get eventId of each Event
+                                for (EventCartItem eventItem : itemList) {//Get total amount of each event
                                     total = total + (eventItem.getQuantity() * eventItem.getUnitPrice());
-                                }
-                                if ("Paid".equals(status)) {
+                                }//Get total amount of each event
+                                if ("Paid".equals(status)) {//Update paymentStatus
                                     paymentStatus = true;
-                                }
+                                }//Update paymentStatus
                                 EventOrderDTO orderInfo = new EventOrderDTO(username, eventId, fullname, phone, address, city, deliveryDate, shipping, payment, "To Do", total, paymentStatus);
                                 //Call DAO/Model   
                                 EventOrderDAO EOrderDao = new EventOrderDAO();
                                 //Saving order by each event
                                 boolean resultOrder = EOrderDao.saveOrder(orderInfo);
                                 int eventOrderId = 0;
-                                //Get eventOrderId after insert order to database
-                                if (resultOrder) {
+                                if (resultOrder) {//Get eventOrderId after insert order to database
                                     eventOrderId = EOrderDao.getEventOrderId(orderInfo);
-                                }
+                                }//Get eventOrderId after insert order to database
                                 //Save order detail by each event
                                 for (EventCartItem item : itemList) {
                                     int quantity = item.getQuantity();
@@ -146,8 +144,14 @@ public class PlaceOrderServlet extends HttpServlet {
                                     double totalPrice = quantity * unitPrice;
                                     int eventProductId = item.getEpId();
                                     double discount = 0;
+
+                                    int newStockQuantity = item.getStockQuantity() - quantity;
+                                    EventProductDAO dao = new EventProductDAO();
+                                    //Update stock quantity
+                                    dao.updateQuantityEventFlower(eventProductId, newStockQuantity);
+
                                     EventOrderDetailDTO orderDetail = new EventOrderDetailDTO(quantity, unitPrice, discount, totalPrice, eventOrderId, eventProductId);
-                                    //Call DAO/Model
+                                    //Call DAO/Model to save INFO to EventOrder Table
                                     EventOrderDetailDAO EOrderDetailDao = new EventOrderDetailDAO();
                                     EOrderDetailDao.saveOrderDetail(orderDetail);
                                 }//saving item to order detail by each event
@@ -166,7 +170,7 @@ public class PlaceOrderServlet extends HttpServlet {
                     session.removeAttribute("TEMPORARY_INFO");
                     ECartSession.removeAttribute("ECART");
                 }//cart place existed
-            }
+            }//Checkout process for COD or After Successful online payment
         } catch (SQLException ex) {
             log("PlaceOrderServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
