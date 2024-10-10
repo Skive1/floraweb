@@ -295,8 +295,24 @@ background-color: #f2f7fb;
   padding: 6px 0;
   
 }
+/*Chart*/
+.admin-content-main-chart {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
 
+.admin-content-main-chart-line,
+.admin-content-main-chart-bar-chart {
+  height: 300px; /* Điều chỉnh chiều cao theo ý muốn */
+  padding: 20px;
+}
 
+#myChart,
+#myBarChart {
+  width: 100%;
+  height: 100%;
+}
 
 
 
