@@ -143,10 +143,12 @@ public class MyAppConstants {
     public class CheckoutFeatures {
         public static final String ERROR_PAGE = "error404";
         public static final String CHECKOUT = "checkoutPage";
+        public static final String CART_PAGE = "eventCart";
     }
     
     public class PlaceOrderFeatures {
-        public static final String ERROR_PAGE = "error404";
+        public static final String CART_PAGE = "eventCart";
+        public static final String ORDER_PAGE = "order";
         public static final String BILL_PAGE = "confirmCheckoutPage";
         public static final String ONLINE_PAYMENT = "vnpayCheckout";
         public static final String CHECKOUT_SUCCESS = "checkouts";

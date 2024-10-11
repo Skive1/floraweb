@@ -42,7 +42,7 @@ public class ReturnUrlServlet extends HttpServlet {
         if ("00".equals(vnp_ResponseCode)) {
             // Thanh toán thành công, xử lý lưu đơn hàng
             // Chuyển hướng đến trang xác nhận đơn hàng
-            response.sendRedirect(url + "?responseCode=00" + "&totalamount=" + total);
+            response.sendRedirect(url + "?responseCode=00" + "&totalamount=" + total + "&status=paid");
         } else {
             url = MyAppConstants.PlaceOrderFeatures.CHECKOUT_FAIL;
             // Thanh toán thất bại, chuyển hướng đến trang checkout

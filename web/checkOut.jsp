@@ -12,7 +12,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Flora Rewind | Buy and sell on the website</title>
+        <title>Thanh toán | Buy and sell on the website</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -46,6 +46,17 @@
                 color: red
             }
         </style>
+        <script>
+            window.onload = function () {
+                const prevPage = sessionStorage.getItem('prevPage');
+                const url = "http://localhost:8084/FloraRewind/checkouts";
+                if (performance.navigation.type === performance.navigation.TYPE_BACK_FORWARD) {                
+                    if (url.includes(prevPage)) {           
+                        window.location.href = "http://localhost:8084/FloraRewind/order";
+                    }
+                }
+            };
+        </script>
     </head>
 
     <body>

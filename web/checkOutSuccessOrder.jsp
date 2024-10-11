@@ -1,5 +1,5 @@
 <%-- 
-    Document   : checkOutSuccess
+    Document   : checkOutSuccessOrder
     Created on : Oct 9, 2024, 10:02:31 AM
     Author     : ADMIN
 --%>

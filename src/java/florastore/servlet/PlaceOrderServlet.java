@@ -53,35 +53,45 @@ public class PlaceOrderServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.ERROR_PAGE);
+        String url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.ORDER_PAGE);
         //1. Get User information
         HttpSession session = request.getSession(false);
+        String statusTransaction = (String) request.getAttribute("status");
+        if (!"SUCESS".equals(session.getAttribute("PAID"))) {
+            url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.CART_PAGE);
+        } else if ("paid".equals(statusTransaction)) {
+            url = (MyAppConstants.PlaceOrderFeatures.CART_PAGE);
+            response.sendRedirect(url);
+            return;
+        }
         String username = (String) session.getAttribute("USERNAME");
         EventOrderDTO temporaryInfo = (EventOrderDTO) session.getAttribute("TEMPORARY_INFO");
         int eventId = 0;
         String fullname = request.getParameter("fullname");
-        if (fullname == null) {
-            fullname = temporaryInfo.getFullname();
-        }
         String phone = request.getParameter("phone");
-        if (phone == null) {
-            phone = temporaryInfo.getPhone();
-        }
         String address = request.getParameter("address");
-        if (address == null) {
-            address = temporaryInfo.getStreet();
-        }
         String city = request.getParameter("city");
-        if (city == null) {
-            city = temporaryInfo.getCity();
-        }
         String shipping = request.getParameter("shipping");
-        if (shipping == null) {
-            shipping = temporaryInfo.getDeliveryOptions();
-        }
         String payment = request.getParameter("payment");
-        if (payment == null) {
-            payment = temporaryInfo.getPaymentOptions();
+        if (temporaryInfo != null) {
+            if (fullname == null) {
+                fullname = temporaryInfo.getFullname();
+            }
+            if (phone == null) {
+                phone = temporaryInfo.getPhone();
+            }
+            if (address == null) {
+                address = temporaryInfo.getStreet();
+            }
+            if (city == null) {
+                city = temporaryInfo.getCity();
+            }
+            if (shipping == null) {
+                shipping = temporaryInfo.getDeliveryOptions();
+            }
+            if (payment == null) {
+                payment = temporaryInfo.getPaymentOptions();
+            }
         }
         String responseCode = request.getParameter("responseCode");
         EventOrderDTO newTemporaryInfo = new EventOrderDTO(fullname, phone, address, city, shipping, payment);
@@ -102,15 +112,17 @@ public class PlaceOrderServlet extends HttpServlet {
                     //4. Cust gets items
                     Map<String, List<EventCartItem>> items = cart.getItems();
                     if (items != null) {
-                        if ("ONLINE".equals(payment) && status == null) {
+                        if ("ONLINE".equals(payment) && status == null) {//ONLINE PAYMENT PROCESS
                             double totalAmount = Double.parseDouble(request.getParameter("totalamount"));//ALL ORDER
                             url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.ONLINE_PAYMENT)
                                     + "?" + "totalamount=" + totalAmount
                                     + "&bankCode=VNPAY";
-                            response.sendRedirect(url);
-                            return;
-                        }
-                        if ("COD".equals(payment) || "00".equals(responseCode)) {
+                            if (!response.isCommitted()) {
+                                response.sendRedirect(url);
+                                return;
+                            }
+                        }//ONLINE PAYMENT PROCESS
+                        if ("COD".equals(payment) || "00".equals(responseCode)) {//COD PAYMENT PROCESS AND PAID ORDER PROCESS
                             for (Map.Entry<String, List<EventCartItem>> entry : items.entrySet()) {//saving order info to order by each event
                                 double total = 0;
                                 //Get ordered items of event
@@ -151,21 +163,22 @@ public class PlaceOrderServlet extends HttpServlet {
                                     EOrderDetailDao.saveOrderDetail(orderDetail);
                                 }//saving item to order detail by each event
                             }//saving order info to order by each event
-                            request.setAttribute("CUST_NAME", fullname);
-                            request.setAttribute("CUST_PHONE", phone);
-                            request.setAttribute("CUST_ADDRESS", address);
-                            request.setAttribute("CUST_CITY", city);
-                            request.setAttribute("SHIPPING", shipping);
-                            request.setAttribute("CUST_PAYMENT", payment);
-                            request.setAttribute("ORDER_ITEMS", cart);
-                            request.setAttribute("PAYMENT_STATUS", paymentStatus);
+                            session.setAttribute("CUST_NAME", fullname);
+                            session.setAttribute("CUST_PHONE", phone);
+                            session.setAttribute("CUST_ADDRESS", address);
+                            session.setAttribute("CUST_CITY", city);
+                            session.setAttribute("SHIPPING", shipping);
+                            session.setAttribute("CUST_PAYMENT", payment);
+                            session.setAttribute("ORDER_ITEMS", cart);
+                            session.setAttribute("PAYMENT_STATUS", paymentStatus);
                             url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.BILL_PAGE);
-                        }//items existed
-                    }//cart existed
-                    session.removeAttribute("TEMPORARY_INFO");
-                    ECartSession.removeAttribute("ECART");
-                }//cart place existed
-            }//Checkout process for COD or After Successful online payment
+                        }//COD PAYMENT PROCESS AND PAID ORDER PROCESS
+                    }//items existed  
+                }//cart existed
+                session.removeAttribute("TEMPORARY_INFO");
+                ECartSession.removeAttribute("ECART");
+                session.setAttribute("PAID", "SUCESS");
+            }//cart place existed
         } catch (SQLException ex) {
             log("PlaceOrderServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {

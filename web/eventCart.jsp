@@ -12,7 +12,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Flora Rewind | Buy and sell on the website</title>
+        <title>Giỏ hàng | Buy and sell on the website</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -46,6 +46,17 @@
                 cursor: none;
             }
         </style>
+        <script>
+            window.onload = function () {
+                const prevPage = sessionStorage.getItem('prevPage');
+                const url = "http://localhost:8084/FloraRewind/order";
+                console.log(prevPage);
+                    if (url.includes(prevPage)) {
+                        sessionStorage.removeItem('prevPage');
+                        window.location.reload();
+                }
+            };
+        </script>
     </head>
 
     <body>
@@ -330,16 +341,5 @@
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
-        <script>
-            document.getElementById("minusButton").addEventListener("click", function () {
-                document.getElementById("action").value = "minus";
-                document.querySelector("form").submit();
-            });
-            document.getElementById("plusButton").addEventListener("click", function () {
-                document.getElementById("action").value = "plus";
-                document.querySelector("form").submit();
-            });
-        </script>
     </body>
-
 </html>

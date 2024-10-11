@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 public class VNPayConfig implements Serializable {
 
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_ReturnUrl = "https://halibut-alive-positively.ngrok-free.app/FloraRewind/vnpayReturn";
+    public static String vnp_ReturnUrl = "http://localhost:8084/FloraRewind/vnpayReturn";
     public static String vnp_TmnCode = "5EB5PRLW";
     public static String secretKey = "ZLWJX8EPR32AR04B5962FAJ6EWP9XI4G";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";

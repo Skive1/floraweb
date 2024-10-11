@@ -19,7 +19,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>Flora Rewind | Buy and sell on the website</title>
+        <title>Cảm ơn bạn đã mua hàng | Buy and sell on the website</title>
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
         <style>
@@ -33,6 +33,11 @@
                 font-weight: bold;
             }
         </style>
+        <script>
+            window.onbeforeunload = function () {
+                sessionStorage.setItem('prevPage', window.location.href);
+            };
+        </script>
     </head>
     <body>
         <div class="container mt-4 mb-4">
@@ -54,12 +59,12 @@
                                     <div class="d-flex justify-content-center mb-5 flex-column align-items-center"> 
                                         <span class="check1"><i class="fa fa-check"></i></span> 
                                         <span class="font-weight-bold">Giao dịch thành công</span> 
-                                        <small class="mt-2">Cảm ơn ${requestScope.CUST_NAME} đã mua hàng trên nền tảng chúng tôi</small> 
+                                        <small class="mt-2">Cảm ơn ${sessionScope.CUST_NAME} đã mua hàng trên nền tảng chúng tôi</small> 
                                         <p>Tình trạng: </p>
-                                        <c:if test="${requestScope.PAYMENT_STATUS == true}">
+                                        <c:if test="${sessionScope.PAYMENT_STATUS == true}">
                                             <p class="green bold">Đã thanh toán</p>
                                         </c:if>
-                                        <c:if test="${requestScope.PAYMENT_STATUS == false}">
+                                        <c:if test="${sessionScope.PAYMENT_STATUS == false}">
                                             <p class="red bold">Chưa thanh toán</p>
                                         </c:if>
                                     </div> 
@@ -69,14 +74,14 @@
                                 </div>
                                 <div class="text-center-content">
                                     <div class="admin-left-content-left">
-                                        <div class="admin-left-content-left-input">Số điện thoại liên hệ:<p>${requestScope.CUST_PHONE}</p></div>
-                                        <div class="admin-left-content-left-input">Địa chỉ giao hàng:<p>${requestScope.CUST_ADDRESS}, ${requestScope.CUST_CITY}</p></div>
+                                        <div class="admin-left-content-left-input">Số điện thoại liên hệ:<p>${sessionScope.CUST_PHONE}</p></div>
+                                        <div class="admin-left-content-left-input">Địa chỉ giao hàng:<p>${sessionScope.CUST_ADDRESS}, ${sessionScope.CUST_CITY}</p></div>
                                     </div>
                                     <div class="admin-left-content-right">
-                                        <div class="admin-left-content-right-input">Phương thức vận chuyển:<p><c:if test="${requestScope.SHIPPING == 'Delivery'}">Giao hàng bởi Flora Delivery</c:if>
-                                                <c:if test="${requestScope.SHIPPING == 'Pick Up'}">Lấy hàng tại điểm bán</c:if></p></div>
-                                        <div class="admin-left-content-right-input">Phương thức thanh toán:<p><c:if test="${requestScope.CUST_PAYMENT == 'COD'}">Thanh toán khi nhận hàng</c:if>
-                                                <c:if test="${requestScope.CUST_PAYMENT == 'ONLINE'}">Thanh toán trực tuyến</c:if></p></div>
+                                        <div class="admin-left-content-right-input">Phương thức vận chuyển:<p><c:if test="${sessionScope.SHIPPING == 'Delivery'}">Giao hàng bởi Flora Delivery</c:if>
+                                                <c:if test="${sessionScope.SHIPPING == 'Pick Up'}">Lấy hàng tại điểm bán</c:if></p></div>
+                                        <div class="admin-left-content-right-input">Phương thức thanh toán:<p><c:if test="${sessionScope.CUST_PAYMENT == 'COD'}">Thanh toán khi nhận hàng</c:if>
+                                                <c:if test="${sessionScope.CUST_PAYMENT == 'ONLINE'}">Thanh toán trực tuyến</c:if></p></div>
                                         </div>
                                     </div>
                                 </div>
@@ -99,7 +104,7 @@
                                                     <a href="#" data-toggle="collapse" class="admin-sidebar-content-detail">Thông tin chi tiết</a>
                                                     <ul class="sub-menu">
                                                         <div class="admin-content-main-content-product-list">
-                                                        <c:set var="bill" value="${requestScope.ORDER_ITEMS}"/>
+                                                        <c:set var="bill" value="${sessionScope.ORDER_ITEMS}"/>
                                                         <c:forEach var="entry" items="${bill.items}">
                                                             <c:set var="eventName" value="${entry.key}"/>
                                                             <c:set var="eventItems" value="${entry.value}"/>
@@ -146,14 +151,5 @@
             </div>
         </div>
         <script src="js/javas.js"></script>
-        <script>
-            document.addEventListener('keydown', function (e) {
-                if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
-                    e.preventDefault();
-                    alert('Refresh is disabled on this page.');
-                }
-            });
-        </script>
-
     </body>
 </html>

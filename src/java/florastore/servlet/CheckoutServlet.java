@@ -43,8 +43,7 @@ public class CheckoutServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.CheckoutFeatures.ERROR_PAGE);
-
+        String url = (String) siteMap.get(MyAppConstants.CheckoutFeatures.CART_PAGE);
         String totalAmount = request.getParameter("total");
         double total = Double.parseDouble(totalAmount);
 
