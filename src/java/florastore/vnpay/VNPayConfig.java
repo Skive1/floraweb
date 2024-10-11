@@ -24,9 +24,10 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author ADMIN
  */
-public class VNPayConfig implements Serializable{
+public class VNPayConfig implements Serializable {
+
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_ReturnUrl = "http://localhost:8084/FloraRewind/vnpayReturn";
+    public static String vnp_ReturnUrl = "https://halibut-alive-positively.ngrok-free.app/FloraRewind/vnpayReturn";
     public static String vnp_TmnCode = "5EB5PRLW";
     public static String secretKey = "ZLWJX8EPR32AR04B5962FAJ6EWP9XI4G";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
@@ -85,12 +86,11 @@ public class VNPayConfig implements Serializable{
                 sb.append("&");
             }
         }
-        return hmacSHA512(secretKey,sb.toString());
+        return hmacSHA512(secretKey, sb.toString());
     }
-    
+
     public static String hmacSHA512(final String key, final String data) {
         try {
-
             if (key == null || data == null) {
                 throw new NullPointerException();
             }
@@ -110,7 +110,7 @@ public class VNPayConfig implements Serializable{
             return "";
         }
     }
-    
+
     public static String getIpAddress(HttpServletRequest request) {
         String ipAdress;
         try {

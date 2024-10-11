@@ -46,7 +46,6 @@
                 color: red
             }
         </style>
-        <script src="https://kit.fontawesome.com/4cb3201524.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -496,9 +495,9 @@
                                             <tr>
                                                 <th scope="col">Sản phẩm</th>
                                                 <th scope="col">Tên</th>
-                                                <th scope="col">Đơn giá</th>
-                                                <th scope="col">Số lượng</th>
-                                                <th scope="col">Thành tiền</th>
+                                                <th scope="col" style="text-align: center">Đơn giá</th>
+                                                <th scope="col" style="text-align: center">Số lượng</th>
+                                                <th scope="col" style="text-align: center">Thành tiền</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -512,9 +511,9 @@
                                                         </div>
                                                     </th>
                                                     <td class="py-5">${item.epName}</td>
-                                                    <td class="py-5"><fmt:formatNumber value="${item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
-                                                    <td class="py-5">${item.quantity}</td>
-                                                    <td class="py-5"><fmt:formatNumber value="${item.quantity * item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
+                                                    <td class="py-5" https://halibut-alive-positively.ngrok-free.app/FloraRewind/><fmt:formatNumber value="${item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
+                                                    <td class="py-5" style="text-align: center">${item.quantity}</td>
+                                                    <td class="py-5" style="text-align: center"><fmt:formatNumber value="${item.quantity * item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
                                                 </tr>      
                                             </c:forEach>                                
                                             <tr>
@@ -546,7 +545,7 @@
                                             <td class="py-5"></td>
                                             <td class="py-5">
                                                 <div class="py-2 border-bottom border-top">
-                                                    <p class="mb-0 text-dark"><fmt:formatNumber value="${requestScope.TOTAL_AMOUNT}" type="number" groupingUsed="true"/>đ</p>
+                                                    <p class="mb-0 text-dark"  style="text-align: center"><fmt:formatNumber value="${requestScope.TOTAL_AMOUNT}" type="number" groupingUsed="true"/>đ</p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -560,7 +559,7 @@
                                             <td class="py-5"></td>
                                             <td class="py-5">
                                                 <div class="py-2 border-bottom border-top">
-                                                    <p class="mb-0 text-dark">10%</p>
+                                                    <p class="mb-0 text-dark"  style="text-align: center">10%</p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -574,7 +573,7 @@
                                             <td class="py-5"></td>
                                             <td class="py-5">
                                                 <div class="py-2 border-bottom border-top">
-                                                    <h3 class="mb-0 text-dark"><fmt:formatNumber value="${requestScope.TOTAL_AMOUNT}" type="number" groupingUsed="true"/>đ</h3>
+                                                    <h3 class="mb-0 text-dark"  style="text-align: center"><fmt:formatNumber value="${requestScope.TOTAL_AMOUNT}" type="number" groupingUsed="true"/>đ</h3>
                                                     <input type="hidden" name="totalamount" value="${requestScope.TOTAL_AMOUNT}"/>
                                                 </div>
                                             </td>
@@ -622,6 +621,7 @@
         <script src="lib/waypoints/waypoints.min.js"></script>
         <script src="lib/lightbox/js/lightbox.min.js"></script>
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="https://kit.fontawesome.com/4cb3201524.js" crossorigin="anonymous"></script>
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>

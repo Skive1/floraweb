@@ -14,7 +14,6 @@ import florastore.eventOrderDetail.EventOrderDetailDTO;
 import florastore.eventProduct.EventProductDAO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -55,7 +54,6 @@ public class PlaceOrderServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.ERROR_PAGE);
-
         //1. Get User information
         HttpSession session = request.getSession(false);
         String username = (String) session.getAttribute("USERNAME");
@@ -88,7 +86,6 @@ public class PlaceOrderServlet extends HttpServlet {
         String responseCode = request.getParameter("responseCode");
         EventOrderDTO newTemporaryInfo = new EventOrderDTO(fullname, phone, address, city, shipping, payment);
         session.setAttribute("TEMPORARY_INFO", newTemporaryInfo);
-
         String status = null;
         boolean paymentStatus = false;
         Timestamp deliveryDate = null;
@@ -144,12 +141,10 @@ public class PlaceOrderServlet extends HttpServlet {
                                     double totalPrice = quantity * unitPrice;
                                     int eventProductId = item.getEpId();
                                     double discount = 0;
-
                                     int newStockQuantity = item.getStockQuantity() - quantity;
                                     EventProductDAO dao = new EventProductDAO();
                                     //Update stock quantity
                                     dao.updateQuantityEventFlower(eventProductId, newStockQuantity);
-
                                     EventOrderDetailDTO orderDetail = new EventOrderDetailDTO(quantity, unitPrice, discount, totalPrice, eventOrderId, eventProductId);
                                     //Call DAO/Model to save INFO to EventOrder Table
                                     EventOrderDetailDAO EOrderDetailDao = new EventOrderDetailDAO();
