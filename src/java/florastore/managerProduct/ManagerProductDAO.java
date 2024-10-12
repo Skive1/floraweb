@@ -32,34 +32,7 @@ public class ManagerProductDAO implements Serializable {
     public ArrayList<CategoryDTO> getListProductType() {
         return listProductType;
     }
-
-    public String getStoreId(String username) throws SQLException, NamingException {
-        Connection con = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        String id = null;
-        try {
-            con = DBHelper.getConnection();
-            if (con != null) {
-                String sql = "SELECT StoreID "
-                        + "From FlowerStore"
-                        + "Where AccountUsername = 'trader'";
-            }
-
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
-        return id;
-    }
-
+    
     public void loadListProductFromDbById(String id, int index) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -68,9 +41,9 @@ public class ManagerProductDAO implements Serializable {
             //1. Get connection
             con = DBHelper.getConnection();
             if (con != null) {
-                String sql = "SELECT ProductId, FlowerStoreStoreID, ProductType, ProductName, ProductCondition, ProductDetail, Img, ProductQuantity, ProductPrice, CategoryCategoryId "
+                String sql = "SELECT ProductId, FlowerStoreStoreID, ProductType, ProductName, ProductCondition, ProductDetail, Img, ProductQuantity, ProductPrice "
                         + "FROM FlowerProducts "
-                        + "WHERE StoreId = ? "
+                        + "WHERE FlowerStoreStoreID = ? "
                         + "Order by ProductId "
                         + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
                 //2. Create stm obj
@@ -80,16 +53,16 @@ public class ManagerProductDAO implements Serializable {
                 //3. Excute Query
                 rs = stm.executeQuery();
                 while (rs.next()) {
-                    int productId = rs.getInt("ProductId");
-                    String storeId = rs.getString("StoreId");
-                    String name = rs.getString("ProductName");
+                    String productId = rs.getString("ProductId");
+                    String storeId = rs.getString("FlowerStoreStoreID");                    
                     String type = rs.getString("ProductType");
+                    String name = rs.getString("ProductName");
                     String condition = rs.getString("ProductCondition");
                     String detail = rs.getString("ProductDetail");
-                    double price = rs.getDouble("ProductPrice");
+                    String img = rs.getString("Img");
                     int quantity = rs.getInt("ProductQuantity");
-                    String imageURL = rs.getString("ImageURL");
-                    ManagerProductDTO items = new ManagerProductDTO(productId, storeId, name, type, condition, detail, price, quantity, imageURL);
+                    double price = rs.getDouble("ProductPrice");                                     
+                    ManagerProductDTO items = new ManagerProductDTO(id, storeId, type, name, condition, detail, img, quantity, price);
                     if (this.listProduct == null) {
                         listProduct = new ArrayList<>();
                     }//end if list is empty
@@ -166,9 +139,7 @@ public class ManagerProductDAO implements Serializable {
                 //5.Process Result
                 if (affectedRows > 0) {
                     result = true;
-                }
-                //username and password are verified
-
+                }//username and password are verified
             }//connect has been avaible
         } finally {
 
@@ -227,7 +198,7 @@ public class ManagerProductDAO implements Serializable {
             if (con != null) {
                 String sql = "Select DISTINCT ProductType "
                         + "From FlowerProducts "
-                        + "WHERE StoreId = ?";
+                        + "WHERE FlowerStoreStoreID = ?";
                 //2. Create stm obj
                 stm = con.prepareStatement(sql);
                 stm.setString(1, id);

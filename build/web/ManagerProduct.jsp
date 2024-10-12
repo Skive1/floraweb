@@ -41,9 +41,19 @@
                         </div>
                     </div>
                 </div>
-                <c:set var="currentP" value="${param.pageNum != null ? param.pageNum : 1}">
-
+                <c:set var="currentP" value="${param.pageNum != null ? param.pageNum : 1}">                   
                 </c:set>
+
+                <form action="ProductManagementAction">
+                    <select name="storeInfo">
+                        <c:forEach items="${sessionScope.Info}" var="info">
+                            <option value="${info.id}">${info.name}</option>                           
+                        </c:forEach>
+                    </select>
+                    <input type="submit" value="Submit">
+                    
+                </form>
+
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
@@ -61,31 +71,31 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        
                         <c:forEach items="${listProduct}" begin="0" end="5" var="o" varStatus="counter">
-                            <param name ="IdStore" value="${o.storeId}">
-                            <c:set var="lastIdStore" value="${o.storeId}" scope="page"/> 
-                            <tr>
-                                <td>
-                                    <span class="custom-checkbox">
-                                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                                        <label for="checkbox1"></label>
-                                    </span>
-                                    <!--                                EDIT SẢN PHẨM TẠI ĐÂY-->
-                                </td>
-                                <td>${counter.count}</td>
-                                <td>${o.storeId}</td>
-                                <td>${o.name}</td>
-                                <td>
-                                    <img src="${o.imageURL}">
-                                </td>
-                                <td>${o.price} VNĐ</td>
-                                <td>
-                                    <a href="#editEmployeeModal"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                    <a href="DelProManagementServlet?proId=${o.productId}&page=${currentP}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                        </c:forEach>
+                        <param name ="IdStore" value="${o.id}">
+                        <c:set var="lastIdStore" value="${o.storeId}" scope="page"/> 
+                        <tr>
+                            <td>
+                                <span class="custom-checkbox">
+                                    <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                                    <label for="checkbox1"></label>
+                                </span>
+                                <!--                                EDIT SẢN PHẨM TẠI ĐÂY-->
+                            </td>
+                            <td>${counter.count}</td>
+                            <td>${o.name}</td>
+                            <td>${o.type}</td>
+                            <td>
+                                <img src="${o.img}">
+                            </td>
+                            <td>${o.price} VNĐ</td>
+                            <td>
+                                <a href="#editEmployeeModal"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="DelProManagementServlet?storeInfo=${requestScope.storeId}&proId=${o.id}&page=${currentP}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
 
@@ -93,15 +103,11 @@
                     <div class="hint-text">Showing all</div>
                     <ul class="pagination">
                         <li class="page-item disabled"><a href="#">Previous</a></li>
-                            <c:forEach begin="1" end="${endP}" var="i">
-                            
 
-                            <li class="page-item" ><a href="ProductManagementServlet?index=${i}" class="active rounded" >${i}</a></li>  
+                        <c:forEach begin="1" end="${endP}" var="i">
+                            <li class="page-item" ><a href="ProductManagementServlet?storeInfo=${requestScope.storeId}&index=${i}" class="active rounded" >${i}</a></li>  
+                            </c:forEach>
 
-
-
-
-                        </c:forEach>
                         <li class="page-item"><a href="#" class="page-link">Last</a></li>
                     </ul>
                 </div>
@@ -122,9 +128,9 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>${lastIdStore}</label>
+                                <label>IDStore</label>
                                 <input name="id" type="text" class="form-control" required>
-                                
+
                             </div>
                             <div class="form-group">
                                 <label>Name</label>
@@ -149,8 +155,8 @@
                             <div class="form-group">
                                 <label>Category</label>
                                 <select name="type" class="form-select" aria-label="Default select example">
-                                    <c:forEach items="${listType}" var="o">
-                                        <option value="${o.type}">${o.type}</option>
+                                    <c:forEach items="" var="o">
+                                        <option value=""></option>
                                     </c:forEach>
                                 </select>
                             </div>
