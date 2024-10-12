@@ -127,8 +127,11 @@ public class MyAppConstants {
         public static final String ERROR_PAGE = "error404";
     }
 
-    public class ManageEventFeatures {
-        public static final String EVENT_PAGE = "eventPage";
+    public class ManageEvent {
+        public static final String ERROR_PAGE = "error404";
+        public static final String VIEW_EVENT_PAGE = "viewEventPage";
+        public static final String VIEW_EVENT = "viewEvent";
         public static final String DETAIL_PAGE = "eventDetailPage";
+        public static final String MANAGE_EVENT_PAGE = "manageEventPage";
     }
 }

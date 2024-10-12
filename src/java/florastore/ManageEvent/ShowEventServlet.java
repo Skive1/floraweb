@@ -30,32 +30,28 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ShowEventServlet", urlPatterns = {"/ShowEventServlet"})
 public class ShowEventServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.ManageEventFeatures.EVENT_PAGE);
+        String url = (String) siteMap.get(MyAppConstants.ManageEvent.ERROR_PAGE);
 
         try {
             //Call DAO/Model
             EventDAO dao = new EventDAO();
             List<EventDTO> events = dao.getAllEvent();
+            for (int i = 0; i < events.size(); i++) {
+                if (events.get(i).getEventName().contains("(Finished)")) {
+                   events.remove(i);
+                }
+            }
             //Process result
             if(events != null){
                 request.setAttribute("EVENT_LIST", events);
             }
-            url = "ManageEventt.jsp";
+            url = (String) siteMap.get(MyAppConstants.ManageEvent.MANAGE_EVENT_PAGE);
             
         } catch (SQLException ex) {
             log("EventServlet _SQL_ " + ex.getMessage());

@@ -48,7 +48,7 @@ public class ShowEventDetailServlet extends HttpServlet {
         String eventName = request.getParameter("getEventName");
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.EventFeatures.DETAIL_PAGE);
+        String url = (String) siteMap.get(MyAppConstants.ManageEvent.ERROR_PAGE);
         
         DecimalFormat df = new DecimalFormat("#,###.##");
         double total = 0;
@@ -57,27 +57,12 @@ public class ShowEventDetailServlet extends HttpServlet {
             EventDAO dao = new EventDAO();
             List<EventProductDTO> flowerList = dao.getEventFlower(eventId);
             if (flowerList != null) {
-                // Paging
-//                int pageSize = 9; // Number of products per page
-//                String pageParam = request.getParameter("page"); // Get the current page number from the request
-//                int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
-//                int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
-//
-//                // Calculate the starting and ending indexes for the sublist of products to display
-//                int start = (currentPage - 1) * pageSize;
-//                int end = Math.min(start + pageSize, totalProducts);
-
-                // Get the products for the current page
-//                List<EventProductDTO> productsForPage = flowerList.subList(start, end);
-//                request.setAttribute("PRODUCTS", productsForPage);
-//                request.setAttribute("currentPage", currentPage);
-//                request.setAttribute("totalPages", totalPages);
                 for (EventProductDTO flowerPrice : flowerList) {
                     total += flowerPrice.getEventProductPrice() * flowerPrice.getEventProductQuantity();
                 }
                 
                 totalOut = df.format(total);
-                url = "ViewEvent.jsp";
+                url = (String) siteMap.get(MyAppConstants.ManageEvent.VIEW_EVENT_PAGE);
                 request.setAttribute("FLOWER_LIST", flowerList);
                 request.setAttribute("EVENT_ID", eventId);
                 request.setAttribute("EVENT_NAME", eventName);

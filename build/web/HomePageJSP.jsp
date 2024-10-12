@@ -94,6 +94,9 @@
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="manageAccount" class="nav-item nav-link">Manage Account</a>
                                 </c:if>
+                                <c:if test="${sessionScope.USER.role == 'Admin'}">
+                                    <a href="viewEvent" class="nav-item nav-link">Manage System</a>
+                                </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
                                     <a href="#" class="nav-item nav-link">Delivery Order</a>

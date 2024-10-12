@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="css/css/jquery-ui.css">
         <link rel="stylesheet" href="css/css/style.css" />
         <link rel="stylesheet" href="css/css/admincss.css" />
-        <title>Order Detail</title>
+        <title>View Event</title>
     </head>
     <body>
         <section class="admin">
@@ -54,12 +54,7 @@
                     <div class="admin-content-top">
                         <div class="admin-content-top-left">
                             <ul class="flex-box">
-                                <li>
-                                    <i class="ri-search-2-line">SEARCH</i>               
-                                </li>
-                                <li>
-                                    <i class="ri-zoom-in-line">Zoom</i>
-                                </li>
+
                             </ul>          
                         </div>
                         <div class="admin-content-top-right">
@@ -91,8 +86,8 @@
                                     <th>Price</th>
                                     </thead>
                                     <tbody style="height: 100px;">
-                                        <c:set var="event" value="${requestScope.FLOWER_LIST}"/>
-                                        <c:if test="${not empty event}">
+                                        <c:set var="flowerList" value="${requestScope.FLOWER_LIST}"/>
+                                        <c:if test="${not empty flowerList}">
                                             <c:forEach var="eventList" items="${requestScope.FLOWER_LIST}" varStatus="counter">
                                                 <tr>
                                                     <td>${counter.count}</td>
@@ -109,13 +104,17 @@
                                                     </td>  
                                                 </tr>
                                             </c:forEach>
-                                        </c:if>  
+                                        </c:if> 
                                         <tr>
-                                            <td style="font-weight: 700;" colspan="5">Total:</td>
-                                            <td style="font-weight: 700;" >${requestScope.TOTAL}</td>  
-                                            <td></td>  
+                                            <td colspan="5"></td>
+                                            <td style="font-weight: 700;">Total:</td>
+                                            <td style="font-weight: 700;" >${requestScope.TOTAL}</td> 
+                                            
                                         </tr> 
                                     </tbody>
+                                    <c:if test="${empty flowerList}">
+                                        <a>How</a>
+                                    </c:if>
                                 </table>
                             </div>
                         </div>

@@ -125,7 +125,7 @@ public class EventDAO implements Serializable {
         }
         return products;
     }
-    
+
     public EventProductDTO getFlowerDetail(int id)
             throws SQLException, NamingException {
 
@@ -176,24 +176,28 @@ public class EventDAO implements Serializable {
         }
         return dto;
     }
-    
-    public boolean deleteEvent(String eventID) throws SQLException, ClassNotFoundException, NamingException {
+
+    public boolean closeEvent(String eventID) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
+        ResultSet rs = null;
         try {
             con = DBHelper.getConnection();
             if (con != null) {
-                String sql = "Delete From EventProduct " + "Where EventEventId = ?";
+                String sql = "Select EventName From Event Where EventId = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, eventID);
-                stm.executeUpdate();
-                
-                sql = "Delete From Event " + "Where EventId = ?";
-                stm = con.prepareStatement(sql);
-                stm.setString(1, eventID);
-                int affectedRow = stm.executeUpdate();
-                if (affectedRow > 0) {
-                    return true;
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    String eventName = rs.getString("EventName");
+                    sql = "Update Event Set EventName = ? Where EventId = ?";
+                    stm = con.prepareStatement(sql);
+                    stm.setString(1, (eventName + " (Finished)"));
+                    stm.setString(2, eventID);
+                    int affectedRow = stm.executeUpdate();
+                    if (affectedRow > 0) {
+                        return true;
+                    }
                 }
             }
         } finally {
@@ -202,6 +206,9 @@ public class EventDAO implements Serializable {
             }
             if (con != null) {
                 con.close();
+            }
+            if (rs != null) {
+                rs.close();
             }
         }
         return false;

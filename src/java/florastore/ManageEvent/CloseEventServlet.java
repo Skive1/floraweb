@@ -10,10 +10,7 @@ import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ASUS
  */
-@WebServlet(name = "DeleteEventServlet", urlPatterns = {"/DeleteEventServlet"})
-public class DeleteEventServlet extends HttpServlet {
+@WebServlet(name = "CloseEventServlet", urlPatterns = {"/CloseEventServlet"})
+public class CloseEventServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,22 +31,22 @@ public class DeleteEventServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.ManageEventFeatures.DETAIL_PAGE);
+        String url = (String) siteMap.get(MyAppConstants.ManageEvent.ERROR_PAGE);
 
         String EventID = request.getParameter("getEventID");
 
         try {
             EventDAO dao = new EventDAO();
-            boolean result = dao.deleteEvent(EventID);
+            boolean result = dao.closeEvent(EventID);
             if (result) {
-                url = "ShowEventServlet";
+                url = (String) siteMap.get(MyAppConstants.ManageEvent.VIEW_EVENT);
             } 
         } catch (SQLException ex) {
-            Logger.getLogger(DeleteEventServlet.class.getName()).log(Level.SEVERE, null, ex);
+            log("EventServlet _SQL_ " + ex.getMessage());
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DeleteEventServlet.class.getName()).log(Level.SEVERE, null, ex);
+            log("EventServlet Class Not Found " + ex.getMessage());
         } catch (NamingException ex) {
-            Logger.getLogger(DeleteEventServlet.class.getName()).log(Level.SEVERE, null, ex);
+            log("EventServlet _Naming_ " + ex.getMessage());
         } finally {
             response.sendRedirect(url);
         }

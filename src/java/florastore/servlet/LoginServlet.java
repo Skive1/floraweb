@@ -12,7 +12,6 @@ import florastore.account.AccountDTO;
 import florastore.googleAccount.GoogleAccount;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
@@ -108,14 +107,6 @@ public class LoginServlet extends HttpServlet {
                     //3. process resultShowEventServlet
                     if (validUser != null) {//user login successful
                         url = (String) siteMap.get(MyAppConstants.LoginFeatures.HOME_PAGE);
-                        //3.1 Create new session
-                        HttpSession session = request.getSession(true);
-                        session.setAttribute("USER", validUser);
-                        session.setAttribute("USERNAME", username);
-                        session.setAttribute("PASSWORD", password);
-                    }//end if validAccount is not null
-                    if (validUser != null && "Admin".equals(validUser.getRole())) {//user login successful
-                        url = "ShowEventServlet";
                         //3.1 Create new session
                         HttpSession session = request.getSession(true);
                         session.setAttribute("USER", validUser);
