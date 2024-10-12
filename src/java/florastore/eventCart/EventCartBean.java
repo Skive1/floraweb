@@ -23,23 +23,21 @@ public class EventCartBean implements Serializable {
         return items;
     }
 
-    public void addItemToCart(int epId, int eventId, String eventName, String img, String epName, int quantity, double unitPrice, int stockQuantity) {
+    public boolean addItemToCart(int epId, int eventId, String eventName, String img, String epName, int quantity, double unitPrice, int stockQuantity) {
+        boolean result = false;
         if (epName == null || epName.trim().isEmpty()) {
-            return;
+            result = false;
         }
-
         // Khởi tạo items map nếu nó null
         if (this.items == null) {
             this.items = new HashMap<>();
         }
-
         // Kiểm tra xem eventId đã tồn tại chưa
         List<EventCartItem> eventItems = items.get(eventName);
         if (eventItems == null) {
             eventItems = new ArrayList<>(); // Tạo mới danh sách sản phẩm cho eventId
             items.put(eventName, eventItems);
         }
-
         EventCartItem existingItem = null;
         for (EventCartItem item : eventItems) {
             if (item.getEpId() == epId) {
@@ -53,8 +51,14 @@ public class EventCartBean implements Serializable {
             eventItems.add(newItem);
         } else {
             // Sản phẩm đã tồn tại, tăng số lượng
-            existingItem.setQuantity(existingItem.getQuantity() + quantity);
+            if (existingItem.getQuantity() < stockQuantity) {
+                existingItem.setQuantity(existingItem.getQuantity() + quantity);
+                result = true;
+            } else {
+                result = false;
+            }
         }
+        return result;
     }
 
     public void removeEItemFromCart(String eventName, int epId) {

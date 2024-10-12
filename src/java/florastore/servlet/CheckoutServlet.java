@@ -62,7 +62,9 @@ public class CheckoutServlet extends HttpServlet {
                     }//items existed
                 }//cart existed
             }//cart place existed
-
+            else if(ECartSession == null){
+                url = (String) siteMap.get(MyAppConstants.CheckoutFeatures.ERROR_PAGE);
+            }
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

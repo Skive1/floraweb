@@ -56,11 +56,8 @@ public class PlaceOrderServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.ORDER_PAGE);
         //1. Get User information
         HttpSession session = request.getSession(false);
-        String statusTransaction = (String) request.getAttribute("status");
-        if (!"SUCESS".equals(session.getAttribute("PAID"))) {
-            url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.CART_PAGE);
-        } else if ("paid".equals(statusTransaction)) {
-            url = (MyAppConstants.PlaceOrderFeatures.CART_PAGE);
+        if(session == null){
+            url = MyAppConstants.PlaceOrderFeatures.ERROR_PAGE;
             response.sendRedirect(url);
             return;
         }
@@ -177,7 +174,6 @@ public class PlaceOrderServlet extends HttpServlet {
                 }//cart existed
                 session.removeAttribute("TEMPORARY_INFO");
                 ECartSession.removeAttribute("ECART");
-                session.setAttribute("PAID", "SUCESS");
             }//cart place existed
         } catch (SQLException ex) {
             log("PlaceOrderServlet _SQL_ " + ex.getMessage());

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : error404Page
-    Created on : Sep 14, 2024, 1:28:00 PM
+    Document   : sessionTimoutPage
+    Created on : Oct 12, 2024, 2:05:46 PM
     Author     : ADMIN
 --%>
 
@@ -157,11 +157,7 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">404 Error</h1>
-            <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="home">Home</a></li>
-                <li class="breadcrumb-item active text-white">404</li>
-            </ol>
+            <h1 class="text-center text-white display-6">440 Error</h1>
         </div>
         <!-- Single Page Header End -->
 
@@ -171,10 +167,10 @@
             <div class="container py-5 text-center">
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
-                        <i class="bi bi-exclamation-triangle display-1 text-secondary"></i>
-                        <h1 class="display-1">404</h1>
-                        <h1 class="mb-4">Page Not Found</h1>
-                        <p class="mb-4">We’re sorry, the page you have looked for does not exist in our website! Maybe go to our home page or try to use a search?</p>
+                        <i class="bi bi-dash-circle display-1" style="color: red"></i>
+                        <h1 class="display-1">440</h1>
+                        <h1 class="mb-4">Your session has expired</h1>
+                        <p class="mb-4">Please login again to continue using the web</p>
                         <a class="btn border-secondary rounded-pill py-3 px-5" href="home">Go Back To Home</a>
                     </div>
                 </div>

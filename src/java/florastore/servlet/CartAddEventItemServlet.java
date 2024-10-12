@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -83,10 +82,12 @@ public class CartAddEventItemServlet extends HttpServlet {
                     }
                 }
             }
-
             // 4. Add item to cart
             if (itemQuantity > 0 || itemQuantity <= stockQuantity) {
-                cart.addItemToCart(productId, eventId, eventName, imageURL, productName, itemQuantity, price, stockQuantity);
+                boolean result = cart.addItemToCart(productId, eventId, eventName, imageURL, productName, itemQuantity, price, stockQuantity);
+                if(result){
+                    request.setAttribute("INSUFFICIENT", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn !");
+                }
                 int pendingItems = cart.getUniqueItemCount();
                 double total = cart.calculateTotal();
                 ECartSession.setAttribute("PENDING_EITEMS", pendingItems);
