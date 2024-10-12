@@ -1,0 +1,57 @@
+form {
+  display: flex;
+  align-items: center; /* Center form elements vertically */
+  margin: 1rem auto; /* Add some margin for better positioning */
+}
+
+select {
+  font-family: inherit; /* Inherit font from the surrounding context */
+  padding: 0.5rem 1rem; /* Add some padding for better readability */
+  border: 1px solid #ccc; /* Light border for visual definition */
+  border-radius: 4px; /* Rounded corners for a smoother look */
+  background-color: #fff; /* White background for readability */
+  cursor: pointer; /* Indicate interactivity when hovering */
+}
+
+select:focus { /* Enhance styling when the select is focused */
+  outline: none; /* Remove default outline */
+  border-color: #999; /* Highlight the border slightly */
+}
+
+/* Styling for the dropdown arrow (using pseudo-class) */
+select::after {
+  content: ""; /* Add an empty content to style the arrow */
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 8px solid   
+ #ccc; /* Adjust color to match border */
+  margin-left: 0.5rem; /* Position the arrow correctly */
+  transition: transform 0.2s ease-in-out; /* Smooth transition */
+}
+
+select:hover::after { /* Rotate the arrow on hover */
+  transform: translateY(-2px); /* Small upward movement */
+}
+
+/* Styling for the options (optional, for better readability) */
+option {
+  padding: 0.5rem 1rem; /* Match the select's padding for consistency */
+}
+
+/* Optional styling for the submit button (consider using a button element) */
+input[type="submit"] {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #4CAF50; /* Green color for submit action */
+  color: #fff; /* White text for better contrast */
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out; /* Smooth button hover */
+}
+
+input[type="submit"]:hover {
+  background-color: #3e8e41; /* Darker green on hover */
+}

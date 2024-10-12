@@ -44,24 +44,19 @@
                 <c:set var="currentP" value="${param.pageNum != null ? param.pageNum : 1}">                   
                 </c:set>
 
-                <form action="ProductManagementAction">
+                <form action="ProductManagementAction" style="padding-left: 50%; padding-top: 10px">
                     <select name="storeInfo">
                         <c:forEach items="${sessionScope.Info}" var="info">
                             <option value="${info.id}">${info.name}</option>                           
                         </c:forEach>
                     </select>
-                    <input type="submit" value="Submit">
-                    
+                    <input type="submit" value="Submit">                    
                 </form>
 
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>
-                                <span class="custom-checkbox">
-                                    <input type="checkbox" id="selectAll">
-                                    <label for="selectAll"></label>
-                                </span>
+                            <th>                       
                             </th>
                             <th>ID</th>
                             <th>Name</th>
@@ -77,10 +72,6 @@
                         <c:set var="lastIdStore" value="${o.storeId}" scope="page"/> 
                         <tr>
                             <td>
-                                <span class="custom-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                                    <label for="checkbox1"></label>
-                                </span>
                                 <!--                                EDIT SẢN PHẨM TẠI ĐÂY-->
                             </td>
                             <td>${counter.count}</td>
