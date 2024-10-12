@@ -7,11 +7,9 @@ package florastore.servlet;
 
 import florastore.account.AccountDAO;
 import florastore.account.AccountDTO;
-import florastore.account.AccountRegisterError;
 import florastore.account.AccountResetPasswordError;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Random;
@@ -39,6 +37,9 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ForgotPasswordServlet", urlPatterns = {"/ForgotPasswordServlet"})
 public class ForgotPasswordServlet extends HttpServlet {
 
+    private final String emailFrom = "flora.flower.platform@gmail.com";
+    private final String AppCode = "vupk fyod yexz omxp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -51,16 +52,16 @@ public class ForgotPasswordServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         String username = request.getParameter("txtUsername");
         int otpvalue = 0;
         AccountResetPasswordError error = new AccountResetPasswordError();
         boolean foundErr = false;
-
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ForgotPasswordFeatures.FAIL_PAGE);
-
         try {
             AccountDTO validUser = null;
             if (username.equals(username.trim())) {
@@ -72,7 +73,6 @@ public class ForgotPasswordServlet extends HttpServlet {
                     url = (String) siteMap.get(MyAppConstants.ForgotPasswordFeatures.SUCCESS_PAGE);
                     Random rand = new Random();
                     otpvalue = rand.nextInt(1255650);
-
                     String to = validUser.getEmail();// change accordingly
                     // Get the session object
                     Properties props = new Properties();
@@ -84,25 +84,23 @@ public class ForgotPasswordServlet extends HttpServlet {
                     Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
                         @Override
                         protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication("flora.flower.platform@gmail.com", "vupk fyod yexz omxp");// Put your email
+                            return new PasswordAuthentication(emailFrom, AppCode);// Put your email
                             // id and
                             // password here
                         }
                     });
                     // compose message
                     MimeMessage message = new MimeMessage(session);
-                    message.setFrom(new InternetAddress(validUser.getEmail()));// change accordingly
+                    message.setFrom(new InternetAddress(emailFrom));// change accordingly
                     message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
                     message.setSubject("Flora Rewind password change request");
                     message.setText("Your OTP is: " + otpvalue);
                     // send message
                     Transport.send(message);
                     System.out.println("message sent successfully");
-
                     request.setAttribute("message", "OTP is sent to your email id");
                     mySession.setAttribute("otp", otpvalue);
                     mySession.setAttribute("email", validUser.getEmail());
-
                 }
             }
             if (validUser == null) {
@@ -112,7 +110,6 @@ public class ForgotPasswordServlet extends HttpServlet {
             if (foundErr) {
                 request.setAttribute("FORGOT_ERROR", error);
             }
-
         } catch (SQLException ex) {
             log("ForgotPasswordServlet _ SQL _ " + ex.getMessage());
         } catch (NamingException ex) {

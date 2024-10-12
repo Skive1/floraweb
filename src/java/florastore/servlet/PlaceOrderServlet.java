@@ -5,6 +5,7 @@
  */
 package florastore.servlet;
 
+import florastore.account.AccountDTO;
 import florastore.eventCart.EventCartBean;
 import florastore.eventCart.EventCartItem;
 import florastore.eventOrder.EventOrderDAO;
@@ -16,9 +17,17 @@ import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -36,6 +45,9 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "PlaceOrderServlet", urlPatterns = {"/PlaceOrderServlet"})
 public class PlaceOrderServlet extends HttpServlet {
 
+    private final String emailFrom = "flora.flower.platform@gmail.com";
+    private final String AppCode = "vupk fyod yexz omxp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -51,17 +63,20 @@ public class PlaceOrderServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
+        DecimalFormat df = new DecimalFormat("#,###");
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.ORDER_PAGE);
         //1. Get User information
         HttpSession session = request.getSession(false);
-        if(session == null){
+        if (session == null) {
             url = MyAppConstants.PlaceOrderFeatures.ERROR_PAGE;
             response.sendRedirect(url);
             return;
         }
         String username = (String) session.getAttribute("USERNAME");
+        AccountDTO validUser = (AccountDTO) session.getAttribute("USER");
+        String emailTo = validUser.getEmail();
         EventOrderDTO temporaryInfo = (EventOrderDTO) session.getAttribute("TEMPORARY_INFO");
         int eventId = 0;
         String fullname = request.getParameter("fullname");
@@ -99,6 +114,21 @@ public class PlaceOrderServlet extends HttpServlet {
         if ("00".equals(responseCode)) {//Check responseCode after VNPay return
             status = "Paid";
         }//Check responseCode after VNPay return
+        // Get the session object
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+        Session emailSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(emailFrom, AppCode);// Put your email
+                // id and
+                // password here
+            }
+        });
         try {
             //2. Cust goes to his/her cart place
             HttpSession ECartSession = request.getSession(false);
@@ -120,17 +150,40 @@ public class PlaceOrderServlet extends HttpServlet {
                             }
                         }//ONLINE PAYMENT PROCESS
                         if ("COD".equals(payment) || "00".equals(responseCode)) {//COD PAYMENT PROCESS AND PAID ORDER PROCESS
+                            // Build dynamic HTML content for the email
+                            StringBuilder htmlContent = new StringBuilder();
+                            htmlContent.append("<h2>Thank you for your order!</h2>");
+                            htmlContent.append("<p>Here is your order summary:</p>");
+                            // Build dynamic HTML content for the email
                             for (Map.Entry<String, List<EventCartItem>> entry : items.entrySet()) {//saving order info to order by each event
                                 double total = 0;
+                                //Get name of event
+                                String listKey = entry.getKey();
                                 //Get ordered items of event
                                 List<EventCartItem> itemList = entry.getValue();
+                                // Build dynamic HTML content for the email
+                                htmlContent.append("<h4>Sự kiện: ").append(listKey).append("</h4>");
+                                htmlContent.append("<table border='1' cellpadding='5' cellspacing='0'>");
+                                htmlContent.append("<tr><th>Tên sản phẩm</th><th>Số lượng</th><th>Giá tiền</th></tr>");
+                                // Build dynamic HTML content for the email
                                 for (EventCartItem eventItem : itemList) {//Get eventId of each Event
                                     eventId = eventItem.getEventId();
                                     break;
                                 }//Get eventId of each Event
                                 for (EventCartItem eventItem : itemList) {//Get total amount of each event
+                                    // Build dynamic HTML content for the email
+                                    htmlContent.append("<tr>")
+                                            .append("<td>").append(eventItem.getEpName()).append("</td>")
+                                            .append("<td>").append(eventItem.getQuantity()).append("</td>")
+                                            .append("<td>").append(df.format(eventItem.getUnitPrice() * eventItem.getQuantity())).append("vnđ</td>")
+                                            .append("</tr>");
+                                    // Build dynamic HTML content for the email
                                     total = total + (eventItem.getQuantity() * eventItem.getUnitPrice());
                                 }//Get total amount of each event
+                                // Build dynamic HTML content for the email
+                                htmlContent.append("<tr><td><b>Total</b></td><td></td><td><b>").append(df.format(total)).append("vnđ</b></td></tr>");
+                                htmlContent.append("</table>");
+                                // Build dynamic HTML content for the email
                                 if ("Paid".equals(status)) {//Update paymentStatus
                                     paymentStatus = true;
                                 }//Update paymentStatus
@@ -169,6 +222,16 @@ public class PlaceOrderServlet extends HttpServlet {
                             session.setAttribute("ORDER_ITEMS", cart);
                             session.setAttribute("PAYMENT_STATUS", paymentStatus);
                             url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.BILL_PAGE);
+                            // Build dynamic HTML content for the email
+                            htmlContent.append("<p>We hope you enjoy your purchase. If you have any questions, feel free to contact us!</p>");
+                            // Build dynamic HTML content for the email
+                            //Compose email                 
+                            MimeMessage message = new MimeMessage(emailSession);
+                            message.setFrom(new InternetAddress(emailFrom)); // Set sender's email
+                            message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailTo)); // Recipient's email
+                            message.setSubject("Your Flora Rewind Order Confirmation");
+                            message.setContent(htmlContent.toString(), "text/html; charset=UTF-8"); // Set email content
+                            Transport.send(message); // Send email
                         }//COD PAYMENT PROCESS AND PAID ORDER PROCESS
                     }//items existed  
                 }//cart existed
@@ -179,6 +242,8 @@ public class PlaceOrderServlet extends HttpServlet {
             log("PlaceOrderServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
             log("PlaceOrderServlet _Naming_ " + ex.getMessage());
+        } catch (MessagingException ex) {
+            log("ForgotPasswordServlet _ Messaging _ " + ex.getMessage());
         } finally {
             if (!response.isCommitted()) {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
