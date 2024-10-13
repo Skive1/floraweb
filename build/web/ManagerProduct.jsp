@@ -56,34 +56,30 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>                       
-                            </th>
-                            <th>ID</th>
+                            <th>ID</th>                           
                             <th>Name</th>
+                            <th>Type</th>
                             <th>Image</th>
                             <th>Price</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
                         <c:forEach items="${listProduct}" begin="0" end="5" var="o" varStatus="counter">
                         <param name ="IdStore" value="${o.id}">
                         <c:set var="lastIdStore" value="${o.storeId}" scope="page"/> 
-                        <tr>
-                            <td>
-                                <!--                                EDIT SẢN PHẨM TẠI ĐÂY-->
-                            </td>
-                            <td>${counter.count}</td>
+                        <tr>                          
+                                <!--                                EDIT SẢN PHẨM TẠI ĐÂY-->                          
+                            <td>${counter.count} and ${o.id}</td>                            
                             <td>${o.name}</td>
                             <td>${o.type}</td>
                             <td>
                                 <img src="${o.img}">
                             </td>
-                            <td>${o.price} VNĐ</td>
+                            <td>${o.price}</td>
                             <td>
                                 <a href="#editEmployeeModal"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="DelProManagementServlet?storeInfo=${requestScope.storeId}&proId=${o.id}&page=${currentP}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                <a href="DelManagement&proId=${o.id}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                             </td>
                         </tr>
                     </c:forEach>

@@ -69,7 +69,6 @@ public class ProductManagementServlet extends HttpServlet {
                 //3. Lấy list sản phẩm theo sell id
                 dao.loadListProductFromDbById(id, indexInt);
                 ArrayList<ManagerProductDTO> list = dao.getListProduct();
-
 //                    ProductTypeDAO typeDao = new ProductTypeDAO();
 //                    typeDao.loadListProductType();
 //                    ArrayList<ProductTypeDTO> listCategory = typeDao.getListCategory();
@@ -82,9 +81,11 @@ public class ProductManagementServlet extends HttpServlet {
             }
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            String msg = ex.getMessage();
+            log("ProductManagementServlet _ SQL: " + msg);
         } catch (NamingException ex) {
-            ex.printStackTrace();
+            String msg = ex.getMessage();
+            log("ProductManagementServlet _ Naming: " + msg);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

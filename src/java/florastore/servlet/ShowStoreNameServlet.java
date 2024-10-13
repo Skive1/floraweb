@@ -62,9 +62,11 @@ public class ShowStoreNameServlet extends HttpServlet {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            String msg = ex.getMessage();
+            log("ShowStoreNameServlet _ SQL: " + msg);
         } catch (NamingException ex) {
-            ex.printStackTrace();
+            String msg = ex.getMessage();
+            log("ShowStoreNameServlet _ Naming: " + msg);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

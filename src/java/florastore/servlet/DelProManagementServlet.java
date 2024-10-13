@@ -44,17 +44,14 @@ public class DelProManagementServlet extends HttpServlet {
         String proId = request.getParameter("proId");
         int id = Integer.parseInt(proId);
 //        String page = request.getParameter("index");
-//        String indexPage = request.getParameter("index");
-      
-               String pageNum = request.getParameter("page");
-
-        int indexInt = Integer.parseInt(pageNum);
-        
+//        String indexPage = request.getParameter("index");    
+//        String pageNum = request.getParameter("page");
+//        int indexInt = Integer.parseInt(pageNum);       
         try {
             ManagerProductDAO dao = new ManagerProductDAO();
             boolean result = dao.deleteProduct(id);
-            if (result) {  url = "ProductManagementServlet?index=" +indexInt;
-                url = "ProductManagementServlet?index=" +indexInt;
+            if (result) {  
+                url = "ProductManagementAction?storeInfo=1";
             }
         } catch (NamingException ex) {
             String msg = ex.getMessage();

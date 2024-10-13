@@ -32,7 +32,7 @@ public class ManagerProductDAO implements Serializable {
     public ArrayList<CategoryDTO> getListProductType() {
         return listProductType;
     }
-    
+
     public void loadListProductFromDbById(String id, int index) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -54,15 +54,15 @@ public class ManagerProductDAO implements Serializable {
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     String productId = rs.getString("ProductId");
-                    String storeId = rs.getString("FlowerStoreStoreID");                    
+                    String storeId = rs.getString("FlowerStoreStoreID");
                     String type = rs.getString("ProductType");
                     String name = rs.getString("ProductName");
                     String condition = rs.getString("ProductCondition");
                     String detail = rs.getString("ProductDetail");
                     String img = rs.getString("Img");
                     int quantity = rs.getInt("ProductQuantity");
-                    double price = rs.getDouble("ProductPrice");                                     
-                    ManagerProductDTO items = new ManagerProductDTO(id, storeId, type, name, condition, detail, img, quantity, price);
+                    double price = rs.getDouble("ProductPrice");
+                    ManagerProductDTO items = new ManagerProductDTO(productId, storeId, type, name, condition, detail, img, quantity, price);
                     if (this.listProduct == null) {
                         listProduct = new ArrayList<>();
                     }//end if list is empty
@@ -117,12 +117,9 @@ public class ManagerProductDAO implements Serializable {
 
     public boolean deleteProduct(int id)
             throws SQLException, NamingException {
-
         Connection con = null;
         PreparedStatement stm = null;
-
         boolean result = false;
-
         try {
             //1.connect DB
             con = DBHelper.getConnection();     //bắt lỗi ClassNotFoundException
