@@ -43,7 +43,7 @@ public class ManagerProductDAO implements Serializable {
             if (con != null) {
                 String sql = "SELECT ProductId, FlowerStoreStoreID, ProductType, ProductName, ProductCondition, ProductDetail, Img, ProductQuantity, ProductPrice "
                         + "FROM FlowerProducts "
-                        + "WHERE FlowerStoreStoreID = ? "
+                        + "WHERE FlowerStoreStoreID = ? AND IsDel = 0 "
                         + "Order by ProductId "
                         + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
                 //2. Create stm obj
@@ -111,26 +111,63 @@ public class ManagerProductDAO implements Serializable {
                 con.close();
             }
         }
-
         return 0;
     }
 
-    public boolean deleteProduct(int id)
+    public boolean delProductByManager(String id)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean result = false;
+
+        try {
+            //1. kết nối DB
+            con = DBHelper.getConnection();
+            if (con != null) { //nếu kết nối DB được
+                //2. khởi tạo lệnh SQL
+                String sql = "DELETE FROM FlowerProducts "
+                        + "WHERE ProductId=?";
+                //3. khởi tạo statement obj
+                stm = con.prepareStatement(sql);
+                stm.setString(1, id);
+                //4. Execute querry
+                int affectedRows = stm.executeUpdate();
+                //5. process result
+                if (affectedRows > 0) {
+                    result = true; //nếu số dóng ảnh hưởng > 0 thì update được
+                }
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return result;
+    }
+
+    public boolean deleteProductByUpdate(String id)
             throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         boolean result = false;
         try {
             //1.connect DB
-            con = DBHelper.getConnection();     //bắt lỗi ClassNotFoundException
+            con = DBHelper.getConnection();
             if (con != null) {
-
                 //2.Create SQL String
-                String sql = "DELETE FROM FlowerProducts "
-                        + "WHERE ProductId=?";
+                String sql = "UPDATE FlowerProducts "
+                        + "SET IsDel = 1 "
+                        + "WHERE ProductId = ?";
                 //3.Create Statement Object
                 stm = con.prepareStatement(sql);
-                stm.setInt(1, id);
+                stm.setString(1, id);
                 //4.Execute Query
                 int affectedRows = stm.executeUpdate();
                 //5.Process Result
@@ -139,7 +176,6 @@ public class ManagerProductDAO implements Serializable {
                 }//username and password are verified
             }//connect has been avaible
         } finally {
-
             if (stm != null) {
                 stm.close();
             }
@@ -148,41 +184,6 @@ public class ManagerProductDAO implements Serializable {
             }
         }
         return result;
-    }
-
-    public void delProduct(int id)
-            throws SQLException, NamingException {
-
-        Connection con = null;
-        PreparedStatement stm = null;
-
-        try {
-            //1.connect DB
-            con = DBHelper.getConnection();     //bắt lỗi ClassNotFoundException
-            if (con != null) {
-
-                //2.Create SQL String
-                String sql = "DELETE FROM FlowerProducts "
-                        + "WHERE ProductId=?";
-                //3.Create Statement Object
-                stm = con.prepareStatement(sql);
-                stm.setInt(1, id);
-                //4.Execute Query
-                int affectedRows = stm.executeUpdate();
-                //5.Process Result
-                //username and password are verified
-
-            }//connect has been avaible
-        } finally {
-
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
-
     }
 
     public void loadListProductType(String id) throws SQLException, NamingException {

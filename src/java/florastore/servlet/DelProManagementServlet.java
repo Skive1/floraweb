@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,16 +43,13 @@ public class DelProManagementServlet extends HttpServlet {
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
         String proId = request.getParameter("proId");
-        int id = Integer.parseInt(proId);
-//        String page = request.getParameter("index");
-//        String indexPage = request.getParameter("index");    
-//        String pageNum = request.getParameter("page");
-//        int indexInt = Integer.parseInt(pageNum);       
+        String storeId = request.getParameter("storeId");
+        String currentPage = request.getParameter("page");
         try {
             ManagerProductDAO dao = new ManagerProductDAO();
-            boolean result = dao.deleteProduct(id);
-            if (result) {  
-                url = "ProductManagementAction?storeInfo=1";
+            boolean result = dao.deleteProductByUpdate(proId);         
+            if (result) {
+                url = "ProductManagementServlet?storeInfo=" + storeId + "&index=" + currentPage;
             }
         } catch (NamingException ex) {
             String msg = ex.getMessage();

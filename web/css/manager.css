@@ -1,8 +1,3 @@
-form {
-  display: flex;
-  align-items: center; /* Center form elements vertically */
-  margin: 1rem auto; /* Add some margin for better positioning */
-}
 
 select {
   font-family: inherit; /* Inherit font from the surrounding context */
@@ -40,7 +35,15 @@ select:hover::after { /* Rotate the arrow on hover */
 option {
   padding: 0.5rem 1rem; /* Match the select's padding for consistency */
 }
+/*hover for index*/
+.page-item:hover {
+    background-color: #f0f0f0; /* Change the background color on hover */
+    border-radius: 5px; /* Add rounded corners */
+}
 
+.page-item:hover a {
+    color: red; /* Change the text color on hover */
+}
 /* Optional styling for the submit button (consider using a button element) */
 input[type="submit"] {
   padding: 0.5rem 1rem;

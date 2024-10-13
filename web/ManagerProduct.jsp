@@ -41,179 +41,179 @@
                         </div>
                     </div>
                 </div>
-                <c:set var="currentP" value="${param.pageNum != null ? param.pageNum : 1}">                   
-                </c:set>
-
-                <form action="ProductManagementAction" style="padding-left: 50%; padding-top: 10px">
-                    <select name="storeInfo">
-                        <c:forEach items="${sessionScope.Info}" var="info">
-                            <option value="${info.id}">${info.name}</option>                           
-                        </c:forEach>
-                    </select>
-                    <input type="submit" value="Submit">                    
-                </form>
-
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>ID</th>                           
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Image</th>
-                            <th>Price</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${listProduct}" begin="0" end="5" var="o" varStatus="counter">
-                        <param name ="IdStore" value="${o.id}">
-                        <c:set var="lastIdStore" value="${o.storeId}" scope="page"/> 
-                        <tr>                          
-                                <!--                                EDIT SẢN PHẨM TẠI ĐÂY-->                          
-                            <td>${counter.count} and ${o.id}</td>                            
-                            <td>${o.name}</td>
-                            <td>${o.type}</td>
-                            <td>
-                                <img src="${o.img}">
-                            </td>
-                            <td>${o.price}</td>
-                            <td>
-                                <a href="#editEmployeeModal"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="DelManagement&proId=${o.id}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                            </td>
-                        </tr>
+                
+                <c:set var="currentP" value="${param.page != null ? param.page : 1}" />  
+                
+            <form action="ProductManagementAction" style="padding-left: 50%; padding-top: 10px">
+                <select name="storeInfo">
+                    <c:forEach items="${sessionScope.Info}" var="info">
+                        <option value="${info.id}">${info.name}</option>                           
                     </c:forEach>
-                    </tbody>
-                </table>
+                </select>
+                <input type="submit" value="Submit">                    
+            </form>
 
-                <div class="clearfix">
-                    <div class="hint-text">Showing all</div>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>                           
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Image</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${listProduct}" begin="0" end="5" var="o" varStatus="counter">
+                    <param name ="IdStore" value="${o.id}">
+                    <c:set var="lastIdStore" value="${o.storeId}" scope="page"/> 
+                    <tr>                          
+                        <!--                                EDIT SẢN PHẨM TẠI ĐÂY-->                          
+                        <td>${counter.count}</td>                            
+                        <td>${o.name}</td>
+                        <td>${o.type}</td>
+                        <td>
+                            <img src="${o.img}">
+                        </td>
+                        <td>${o.price}</td>
+                        <td>                       
+                            <a href="#editEmployeeModal"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            <a href="DelManagement?proId=${o.id}&storeId=${o.storeId}&page=${currentP}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
 
-                        <c:forEach begin="1" end="${endP}" var="i">
-                            <li class="page-item" ><a href="ProductManagementServlet?storeInfo=${requestScope.storeId}&index=${i}" class="active rounded" >${i}</a></li>  
-                            </c:forEach>
+            <div class="clearfix">
+                <div class="hint-text">Showing all</div>
+                <ul class="pagination">
+                    <li class="page-item disabled"><a href="#">Previous</a></li>
 
-                        <li class="page-item"><a href="#" class="page-link">Last</a></li>
-                    </ul>
-                </div>
+                    <c:forEach begin="1" end="${endP}" var="i">
+                        <li class="page-item" ><a style="background-color: #ffcc33; color: whitesmoke" href="ProductManagementServlet?storeInfo=${requestScope.storeId}&index=${i}" class="active rounded" >${i}</a></li>  
+                        </c:forEach>
 
-
+                    <li class="page-item"><a href="#" class="page-link">Last</a></li>
+                </ul>
             </div>
-            <a href="#"><button type="button" class="btn btn-primary">BACK TO STORE</button>
+
 
         </div>
-        <!-- Edit Modal HTML -->
-        <div id="addEmployeeModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="add" method="post">
-                        <div class="modal-header">						
-                            <h4 class="modal-title">Add Product</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label>IDStore</label>
-                                <input name="id" type="text" class="form-control" required>
+        <a href="#"><button type="button" class="btn btn-primary">BACK TO STORE</button>
 
-                            </div>
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input name="name" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Condition</label>
-                                <input name="type" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Price</label>
-                                <input name="price" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Quantity</label>
-                                <textarea name="quantity" class="form-control" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Image Link</label>
-                                <textarea name="imageURL" class="form-control" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Category</label>
-                                <select name="type" class="form-select" aria-label="Default select example">
-                                    <c:forEach items="" var="o">
-                                        <option value=""></option>
-                                    </c:forEach>
-                                </select>
-                            </div>
+    </div>
+    <!-- Edit Modal HTML -->
+    <div id="addEmployeeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="add" method="post">
+                    <div class="modal-header">						
+                        <h4 class="modal-title">Add Product</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>IDStore</label>
+                            <input name="id" type="text" class="form-control" required>
 
                         </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Add">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input name="name" type="text" class="form-control" required>
                         </div>
-                    </form>
-                </div>
+                        <div class="form-group">
+                            <label>Condition</label>
+                            <input name="type" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Price</label>
+                            <input name="price" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <textarea name="quantity" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Image Link</label>
+                            <textarea name="imageURL" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select name="type" class="form-select" aria-label="Default select example">
+                                <c:forEach items="" var="o">
+                                    <option value=""></option>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-success" value="Add">
+                    </div>
+                </form>
             </div>
         </div>
-        <!-- Edit Modal HTML -->
-        <div id="editEmployeeModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form>
-                        <div class="modal-header">						
-                            <h4 class="modal-title">Edit Employee</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+    <!-- Edit Modal HTML -->
+    <div id="editEmployeeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">						
+                        <h4 class="modal-title">Edit Employee</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">					
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" required>
                         </div>
-                        <div class="modal-body">					
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Address</label>
-                                <textarea class="form-control" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Phone</label>
-                                <input type="text" class="form-control" required>
-                            </div>					
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" required>
                         </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-info" value="Save">
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea class="form-control" required></textarea>
                         </div>
-                    </form>
-                </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="text" class="form-control" required>
+                        </div>					
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-info" value="Save">
+                    </div>
+                </form>
             </div>
         </div>
-        <!-- Delete Modal HTML -->
-        <div id="deleteEmployeeModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form>
-                        <div class="modal-header">						
-                            <h4 class="modal-title">Delete Product</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">					
-                            <p>Are you sure you want to delete these Records?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-danger" value="Delete">
-                        </div>
-                    </form>
-                </div>
+    </div>
+    <!-- Delete Modal HTML -->
+    <div id="deleteEmployeeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">						
+                        <h4 class="modal-title">Delete Product</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">					
+                        <p>Are you sure you want to delete these Records?</p>
+                        <p class="text-warning"><small>This action cannot be undone.</small></p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </div>
+                </form>
             </div>
         </div>
-    </a>
-    <script src="js/manager.js" type="text/javascript"></script>
+    </div>
+</a>
+<script src="js/manager.js" type="text/javascript"></script>
 </body>
 </html>
