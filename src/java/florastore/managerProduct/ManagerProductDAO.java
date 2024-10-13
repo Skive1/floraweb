@@ -27,12 +27,6 @@ public class ManagerProductDAO implements Serializable {
         return listProduct;
     }
 
-    private ArrayList<CategoryDTO> listProductType;
-
-    public ArrayList<CategoryDTO> getListProductType() {
-        return listProductType;
-    }
-
     public void loadListProductFromDbById(String id, int index) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -184,45 +178,6 @@ public class ManagerProductDAO implements Serializable {
             }
         }
         return result;
-    }
-
-    public void loadListProductType(String id) throws SQLException, NamingException {
-        Connection con = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        try {
-            //1. Get connection
-            con = DBHelper.getConnection();
-            if (con != null) {
-                String sql = "Select DISTINCT ProductType "
-                        + "From FlowerProducts "
-                        + "WHERE FlowerStoreStoreID = ?";
-                //2. Create stm obj
-                stm = con.prepareStatement(sql);
-                stm.setString(1, id);
-                //3. Excute Query
-                rs = stm.executeQuery();
-                while (rs.next()) {
-                    String type = rs.getString("ProductType");
-                    CategoryDTO dto = new CategoryDTO(type);
-                    if (this.listProductType == null) {
-                        listProductType = new ArrayList<>();
-                    }//end if list is empty
-                    listProductType.add(dto);
-                } //end while loop
-            } //end if connection is success
-
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
     }
 
 }

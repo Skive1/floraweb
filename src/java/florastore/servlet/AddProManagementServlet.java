@@ -5,19 +5,12 @@
  */
 package florastore.servlet;
 
-import florastore.account.AccountDTO;
-import florastore.managerProduct.CategoryDAO;
-import florastore.managerProduct.CategoryDTO;
-import florastore.managerProduct.ManagerProductDAO;
-import florastore.managerProduct.ManagerProductDTO;
-import florastore.managerProduct.ProductTypeDAO;
-import florastore.managerProduct.ProductTypeDTO;
+import florastore.managerProduct.FlowerProductDAO;
+import florastore.managerProduct.FlowerProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -27,14 +20,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author acer
  */
-@WebServlet(name = "ProductManagementServlet", urlPatterns = {"/ProductManagementServlet"})
-public class ProductManagementServlet extends HttpServlet {
+@WebServlet(name = "AddProManagementServlet", urlPatterns = {"/AddProManagementServlet"})
+public class AddProManagementServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,45 +42,36 @@ public class ProductManagementServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
+        //Get parameter
         String url = (String) siteMap.get(MyAppConstants.ShowProductManager.ERROR_PAGE);
-        String id = request.getParameter("storeInfo");
-        String indexPage = request.getParameter("index");
-        if (indexPage == null) {
-            indexPage = "1";
-        }
-        int indexInt = Integer.parseInt(indexPage);
-
-        try {
-
-            if (id != null) {
-                //2. Gọi method DAO
-                ManagerProductDAO dao = new ManagerProductDAO();
-                int count = dao.getTotalProduct();
-                int endPage = count / 5;
-                if (count % 5 != 0) {
-                    endPage++;
-                }
-                //3. Lấy list sản phẩm theo sell id
-                dao.loadListProductFromDbById(id, indexInt);
-                ArrayList<ManagerProductDTO> list = dao.getListProduct();
-
-                CategoryDAO catDao = new CategoryDAO();
-                catDao.loadListProductCategory();
-                ArrayList<CategoryDTO> listCat = catDao.getListCategory();
-                //4. Lưu vào trong attribute
-                request.setAttribute("listCate", listCat);
-                request.setAttribute("storeId", id);
-                request.setAttribute("listProduct", list);
-                request.setAttribute("endP", endPage);
-                url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
+        String id = request.getParameter("storeIdAdd");
+        int storeId = Integer.parseInt(id);
+        String name = request.getParameter("nameAdd");
+        String type = request.getParameter("typeAdd");
+        String condition = request.getParameter("conditionAdd");
+        String detail = request.getParameter("detailAdd");
+        String price = request.getParameter("priceAdd");
+        double priceDouble = Double.parseDouble(price);
+        String quantity = request.getParameter("quantityAdd");
+        int quantityInt = Integer.parseInt(quantity);
+        String img = request.getParameter("imageURLAdd");
+        String categoryId = request.getParameter("categoryAdd");
+        try  {
+            //1. Add product information into dto
+            FlowerProductDTO dto = new FlowerProductDTO(type, name, condition, detail, img, quantityInt, priceDouble, categoryId, "0");
+            //2. Call dao
+            FlowerProductDAO dao = new FlowerProductDAO();
+            //3. Call method dao
+            boolean result = dao.saveProduct(dto,storeId);
+            if(result){
+                url = "ProductManagementServlet?storeInfo=" + id + "&index=1";
             }
-
         } catch (SQLException ex) {
             String msg = ex.getMessage();
-            log("ProductManagementServlet _ SQL: " + msg);
+            log("AddProManagementServlet _ SQL: " + msg);
         } catch (NamingException ex) {
             String msg = ex.getMessage();
-            log("ProductManagementServlet _ Naming: " + msg);
+            log("AddProManagementServlet _ Naming: " + msg);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
