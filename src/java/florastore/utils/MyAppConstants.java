@@ -121,5 +121,6 @@ public class MyAppConstants {
         public static final String DASHBOARD_PAGE = "dashBoard";
         public static final String ERROR_PAGE = "error404";
         public static final String MONTHLY_PAGE = "monthlyBoard";
+
     }
 }

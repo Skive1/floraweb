@@ -62,7 +62,6 @@ public class ProductManagementServlet extends HttpServlet {
                 //1. Lấy id từ session Scope
                 AccountDTO dto = (AccountDTO) session.getAttribute("USER");
                 String id = dto.getUsername();
-
                 if (dto.getUsername() != null) {
                     //2. Gọi method DAO
                     ManagerProductDAO dao = new ManagerProductDAO();
@@ -84,6 +83,8 @@ public class ProductManagementServlet extends HttpServlet {
                     request.setAttribute("listType", listCategory);
                     request.setAttribute("listProduct", list);
                     request.setAttribute("endP", endPage);
+
+                    url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
 
                     url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
                 }
