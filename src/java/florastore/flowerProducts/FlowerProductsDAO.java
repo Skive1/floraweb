@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package florastore.flowerProducts;
+
 import florastore.utils.DBHelper;
 import java.io.Serializable;
 import java.sql.Connection;
