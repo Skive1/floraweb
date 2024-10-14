@@ -26,9 +26,6 @@ public class ManagerProductDAO implements Serializable {
     public ArrayList<ManagerProductDTO> getListProduct() {
         return listProduct;
     }
-<<<<<<< HEAD
-    
-=======
 
     private ArrayList<CategoryDTO> listProductType;
 
@@ -63,7 +60,7 @@ public class ManagerProductDAO implements Serializable {
         return id;
     }
 
->>>>>>> main
+
     public void loadListProductFromDbById(String id, int index) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
