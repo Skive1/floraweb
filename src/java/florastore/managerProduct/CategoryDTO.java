@@ -12,27 +12,43 @@ import java.io.Serializable;
  * @author acer
  */
 public class CategoryDTO implements Serializable{
-    private String type;
+    private String categoryId;
+    private String category;
 
     public CategoryDTO() {
     }
 
-    public CategoryDTO(String type) {
-        this.type = type;
+    public CategoryDTO(String categoryId, String category) {
+        this.categoryId = categoryId;
+        this.category = category;
     }
 
     /**
-     * @return the type
+     * @return the categoryId
      */
-    public String getType() {
-        return type;
+    public String getCategoryId() {
+        return categoryId;
     }
 
     /**
-     * @param type the type to set
+     * @param categoryId the categoryId to set
      */
-    public void setType(String type) {
-        this.type = type;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    /**
+     * @return the category
+     */
+    public String getCategory() {
+        return category;
+    }
+
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(String category) {
+        this.category = category;
     }
     
 }
