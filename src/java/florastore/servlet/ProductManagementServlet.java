@@ -6,6 +6,8 @@
 package florastore.servlet;
 
 import florastore.account.AccountDTO;
+import florastore.managerProduct.CategoryDAO;
+import florastore.managerProduct.CategoryDTO;
 import florastore.managerProduct.ManagerProductDAO;
 import florastore.managerProduct.ManagerProductDTO;
 import florastore.managerProduct.ProductTypeDAO;
@@ -49,7 +51,7 @@ public class ProductManagementServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ShowProductManager.ERROR_PAGE);
-//        String url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
+        String id = request.getParameter("storeInfo");
         String indexPage = request.getParameter("index");
         if (indexPage == null) {
             indexPage = "1";
@@ -57,40 +59,36 @@ public class ProductManagementServlet extends HttpServlet {
         int indexInt = Integer.parseInt(indexPage);
 
         try {
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                //1. Lấy id từ session Scope
-                AccountDTO dto = (AccountDTO) session.getAttribute("USER");
-                String id = dto.getUsername();
-                if (dto.getUsername() != null) {
-                    //2. Gọi method DAO
-                    ManagerProductDAO dao = new ManagerProductDAO();
-                    //2. Gọi method DAO                
-                    int count = dao.getTotalProduct();
-                    int endPage = count / 5;
-                    if (count % 5 != 0) {
-                        endPage++;
-                    }
-                    //3. Lấy list sản phẩm theo sell id
-                    dao.loadListProductFromDbById(id, indexInt);
-                    ArrayList<ManagerProductDTO> list = dao.getListProduct();
-                    ProductTypeDAO typeDao = new ProductTypeDAO();
-                    typeDao.loadListProductType();
-                    ArrayList<ProductTypeDTO> listCategory = typeDao.getListCategory();
 
-                    //4. Lưu vào trong attribute
-                    request.setAttribute("listType", listCategory);
-                    request.setAttribute("listProduct", list);
-                    request.setAttribute("endP", endPage);
-
-                    url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
+            if (id != null) {
+                //2. Gọi method DAO
+                ManagerProductDAO dao = new ManagerProductDAO();
+                int count = dao.getTotalProduct();
+                int endPage = count / 5;
+                if (count % 5 != 0) {
+                    endPage++;
                 }
+                //3. Lấy list sản phẩm theo sell id
+                dao.loadListProductFromDbById(id, indexInt);
+                ArrayList<ManagerProductDTO> list = dao.getListProduct();
+
+                CategoryDAO catDao = new CategoryDAO();
+                catDao.loadListProductCategory();
+                ArrayList<CategoryDTO> listCat = catDao.getListCategory();
+                //4. Lưu vào trong attribute
+                request.setAttribute("listCate", listCat);
+                request.setAttribute("storeId", id);
+                request.setAttribute("listProduct", list);
+                request.setAttribute("endP", endPage);
+                url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
             }
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            String msg = ex.getMessage();
+            log("ProductManagementServlet _ SQL: " + msg);
         } catch (NamingException ex) {
-            ex.printStackTrace();
+            String msg = ex.getMessage();
+            log("ProductManagementServlet _ Naming: " + msg);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
