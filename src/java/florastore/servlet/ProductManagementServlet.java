@@ -62,10 +62,12 @@ public class ProductManagementServlet extends HttpServlet {
                 //1. Lấy id từ session Scope
                 AccountDTO dto = (AccountDTO) session.getAttribute("USER");
                 String id = dto.getUsername();
+
                 if (dto.getUsername() != null) {
                     //2. Gọi method DAO
                     ManagerProductDAO dao = new ManagerProductDAO();
                     //2. Gọi method DAO                
+
                     int count = dao.getTotalProduct();
                     int endPage = count / 5;
                     if (count % 5 != 0) {
@@ -74,6 +76,7 @@ public class ProductManagementServlet extends HttpServlet {
                     //3. Lấy list sản phẩm theo sell id
                     dao.loadListProductFromDbById(id, indexInt);
                     ArrayList<ManagerProductDTO> list = dao.getListProduct();
+
                     ProductTypeDAO typeDao = new ProductTypeDAO();
                     typeDao.loadListProductType();
                     ArrayList<ProductTypeDTO> listCategory = typeDao.getListCategory();
@@ -84,6 +87,7 @@ public class ProductManagementServlet extends HttpServlet {
                     request.setAttribute("endP", endPage);
 
                     url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
+
                 }
             }
 
