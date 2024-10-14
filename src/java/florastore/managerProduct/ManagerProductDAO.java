@@ -26,7 +26,7 @@ public class ManagerProductDAO implements Serializable {
     public ArrayList<ManagerProductDTO> getListProduct() {
         return listProduct;
     }
-
+    
     public void loadListProductFromDbById(String id, int index) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;

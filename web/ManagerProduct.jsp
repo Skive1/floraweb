@@ -78,7 +78,7 @@
                             </td>
                             <td>${o.price}</td>
                             <td>                       
-                                <a href="#editEmployeeModal"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="editProductManagement"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="DelManagement?proId=${o.id}&storeId=${o.storeId}&page=${currentP}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                             </td>
                         </tr>
@@ -116,7 +116,7 @@
             <a href="#"><button type="button" class="btn btn-primary">BACK TO STORE</button>
 
         </div>
-        <!-- Edit Modal HTML -->
+        <!-- Add Products -->
         <div id="addEmployeeModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -176,37 +176,56 @@
                 </div>
             </div>
         </div>
-        <!-- Edit Modal HTML -->
+        <!-- Edit Product HTML -->
         <div id="editEmployeeModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form>
                         <div class="modal-header">						
-                            <h4 class="modal-title">Edit Employee</h4>
+                            <h4 class="modal-title">Edit Product</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">					
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" required>
+                                <input type="textE" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" class="form-control" required>
+                                <label>Type</label>
+                                <input type="typeE" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Address</label>
-                                <textarea class="form-control" required></textarea>
+                                <label>Condition</label>
+                                <textarea name ="conditionE" class="form-control" required></textarea>
                             </div>
                             <div class="form-group">
-                                <label>Phone</label>
-                                <input type="text" class="form-control" required>
-                            </div>					
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-info" value="Save">
-                        </div>
+                                <label>Detail</label>
+                                <textarea name ="detailE" class="form-control" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input name="priceE" type="number" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="number" name="quantityE" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Image Link</label>
+                                <textarea name="imageE" class="form-control" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select name="categoryE" class="form-select" aria-label="Default select example">
+                                    <c:forEach items="${listCate}" var="o">
+                                        <option value="${o.categoryId}">${o.category}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                <input type="submit" class="btn btn-info" value="Save">
+                            </div>
                     </form>
                 </div>
             </div>
