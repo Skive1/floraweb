@@ -41,31 +41,29 @@
                         </div>
                     </div>
                 </div>
+                <c:set var="currentP" value="${param.pageNum != null ? param.pageNum : 1}">
 
-                <c:set var="currentP" value="${param.page != null ? param.page : 1}" />  
-
-                <form action="ProductManagementAction" style="padding-left: 50%; padding-top: 10px">
-                    <select name="storeInfo">
-                        <c:forEach items="${sessionScope.Info}" var="info">
-                            <option value="${info.id}">${info.name}</option>                           
-                        </c:forEach>
-                    </select>
-                    <input type="submit" value="Submit">                    
-                </form>
-
+                </c:set>
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>                           
+                            <th>
+                                <span class="custom-checkbox">
+                                    <input type="checkbox" id="selectAll">
+                                    <label for="selectAll"></label>
+                                </span>
+                            </th>
+                            <th>ID</th>
                             <th>Name</th>
-                            <th>Type</th>
                             <th>Image</th>
                             <th>Price</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
+
                         <c:forEach items="${listProduct}" begin="0" end="5" var="o" varStatus="counter">
+<<<<<<< HEAD
                         <param name ="IdStore" value="${o.id}">
                         <c:set var="lastIdStore" value="${o.storeId}" scope="page"/> 
                         <tr>                          
@@ -83,6 +81,31 @@
                             </td>
                         </tr>
                     </c:forEach>
+=======
+                            <param name ="IdStore" value="${o.storeId}">
+                            <c:set var="lastIdStore" value="${o.storeId}" scope="page"/> 
+                            <tr>
+                                <td>
+                                    <span class="custom-checkbox">
+                                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                                        <label for="checkbox1"></label>
+                                    </span>
+                                    <!--                                EDIT SẢN PHẨM TẠI ĐÂY-->
+                                </td>
+                                <td>${counter.count}</td>
+                                <td>${o.storeId}</td>
+                                <td>${o.name}</td>
+                                <td>
+                                    <img src="${o.imageURL}">
+                                </td>
+                                <td>${o.price} VNĐ</td>
+                                <td>
+                                    <a href="#editEmployeeModal"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                    <a href="DelProManagementServlet?proId=${o.productId}&page=${currentP}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+>>>>>>> main
                     </tbody>
                 </table>
 
@@ -90,24 +113,16 @@
                     <div class="hint-text">Showing all</div>
                     <ul class="pagination">
                         <li class="page-item disabled"><a href="#">Previous</a></li>
+                            <c:forEach begin="1" end="${endP}" var="i">
+                            
 
-                        <c:forEach begin="1" end="${endP}" var="i">
-                            <li class="page-item" ><a style="background-color: #ffcc33; color: whitesmoke" href="ProductManagementServlet?storeInfo=${requestScope.storeId}&index=${i}" class="active rounded" >${i}</a></li>  
-                            </c:forEach>
+                            <li class="page-item" ><a href="ProductManagementServlet?index=${i}" class="active rounded" >${i}</a></li>  
 
-                        <!--                    <li class="page-item"><a href="#" class="page-link">Last</a></li>-->
-                        <li class="page-item ">
-                            <c:if test="${currentP == endP}">
-                            <li class="page-item disabled">
 
-                            </li>
-                        </c:if>
-                        <c:if test="${currentP != endP}">
-                            <li class="page-item">
-                                <a href="ProductManagementServlet?storeInfo=${requestScope.storeId}&index=${endP}">Last</a>
-                            </li>
-                        </c:if>                   
-                        </li>
+
+
+                        </c:forEach>
+                        <li class="page-item"><a href="#" class="page-link">Last</a></li>
                     </ul>
                 </div>
 
@@ -120,49 +135,42 @@
         <div id="addEmployeeModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="addProductManagement" method="post">
+                    <form action="add" method="post">
                         <div class="modal-header">						
                             <h4 class="modal-title">Add Product</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>ID Store: ${lastIdStore}</label>
-                                <input type="hidden" name="storeIdAdd" value="${lastIdStore}">
+                                <label>${lastIdStore}</label>
+                                <input name="id" type="text" class="form-control" required>
+                                
                             </div>
                             <div class="form-group">
                                 <label>Name</label>
-                                <input name="nameAdd" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Type</label>
-                                <input name="typeAdd" type="text" class="form-control" required>
+                                <input name="name" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Condition</label>
-                                <input name="conditionAdd" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Detail</label>
-                                <input name="detailAdd" type="text" class="form-control" required>
+                                <input name="type" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Price</label>
-                                <input name="priceAdd" type="number" class="form-control" required>
+                                <input name="price" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Quantity</label>
-                                <input type="number" name="quantityAdd" class="form-control" required>
+                                <textarea name="quantity" class="form-control" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Image Link</label>
-                                <textarea name="imageURLAdd" class="form-control" required></textarea>
+                                <textarea name="imageURL" class="form-control" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Category</label>
-                                <select name="categoryAdd" class="form-select" aria-label="Default select example">
-                                    <c:forEach items="${listCate}" var="o">
-                                        <option value="${o.categoryId}">${o.category}</option>
+                                <select name="type" class="form-select" aria-label="Default select example">
+                                    <c:forEach items="${listType}" var="o">
+                                        <option value="${o.type}">${o.type}</option>
                                     </c:forEach>
                                 </select>
                             </div>
