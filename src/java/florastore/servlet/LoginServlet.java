@@ -58,36 +58,23 @@ public class LoginServlet extends HttpServlet {
         AccountLoginError error = new AccountLoginError();
         boolean foundErr = false;
 
-        log("LoginServlet _ Code: " + code);
-        log("LoginServlet _ Error: " + authError);
-        log("LoginServlet _ Username: " + username);
-        log("LoginServlet _ Password: " + (password != null ? "********" : null)); // Mask password
-        log("LoginServlet _ Initial URL: " + url);
-
         try {
             if (code != null) {
                 if (authError == null) {
-                    log("Google login code received: " + code);
                     GoogleLogin googleLogin = new GoogleLogin();
                     String accessToken = googleLogin.getToken(code);
                     GoogleAccount googleAccount = GoogleLogin.getUserInfo(accessToken);
                     String email = googleAccount.getEmail();
                     String saleId = null;
-                    log("Google Account Email: " + email);
 
                     // Extract username from email
                     String newUsername = email.substring(0, email.indexOf("@"));
-                    log("Extracted Username: " + newUsername);
 
                     AccountDAO dao = new AccountDAO();
                     AccountDTO authUser = dao.getAccountByGoogleAccount(email);
                     if (authUser == null) {
-                        log("User not found. Creating new user.");
                         authUser = new AccountDTO(newUsername, "GOOGLE_AUTH", newUsername, "Customer", email, "Hidden", "", "", "",saleId);
                         dao.createAccount(authUser); // Add user to the database
-                    } else {
-                        log("User found: " + authUser.getUsername());
-                        log("User found: " + authUser.getEmail());
                     }
 
                     url = (String) siteMap.get(MyAppConstants.LoginFeatures.HOME_PAGE);
@@ -96,7 +83,6 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("USERNAME", authUser.getUsername());
 
                 } else {
-                    log("OAuth Error: " + authError);
                     url = (String) siteMap.get(MyAppConstants.LoginFeatures.INVALID_PAGE);
                 }
             } else {

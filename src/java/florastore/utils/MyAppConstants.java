@@ -128,4 +128,14 @@ public class MyAppConstants {
         public static final String VIEW_CART_PAGE = "cartPage";
         public static final String ERROR_PAGE = "insufficient.html";
     }
+    
+    public class AddEventFeatures{
+        public static final String ADD_EVENT_PAGE = "addEventPage";
+        public static final String HOME_PAGE = "home";
+    }
+    
+    public class AddEventProductFeatures{
+        public static final String ADD_EVENT_PRODUCT_PAGE = "addEventProductPage";
+        public static final String ERROR_PAGE = "error404";
+    }
 }

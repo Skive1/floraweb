@@ -122,6 +122,9 @@
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                         <a href="viewProfileAction" class="dropdown-item">My Profile</a>
                                         <a href="#" class="dropdown-item">Purchase Order</a>
+                                        <c:if test="${sessionScope.USER.role == 'Seller'}">
+                                            <a href="addEventPage" class="dropdown-item">Add Event</a>
+                                        </c:if>
                                         <a href="logoutAction" class="dropdown-item">Logout</a>
                                     </div>
                                 </div>                         
@@ -364,7 +367,9 @@
                                     </c:if>
                                     <c:if test="${empty products}">
                                         Sản phẩm của Event này đang không tồn tại!!!
+                                        <a href="<c:url value='eventCategory'><c:param name='eventId' value='${requestScope.EVENT_ID}'/></c:url>">Go to Add Event Product</a>.
                                     </c:if>
+
                                     <div class="col-12">
                                         <nav aria-label="Page navigation">
                                             <ul class="pagination d-flex justify-content-center mt-5">

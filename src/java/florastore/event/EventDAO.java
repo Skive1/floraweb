@@ -125,7 +125,7 @@ public class EventDAO implements Serializable {
         }
         return products;
     }
-    
+
     public EventProductDTO getFlowerDetail(int id)
             throws SQLException, NamingException {
 
@@ -175,5 +175,144 @@ public class EventDAO implements Serializable {
             }
         }
         return dto;
+    }
+
+    public boolean addEvent(EventDTO dto)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean result = false;
+
+        try {
+            // 1. Connect to DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                // 2. Create SQL String with RETURN_GENERATED_KEYS to get eventId
+                String sql = "INSERT INTO Event (AccountUsername, EventName, EventLocation, EventCity, StartDate, EndDate, EventImg) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?);";
+                // 3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, dto.getEventOwner());
+                stm.setString(2, dto.getEventName());
+                stm.setString(3, dto.getEventLocation());
+                stm.setString(4, dto.getEventCity());
+                stm.setTimestamp(5, dto.getStartDate());
+                stm.setTimestamp(6, dto.getEndDate());
+                stm.setString(7, dto.getEventImg());
+                // 4. Execute the update
+                int affectedRows = stm.executeUpdate();
+
+                // 5. Process result and retrieve generated eventId
+                if (affectedRows > 0) {
+                    result = true;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+
+    public List<EventCategoryDTO> getCategories()
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<EventCategoryDTO> categories = new ArrayList<>();
+        
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String 
+                String sql = "Select CategoryId, CategoryName "
+                        + "From Category";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    int id = rs.getInt("CategoryId");
+                    String name = rs.getString("CategoryName");
+                    //set data to DTO properties
+                    EventCategoryDTO dto
+                            = new EventCategoryDTO(id, name);
+                    categories.add(dto);
+                }//process each record in resultset    
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return categories;
+    }
+
+    public boolean addEventProduct(EventProductDTO dto, int categoryId, int eventId)
+            throws SQLException, NamingException {
+        
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean result = false;
+
+        try {
+            // 1. Connect to DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                // 2. Create SQL String with RETURN_GENERATED_KEYS to get eventId
+                String sql = "INSERT INTO EventProduct (CategoryCategoryId, EventEventId, EPName, EPType, EPCondition, EPDetail, Img, EPQuantity, EPPrice) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                // 3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, categoryId);
+                stm.setInt(2, eventId);
+                stm.setString(3, dto.getEventProductName());
+                stm.setString(4, dto.getEventProductType());
+                stm.setString(5, dto.getEventProductCondition());
+                stm.setString(6, dto.getEventProductDetail());
+                stm.setString(7, dto.getEventProductImg());
+                stm.setInt(8, dto.getEventProductQuantity());
+                stm.setDouble(9, dto.getEventProductPrice());
+                // 4. Execute the update
+                int affectedRows = stm.executeUpdate();
+
+                // 5. Process result and retrieve generated eventId
+                if (affectedRows > 0) {
+                    result = true;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
     }
 }

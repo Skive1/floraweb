@@ -3,10 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/EFdetail.jsp</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/WEB-INF/siteMap.properties</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/EventDetail.jsp</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/src/java/florastore/servlet/EventFlowerDetailServlet.java</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/src/java/florastore/servlet/AddEventProductServlet.java</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/src/java/florastore/servlet/EventDetailServlet.java</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/web/WEB-INF/siteMap.properties</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/web/addEventProduct.jsp</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/src/java/florastore/servlet/EventCategoryServlet.java</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/src/java/florastore/event/EventDAO.java</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/web/Event.jsp</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/web/EventDetail.jsp</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/web/addEvent.jsp</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/src/java/florastore/utils/MyAppConstants.java</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/src/java/florastore/event/EventCategoryDTO.java</file>
         </group>
     </open-files>
 </project-private>

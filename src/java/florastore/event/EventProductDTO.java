@@ -148,8 +148,4 @@ public class EventProductDTO implements Serializable {
     public void setEventProductPrice(double eventProductPrice) {
         this.eventProductPrice = eventProductPrice;
     }
-
-  
-
-    
 }
