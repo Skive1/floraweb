@@ -5,14 +5,11 @@
  */
 package florastore.servlet;
 
-import florastore.event.EventDAO;
-import florastore.event.EventProductDTO;
-import florastore.flowerProducts.FlowerProductsCategoryDTO;
-import florastore.flowerProducts.FlowerProductsDTO;
+import florastore.eventProduct.EventProductDAO;
+import florastore.eventProduct.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -53,14 +50,14 @@ public class EventFlowerDetailServlet extends HttpServlet {
 
         try {
             //2. Call DAO/Model
-            EventDAO dao = new EventDAO();
+            EventProductDAO dao = new EventProductDAO();
             //2.1 Get flower detail
             EventProductDTO flowerDetail = dao.getFlowerDetail(productId);
 
             if (flowerDetail != null) {//check flower in detail is available
                 url = (String) siteMap.get(MyAppConstants.EventFlowerFeatures.DETAIL_PAGE);
                 //4. Push to Product Detail
-                request.setAttribute("PRODUCT_DETAIL", flowerDetail);
+                request.setAttribute("EPRODUCT_DETAIL", flowerDetail);
                 request.setAttribute("EVENT_ID", eventId);
             }//check flower in detail is available
         } catch (SQLException ex) {

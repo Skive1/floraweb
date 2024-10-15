@@ -5,13 +5,16 @@
  */
 package florastore.servlet;
 
+import florastore.cart.CartBean;
+import florastore.cart.CartItem;
 import florastore.event.EventDAO;
-import florastore.event.EventProductDTO;
-import florastore.flowerProducts.FlowerProductsDTO;
+import florastore.eventProduct.EventProductDAO;
+import florastore.eventProduct.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -21,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -50,8 +54,27 @@ public class EventDetailServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.EventFeatures.DETAIL_PAGE);
 
         try {
-            EventDAO dao = new EventDAO();
-            List<EventProductDTO> flowerList = dao.getEventFlower(eventId);
+            //Check cart place
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                //Check user cart
+                CartBean cart = (CartBean) session.getAttribute("CART");
+                if (cart != null) {
+                    //Check items
+                    Map<String, List<CartItem>> items = cart.getItems();
+                    if (items != null) {
+                        int pendingItems = cart.getUniqueItemCount();
+                        session.setAttribute("PENDING_ITEMS", pendingItems);
+                    }
+                }
+                int pendingItems = 0;
+                session.setAttribute("PENDING_ITEMS", pendingItems);
+            }
+            
+            EventDAO eDao = new EventDAO();
+            String eventName = eDao.getEventNameByEventId(eventId);
+            EventProductDAO epDao = new EventProductDAO();
+            List<EventProductDTO> flowerList = epDao.getEventFlower(eventId);
             if (flowerList != null) {
                 // Paging
                 int pageSize = 9; // Number of products per page
@@ -72,6 +95,7 @@ public class EventDetailServlet extends HttpServlet {
                 request.setAttribute("totalPages", totalPages);
                 request.setAttribute("FLOWER_LIST", flowerList);
                 request.setAttribute("EVENT_ID", eventId);
+                request.setAttribute("EVENT_NAME", eventName);
             }
         } catch (SQLException ex) {
             log("EventDetailServlet _SQL_ " + ex.getMessage());
