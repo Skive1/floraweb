@@ -57,7 +57,11 @@ public class EventDetailServlet extends HttpServlet {
             //Check cart place
             HttpSession session = request.getSession(false);
             if (session != null) {
-                //Check user cart
+                if (session.getAttribute("INSUFFICIENT") != null) {
+                    request.setAttribute("INSUFFICIENT", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
+                    session.removeAttribute("INSUFFICIENT");
+                }
+                //Check user cart             
                 CartBean cart = (CartBean) session.getAttribute("CART");
                 if (cart != null) {
                     //Check items
@@ -70,7 +74,7 @@ public class EventDetailServlet extends HttpServlet {
                 int pendingItems = 0;
                 session.setAttribute("PENDING_ITEMS", pendingItems);
             }
-            
+
             EventDAO eDao = new EventDAO();
             String eventName = eDao.getEventNameByEventId(eventId);
             EventProductDAO epDao = new EventProductDAO();

@@ -88,7 +88,7 @@ public class CartAddEventItemServlet extends HttpServlet {
             if (itemQuantity > 0 || itemQuantity <= stockQuantity) {
                 boolean result = cart.addItemToCart(productId, eventId, eventName, imageURL, productName, itemQuantity, price, stockQuantity);
                 if(result == false){
-                    request.setAttribute("INSUFFICIENT", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
+                    ECartSession.setAttribute("INSUFFICIENT", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
                 }
                 int pendingItems = cart.getUniqueItemCount();
                 double total = cart.calculateTotal();

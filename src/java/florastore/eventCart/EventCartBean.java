@@ -41,7 +41,7 @@ public class EventCartBean implements Serializable {
         EventCartItem existingItem = null;
         for (EventCartItem item : eventItems) {
             if (item.getEpId() == epId) {
-                existingItem = item; // Lưu sản phẩm đã tồn tại
+                existingItem = item; // Lưu sản phẩm đã tồn tại              
                 break;
             }
         }
@@ -49,12 +49,13 @@ public class EventCartBean implements Serializable {
             // Sản phẩm mới, thêm vào danh sách
             EventCartItem newItem = new EventCartItem(epId, eventId, eventName, epName, img, quantity, unitPrice, stockQuantity);
             eventItems.add(newItem);
+            result = true;
         } else {
             // Sản phẩm đã tồn tại, tăng số lượng
             if (existingItem.getQuantity() < stockQuantity) {
                 existingItem.setQuantity(existingItem.getQuantity() + quantity);
                 result = true;
-            } else {
+            } else if(existingItem.getQuantity() == stockQuantity) {
                 result = false;
             }
         }
