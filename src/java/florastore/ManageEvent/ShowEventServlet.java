@@ -41,12 +41,7 @@ public class ShowEventServlet extends HttpServlet {
         try {
             //Call DAO/Model
             EventDAO dao = new EventDAO();
-            List<EventDTO> events = dao.getAllEvent();
-            for (int i = 0; i < events.size(); i++) {
-                if (events.get(i).getEventName().contains("(Finished)")) {
-                   events.remove(i);
-                }
-            }
+            List<EventDTO> events = dao.getAllEventExcept();
             //Process result
             if(events != null){
                 request.setAttribute("EVENT_LIST", events);
