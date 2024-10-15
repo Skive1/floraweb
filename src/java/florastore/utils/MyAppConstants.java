@@ -114,6 +114,14 @@ public class MyAppConstants {
         public static final String DETAIL_PAGE = "EventFlowerDetail";
         public static final String ERROR_PAGE = "error404";
 
+
+    }
+    
+    public class DashBoardFeatures {
+        public static final String DASHBOARD_PAGE = "dashBoard";
+        public static final String ERROR_PAGE = "error404";
+        public static final String MONTHLY_PAGE = "monthlyBoard";
+
     }
 
     public class CartAddItemFeatures {

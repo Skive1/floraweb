@@ -110,7 +110,6 @@
                                     <a href="ProductManagementAction" class="nav-item nav-link">Manage Shop</a>
                                 </c:if>
                             </c:if>
-
                         </div>
                         <div class="d-flex align-items-center justify-content-center m-3 me-0">
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">

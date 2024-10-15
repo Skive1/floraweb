@@ -48,35 +48,15 @@ public class DelProManagementServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
-        String indexPage = request.getParameter("index");
-        if (indexPage == null) {
-            indexPage = "1";
-        }
-        int indexInt = Integer.parseInt(indexPage);
 
+        String proId = request.getParameter("proId");
+        String storeId = request.getParameter("storeId");
+        String currentPage = request.getParameter("page");
         try {
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                //1. Lấy id từ session Scope
-                AccountDTO dto = (AccountDTO) session.getAttribute("USER");
-                String id = dto.getUsername();
-                if (dto.getUsername()!= null) {
-                    //2. Gọi method DAO
-                    ManagerProductDAO dao = new ManagerProductDAO();
-
-                    int count = dao.getTotalProduct();
-                    int endPage = count / 5;
-                    if (count % 5 != 0) {
-                        endPage++;
-                    }
-                    //3. Lấy list sản phẩm theo sell id
-                    dao.loadListProductFromDbById(id, indexInt);
-                    ArrayList<ManagerProductDTO> list = dao.getListProduct();
-
-                    //4. Lưu vào trong attribute
-                    request.setAttribute("listProduct", list);
-                    request.setAttribute("endP", endPage);
-                }
+            ManagerProductDAO dao = new ManagerProductDAO();
+            boolean result = dao.deleteProductByUpdate(proId);
+            if (result) {
+                url = "ProductManagementServlet?storeInfo=" + storeId + "&index=" + currentPage;
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

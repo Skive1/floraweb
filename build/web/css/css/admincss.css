@@ -33,6 +33,41 @@ a {
   cursor: pointer;
 
 }
+.show-class {
+  padding: 10px;
+background-color: #00c0ef;
+color: whitesmoke;
+border-radius: 10px;
+}
+.active {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.confirm-class {
+  padding: 10px;
+background-color: rgb(29, 223, 29);
+color: whitesmoke;
+border-radius: 10px;
+}
+.delay-class {
+  padding: 10px;
+background-color: orangered;
+color: whitesmoke;
+border-radius: 10px;
+}
+.delete-class {
+padding: 10px;
+background-color: red;
+color: whitesmoke;
+border-radius: 10px;
+}
+.edit-class {
+padding: 10px;
+background-color: green;
+color: whitesmoke;
+border-radius: 10px;
+}
 .row-grid {
     display: grid;
     justify-content: space-between;
@@ -191,14 +226,13 @@ background-color: #f2f7fb;
 
 /* content trong admin-content-main */
 .admin-content-main-content {
-  display: grid;
-  grid-template-columns: 80% 20%;
-  padding: 10px 12px;
+
+  background-color: white;
 }
 .admin-content-main-content-left input {
   height: 40px;
   border: none;
-  background-color: rgb(214, 225, 177);
+  background-color: rgb(193, 197, 234);
   margin-bottom: 20px;
   outline: none;
   border-radius: var(--main-border-radius);
@@ -208,14 +242,7 @@ background-color: #f2f7fb;
 .admin-content-main-content-two-input input {
   width: 43%;
 }
-.admin-content-main-content-left textarea {
-  height: 150px;
-  width: 100%;
-  margin-bottom: 20px;
-  outline: none;
-  padding: 6px;
-  
-}
+
 
 .hidden {
   display: none;
@@ -232,6 +259,74 @@ background-color: #f2f7fb;
   min-height: 150px;
 
 }
+.admin-content-main-content-left {
+  max-height: 700px;
+  overflow: scroll;
+}
+/*textarea*/
+.admin-content-main-content-textarea1, .admin-content-main-content-textarea2 {
+  padding-bottom: 30px;
+  max-height: 250px;
+}
+/* add-event */
+.admin-content-main-event-add {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  padding: 12px;
+  column-gap: 20px;
+}
+/* product-list */
+.admin-content-main-content-product-list a {
+  display:inline-block;
+}
+.admin-content-main-content-product-list table {
+  width: 100%;
+  
+}
+
+.admin-content-main-content-product-list table th,td {
+  text-align: center;
+  padding: 12px 0;
+  border-bottom: 1px solid black;
+}
+.admin-content-main-content-product-list table th {
+  background-color: rgb(9, 16, 71);
+  color: whitesmoke;
+  padding: 6px 0;
+  
+}
+/*Chart*/
+.admin-content-main-chart {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.admin-content-main-chart-line,
+.admin-content-main-chart-bar-chart {
+  height: 300px; /* Điều chỉnh chiều cao theo ý muốn */
+  padding: 20px;
+}
+
+#myChart,
+#myBarChart {
+  width: 100%;
+  height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* box */
 .box {
     position: relative;
