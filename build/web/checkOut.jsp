@@ -50,8 +50,8 @@
             window.onload = function () {
                 const prevPage = sessionStorage.getItem('prevPage');
                 const url = "http://localhost:8084/FloraRewind/checkouts";
-                if (performance.navigation.type === performance.navigation.TYPE_BACK_FORWARD) {                
-                    if (url.includes(prevPage)) {           
+                if (performance.navigation.type === performance.navigation.TYPE_BACK_FORWARD) {
+                    if (url.includes(prevPage)) {
                         window.location.href = "http://localhost:8084/FloraRewind/order";
                     }
                 }
@@ -196,7 +196,7 @@
                         <div class="col-md-12 col-lg-6 col-xl-6">
                             <div class="form-item">
                                 <label class="form-label my-3">Họ và Tên<sup class="red">*</sup></label>
-                                <input type="text" name="fullname" value="${sessionScope.USER.fullName}" id="fullname" class="form-control" required="">
+                                <input type="text" name="fullname" value="${sessionScope.USER.fullName}" id="fullname" class="form-control"  pattern=".*\S+.*"  title="Không được phép có khoảng trắng" required="">
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Số điện thoại<sup class="red">*</sup></label>
@@ -204,7 +204,7 @@
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Địa chỉ <sup class="red">*</sup></label>
-                                <input type="text" name="address" value="${sessionScope.USER.street}" id="address" class="form-control" required="">
+                                <input type="text" name="address" value="${sessionScope.USER.street}" id="address" class="form-control" pattern=".*\S+.*" title="Không được phép có khoảng trắng" required="">
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Thành phố<sup class="red">*</sup></label>
@@ -492,6 +492,11 @@
                                     <input type="radio" name="payment" value="ONLINE" class="radio radio-inline" required="">
                                     <i class="fa-solid fa-credit-card"></i> Thanh toán trực tuyến (VN Pay)
                                 </label>
+                            </div>
+                            <hr>
+                            <label class="form-label my-3">Ghi chú</label>
+                            <div class="form-item">
+                                <textarea name="note" rows="4" cols="50" class="form-control"></textarea>
                             </div>
                         </div>
                         <c:set var="ecart" value="${sessionScope.ECART}"/>

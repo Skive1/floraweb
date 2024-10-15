@@ -39,6 +39,8 @@ public class CartAddEventItemServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
@@ -85,8 +87,8 @@ public class CartAddEventItemServlet extends HttpServlet {
             // 4. Add item to cart
             if (itemQuantity > 0 || itemQuantity <= stockQuantity) {
                 boolean result = cart.addItemToCart(productId, eventId, eventName, imageURL, productName, itemQuantity, price, stockQuantity);
-                if(result){
-                    request.setAttribute("INSUFFICIENT", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn !");
+                if(result == false){
+                    request.setAttribute("INSUFFICIENT", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
                 }
                 int pendingItems = cart.getUniqueItemCount();
                 double total = cart.calculateTotal();
