@@ -52,10 +52,10 @@ public class EventCartBean implements Serializable {
             result = true;
         } else {
             // Sản phẩm đã tồn tại, tăng số lượng
-            if (existingItem.getQuantity() < stockQuantity) {
+            if (existingItem.getQuantity() < stockQuantity && (existingItem.getQuantity() + quantity) <= stockQuantity) {
                 existingItem.setQuantity(existingItem.getQuantity() + quantity);
                 result = true;
-            } else if(existingItem.getQuantity() == stockQuantity) {
+            } else if (existingItem.getQuantity() == stockQuantity) {
                 result = false;
             }
         }

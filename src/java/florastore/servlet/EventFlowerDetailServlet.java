@@ -5,11 +5,15 @@
  */
 package florastore.servlet;
 
+import florastore.eventCart.EventCartBean;
+import florastore.eventCart.EventCartItem;
 import florastore.eventProduct.EventProductDAO;
 import florastore.eventProduct.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -19,6 +23,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -49,6 +54,26 @@ public class EventFlowerDetailServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.EventFlowerFeatures.ERROR_PAGE);
 
         try {
+            //Check cart place
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                if (session.getAttribute("INSUFFICIENT") != null) {
+                    request.setAttribute("INSUFFICIENT", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
+                    session.removeAttribute("INSUFFICIENT");
+                }
+                //Check user cart             
+                EventCartBean cart = (EventCartBean) session.getAttribute("ECART");
+                if (cart != null) {
+                    //Check items
+                    Map<String, List<EventCartItem>> items = cart.getItems();
+                    if (items != null) {
+                        int pendingItems = cart.getUniqueItemCount();
+                        session.setAttribute("PENDING_ITEMS", pendingItems);
+                    }
+                }
+                int pendingItems = 0;
+                session.setAttribute("PENDING_ITEMS", pendingItems);
+            }
             //2. Call DAO/Model
             EventProductDAO dao = new EventProductDAO();
             //2.1 Get flower detail
