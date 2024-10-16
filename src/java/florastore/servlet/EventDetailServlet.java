@@ -5,9 +5,9 @@
  */
 package florastore.servlet;
 
-import florastore.cart.CartBean;
-import florastore.cart.CartItem;
 import florastore.event.EventDAO;
+import florastore.eventCart.EventCartBean;
+import florastore.eventCart.EventCartItem;
 import florastore.eventProduct.EventProductDAO;
 import florastore.eventProduct.EventProductDTO;
 import florastore.utils.MyAppConstants;
@@ -62,10 +62,10 @@ public class EventDetailServlet extends HttpServlet {
                     session.removeAttribute("INSUFFICIENT");
                 }
                 //Check user cart             
-                CartBean cart = (CartBean) session.getAttribute("CART");
+                EventCartBean cart = (EventCartBean) session.getAttribute("ECART");
                 if (cart != null) {
                     //Check items
-                    Map<String, List<CartItem>> items = cart.getItems();
+                    Map<String, List<EventCartItem>> items = cart.getItems();
                     if (items != null) {
                         int pendingItems = cart.getUniqueItemCount();
                         session.setAttribute("PENDING_ITEMS", pendingItems);

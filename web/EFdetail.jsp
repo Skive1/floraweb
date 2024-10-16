@@ -36,6 +36,7 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="alertPackage/alertCss.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
 
@@ -559,43 +560,56 @@
                 </div>
             </div>
             <!-- Copyright End -->
+        <c:if test="${not empty requestScope.INSUFFICIENT}">
+            <div id="modal-alert" class="modal-alert">
+                <div class="modal-alert-fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="" role="document">
+                        <div class="modal-content-alert">
+                            <h5 class="modal-title-alert">${requestScope.INSUFFICIENT}</h5>
+                            <p>Vui lòng hãy chọn sản phẩm khác</p>
+                            <button class="btn-secondary-alert">Ok</button>
+                        </div>                     `
+                    </div>
+                </div>
+            </div>
+        </c:if>
 
 
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
 
-            <!-- Back to Top -->
-            <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
 
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/lightbox/js/lightbox.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-            <!-- JavaScript Libraries -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="lib/easing/easing.min.js"></script>
-            <script src="lib/waypoints/waypoints.min.js"></script>
-            <script src="lib/lightbox/js/lightbox.min.js"></script>
-            <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <!-- Template Javascript -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var quantityInput = document.getElementById("itemQuantity");
+                var btnMinus = document.getElementById("btnMinus");
+                var btnPlus = document.getElementById("btnPlus");
 
-            <!-- Template Javascript -->
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    var quantityInput = document.getElementById("itemQuantity");
-                    var btnMinus = document.getElementById("btnMinus");
-                    var btnPlus = document.getElementById("btnPlus");
-
-                    btnMinus.addEventListener("click", function () {
-                        var currentValue = parseInt(quantityInput.value, 10);
-                        if (currentValue <= 1) {
-                            quantityInput.value = 1; // Ensures it doesn't go below 1
-                        }
-                    });
-
-                    btnPlus.addEventListener("click", function () {
-                        var currentValue = parseInt(quantityInput.value, 10);
-                        if (currentValue >= ${detail.eventProductQuantity}) {
-                            quantityInput.value = ${detail.eventProductQuantity}; // Ensures it doesn't go below 1
-                        }
-                    });
+                btnMinus.addEventListener("click", function () {
+                    var currentValue = parseInt(quantityInput.value, 10);
+                    if (currentValue <= 1) {
+                        quantityInput.value = 1; // Ensures it doesn't go below 1
+                    }
                 });
+
+                btnPlus.addEventListener("click", function () {
+                    var currentValue = parseInt(quantityInput.value, 10);
+                    if (currentValue >= ${detail.eventProductQuantity}) {
+                        quantityInput.value = ${detail.eventProductQuantity}; // Ensures it doesn't go below 1
+                    }
+                });
+            });
         </script>
+        <script src="alertPackage/alertJs.js"></script>
         <script src="js/main.js"></script>
     </body>
 

@@ -63,12 +63,9 @@ public class CartAddEventItemServlet extends HttpServlet {
             int stockQuantity = Integer.parseInt(request.getParameter("productQuantity"));
             String itemQuantityStr = request.getParameter("itemQuantity");
             int itemQuantity = (itemQuantityStr != null && !itemQuantityStr.isEmpty()) ? Integer.parseInt(itemQuantityStr) : 1;
-//            log("Product Name: " + productName + ", Price: " + price + ", Item Quantity: " + itemQuantity + ", Stock Quantity: " + stockQuantity);
-
             //Get store name by productId
             EventDAO dao = new EventDAO();
             String eventName = dao.getEventNameByProductId(productId);
-
             // Get the page that made the request
             String page = request.getParameter("page");
             String pageIndex = request.getParameter("pageIndex");
@@ -77,18 +74,21 @@ public class CartAddEventItemServlet extends HttpServlet {
                 if (page.equals("eventDetail")) {
                     url = MyAppConstants.EventCartAddItemFeatures.EVENT_VIEW + "?eventId=" + eventId + "&page=" + pageIndex;
                 } else if (page.equals("EProduct_detail")) {
-                    if (itemQuantity > stockQuantity) {
-                        url = MyAppConstants.EventCartAddItemFeatures.ERROR_PAGE;
-                    } else {
-                        url = MyAppConstants.EventCartAddItemFeatures.VIEW_ECART_PAGE;
-                    }
+                    url = MyAppConstants.EventCartAddItemFeatures.VIEW_ECART_PAGE;
                 }
             }
             // 4. Add item to cart
             if (itemQuantity > 0 || itemQuantity <= stockQuantity) {
                 boolean result = cart.addItemToCart(productId, eventId, eventName, imageURL, productName, itemQuantity, price, stockQuantity);
-                if(result == false){
+                if (result == false) {
                     ECartSession.setAttribute("INSUFFICIENT", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
+                    if (page != null && !page.isEmpty()) {
+                        if (page.equals("eventDetail")) {
+                            url = MyAppConstants.EventCartAddItemFeatures.EVENT_VIEW + "?eventId=" + eventId + "&page=" + pageIndex;
+                        } else if (page.equals("EProduct_detail")) {
+                            url = MyAppConstants.EventCartAddItemFeatures.ERROR_PAGE + "?productId=" + productId + "&eventId=" + eventId;
+                        }
+                    }
                 }
                 int pendingItems = cart.getUniqueItemCount();
                 double total = cart.calculateTotal();
