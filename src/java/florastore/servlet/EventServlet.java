@@ -5,6 +5,8 @@
  */
 package florastore.servlet;
 
+import florastore.cart.CartBean;
+import florastore.cart.CartItem;
 import florastore.event.EventDAO;
 import florastore.event.EventDTO;
 import florastore.utils.MyAppConstants;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -21,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -47,6 +51,23 @@ public class EventServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.EventFeatures.EVENT_PAGE);
 
         try {
+            //Check cart place
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                //Check user cart
+                CartBean cart = (CartBean) session.getAttribute("CART");
+                if (cart != null) {
+                    //Check items
+                    Map<String, List<CartItem>> items = cart.getItems();
+                    if (items != null) {
+                        int pendingItems = cart.getUniqueItemCount();
+                        session.setAttribute("PENDING_ITEMS", pendingItems);
+                    }
+                }
+                int pendingItems = 0;
+                session.setAttribute("PENDING_ITEMS", pendingItems);
+            }
+            
             //Call DAO/Model
             EventDAO dao = new EventDAO();
             List<EventDTO> events = dao.getAllEvent();

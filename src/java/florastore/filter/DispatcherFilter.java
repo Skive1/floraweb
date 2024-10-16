@@ -6,7 +6,6 @@
 package florastore.filter;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Properties;
@@ -27,16 +26,16 @@ import javax.servlet.http.HttpServletRequest;
  */
 @WebFilter(filterName = "DispatcherFilter", urlPatterns = {"/*"})
 public class DispatcherFilter implements Filter {
-    
-    private static final boolean debug = true;
+
+    private static final boolean DEBUG = true;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-    
+
     public DispatcherFilter() {
-    }    
+    }
 
     /**
      *
@@ -47,18 +46,19 @@ public class DispatcherFilter implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-        
+
         HttpServletRequest req = (HttpServletRequest) request;
         String uri = req.getRequestURI();
         String url;
         try {
             //get site map
             ServletContext context = request.getServletContext();
-            Properties siteMap = 
-                    (Properties) context.getAttribute("SITE_MAP");
+            Properties siteMap
+                    = (Properties) context.getAttribute("SITE_MAP");
             //get resource name
             int lastIndex = uri.lastIndexOf("/");
             String resource = uri.substring(lastIndex + 1);
@@ -70,13 +70,15 @@ public class DispatcherFilter implements Filter {
             } else {
                 chain.doFilter(request, response);
             }
-        } catch (Throwable t) {
+        } catch (IOException | ServletException t) {
             log(t.getMessage());
         }
     }
 
     /**
      * Return the filter configuration object for this filter.
+     *
+     * @return
      */
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
@@ -94,16 +96,20 @@ public class DispatcherFilter implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {        
+    @Override
+    public void destroy() {
     }
 
     /**
      * Init method for this filter
+     *
+     * @param filterConfig
      */
-    public void init(FilterConfig filterConfig) {        
+    @Override
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {                
+            if (DEBUG) {
                 log("DispatcherFilter:Initializing filter");
             }
         }
@@ -122,37 +128,12 @@ public class DispatcherFilter implements Filter {
         sb.append(")");
         return (sb.toString());
     }
-    
-    private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
-        if (stackTrace != null && !stackTrace.equals("")) {
-            try {
-                response.setContentType("text/html");
-                PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
-                pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
-                // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
-                pw.print("</pre></body>\n</html>"); //NOI18N
-                pw.close();
-                ps.close();
-                response.getOutputStream().close();
-            } catch (Exception ex) {
-            }
-        } else {
-            try {
-                PrintStream ps = new PrintStream(response.getOutputStream());
-                t.printStackTrace(ps);
-                ps.close();
-                response.getOutputStream().close();
-            } catch (Exception ex) {
-            }
-        }
-    }
-    
+    /**
+     *
+     * @param t
+     * @return
+     */
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -162,14 +143,12 @@ public class DispatcherFilter implements Filter {
             pw.close();
             sw.close();
             stackTrace = sw.getBuffer().toString();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
+        filterConfig.getServletContext().log(msg);
     }
-    
-    
 }
