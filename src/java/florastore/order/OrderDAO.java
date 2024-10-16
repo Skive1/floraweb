@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.eventOrder;
+package florastore.order;
 
 import florastore.utils.DBHelper;
 import java.io.Serializable;
@@ -17,9 +17,9 @@ import javax.naming.NamingException;
  *
  * @author ADMIN
  */
-public class EventOrderDAO implements Serializable {
+public class OrderDAO implements Serializable {
 
-    public boolean saveOrder(EventOrderDTO order)
+    public boolean saveOrder(OrderDTO order)
             throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -31,15 +31,15 @@ public class EventOrderDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String 
-                String sql = "Insert Into EventOrder( "
-                        + "AccountUsername, EventId, Fullname, Phone, Street, City, DeliveryDate, DeliveryOption, Status, Amount, isPaid, PaymentOptions, Note "
+                String sql = "Insert Into [Order]( "
+                        + "AccountUsername, FlowerStoreStoreID, Fullname, Phone, Street, City, DeliveryDate, DeliveryOption, Status, Amount, isPaid, PaymentOptions, Note "
                         + ") Values( "
                         + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? "
                         + ")";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
                 stm.setString(1, order.getUsername());
-                stm.setInt(2, order.getEventId());
+                stm.setInt(2, order.getStoreId());
                 stm.setString(3, order.getFullname());
                 stm.setString(4, order.getPhone());
                 stm.setString(5, order.getStreet());
@@ -71,8 +71,8 @@ public class EventOrderDAO implements Serializable {
         }
         return result;
     }
-
-    public int getEventOrderId(EventOrderDTO order)
+    
+    public int getOrderId(OrderDTO order)
             throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -84,10 +84,10 @@ public class EventOrderDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String 
-                String sql = "Select TOP 1 EventOrderId "
-                        + "From EventOrder "
+                String sql = "Select TOP 1 OrderId "
+                        + "From [Order] "
                         + "Where AccountUsername = ? "
-                        + "AND EventId = ? "
+                        + "AND FlowerStoreStoreID = ? "
                         + "AND Fullname = ? "
                         + "AND Phone = ? "
                         + "AND Street = ? "
@@ -98,11 +98,11 @@ public class EventOrderDAO implements Serializable {
                         + "AND isPaid = ? "
                         + "AND PaymentOptions = ? "
                         + "AND Note = ? "
-                        + "ORDER BY EventOrderId DESC";
+                        + "ORDER BY OrderId DESC";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
                 stm.setString(1, order.getUsername());
-                stm.setInt(2, order.getEventId());
+                stm.setInt(2, order.getStoreId());
                 stm.setString(3, order.getFullname());
                 stm.setString(4, order.getPhone());
                 stm.setString(5, order.getStreet());
@@ -117,7 +117,7 @@ public class EventOrderDAO implements Serializable {
                 rs = stm.executeQuery();
                 //5. process result
                 if (rs.next()) {
-                    result = rs.getInt("EventOrderId");
+                    result = rs.getInt("OrderId");
                 }
             }//connection has been available
         } finally {

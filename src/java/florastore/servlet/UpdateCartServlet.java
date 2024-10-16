@@ -54,51 +54,31 @@ public class UpdateCartServlet extends HttpServlet {
                     Map<String, List<CartItem>> items = cart.getItems();
                     if (items != null) {
                         String removeBt = request.getParameter("removeButton");
-                        if (removeBt != null) {
+                        if (removeBt != null && "delete".equals(removeBt)) {
                             String key = (String) request.getParameter("key");
                             int id = Integer.parseInt(request.getParameter("Id"));
                             cart.removeItemFromCart(key, id);
-                        } else {
-                            String productName = request.getParameter("productName");
+                        } else if (action != null && !action.isEmpty()) {
+                            int productId = Integer.parseInt(request.getParameter("productId"));
                             String storeName = request.getParameter("storeName");
-                            String newQuantityStr = request.getParameter("quantity"); // Get the updated quantity from the form
                             List<CartItem> itemList = items.get(storeName);
                             if (itemList != null) {
                                 for (CartItem item : itemList) {
-                                    if (item.getName().equals(productName)) {
+                                    if (item.getProductId() == productId) {
 //                                        log("Received new quantity: " + newQuantityStr);
                                         FlowerProductsDAO dao = new FlowerProductsDAO();
                                         // Fetch the stock quantity from the database for this product
-                                        int stockQuantity = dao.getProductQuantityByName(productName);
-
-                                        if (newQuantityStr != null && !newQuantityStr.isEmpty() && !newQuantityStr.equals("NaN")) {
-
-                                            int newQuantity = Integer.parseInt(newQuantityStr); // Parse the new quantity
-//                                            log("Parsed new quantity: " + newQuantity);
-                                            // Validate the quantity within stock limits
-                                            if (newQuantity > 0 && newQuantity <= stockQuantity) {
-                                                item.setQuantity(newQuantity); // Set the new quantity from the user input
-                                            } else {
-//                                                log("Invalid quantity: " + newQuantityStr);
-                                                // Handle invalid quantity input (e.g., redirect to an error page)
+                                        int stockQuantity = dao.getProductQuantityById(productId);
+                                        int currentQuantity = item.getQuantity();
+                                        if ("plus".equals(action)) {
+                                            // Only increase if the current quantity is less than stock
+                                            if (currentQuantity < stockQuantity) {
+                                                item.setQuantity(currentQuantity + 1);
                                             }
-                                        } else {
-                                            // Handle button actions only if quantity input is not provided
-
-                                            if (action != null && !action.isEmpty()) {
-//                                                log("Received action: " + action);
-                                                int currentQuantity = item.getQuantity();
-                                                if ("plus".equals(action)) {
-                                                    // Only increase if the current quantity is less than stock
-                                                    if (currentQuantity < stockQuantity) {
-                                                        item.setQuantity(currentQuantity + 1);
-                                                    }
-                                                } else if ("minus".equals(action)) {
-                                                    // Decrease quantity, but remove item if it reaches 0
-                                                    if (currentQuantity > 1) {
-                                                        item.setQuantity(currentQuantity - 1);
-                                                    }
-                                                }
+                                        } else if ("minus".equals(action)) {
+                                            // Decrease quantity, but remove item if it reaches 0
+                                            if (currentQuantity > 1) {
+                                                item.setQuantity(currentQuantity - 1);
                                             }
                                         }
                                     }

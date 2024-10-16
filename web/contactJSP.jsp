@@ -81,6 +81,7 @@
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="manageAccount" class="nav-item nav-link">Manage Account</a>
+                                    <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
@@ -88,7 +89,7 @@
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
-                                    <a href="ProductManagementAction" class="nav-item nav-link">Manage Shop</a>
+                                    <a href="showStoreName" class="nav-item nav-link">Manage Shop</a>
                                 </c:if>
                             </c:if>
 
@@ -160,8 +161,7 @@
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">Contact</h1>
             <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item"><a href="home">Home</a></li>
                 <li class="breadcrumb-item active text-white">Contact</li>
             </ol>
         </div>
