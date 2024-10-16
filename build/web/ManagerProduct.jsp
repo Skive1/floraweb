@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <c:set var="currentP" value="${param.page != null ? param.page : 1}" />  
+                <c:set var="currentP" value="${param.index != null ? param.index : 1}" />  
 
                 <form action="ProductManagementAction" style="padding-left: 50%; padding-top: 10px">
                     <select name="storeInfo">
@@ -78,7 +78,7 @@
                             </td>
                             <td>${o.price}</td>
                             <td>                       
-                                <a href="#editEmployeeModal"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="editManagement?proId=${o.id}"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="DelManagement?proId=${o.id}&storeId=${o.storeId}&page=${currentP}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                             </td>
                         </tr>
@@ -89,7 +89,15 @@
                 <div class="clearfix">
                     <div class="hint-text">Showing all</div>
                     <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
+                        <c:choose>
+                            <c:when test="${currentP > 1}">
+                                <li class="page-item"><a href="ProductManagementServlet?storeInfo=${requestScope.storeId}&index=${currentP - 1}">Previous</a></li>
+                                </c:when>
+                                <c:otherwise>
+                                <li class="page-item disabled"><a href="#">Previous</a></li>
+                                </c:otherwise>
+                            </c:choose>
+
 
                         <c:forEach begin="1" end="${endP}" var="i">
                             <li class="page-item" ><a style="background-color: #ffcc33; color: whitesmoke" href="ProductManagementServlet?storeInfo=${requestScope.storeId}&index=${i}" class="active rounded" >${i}</a></li>  
@@ -188,20 +196,40 @@
                         <div class="modal-body">					
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" required>
+                                <input name="nameE" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" class="form-control" required>
+                                <label>Type</label>
+                                <input name="typeE" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Address</label>
-                                <textarea class="form-control" required></textarea>
+                                <label>Condition</label>
+                                <input name="conditionE" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Phone</label>
-                                <input type="text" class="form-control" required>
-                            </div>					
+                                <label>Detail</label>
+                                <input name="detailE" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input name="priceE" type="number" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="number" name="quantityE" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Image Link</label>
+                                <textarea name="imageE" class="form-control" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select name="categoryE" class="form-select" aria-label="Default select example">
+                                    <c:forEach items="${listCate}" var="o">
+                                        <option value="${o.categoryId}">${o.category}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>			
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
