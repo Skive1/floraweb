@@ -100,6 +100,7 @@
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="manageAccount" class="nav-item nav-link">Manage Account</a>
+                                    <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
@@ -107,7 +108,7 @@
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
-                                    <a href="ProductManagementAction" class="nav-item nav-link">Manage Shop</a>
+                                    <a href="showStoreName" class="nav-item nav-link">Manage Shop</a>
                                 </c:if>
                             </c:if>
 
@@ -180,6 +181,7 @@
             <h1 class="text-center text-white display-6">Giỏ hàng hoa sự kiện</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
+                <li class="breadcrumb-item"><a href="event">Event</a></li>
                 <li class="breadcrumb-item active text-white">Giỏ hàng</li>
             </ol>
         </div>
@@ -225,7 +227,7 @@
                                             <td>
                                                 <div class="input-group quantity mt-4" style="width: 100px;">
                                                     <form action="eventCartView" method="POST">
-                                                        <input type="hidden" name="eventProductName" value="${item.epName}"/>
+                                                        <input type="hidden" name="eventProductId" value="${item.epId}"/>
                                                         <input type="hidden" name="eventName" value="${eventId}"/>
                                                         <div class="input-group">   
                                                             <div class="input-group-btn">
@@ -282,7 +284,7 @@
                             <form action="checkout" method="POST">
                                 <div class="bg-light rounded">
                                     <div class="p-4">
-                                        <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
+                                        <h1 class="display-6 mb-4">Event Cart <span class="fw-normal">Total</span></h1>
                                         <div class="d-flex justify-content-between mb-4">
                                             <h5 class="mb-0 me-4">Tổng tiền hàng:</h5>
                                             <p class="mb-0"><c:if test="${not empty ecart || not empty ecart.items}"><fmt:formatNumber value="${sessionScope.ETOTAL}" type="number" groupingUsed="true"/>đ</c:if></p>

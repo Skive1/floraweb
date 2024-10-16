@@ -1,6 +1,6 @@
 <%-- 
-    Document   : checkOut
-    Created on : Sep 14, 2024, 1:26:01 PM
+    Document   : shopCheckout
+    Created on : Oct 16, 2024, 2:10:13 PM
     Author     : ADMIN
 --%>
 
@@ -49,10 +49,10 @@
         <script>
             window.onload = function () {
                 const prevPage = sessionStorage.getItem('prevPage');
-                const url = "http://localhost:8084/FloraRewind/checkouts";
+                const url = "http://localhost:8084/FloraRewind/shopCheckouts";
                 if (performance.navigation.type === performance.navigation.TYPE_BACK_FORWARD) {
                     if (url.includes(prevPage)) {
-                        window.location.href = "http://localhost:8084/FloraRewind/order";
+                        window.location.href = "http://localhost:8084/FloraRewind/orderShop";
                     }
                 }
             };
@@ -190,7 +190,7 @@
         <div class="container-fluid py-5">
             <div class="container py-5">
                 <h1 class="mb-4">Thông tin thanh toán</h1>
-                <form action="checkouts" method="POST">
+                <form action="shopCheckouts" method="POST">
                     <div class="row g-5">
                         <div class="col-md-12 col-lg-6 col-xl-6">
                             <div class="form-item">
@@ -498,13 +498,13 @@
                                 <textarea name="note" rows="4" cols="50" class="form-control"></textarea>
                             </div>
                         </div>
-                        <c:set var="ecart" value="${sessionScope.ECART}"/>
+                        <c:set var="cart" value="${sessionScope.CART}"/>
                         <div class="col-md-12 col-lg-6 col-xl-6">
                             <div class="table-responsive">
-                                <c:forEach var="entry" items="${ecart.items}">
-                                    <c:set var="eventId" value="${entry.key}"/>
-                                    <c:set var="eventItems" value="${entry.value}"/>
-                                    <h3>Sự kiện: ${eventId}</h3>
+                                <c:forEach var="entry" items="${cart.items}">
+                                    <c:set var="storeId" value="${entry.key}"/>
+                                    <c:set var="storeItems" value="${entry.value}"/>
+                                    <h3>Shop: ${storeId}</h3>
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -516,16 +516,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:set var="totalEvent" value="0"/>
-                                            <c:forEach var="item" items="${eventItems}" varStatus="counter">
-                                                <c:set var="totalEvent" value="${totalEvent + (item.unitPrice * item.quantity)}"/>
+                                            <c:set var="totalShop" value="0"/>
+                                            <c:forEach var="item" items="${storeItems}" varStatus="counter">
+                                                <c:set var="totalShop" value="${totalShop + (item.unitPrice * item.quantity)}"/>
                                                 <tr>
                                                     <th scope="row">
                                                         <div class="d-flex align-items-center mt-2">
-                                                            <img src="${item.img}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                                            <img src="${item.imageURL}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
                                                         </div>
                                                     </th>
-                                                    <td class="py-5">${item.epName}</td>
+                                                    <td class="py-5">${item.name}</td>
                                                     <td class="py-5"><fmt:formatNumber value="${item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
                                                     <td class="py-5" style="text-align: center">${item.quantity}</td>
                                                     <td class="py-5" style="text-align: center"><fmt:formatNumber value="${item.quantity * item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
@@ -541,7 +541,7 @@
                                                 <td class="py-5"></td>
                                                 <td class="py-5">
                                                     <div class="py-2 border-bottom border-top">
-                                                        <p class="mb-0 text-dark" style="text-align: center"><fmt:formatNumber value="${totalEvent}" type="number" groupingUsed="true"/>đ</p>
+                                                        <p class="mb-0 text-dark" style="text-align: center"><fmt:formatNumber value="${totalShop}" type="number" groupingUsed="true"/>đ</p>
                                                     </div>
                                                 </td>
                                             </tr>

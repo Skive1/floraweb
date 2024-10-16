@@ -45,17 +45,21 @@ public class ShopServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ShopFeatures.SHOP_PAGE);
-        
-        log("ShopServlet: Starting processRequest. Retrieving products...");
-         
+       
         try {
             //Check cart place
             HttpSession session = request.getSession(false);
             if (session != null) {
+                if (session.getAttribute("INSUFFICIENTSHOP") != null) {
+                    request.setAttribute("INSUFFICIENTSHOP", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
+                    session.removeAttribute("INSUFFICIENTSHOP");
+                }
                 //Check user cart
                 CartBean cart = (CartBean) session.getAttribute("CART");
                 if (cart != null) {
@@ -68,14 +72,9 @@ public class ShopServlet extends HttpServlet {
                 }
                 int pendingItems = 0;
                 session.setAttribute("PENDING_ITEMS", pendingItems);
-            }
-            
+            }  
             FlowerProductsDAO dao = new FlowerProductsDAO();
-            
-            log("ShopServlet: Calling productDAO.getAllProducts()...");
-            
             List<FlowerProductsDTO> products = dao.getAllProducts();
-            
             // Paging
             int pageSize = 9; // Number of products per page
             String pageParam = request.getParameter("page"); // Get the current page number from the request
@@ -85,29 +84,14 @@ public class ShopServlet extends HttpServlet {
             
             // Calculate the starting and ending indexes for the sublist of products to display
             int start = (currentPage - 1) * pageSize;
-            int end = Math.min(start + pageSize, totalProducts);
-
-            // Get the products for the current page
+            int end = Math.min(start + pageSize, totalProducts);           // Get the products for the current page
             List<FlowerProductsDTO> productsForPage = products.subList(start, end);
-            
             //categories
             Map<String, Integer> categoriesMap = new HashMap<>();
             for (FlowerProductsDTO product : products) {
                 String category = product.getProductType();
                 categoriesMap.put(category, categoriesMap.getOrDefault(category, 0) + 1);
             }
-            
-//            if (products != null && !products.isEmpty()) {
-//                log("ShopServlet: Successfully retrieved " + products.size() + " products.");
-//                for (FlowerProductsDTO product : products) {
-//                    log("ShopServlet: Product -> ID: " + product.getProductId() +
-//                        ", Name: " + product.getProductName() +
-//                        ", Price: " + product.getProductPrice());
-//                }
-//            } else {
-//                log("ShopServlet: No products were retrieved from the database.");
-//            }
-            
             request.setAttribute("products", productsForPage);
             request.setAttribute("currentPage", currentPage);
             request.setAttribute("totalPages", totalPages);
