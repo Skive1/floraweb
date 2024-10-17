@@ -21,3 +21,10 @@ and open the template in the editor.
     color: #0056b3; /* Darker color on hover */
 }
 
+.cart{
+    margin-left: 24px;
+    margin-right: 0px;
+}
+.radio-shipping{
+    padding: 17px;
+}

@@ -124,4 +124,44 @@ public class MyAppConstants {
         public static final String MONTHLY_PAGE = "monthlyBoard";
 
     }
+
+    public class CartAddItemFeatures {
+
+        public static final String SHOP_VIEW = "shoppingAction";
+        public static final String VIEW_CART_PAGE = "cartPage";
+        public static final String ERROR_PAGE = "insufficient.html";
+    }
+
+    public class CartFeatures {
+
+        public static final String VIEW_CART_PAGE = "cartPage";
+    }
+
+    public class EventCartAddItemFeatures {
+
+        public static final String EVENT_VIEW = "eventDetail";
+        public static final String VIEW_ECART_PAGE = "eventCart";
+        public static final String ERROR_PAGE = "flowerDetail";
+    }
+
+    public class EventCartFeatures {
+
+        public static final String CART_PAGE = "eventCart";
+    }
+
+    public class CheckoutFeatures {
+        public static final String ERROR_PAGE = "sessionExpired";
+        public static final String CHECKOUT = "checkoutPage";
+        public static final String CART_PAGE = "eventCart";
+    }
+    
+    public class PlaceOrderFeatures {
+        public static final String CART_PAGE = "eventCart";
+        public static final String ERROR_PAGE = "sessionExpired";
+        public static final String ORDER_PAGE = "order";
+        public static final String BILL_PAGE = "confirmCheckoutPage";
+        public static final String ONLINE_PAYMENT = "vnpayCheckout";
+        public static final String CHECKOUT_SUCCESS = "checkouts";
+        public static final String CHECKOUT_FAIL = "checkout";
+    }
 }

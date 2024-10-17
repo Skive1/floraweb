@@ -34,6 +34,7 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="alertPackage/alertCss.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
 
@@ -53,8 +54,8 @@
             <div class="container topbar bg-primary d-none d-lg-block">
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
-                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="https://hcmuni.fpt.edu.vn/" class="text-white">FPT University, HCM</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
                         <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
@@ -71,18 +72,9 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link">Event</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">Cart</a>
-                                    <a href="chackout.html" class="dropdown-item">Checkout</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
-                                </div>
-                            </div>
+                            <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
@@ -105,18 +97,27 @@
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
                                 <i class="fas fa-search text-third"></i>
                             </button>
-                            <a href="#" class="position-relative me-4">
-                                <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
-                            </a>
                             <c:if test="${empty sessionScope.USER}">
+                                <a href="loginPage" class="position-relative me-4">
+                                    <i class="fa fa-shopping-bag fa-2x"></i>
+                                </a>
                                 <a href="loginPage" class="my-auto">
                                     <i class="fas fa-user fa-2x"></i>
                                 </a>
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a href="" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                        <i class="fa fa-shopping-bag fa-2x"></i>
+                                    </a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="cartPage" class="dropdown-item">Cart</a>
+                                        <a href="eventCart" class="dropdown-item">Event Cart</a>
+                                    </div>
+                                </div>
+
+                                <div class="nav-item dropdown">
+                                    <a href="" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -169,7 +170,7 @@
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Fresh fruits shop</h1>
+                <h1 class="mb-4">Tên sự kiện: ${requestScope.EVENT_NAME}</h1>
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
@@ -312,7 +313,7 @@
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-center my-4">
-                                            <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-third w-100">Vew More</a>
+                                            <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-third w-100">View More</a>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -331,7 +332,9 @@
                                     <c:if test="${not empty products}">
                                         <c:forEach var="flower" items="${requestScope.PRODUCTS}">
                                             <div class="col-md-6 col-lg-6 col-xl-4">
-                                                <form action="cartAddItem">
+                                                <form action="cartAddEventItem">
+                                                    <input type="hidden" name="page" value="eventDetail"/>
+                                                    <input type="hidden" name="pageIndex" value="${currentPage}"/>
                                                     <div class="rounded position-relative fruite-item">
                                                         <div class="fruite-img">
                                                             <img src="${flower.eventProductImg}" class="img-fluid w-100 rounded-top" alt="${flower.eventProductName}">
@@ -347,14 +350,45 @@
                                                             <a href="${urlRewriting}">
                                                                 <h4>${flower.eventProductName}</h4>
                                                             </a>
-                                                            <p>${product.productDetail}</p>
+                                                            <p>${flower.eventProductDetail}</p>
                                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                                 <p class="text-dark fs-5 fw-bold mb-0">
                                                                     <fmt:formatNumber value="${flower.eventProductPrice}" type="number" groupingUsed="true"/>đ
                                                                 </p>
-                                                                <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                                    <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                                                </button>
+
+                                                                <!-- Hidden inputs to pass product details to the servlet -->
+                                                                <input type="hidden" name="productId" value="${flower.eventProductId}">
+                                                                <input type="hidden" name="eventId" value="${requestScope.EVENT_ID}">
+                                                                <input type="hidden" name="imageURL" value="${flower.eventProductImg}">
+                                                                <input type="hidden" name="productName" value="${flower.eventProductName}">
+                                                                <input type="hidden" name="productPrice" value="${flower.eventProductPrice}">
+                                                                <input type="hidden" name="productQuantity" value="${flower.eventProductQuantity}">
+                                                                <input type="hidden" name="itemQuantity" value="1">
+
+                                                                <c:if test="${not empty sessionScope.USER}">
+                                                                    <c:if test="${flower.eventProductQuantity > 0}">
+                                                                        <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                                                        </button>
+                                                                    </c:if>
+                                                                    <c:if test="${flower.eventProductQuantity == 0}">
+                                                                        <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third" disabled="">
+                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                                        </button>
+                                                                    </c:if>
+                                                                </c:if>
+                                                                <c:if test="${empty sessionScope.USER}">
+                                                                    <c:if test="${flower.eventProductQuantity == 0}">
+                                                                        <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third disabled-link">
+                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                                        </a>
+                                                                    </c:if>
+                                                                    <c:if test="${flower.eventProductQuantity > 0}">
+                                                                        <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                                                        </a>
+                                                                    </c:if>
+                                                                </c:if>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -403,21 +437,33 @@
 
         <!-- Footer Start -->
         <jsp:include page="footer.jsp"></jsp:include>
-        <!-- Footer End -->
+            <!-- Footer End -->
 
-        <!-- Copyright Start -->
-        <div class="container-fluid copyright bg-dark py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+            <!-- Copyright Start -->
+            <div class="container-fluid copyright bg-dark py-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>FPT Flora Rewind</a>, All right reserved.</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Copyright End -->
+            <!-- Copyright End -->
 
-
+            <c:if test="${not empty requestScope.INSUFFICIENT}">
+            <div id="modal-alert" class="modal-alert">
+                <div class="modal-alert-fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="" role="document">
+                        <div class="modal-content-alert">
+                            <h5 class="modal-title-alert">${requestScope.INSUFFICIENT}</h5>
+                            <p>Vui lòng hãy chọn sản phẩm khác</p>
+                            <button class="btn-secondary-alert">Ok</button>
+                        </div>                     `
+                    </div>
+                </div>
+            </div>
+        </c:if>
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
@@ -432,6 +478,7 @@
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
         <!-- Template Javascript -->
+        <script src="alertPackage/alertJs.js"></script>
         <script src="js/main.js"></script>
     </body>
 

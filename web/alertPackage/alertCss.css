@@ -2,12 +2,12 @@
     /*    display: none ;  Ẩn modal mặc định */
     display: inline-block;
     position: fixed; /* Đặt modal cố định trên màn hình */
-    z-index: 1; /* Đặt modal lên trên các phần tử khác */
+    z-index: 10; /* Đặt modal lên trên các phần tử khác */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* Cho phép cuộn nếu nội dung quá dài */
+    overflow: hidden; /* Cho phép cuộn nếu nội dung quá dài */
     background-color: rgba(0,0,0,0.4); /* Nền mờ */
 }
 
@@ -39,7 +39,7 @@
     font-size: 16px;
 }
 .btn-secondary-alert {
-    background-color: #ed190a; /* Màu xanh lá cây */
+    background-color: #4CAF50; /* Màu xanh lá cây */
     border: none;
     color: white;
     padding: 15px 32px;
@@ -47,4 +47,11 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    border: 1px solid #4CAF50;
+    border-radius: 10px
+}
+.btn-secondary-alert:hover {
+    background-color: #45a049; /* Darker green on hover */
+    color: #fff; /* Text color remains white */
+    border-color: #3e8e41; /* Darker green border on hover */
 }

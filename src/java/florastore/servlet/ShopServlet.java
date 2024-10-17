@@ -5,6 +5,8 @@
  */
 package florastore.servlet;
 
+import florastore.cart.CartBean;
+import florastore.cart.CartItem;
 import florastore.flowerProducts.FlowerProductsDAO;
 import florastore.flowerProducts.FlowerProductsDTO;
 import florastore.utils.MyAppConstants;
@@ -22,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -50,6 +53,23 @@ public class ShopServlet extends HttpServlet {
         log("ShopServlet: Starting processRequest. Retrieving products...");
          
         try {
+            //Check cart place
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                //Check user cart
+                CartBean cart = (CartBean) session.getAttribute("CART");
+                if (cart != null) {
+                    //Check items
+                    Map<String, List<CartItem>> items = cart.getItems();
+                    if (items != null) {
+                        int pendingItems = cart.getUniqueItemCount();
+                        session.setAttribute("PENDING_ITEMS", pendingItems);
+                    }
+                }
+                int pendingItems = 0;
+                session.setAttribute("PENDING_ITEMS", pendingItems);
+            }
+            
             FlowerProductsDAO dao = new FlowerProductsDAO();
             
             log("ShopServlet: Calling productDAO.getAllProducts()...");
@@ -98,7 +118,6 @@ public class ShopServlet extends HttpServlet {
         } catch (NamingException ex){
             log("ShopServlet_Naming_" + ex.getMessage());
         } finally {
-            log("ShopServlet: Forwarding request to JSP: " + url);
             
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

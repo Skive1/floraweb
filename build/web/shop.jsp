@@ -53,8 +53,8 @@
             <div class="container topbar bg-primary d-none d-lg-block">
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
-                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="https://hcmuni.fpt.edu.vn/" class="text-white">FPT University, HCM</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
                         <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
@@ -71,18 +71,9 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Shop</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
+                            <a href="shoppingAction" class="nav-item nav-link active">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">Cart</a>
-                                    <a href="chackout.html" class="dropdown-item">Checkout</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
-                                </div>
-                            </div>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
@@ -105,18 +96,28 @@
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
                                 <i class="fas fa-search text-third"></i>
                             </button>
-                            <a href="#" class="position-relative me-4">
-                                <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
-                            </a>
+
                             <c:if test="${empty sessionScope.USER}">
+                                <a href="loginPage" class="position-relative me-4">
+                                    <i class="fa fa-shopping-bag fa-2x"></i>
+                                </a>
                                 <a href="loginPage" class="my-auto">
                                     <i class="fas fa-user fa-2x"></i>
                                 </a>
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a href="" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                        <i class="fa fa-shopping-bag fa-2x"></i>
+                                    </a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="cartPage" class="dropdown-item">Cart</a>
+                                        <a href="eventCart" class="dropdown-item">Event Cart</a>
+                                    </div>
+                                </div>
+
+                                <div class="nav-item dropdown">
+                                    <a href="" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -159,8 +160,7 @@
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">Shop</h1>
             <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item"><a href="home">Home</a></li>
                 <li class="breadcrumb-item active text-white">Shop</li>
             </ol>
         </div>
@@ -331,6 +331,8 @@
                                     <c:forEach var="product" items="${requestScope.products}">
                                         <div class="col-md-6 col-lg-6 col-xl-4">
                                             <form action="cartAddItem">
+                                                <input type="hidden" name="page" value="shop"/>
+                                                <input type="hidden" name="pageIndex" value="${currentPage}"/>
                                                 <div class="rounded position-relative fruite-item">
                                                     <div class="fruite-img">
                                                         <img src="${product.imageURL}" class="img-fluid w-100 rounded-top" alt="${product.productName}">
@@ -351,9 +353,24 @@
                                                             <p class="text-dark fs-5 fw-bold mb-0">
                                                                 <fmt:formatNumber value="${product.productPrice}" type="number" groupingUsed="true"/>đ
                                                             </p>
-                                                            <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                                            </button>
+                                                            <!-- Hidden inputs to pass product details to the servlet -->
+                                                            <input type="hidden" name="productId" value="${product.productId}">
+                                                            <input type="hidden" name="storeId" value="${product.storeId}">
+                                                            <input type="hidden" name="imageURL" value="${product.imageURL}">
+                                                            <input type="hidden" name="productName" value="${product.productName}">
+                                                            <input type="hidden" name="productPrice" value="${product.productPrice}">
+                                                            <input type="hidden" name="productQuantity" value="${product.productQuantity}">
+                                                            <input type="hidden" name="itemQuantity" value="1">
+                                                            <c:if test="${not empty sessionScope.USER}">
+                                                                <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                    <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                                                </button>
+                                                            </c:if>
+                                                            <c:if test="${empty sessionScope.USER}">
+                                                                <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                    <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                                                </a>
+                                                            </c:if>
                                                         </div>
                                                     </div>
                                                 </div>
