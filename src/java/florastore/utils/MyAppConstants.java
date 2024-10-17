@@ -78,8 +78,7 @@ public class MyAppConstants {
     }
 
     public class ManageAccountFeatures {
-
-        public static final String MANAGE_ACCOUNT_PAGE = "manageAccountPage";
+        public static final String MANAGE_ACCOUNT_PAGE = "adminManageAccount";
         public static final String ERROR_PAGE = "error404";
     }
 

@@ -1,16 +1,20 @@
 <%-- 
-    Document   : dashBoardPage
-    Created on : Oct 7, 2024, 10:37:29 AM
-    Author     : acer
+    Document   : AdminManageAccount
+    Created on : Oct 18, 2024, 12:30:48 AM
+    Author     : ADMIN
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/css/style.css">
         <link rel="stylesheet" href="css/css/bootstrap.min.css">
@@ -20,9 +24,18 @@
         <link rel="stylesheet" href="css/css/jquery-ui.css">
         <link rel="stylesheet" href="css/css/style.css" />
         <link rel="stylesheet" href="css/css/admincss.css" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <title>Admin</title>
+        <link rel="stylesheet" href="alertPackage/alertCss.css">
+        <link href="css/editbutton.css" rel="stylesheet" type="text/css"/>
+        <title>Administrator | Manage Flora website</title>
+        <link rel="icon" href="img/flora-favicon.png"/>
+        <style>
+            td{
+                font-size: 15px;
+                word-wrap: break-word;
+                word-break: normal;
+                max-width: 100px; /* Điều chỉnh độ rộng theo ý muốn */
+            }
+        </style>
     </head>
     <body>
         <section class="admin">
@@ -35,7 +48,6 @@
                         <ul>
                             <li>
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
-
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="dashBoard">Theo tuần</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Theo tháng</a></li>
@@ -44,14 +56,14 @@
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="manageAccount">Account</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="manageAccount" active>Account</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="">Event</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Order<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="productList.html">Danh sách đơn hàng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="">Danh sách đơn hàng</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="">Delivery</a></li>
                                 </ul>
                             </li>
@@ -62,7 +74,13 @@
                 <div class="admin-content">
                     <div class="admin-content-top">
                         <div class="admin-content-top-left">
-                            <ul class="flex-box">                    
+                            <ul class="flex-box">
+                                <li>
+                                    <i class="ri-search-2-line">SEARCH</i>               
+                                </li>
+                                <li>
+                                    <i class="ri-zoom-in-line">Zoom</i>
+                                </li>
                             </ul>          
                         </div>
                         <div class="admin-content-top-right">
@@ -77,37 +95,127 @@
                         </div>
                     </div> 
                     <div class="admin-content-main">
-                        <c:if test="${empty requestScope.MonthList}">
-                            <p>Không có sản phẩm được bán trong tháng/năm này</p>
-                        </c:if>                      
-                        <h1 style="text-align: center;">Dashboard</h1>                    
-                        <h3 class="mb-0 text-center">
-                            <strong>Revenue by month</strong>
-                            <form id="f1" method="get" action="monthlyRevenue">
-                                <select name="year" class="form-control" id="dropdownYear" style="width: 120px;" onchange="getYear(this)">
-                                    <c:set var="currentYear" value="2024"/>
-                                    <c:set var="endYear" value="2018"/>
-                                    <c:forEach var="year" begin="0" end="${currentYear - endYear}">
-                                        <option  value="${currentYear - year}">${currentYear - year}</option>
-                                    </c:forEach>
-                                </select>
+                        <div class="admin-content-main-title">
+                            <h1>Danh sách tài khoản</h1>
+                        </div>
+                        <div class="admin-content-main-content">
+                            <!-- Nội dung ở đây -->
+                            <div class="admin-content-main-content-product-list">
+                                <c:set var="result" value="${requestScope.ACCOUNT_LIST}"/>
+                                <c:set var="currentPage" value="${param.page != null ? param.page : 1}" />
+                                <table >
+                                    <thead>
+                                    <th>Username</th>
+                                    <th>Fullname</th>
+                                    <th>Role</th>
+                                    <th>Giới tính</th>
+                                    <th>Email</th>
+                                    <th>Sđt</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Thành phố</th>
+                                    <th colspan="2">Tùy chỉnh</th>
+                                    </thead>
+                                    <c:if test="${not empty result}">
+                                        <tbody style="height: 100px;">
+                                            <c:forEach var="dto" items="${result}">
+                                            <form action="update" method="POST" class="updateForm">
+                                                <tr>
+                                                    <td>
+                                                        ${dto.username}
+                                                        <input type="hidden" name="txtUsername" value="${dto.username}"/>
+                                                    </td>
+                                                    <td>
+                                                        ${dto.fullName}
+                                                    </td>
+                                                    <td>
+                                                        <select name="txtRole">
+                                                            <option value="Admin"    
+                                                                    <c:if test="${dto.role == 'Admin'}">
+                                                                        selected="selected"
+                                                                    </c:if>>Admin</option>
+                                                            <option value="Seller" 
+                                                                    <c:if test="${dto.role == 'Seller'}">
+                                                                        selected="selected"
+                                                                    </c:if>>Seller</option>
+                                                            <option value="Delivery" 
+                                                                    <c:if test="${dto.role == 'Delivery'}">
+                                                                        selected="selected"
+                                                                    </c:if>>Delivery</option>
+                                                            <option value="Customer" 
+                                                                    <c:if test="${dto.role == 'Customer'}">
+                                                                        selected="selected"
+                                                                    </c:if>>Customer</option>
+                                                        </select>
+                                                    </td>
+                                                    <td> 
+                                                        ${dto.gender}
+                                                    </td>
+                                                    <td>
+                                                        ${dto.email}
+                                                    </td>
+                                                    <td>
+                                                        ${dto.phone}
+                                                    </td>                           
+                                                    <td>
+                                                        ${dto.street}
+                                                    </td>
+                                                    <td>
+                                                        ${dto.city}
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" name="currentPage" value="${currentPage}"/>
+                                                        <button type="submit" class="edit edit-button" title="Edit">
+                                                            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <c:url var="urlRewriting" value="delete">
+                                                            <c:param name="txtUsername" value="${dto.username}"/>
+                                                            <c:param name="page" value="${currentPage}"/>
+                                                        </c:url>
+                                                        <a href="#deleteAccountServlet" class="delete" data-toggle="modal" data-url="${urlRewriting}"><i class="material-icons" style="color: red" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                                    </td>
+                                                </tr>
+                                            </form>
+                                        </c:forEach>
+                                        </tbody>
+                                    </c:if>
+                                </table>
+                                <div class="clearfix">
+                                    <div class="hint-text">Showing <b>${requestScope.ACCOUNT_PER_PAGE}</b> out of <b>${requestScope.TOTAL_ACCOUNT}</b> entries</div>
+                                    <ul class="pagination">
+                                        <c:choose>
+                                            <c:when test="${currentPage > 1}">
+                                                <c:url var="prevUrl" value="manageAccount">
+                                                    <c:param name="page" value="${currentPage - 1}"/>
+                                                </c:url>
+                                                <li class="page-item"><a href="${prevUrl}" class="page-link">Previous</a></li>
+                                                </c:when>
+                                                <c:otherwise>
+                                                <li class="page-item disabled"><a href="#" class="page-link">Previous</a></li>
+                                                </c:otherwise>
+                                            </c:choose>
 
-                                <select name="month" class="form-control" id="dropdownMonth" style="width: 120px;">
-                                    <option value="" selected="" disabled="">-- Select Month --</option>
-                                    <c:forEach var="month" begin="1" end="12">
-                                        <option  value="${month}">${month}</option>
-                                    </c:forEach>
-                                </select>
-                                <button style="width: 100px; padding: 0" class="form-control" type="submit">Submit</button>
-                            </form>
-                        </h3>
-                        <div class="admin-content-main-chart">
+                                        <c:forEach begin="1" end="${requestScope.END_PAGE}" var="i">
+                                            <c:url var="urlRewriting" value="manageAccount">
+                                                <c:param name="page" value="${i}"/>
+                                            </c:url>
+                                            <li class="page-item ${i == currentPage ? 'active' : ''}"><a href="${urlRewriting}" class="page-link">${i}</a></li>    
+                                            </c:forEach>
 
-                            <div class="admin-content-main-chart-line">            
-                                <canvas id="myChart"></canvas>
-                            </div>
-                            <div class="admin-content-main-chart-bar-chart">
-                                <canvas id="myBarChart"></canvas>
+                                        <c:choose>
+                                            <c:when test="${currentPage < requestScope.END_PAGE}">
+                                                <c:url var="nextUrl" value="manageAccount">
+                                                    <c:param name="page" value="${currentPage + 1}"/>
+                                                </c:url>
+                                                <li class="page-item"><a href="${nextUrl}" class="page-link">Next</a></li>
+                                                </c:when>
+                                                <c:otherwise>
+                                                <li class="page-item disabled"><a href="#" class="page-link">Next</a></li>
+                                                </c:otherwise>
+                                            </c:choose>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -115,57 +223,68 @@
             </div>
         </div>
     </div>
-</div> 
-
+    <c:if test="${not empty requestScope.SUCESS}">
+        <div id="modal-alert" class="modal-alert">
+            <div class="modal-alert-fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="" role="document">
+                    <div class="modal-content-alert">
+                        <h5 class="modal-title-alert">${requestScope.SUCESS}</h5>
+                        <p>Tài khoản đã bị chặn</p>
+                        <button class="btn-secondary-alert">Ok</button>
+                    </div>                     `
+                </div>
+            </div>
+        </div>
+    </c:if>
+    <div id="deleteAccountServlet" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="" method="post" id="deleteForm">
+                    <div class="modal-header">						
+                        <h4 class="modal-title">Delete Account</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">					
+                        <p>Are you sure you want to delete these Records?</p>
+                        <p class="text-warning"><small>This action cannot be undone.</small></p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </section>
-<script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            datasets: [{
-                    label: 'Biểu đồ doanh thu tổng của cả năm',
-                    data: [${requestScope.month1.total}, ${requestScope.month2.total}, ${requestScope.month3.total}, ${requestScope.month4.total}, ${requestScope.month5.total}
-                        , ${requestScope.month6.total}, ${requestScope.month7.total}, ${requestScope.month8.total}, ${requestScope.month9.total}, ${requestScope.month10.total}
-                        , ${requestScope.month11.total}, ${requestScope.month12.total}],
-                    fill: false,
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1
-                }]
-        },
-        options: {}
-    });
-</script>
 
-<script>
-    var xValues = ["${requestScope.pro1.productName}", "${requestScope.pro2.productName}", "${requestScope.pro3.productName}", "${requestScope.pro4.productName}", "${requestScope.pro5.productName}"];
-//    var xValues = [1, 2, 3, 4, 5];
-    var yValues = [${requestScope.pro1.total}, ${requestScope.pro2.total}, ${requestScope.pro3.total}, ${requestScope.pro4.total}, ${requestScope.pro5.total}];
-    var barColors = ["red", "green", "blue", "orange", "brown"];
-
-    new Chart("myBarChart", {
-        type: "bar",
-        data: {
-            labels: xValues,
-            datasets: [{
-                    label: 'Biểu đồ Top 5 sản phẩm bán chạy theo tháng',
-                    backgroundColor: barColors,
-                    data: yValues,
-                    borderColor: 'rgb(75, 192, 192)'
-                }]
-        },
-        options: {
-            legend: {display: false},
-            title: {
-                display: true,
-                text: "TOP 5 Best Selling Product"
-            }
-        }
-    });
-
- 
-</script>
 <script src="js/javascript.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="alertPackage/alertJs.js"></script>
+<script>
+    $(document).ready(function () {
+        // When the delete link is clicked
+        $('.delete').click(function () {
+            // Retrieve the URL stored in the 'data-url' attribute
+            var url = $(this).data('url');
+            // Set the form action attribute to the retrieved URL
+            $('#deleteForm').attr('action', url);
+        });
+    });
+    $(document).ready(function () {
+        $(".updateForm").submit(function (event) {
+            event.preventDefault(); // Prevent normal submission
+
+            // Show SweetAlert message
+            swal("Save successfully!", "You have edited account's info!", "success").then(() => {
+                // After the alert is shown, submit the form
+                this.submit(); // Proceed with the normal form submission
+            });
+        });
+    });
+</script>
 </body>
 </html>
