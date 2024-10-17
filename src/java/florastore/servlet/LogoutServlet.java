@@ -7,9 +7,6 @@ package florastore.servlet;
 
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Properties;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,9 +34,7 @@ public class LogoutServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        ServletContext context = request.getServletContext();
-        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.LogoutFeatures.LOGIN_PAGE);
+        String url = MyAppConstants.LogoutFeatures.LOGIN_PAGE;
         
         try {
             //check session co ton tai hay khong

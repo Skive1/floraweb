@@ -12,7 +12,7 @@
             <div class="row g-4">
                 <div class="col-lg-3">
                     <img class="mb-0" src="img/floralogo.png" alt="Flora Logo" width="240">
-                    <p class="text-secondary mb-0">Reselling Platform</p>
+                    <p class="text-secondary mb-0">Reselling Event Flower Platform</p>
                 </div>
                 <div class="col-lg-6">
                     <div class="position-relative mx-auto">
@@ -22,10 +22,10 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="d-flex justify-content-end pt-3">
-                        <a class="btn  btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-outline-secondary btn-md-square rounded-circle" href=""><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn  btn-outline-secondary me-2 btn-md-square rounded-circle" href="https://www.instagram.com/fptuniversityhcm/"><i class="fab fa-instagram"></i></a>
+                        <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href="https://www.facebook.com/FPTU.HCM"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href="https://www.youtube.com/@FPTUniversityHCM"><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-secondary btn-md-square rounded-circle" href="https://hcmuni.fpt.edu.vn/"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
             </div>
@@ -34,9 +34,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="footer-item">
                     <h4 class="text-light mb-3">Why People Like us!</h4>
-                    <p class="mb-4">typesetting, remaining essentially unchanged. It was 
-                        popularised in the 1960s with the like Aldus PageMaker including of Lorem Ipsum.</p>
-                    <a href="" class="btn border-secondary py-2 px-4 rounded-pill text-third">Read More</a>
+                    <p class="mb-4">Chúng tôi là trung gian kết nối những người sở hữu hoa dư sau các sự kiện với những khách hàng có nhu cầu mua hoa với mức giá hợp lý. Đồng thời chúng tôi cũng tạo ra một nơi để các cá nhân, nông trại hoa hay là các cửa hàng hoa có thể buôn bán các loại hoa trên nền tảng để các quý khách hàng có thể dễ dàng kết nối tới và mua hàng</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
@@ -45,28 +43,25 @@
                     <a class="btn-link" href="">About Us</a>
                     <a class="btn-link" href="">Contact Us</a>
                     <a class="btn-link" href="">Privacy Policy</a>
-                    <a class="btn-link" href="">Terms & Condition</a>
-                    <a class="btn-link" href="">Return Policy</a>
+                    <a class="btn-link" href="">Terms & Condition</a> 
                     <a class="btn-link" href="">FAQs & Help</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="d-flex flex-column text-start footer-item">
                     <h4 class="text-light mb-3">Account</h4>
-                    <a class="btn-link" href="">My Account</a>
-                    <a class="btn-link" href="">Shop details</a>
-                    <a class="btn-link" href="">Shopping Cart</a>
-                    <a class="btn-link" href="">Wishlist</a>
+                    <a class="btn-link" href="viewProfileAction">My Account</a>
+                    <a class="btn-link" href="eventCart">Event Cart</a>
+                    <a class="btn-link" href="cartPage">Shopping Cart</a>
                     <a class="btn-link" href="">Order History</a>
-                    <a class="btn-link" href="">International Orders</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="footer-item">
                     <h4 class="text-light mb-3">Contact</h4>
-                    <p>Address: 1429 Netus Rd, NY 48247</p>
-                    <p>Email: Example@gmail.com</p>
-                    <p>Phone: +0123 4567 8910</p>
+                    <p>Địa chỉ: Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh</p>
+                    <p>Email: flora.flower.platform@gmail.com</p>
+                    <p>Số điện thoại: +84 123 456 789</p>
                     <p>Payment Accepted</p>
                     <img src="img/payment.png" class="img-fluid" alt="">
                 </div>

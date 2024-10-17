@@ -5,14 +5,16 @@
  */
 package florastore.servlet;
 
+import florastore.cart.CartBean;
+import florastore.cart.CartItem;
 import florastore.flowerProducts.FlowerProductsCategoryDTO;
 import florastore.flowerProducts.FlowerProductsDAO;
 import florastore.flowerProducts.FlowerProductsDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -22,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -42,7 +45,8 @@ public class ViewProductDetailServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         //1. Get id of flower
         int productId = Integer.parseInt(request.getParameter("productId"));
         String relatedType = request.getParameter("productType");
@@ -51,7 +55,29 @@ public class ViewProductDetailServlet extends HttpServlet {
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ViewProductDetailFeatures.ERROR_PAGE);
 
+        //initial quantity
+        int itemQuantity = 1;
         try {
+            //Check cart place
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                if (session.getAttribute("INSUFFICIENTSHOP") != null) {
+                    request.setAttribute("INSUFFICIENTSHOP", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
+                    session.removeAttribute("INSUFFICIENTSHOP");
+                }
+                //Check user cart
+                CartBean cart = (CartBean) session.getAttribute("CART");
+                if (cart != null) {
+                    //Check items
+                    Map<String, List<CartItem>> items = cart.getItems();
+                    if (items != null) {
+                        int pendingItems = cart.getUniqueItemCount();
+                        session.setAttribute("PENDING_ITEMS", pendingItems);
+                    }
+                }
+                int pendingItems = 0;
+                session.setAttribute("PENDING_ITEMS", pendingItems);
+            }
             //2. Call DAO/Model
             FlowerProductsDAO dao = new FlowerProductsDAO();
             //2.1 Get flower detail
@@ -69,6 +95,7 @@ public class ViewProductDetailServlet extends HttpServlet {
                 request.setAttribute("PRODUCT_DETAIL", flowerDetail);
                 request.setAttribute("CATEGORIES_TOP", topCategories);
                 request.setAttribute("RELATED_PRODUCTS", relatedProducts);
+                request.setAttribute("ITEM_QUANTITY", itemQuantity);
             }//check flower in detail is available
         } catch (SQLException ex) {
             log("ViewProductDetailServlet _SQL_ " + ex.getMessage());

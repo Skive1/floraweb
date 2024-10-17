@@ -53,8 +53,8 @@
             <div class="container topbar bg-primary d-none d-lg-block">
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
-                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="https://hcmuni.fpt.edu.vn/" class="text-white">FPT University, HCM</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
                         <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
@@ -81,6 +81,7 @@
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="manageAccount" class="nav-item nav-link">Manage Account</a>
+                                    <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
                                 </c:if>
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="viewEvent" class="nav-item nav-link">Manage System</a>
@@ -91,7 +92,7 @@
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
-                                    <a href="ProductManagementAction" class="nav-item nav-link">Manage Shop</a>
+                                    <a href="showStoreName" class="nav-item nav-link">Manage Shop</a>
                                 </c:if>
                             </c:if>
 
@@ -100,18 +101,28 @@
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
                                 <i class="fas fa-search text-third"></i>
                             </button>
-                            <a href="#" class="position-relative me-4">
-                                <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
-                            </a>
+
                             <c:if test="${empty sessionScope.USER}">
+                                <a href="loginPage" class="position-relative me-4">
+                                    <i class="fa fa-shopping-bag fa-2x"></i>
+                                </a>
                                 <a href="loginPage" class="my-auto">
                                     <i class="fas fa-user fa-2x"></i>
                                 </a>
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a href="" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                        <i class="fa fa-shopping-bag fa-2x"></i>
+                                    </a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="cartPage" class="dropdown-item">Cart</a>
+                                        <a href="eventCart" class="dropdown-item">Event Cart</a>
+                                    </div>
+                                </div>
+
+                                <div class="nav-item dropdown">
+                                    <a href="" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -267,6 +278,7 @@
                                         <c:forEach items="${requestScope.BEST_SELLER}" var="flower">
                                             <div class="col-md-6 col-lg-4 col-xl-3">
                                                 <form action="cartAddItem">
+                                                    <input type="hidden" name="page" value="DETAIL_PAGE">
                                                     <div class="rounded position-relative fruite-item">
                                                         <div class="fruite-img">
                                                             <img src="${flower.imageURL}" class="img-fluid w-100 rounded-top" alt="">
@@ -281,13 +293,28 @@
                                                                 <h4>${flower.productName}</h4>
                                                             </a>
                                                             <p>${flower.productDetail}</p>
+                                                            <!-- Hidden inputs to pass product details to the servlet -->
+                                                            <input type="hidden" name="productId" value="${flower.productId}">
+                                                            <input type="hidden" name="storeId" value="${flower.storeId}">
+                                                            <input type="hidden" name="imageURL" value="${flower.imageURL}">
+                                                            <input type="hidden" name="productName" value="${flower.productName}">
+                                                            <input type="hidden" name="productPrice" value="${flower.productPrice}">
+                                                            <input type="hidden" name="productQuantity" value="${flower.productQuantity}">
+                                                            <input type="hidden" name="itemQuantity" value="1">
                                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                                 <p class="text-dark fs-5 fw-bold mb-0">
                                                                     <fmt:formatNumber value="${flower.productPrice}" type="number" groupingUsed="true"/>đ
                                                                 </p>
-                                                                <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                                    <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                                                </button>
+                                                                <c:if test="${not empty sessionScope.USER}">
+                                                                    <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                                                    </button>
+                                                                </c:if>
+                                                                <c:if test="${empty sessionScope.USER}">
+                                                                    <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                                                    </a>
+                                                                </c:if>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -360,6 +387,7 @@
                 <div class="owl-carousel vegetable-carousel justify-content-center">
                     <c:forEach items="${requestScope.NEW_ARRIVAL}" var="flower">
                         <form action="cartAddItem">
+                            <input type="hidden" name="page" value="DETAIL_PAGE">
                             <div class="border border-primary rounded position-relative vesitable-item">
                                 <div class="fruite-img">
                                     <img src="${flower.imageURL}" class="img-fluid w-100 rounded-top" alt="">
@@ -374,13 +402,28 @@
                                         <h4>${flower.productName}</h4>
                                     </a>
                                     <p>${productDetail}</p>
+                                    <!-- Hidden inputs to pass product details to the servlet -->
+                                    <input type="hidden" name="productId" value="${flower.productId}">
+                                    <input type="hidden" name="storeId" value="${flower.storeId}">
+                                    <input type="hidden" name="imageURL" value="${flower.imageURL}">
+                                    <input type="hidden" name="productName" value="${flower.productName}">
+                                    <input type="hidden" name="productPrice" value="${flower.productPrice}">
+                                    <input type="hidden" name="productQuantity" value="${flower.productQuantity}">
+                                    <input type="hidden" name="itemQuantity" value="1">
                                     <div class="d-flex justify-content-between flex-lg-wrap">
                                         <p class="text-dark fs-5 fw-bold mb-0">
                                             <fmt:formatNumber value="${flower.productPrice}" type="number" groupingUsed="true" />đ
                                         </p>
-                                        <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
-                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                        </button>
+                                        <c:if test="${not empty sessionScope.USER}">
+                                            <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                            </button>
+                                        </c:if>
+                                        <c:if test="${empty sessionScope.USER}">
+                                            <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                            </a>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
@@ -406,7 +449,7 @@
                                 <c:param name="productId" value="${flower.productId}"/>
                                 <c:param name="productType" value="${flower.productType}"/>
                             </c:url>
-                            <a href="${urlRewriting}" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">BUY</a>
+                            <a href="${urlRewriting}" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">View</a>
                         </div>
                     </div>
                     <div class="col-lg-6">
