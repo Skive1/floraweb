@@ -41,7 +41,7 @@
                             <ul class="flex-box">
                                 <li>
                                     <c:if test="${sessionScope.Total_Order != null}">
-                                        <i class="ri-notification-4-line" number="${sessionScope.Total_Order}"></i>
+                                        <i href="viewOrderForDelivery" class="ri-notification-4-line" number="${sessionScope.Total_Order}"></i>
                                     </c:if>
                                     <c:if test="${sessionScope.Total_Order == null}">
                                         <i class="ri-notification-4-line" number="0"></i>
