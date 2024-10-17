@@ -6,7 +6,6 @@
 package florastore.servlet;
 
 import florastore.managerProduct.FlowerProductDAO;
-import florastore.managerProduct.FlowerProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author acer
  */
-@WebServlet(name = "AddProManagementServlet", urlPatterns = {"/AddProManagementServlet"})
-public class AddProManagementServlet extends HttpServlet {
+@WebServlet(name = "ConfirmEditServlet", urlPatterns = {"/ConfirmEditServlet"})
+public class ConfirmEditServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,42 +40,36 @@ public class AddProManagementServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");       
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        //Get parameter
         String url = (String) siteMap.get(MyAppConstants.ShowProductManager.ERROR_PAGE);
-        String id = request.getParameter("storeIdAdd");
-        int storeId = Integer.parseInt(id);
-        String name = request.getParameter("nameAdd");
-        String type = request.getParameter("typeAdd");
-        String condition = request.getParameter("conditionAdd");
-        String detail = request.getParameter("detailAdd");
-        String price = request.getParameter("priceAdd");
-        double priceDouble = Double.parseDouble(price);
-        String quantity = request.getParameter("quantityAdd");
-        int quantityInt = Integer.parseInt(quantity);
-        String img = request.getParameter("imageURLAdd");
-        String categoryId = request.getParameter("categoryAdd");
-        try  {
-            //1. Add product information into dto
-            FlowerProductDTO dto = new FlowerProductDTO(type, name, condition, detail, img, quantityInt, priceDouble, categoryId, "0");
-            //2. Call dao
+        String type = request.getParameter("typeE");
+        String name = request.getParameter("nameE");
+        String condition = request.getParameter("conditionE");
+        String detail = request.getParameter("detailE");
+        String id = request.getParameter("idE");
+        double price = Double.parseDouble(request.getParameter("priceE"));
+        int quantity = Integer.parseInt(request.getParameter("quantityE"));
+        String cateId = request.getParameter("categoryE");
+        String img = request.getParameter("imageE");
+        String storeId = request.getParameter("storeId");
+        try {
             FlowerProductDAO dao = new FlowerProductDAO();
-            //3. Call method dao
-            boolean result = dao.saveProduct(dto,storeId);
-            if(result){
-                url = "ProductManagementServlet?storeInfo=" + id + "&index=1";
+            boolean result = dao.updateProduct(type, name, condition, detail, img, quantity, price, cateId, id);
+            if (result) {
+                url = "ProductManagementServlet?storeInfo=" + storeId;
             }
         } catch (SQLException ex) {
             String msg = ex.getMessage();
-            log("AddProManagementServlet _ SQL: " + msg);
+            log("ConfirmEditServlet _ SQL: " + msg);
         } catch (NamingException ex) {
             String msg = ex.getMessage();
-            log("AddProManagementServlet _ Naming: " + msg);
+            log("ConfirmEditServlet _ Naming: " + msg);
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+//            RequestDispatcher rd = request.getRequestDispatcher(url);
+//            rd.forward(request, response);
+            response.sendRedirect(url);
         }
     }
 

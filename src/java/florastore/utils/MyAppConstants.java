@@ -88,6 +88,7 @@ public class MyAppConstants {
         public static final String INVALID_PAGE = "homePage";
         public static final String STORE_PAGE = "managerPage";
         public static final String ERROR_PAGE = "error404";
+        public static final String EDIT_PAGE = "editPage";
 
     }
 
@@ -114,10 +115,10 @@ public class MyAppConstants {
         public static final String DETAIL_PAGE = "EventFlowerDetail";
         public static final String ERROR_PAGE = "error404";
 
-
     }
-    
+
     public class DashBoardFeatures {
+
         public static final String DASHBOARD_PAGE = "dashBoard";
         public static final String ERROR_PAGE = "error404";
         public static final String MONTHLY_PAGE = "monthlyBoard";
