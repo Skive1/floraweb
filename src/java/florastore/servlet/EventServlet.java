@@ -45,34 +45,17 @@ public class EventServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.EventFeatures.EVENT_PAGE);
 
         try {
-            //Check cart place
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                //Check user cart
-                CartBean cart = (CartBean) session.getAttribute("CART");
-                if (cart != null) {
-                    //Check items
-                    Map<String, List<CartItem>> items = cart.getItems();
-                    if (items != null) {
-                        int pendingItems = cart.getUniqueItemCount();
-                        session.setAttribute("PENDING_ITEMS", pendingItems);
-                    }
-                }
-                int pendingItems = 0;
-                session.setAttribute("PENDING_ITEMS", pendingItems);
-            }
-            
             //Call DAO/Model
             EventDAO dao = new EventDAO();
             List<EventDTO> events = dao.getAllEvent();
             //Process result
-            if(events != null){
+            if (events != null) {
                 request.setAttribute("EVENT_LIST", events);
             }
         } catch (SQLException ex) {

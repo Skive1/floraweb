@@ -102,7 +102,6 @@ public class CartAddItemServlet extends HttpServlet {
                 session.setAttribute("TOTAL", total);
                 session.setAttribute("CART", cart);
             }
-
         } catch (SQLException ex) {
             log("CartAddItemServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {

@@ -37,7 +37,8 @@ public class EventDAO implements Serializable {
                 //2. Create SQL String
                 String sql = "SELECT AccountUsername, EventId, EventName, EventLocation, EventCity, StartDate, EndDate, EventImg "
                         + "FROM Event "
-                        + "ORDER BY StartDate";
+                        + "WHERE EventStatus = 1 "
+                        + "ORDER BY StartDate ";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
                 //4. Execute Query

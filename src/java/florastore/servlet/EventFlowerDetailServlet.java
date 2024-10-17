@@ -61,18 +61,6 @@ public class EventFlowerDetailServlet extends HttpServlet {
                     request.setAttribute("INSUFFICIENT", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
                     session.removeAttribute("INSUFFICIENT");
                 }
-                //Check user cart             
-                EventCartBean cart = (EventCartBean) session.getAttribute("ECART");
-                if (cart != null) {
-                    //Check items
-                    Map<String, List<EventCartItem>> items = cart.getItems();
-                    if (items != null) {
-                        int pendingItems = cart.getUniqueItemCount();
-                        session.setAttribute("PENDING_ITEMS", pendingItems);
-                    }
-                }
-                int pendingItems = 0;
-                session.setAttribute("PENDING_ITEMS", pendingItems);
             }
             //2. Call DAO/Model
             EventProductDAO dao = new EventProductDAO();
