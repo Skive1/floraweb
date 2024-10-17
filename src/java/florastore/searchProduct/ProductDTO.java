@@ -12,36 +12,100 @@ import java.io.Serializable;
  * @author ASUS
  */
 public class ProductDTO implements Serializable{
-    private int ProductID;
-    private int StoreId;
-    private String ProductName;
-    private String ProductType;
-    private String ProductCondition;
-    private String ProductDetail;
-    private int ProductPrice;
-    private int ProductQuantity;
-    private String ImageURL;
+    private int productID;
+    private int storeId;
+    private String productName;
+    private String productType;
+    private String productCondition;
+    private String productDetail;
+    private int productPrice;
+    private int productQuantity;
+    private String imageURL;
     private int categoryID;
-    
-    public ProductDTO(int ProductID, int StoreId, String ProductName, String ProductType, String ProductCondition, String ProductDetail, int ProductPrice, int ProductQuantity, String ImageURL, int categoryID) {
-        this.ProductID = ProductID;
-        this.StoreId = StoreId;
-        this.ProductName = ProductName;
-        this.ProductType = ProductType;
-        this.ProductCondition = ProductCondition;
-        this.ProductDetail = ProductDetail;
-        this.ProductPrice = ProductPrice;
-        this.ProductQuantity = ProductQuantity;
-        this.ImageURL = ImageURL;
+
+    public ProductDTO(int productID, int storeId, String productName, String productType, String productCondition, String productDetail, int productPrice, int productQuantity, String imageURL, int categoryID) {
+        this.productID = productID;
+        this.storeId = storeId;
+        this.productName = productName;
+        this.productType = productType;
+        this.productCondition = productCondition;
+        this.productDetail = productDetail;
+        this.productPrice = productPrice;
+        this.productQuantity = productQuantity;
+        this.imageURL = imageURL;
         this.categoryID = categoryID;
     }
 
     public int getProductID() {
-        return ProductID;
+        return productID;
     }
 
-    public void setProductID(int ProductID) {
-        this.ProductID = ProductID;
+    public void setProductID(int productID) {
+        this.productID = productID;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
+    public String getProductCondition() {
+        return productCondition;
+    }
+
+    public void setProductCondition(String productCondition) {
+        this.productCondition = productCondition;
+    }
+
+    public String getProductDetail() {
+        return productDetail;
+    }
+
+    public void setProductDetail(String productDetail) {
+        this.productDetail = productDetail;
+    }
+
+    public int getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(int productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public int getProductQuantity() {
+        return productQuantity;
+    }
+
+    public void setProductQuantity(int productQuantity) {
+        this.productQuantity = productQuantity;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public int getCategoryID() {
@@ -50,81 +114,6 @@ public class ProductDTO implements Serializable{
 
     public void setCategoryID(int categoryID) {
         this.categoryID = categoryID;
-    }
-
-    public ProductDTO() {
-    }
-
-    public int getProductId() {
-        return ProductID;
-    }
-
-    public void setProductId(int ProductId) {
-        this.ProductID = ProductId;
-    }
-
-    public int getStoreId() {
-        return StoreId;
-    }
-
-    public void setStoreId(int StoreId) {
-        this.StoreId = StoreId;
-    }
-
-    public String getProductName() {
-        return ProductName;
-    }
-
-    public void setProductName(String ProductName) {
-        this.ProductName = ProductName;
-    }
-
-    public String getProductType() {
-        return ProductType;
-    }
-
-    public void setProductType(String ProductType) {
-        this.ProductType = ProductType;
-    }
-
-    public String getProductCondition() {
-        return ProductCondition;
-    }
-
-    public void setProductCondition(String ProductCondition) {
-        this.ProductCondition = ProductCondition;
-    }
-
-    public String getProductDetail() {
-        return ProductDetail;
-    }
-
-    public void setProductDetail(String ProductDetail) {
-        this.ProductDetail = ProductDetail;
-    }
-
-    public int getProductPrice() {
-        return ProductPrice;
-    }
-
-    public void setProductPrice(int ProductPrice) {
-        this.ProductPrice = ProductPrice;
-    }
-
-    public int getProductQuantity() {
-        return ProductQuantity;
-    }
-
-    public void setProductQuantity(int ProductQuantity) {
-        this.ProductQuantity = ProductQuantity;
-    }
-
-    public String getImageURL() {
-        return ImageURL;
-    }
-
-    public void setImageURL(String ImageURL) {
-        this.ImageURL = ImageURL;
     }
     
     

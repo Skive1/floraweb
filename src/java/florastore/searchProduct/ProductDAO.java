@@ -55,19 +55,19 @@ public class ProductDAO {
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     //get data from result set
-                    int ProductId = rs.getInt("ProductId");
-                    int StoreId = rs.getInt("FlowerStoreStoreId");
-                    String ProductName = rs.getString("ProductName");
-                    String ProductType = rs.getString("ProductType");
-                    String ProductCondition = rs.getString("ProductCondition");
-                    String ProductDetail = rs.getString("ProductDetail");
-                    int ProductPrice = rs.getInt("ProductPrice");
-                    int ProductQuantity = rs.getInt("ProductQuantity");
-                    String ImageURL = rs.getString("Img");
+                    int productId = rs.getInt("ProductId");
+                    int storeId = rs.getInt("FlowerStoreStoreId");
+                    String productName = rs.getString("ProductName");
+                    String productType = rs.getString("ProductType");
+                    String productCondition = rs.getString("ProductCondition");
+                    String productDetail = rs.getString("ProductDetail");
+                    int productPrice = rs.getInt("ProductPrice");
+                    int productQuantity = rs.getInt("ProductQuantity");
+                    String imageURL = rs.getString("Img");
                     int categoryID = rs.getInt("CategoryCategoryId");
                     //set data to DTO properties
-                    ProductDTO dto = new ProductDTO(ProductId, StoreId, ProductName, ProductType,
-                            ProductCondition, ProductDetail, ProductPrice, ProductQuantity, ImageURL, categoryID);
+                    ProductDTO dto = new ProductDTO(productId, storeId, productName, productType, productCondition, 
+                            productDetail, productPrice, productQuantity, imageURL, categoryID);
                     if (this.productSplit == null) {                                //add total
                         this.productSplit = new ArrayList<>();
                     }

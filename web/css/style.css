@@ -1,23 +1,4 @@
 
-
-.small-heading {
-    font-size: 1.2rem; 
-}
-
-.fruite-img {
-    width: 100%;
-    max-width: 300px; 
-    position: relative;
-    overflow: hidden;
-}
-
-.square-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-    aspect-ratio: 1/1; 
-}
-
 /*** Spinner Start ***/
 #spinner {
     opacity: 0;

@@ -74,7 +74,6 @@
                             <a href="home" class="nav-item nav-link active">Home</a>
 
                             <a href="SearchServlet" class="nav-item nav-link">Shop</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
@@ -88,11 +87,14 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="#" class="nav-item nav-link">Delivery Order</a>
+                                    <a href="viewOrderForDelivery" class="nav-item nav-link">Delivery Order</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
                                     <a href="ProductManagementAction" class="nav-item nav-link">Manage Shop</a>
+                                </c:if>
+                                <c:if test="${sessionScope.USER.role == 'Seller'}">
+                                    <a href="viewOrderDetail" class="nav-item nav-link">Delivery Order</a>
                                 </c:if>
                             </c:if>
 
