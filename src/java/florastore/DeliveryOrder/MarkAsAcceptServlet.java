@@ -34,15 +34,18 @@ public class MarkAsAcceptServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
 
         HttpSession session = request.getSession();
-        
+        String getFullname = (String) session.getAttribute("USERNAME");
         String eventOrderID = request.getParameter("getEventOrderID");
         int intEventOrderID = Integer.parseInt(eventOrderID);
         int staffId = (int) session.getAttribute("Staff_ID");
+        
         try {
             DeliverDAO dao = new DeliverDAO();
             boolean result = dao.markAsGet(intEventOrderID, staffId);
+            List<DeliverDTO> orderList = dao.getOrder(getFullname);
+            session.setAttribute("Total_Order", orderList.size());
             if (result) {
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING);
+                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
             } else {
                 url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
                 request.setAttribute("FoundError", "active");

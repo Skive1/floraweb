@@ -39,7 +39,7 @@ public class MarkAsDoneServlet extends HttpServlet {
             boolean result = dao.markAsDone(intEventOrderID);
             if (result) {
                 session.removeAttribute("Total_Order");
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
+                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING);
             }
         } catch (SQLException ex) {
             log("EventServlet _SQL_ " + ex.getMessage());

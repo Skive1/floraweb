@@ -269,7 +269,7 @@ public class DeliverDAO {
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, eventOrderID);
                 rs = stm.executeQuery();
-                if (rs.next()) {
+                while (rs.next()) {
                     int eventOrderId = rs.getInt("EventOrderId");
                     String fullname = rs.getString("Fullname");
                     String phone = rs.getString("Phone");

@@ -39,9 +39,9 @@
                         </div>
                         <div class="admin-content-top-right">
                             <ul class="flex-box">
-                                <li>
+                                <li href="viewOrderForDelivery">
                                     <c:if test="${sessionScope.Total_Order != null}">
-                                        <i href="viewOrderForDelivery" class="ri-notification-4-line" number="${sessionScope.Total_Order}"></i>
+                                        <i class="ri-notification-4-line" number="${sessionScope.Total_Order}"></i>
                                     </c:if>
                                     <c:if test="${sessionScope.Total_Order == null}">
                                         <i class="ri-notification-4-line" number="0"></i>
