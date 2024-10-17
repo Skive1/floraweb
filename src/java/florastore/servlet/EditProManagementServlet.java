@@ -5,8 +5,19 @@
  */
 package florastore.servlet;
 
+import florastore.managerProduct.CategoryDAO;
+import florastore.managerProduct.CategoryDTO;
+import florastore.managerProduct.FlowerProductDAO;
+import florastore.managerProduct.FlowerProductDTO;
+import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Properties;
+import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,17 +43,41 @@ public class EditProManagementServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet EditProManagementServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet EditProManagementServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        ServletContext context = request.getServletContext();
+        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
+        String url = (String) siteMap.get(MyAppConstants.ShowProductManager.ERROR_PAGE);
+        String id = request.getParameter("proId");
+        String storeId = request.getParameter("storeId");
+        try {
+            if (id != null && !id.isEmpty()) {
+                FlowerProductDAO dao = new FlowerProductDAO();
+//                dao.loadProductById(id);
+//                ArrayList<FlowerProductDTO> listFlower = dao.getProduct();
+                FlowerProductDTO product = dao.searchProductById(id);
+                
+                //Load list category
+                CategoryDAO catDao = new CategoryDAO();
+                catDao.loadListProductCategory();
+                ArrayList<CategoryDTO> listCat = catDao.getListCategory();
+
+                request.setAttribute("ListCat", listCat);
+                request.setAttribute("ProductId", id);
+                request.setAttribute("StoreId", storeId);
+                request.setAttribute("detail", product);
+
+                url = (String) siteMap.get(MyAppConstants.ShowProductManager.EDIT_PAGE);
+            }
+        } catch (SQLException ex) {
+            String msg = ex.getMessage();
+            log("EditProManagementServlet _ SQL: " + msg);
+        } catch (NamingException ex) {
+            String msg = ex.getMessage();
+            log("EditProManagementServlet _ Naming: " + msg);
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 
