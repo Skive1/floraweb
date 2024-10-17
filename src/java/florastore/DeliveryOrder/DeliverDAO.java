@@ -50,8 +50,8 @@ public class DeliverDAO {
                     double amount = rs.getDouble("Amount");
                     boolean isPaid = rs.getBoolean("isPaid");
                     String note = rs.getString("Note");
-                    if ("Chờ giao".equals(status)) {
-                        DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street, 
+                    if ("Chờ giao".equals(status) && deliveryStaffId != 1) {
+                        DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street,
                                 city, deliveryDate, status, deliveryStaffId, amount, isPaid, note);
                         products.add(product);
                     }
@@ -110,7 +110,7 @@ public class DeliverDAO {
                         boolean isPaid = rs.getBoolean("isPaid");
                         String note = rs.getString("Note");
                         if ("Chờ giao".equals(status) && deliveryStaffId == staffId) {
-                            DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street, 
+                            DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street,
                                     city, deliveryDate, status, deliveryStaffId, amount, isPaid, note);
                             products.add(product);
                         }
@@ -131,7 +131,7 @@ public class DeliverDAO {
         return products;
     }
 
-    public boolean markAsGet(int eventOrderID, String getFullname) throws SQLException, ClassNotFoundException, NamingException {
+    public boolean markAsGet(int eventOrderID, int staffId) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stmSelect = null;
         PreparedStatement stmSelectId = null;
@@ -140,31 +140,23 @@ public class DeliverDAO {
         try {
             con = DBHelper.getConnection();
             if (con != null) {
-                String sqlSelect = "Select StaffId From Delivery Where AccountUsername = ?";
-                stmSelect = con.prepareStatement(sqlSelect);
-                stmSelect.setString(1, getFullname);
-                rs = stmSelect.executeQuery();
-                // Nếu tìm thấy StaffId
+                String sqlSelectId = "Select DeliveryStaffId From EventOrder Where EventOrderId = ?";           //kiểm tra xem DeliveryStaffId có null ko
+                stmSelectId = con.prepareStatement(sqlSelectId);
+                stmSelectId.setInt(1, eventOrderID);
+                rs = stmSelectId.executeQuery();
                 if (rs.next()) {
-                    int staffId = rs.getInt("StaffId");
-
-                    String sqlSelectId = "Select DeliveryStaffId From EventOrder Where EventOrderId = ?";
-                    stmSelectId = con.prepareStatement(sqlSelectId);
-                    stmSelectId.setInt(1, eventOrderID);
-                    rs = stmSelectId.executeQuery();
-                    if (rs.next()) {
-                        int deliveryStaffId = rs.getInt("DeliveryStaffId");
-                        if (deliveryStaffId == 0) {
-                            String sqlUpdate = "Update EventOrder Set DeliveryStaffId = ? Where EventOrderId = ?";
-                            stmUpdate = con.prepareStatement(sqlUpdate);
-                            stmUpdate.setInt(1, staffId);
-                            stmUpdate.setInt(2, eventOrderID);
-                            int affectedRow = stmUpdate.executeUpdate();
-                            if (affectedRow > 0) {
-                                return true;
-                            }
+                    int deliveryStaffId = rs.getInt("DeliveryStaffId");
+                    if (deliveryStaffId == 0) {                                 //nếu null thì nhận đơn, không thì đã có người khác nhận
+                        String sqlUpdate = "Update EventOrder Set DeliveryStaffId = ? Where EventOrderId = ?";
+                        stmUpdate = con.prepareStatement(sqlUpdate);
+                        stmUpdate.setInt(1, staffId);
+                        stmUpdate.setInt(2, eventOrderID);
+                        int affectedRow = stmUpdate.executeUpdate();
+                        if (affectedRow > 0) {
+                            return true;
                         }
                     }
+
                 }
             }
         } finally {
@@ -182,6 +174,69 @@ public class DeliverDAO {
             }
         }
         return false;
+    }
+
+    public boolean markAsDone(int eventOrderID) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.getConnection();
+            if (con != null) {
+                String sqlUpdate = "Update EventOrder Set Status = ? Where EventOrderId = ?";
+                stm = con.prepareStatement(sqlUpdate);
+                stm.setString(1, "Đã giao");
+                stm.setInt(2, eventOrderID);
+                int affectedRow = stm.executeUpdate();
+
+                if (affectedRow > 0) {
+                    return true;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
+
+    public int getStaffId(String getFullname) throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                String sql = "Select StaffId From Delivery Where AccountUsername = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, getFullname);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("StaffId");
+                }//process each record in resultset  
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return 0;
     }
 
 }

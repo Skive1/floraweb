@@ -39,8 +39,14 @@ public class ViewOrderDetailServlet extends HttpServlet {
         try {
             DeliverDAO dao = new DeliverDAO();
             List<DeliverDTO> orderList = dao.getOrder(getFullname);
-            request.setAttribute("DELIVERING_LIST", orderList);            //trang này show toàn bộ sản phẩm cần giao của ev đó - DB: EventOrder - Delivery
-            if (orderList.isEmpty()) {
+
+            if (session.getAttribute("Staff_ID") == null) {
+                int staffId = dao.getStaffId(getFullname);
+                session.setAttribute("Staff_ID", staffId);
+            }
+
+            request.setAttribute("DELIVERING_LIST", orderList);
+            if (orderList.isEmpty()) {                                          //kiểm tra trước đó deliverer có nhận đơn nào ko
                 url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
             } else {
                 url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING_PAGE);

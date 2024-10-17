@@ -1,16 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package florastore.DeliveryOrder;
 
-import florastore.account.AccountDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -22,12 +16,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "MarkAsAcceptServlet", urlPatterns = {"/MarkAsAcceptServlet"})
-public class MarkAsAcceptServlet extends HttpServlet {
+
+@WebServlet(name = "MarkAsDoneServlet", urlPatterns = {"/MarkAsDoneServlet"})
+public class MarkAsDoneServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        
         
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
@@ -37,15 +34,11 @@ public class MarkAsAcceptServlet extends HttpServlet {
         
         String eventOrderID = request.getParameter("getEventOrderID");
         int intEventOrderID = Integer.parseInt(eventOrderID);
-        int staffId = (int) session.getAttribute("Staff_ID");
         try {
             DeliverDAO dao = new DeliverDAO();
-            boolean result = dao.markAsGet(intEventOrderID, staffId);
+            boolean result = dao.markAsDone(intEventOrderID);
             if (result) {
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING);
-            } else {
                 url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
-                request.setAttribute("FoundError", "active");
             }
         } catch (SQLException ex) {
             log("EventServlet _SQL_ " + ex.getMessage());
