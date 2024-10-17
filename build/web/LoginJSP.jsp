@@ -55,7 +55,6 @@
                     <div class="row justify-content-center">
                         <div class="col-12">
                             <div class="mb-5 text-center">
-
                                 <c:set var="error" value="${requestScope.LOGIN_ERROR}"/>
                                 <c:if test="${not empty error.loginErr}">   
                                     <div id="notification" style="background-color: rgb(245, 229, 229)">
