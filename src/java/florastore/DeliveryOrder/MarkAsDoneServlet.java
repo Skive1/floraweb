@@ -38,6 +38,7 @@ public class MarkAsDoneServlet extends HttpServlet {
             DeliverDAO dao = new DeliverDAO();
             boolean result = dao.markAsDone(intEventOrderID);
             if (result) {
+                session.removeAttribute("Total_Order");
                 url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
             }
         } catch (SQLException ex) {

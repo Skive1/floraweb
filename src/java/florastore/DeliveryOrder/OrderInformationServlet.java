@@ -5,6 +5,7 @@
  */
 package florastore.DeliveryOrder;
 
+import florastore.eventProduct.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +13,8 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -22,36 +25,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "ViewOrderDetailServlet", urlPatterns = {"/ViewOrderDetailServlet"})
-public class ViewOrderDetailServlet extends HttpServlet {
+
+@WebServlet(name = "OrderInformationServlet", urlPatterns = {"/OrderInformationServlet"})
+public class OrderInformationServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        //1. Get event id
+        
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
-
-        HttpSession session = request.getSession();
-        String getFullname = (String) session.getAttribute("USERNAME");
+        int eventOrderID = Integer.parseInt(request.getParameter("getEventOrderID").trim());
+        
+        DecimalFormat df = new DecimalFormat("#,###.##");
+        double total = 0;
+        String totalOut;
         try {
             DeliverDAO dao = new DeliverDAO();
-            List<DeliverDTO> orderList = dao.getOrder(getFullname);
-
-            if (session.getAttribute("Staff_ID") == null) {
-                int staffId = dao.getStaffId(getFullname);
-                session.setAttribute("Staff_ID", staffId);
-            }
-
-            request.setAttribute("DELIVERING_LIST", orderList);
-            if (orderList.isEmpty()) {                                          //kiểm tra trước đó deliverer có nhận đơn nào ko
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
-            } else {
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING_PAGE);
-                request.setAttribute("ORDER_LIST", orderList);
-            }
+            List<DeliverDTO> orderList = dao.getOrderInfo(eventOrderID);
+            if (orderList != null) {                                          //kiểm tra trước đó deliverer có nhận đơn nào ko
+                for (DeliverDTO orderPrice : orderList) {
+                    total += orderPrice.getUnitPrice()* orderPrice.getQuantity();
+                }
+                totalOut = df.format(total);
+                request.setAttribute("TOTAL", totalOut);
+                request.setAttribute("DELIVERING_DETAIL", orderList);
+                url = (String) siteMap.get(MyAppConstants.Delivery.DELIVERY_INFO_PAGE);
+            } 
         } catch (SQLException ex) {
             log("ViewOrderServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {

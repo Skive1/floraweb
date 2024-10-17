@@ -5,7 +5,6 @@
  */
 package florastore.DeliveryOrder;
 
-
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,30 +18,38 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author ASUS
- */
-@WebServlet(name = "ViewOrderServlet", urlPatterns = {"/ViewOrderServlet"})
-public class ViewOrderServlet extends HttpServlet {
+@WebServlet(name = "ViewOrderForDeliveryServlet", urlPatterns = {"/ViewOrderForDeliveryServlet"})
+public class ViewOrderForDeliveryServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         //1. Get event id
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
 
+        HttpSession session = request.getSession();
+        String getFullname = (String) session.getAttribute("USERNAME");
         try {
             DeliverDAO dao = new DeliverDAO();
-            List<DeliverDTO> orderList = dao.getDeliveryOrder();
-            if (orderList != null) {
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
-                request.setAttribute("Total_Order", orderList.size());
-                request.setAttribute("DELIVERY_LIST", orderList);
+            List<DeliverDTO> orderList = dao.getOrder(getFullname);
+
+            if (session.getAttribute("Staff_ID") == null) {
+                int staffId = dao.getStaffId(getFullname);
+                session.setAttribute("Staff_ID", staffId);
+            }
+            
+            request.setAttribute("DELIVERING_LIST", orderList);
+            if (orderList.isEmpty()) {                                          //kiểm tra trước đó deliverer có nhận đơn nào ko
+                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
+            } else {
+                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING_PAGE);
+                session.setAttribute("Total_Order", orderList.size());
+                request.setAttribute("ORDER_LIST", orderList);
             }
         } catch (SQLException ex) {
             log("ViewOrderServlet _SQL_ " + ex.getMessage());

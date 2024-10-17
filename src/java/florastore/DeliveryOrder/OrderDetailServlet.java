@@ -5,9 +5,9 @@
  */
 package florastore.DeliveryOrder;
 
-
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
@@ -24,14 +24,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ASUS
  */
-@WebServlet(name = "ViewOrderServlet", urlPatterns = {"/ViewOrderServlet"})
-public class ViewOrderServlet extends HttpServlet {
+@WebServlet(name = "OrderDetailServlet", urlPatterns = {"/OrderDetailServlet"})
+public class OrderDetailServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        //1. Get event id
+
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);

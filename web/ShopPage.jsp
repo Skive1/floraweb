@@ -120,17 +120,7 @@
             </div>
         </form>
         <!-- Modal Search End -->
-
-        <%--<!-- Script to automatically show modal on page load -->
-        <script>
-            window.onload = function () {
-                var myModal = new bootstrap.Modal(document.getElementById('searchModal'), { script auto b?t thanh search m?i khi nh?p search sai
-                    keyboard: false
-                });
-                myModal.show();
-            };
-        </script>--%>
-
+        
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">Shop</h1>
@@ -141,7 +131,6 @@
             </ol>
         </div>
         <!-- Single Page Header End -->
-
 
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">

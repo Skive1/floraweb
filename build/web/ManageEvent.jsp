@@ -1,4 +1,5 @@
  <!DOCTYPE html>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html lang="en">
@@ -73,7 +74,7 @@
                             <h1>Event List</h1>
                         </div>
                         <div class="admin-content-main-content">
-                            <!-- N?i dung ? ?�y -->
+                            <!-- N?i dung ? ?ây -->
                             <div class="admin-content-main-content-product-list">
                                 <table>
                                     <thead>
@@ -113,7 +114,7 @@
                                         </c:if>    
                                     </tbody>
                                     <c:if test="${empty event}">
-                                        <a>How</a>
+                                        <a>Hiện tại không có event nào </a>
                                     </c:if>
                                 </table>
                             </div>

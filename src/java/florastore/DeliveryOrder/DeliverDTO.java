@@ -12,10 +12,30 @@ public class DeliverDTO {
     private Timestamp deliveryDate;
     private String status;
     private int deliveryStaffId;
-    private double amount;
     private boolean isPaid;
     private String note;
+    private double unitPrice;
+    private double amount;
+    private int quantity;
+    private String productName;
 
+    public DeliverDTO(int eventOrderId, String fullname, String phone, String street, String city, Timestamp deliveryDate, String status, int deliveryStaffId, boolean isPaid, String note, double unitPrice, double amount, int quantity, String productName) {
+        this.eventOrderId = eventOrderId;
+        this.fullname = fullname;
+        this.phone = phone;
+        this.street = street;
+        this.city = city;
+        this.deliveryDate = deliveryDate;
+        this.status = status;
+        this.deliveryStaffId = deliveryStaffId;
+        this.isPaid = isPaid;
+        this.note = note;
+        this.unitPrice = unitPrice;
+        this.amount = amount;
+        this.quantity = quantity;
+        this.productName = productName;
+    }
+    
     public DeliverDTO(int eventOrderId, String fullname, String phone, String street, String city, Timestamp deliveryDate, String status, int deliveryStaffId, double amount, boolean isPaid, String note) {
         this.eventOrderId = eventOrderId;
         this.fullname = fullname;
@@ -38,8 +58,30 @@ public class DeliverDTO {
         this.note = note;
     }
 
+    public double getUnitPrice() {
+        return unitPrice;
+    }
 
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+    
     public int getDeliveryStaffId() {
         return deliveryStaffId;
     }

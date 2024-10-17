@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
@@ -50,7 +52,7 @@ public class DeliverDAO {
                     double amount = rs.getDouble("Amount");
                     boolean isPaid = rs.getBoolean("isPaid");
                     String note = rs.getString("Note");
-                    if ("Chờ giao".equals(status) && deliveryStaffId != 1) {
+                    if ("Chờ giao".equals(status)) {
                         DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street,
                                 city, deliveryDate, status, deliveryStaffId, amount, isPaid, note);
                         products.add(product);
@@ -180,13 +182,19 @@ public class DeliverDAO {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
+        
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS");
+        String formattedDateTime = dateTime.format(formatter);
+        
         try {
             con = DBHelper.getConnection();
             if (con != null) {
-                String sqlUpdate = "Update EventOrder Set Status = ? Where EventOrderId = ?";
+                String sqlUpdate = "Update EventOrder Set Status = ?, DeliveryDate = ? Where EventOrderId = ?";
                 stm = con.prepareStatement(sqlUpdate);
                 stm.setString(1, "Đã giao");
-                stm.setInt(2, eventOrderID);
+                stm.setString(2, formattedDateTime);
+                stm.setInt(3, eventOrderID);
                 int affectedRow = stm.executeUpdate();
 
                 if (affectedRow > 0) {
@@ -237,6 +245,62 @@ public class DeliverDAO {
             }
         }
         return 0;
+    }
+
+    public List<DeliverDTO> getOrderInfo(int eventOrderID)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<DeliverDTO> products = new ArrayList<>();
+
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                String sql = "SELECT eo.EventOrderId, eo.Fullname, eo.Phone, eo.Street, eo.City, eo.DeliveryDate, "
+                        + "eo.DeliveryStaffId, eo.Status, eo.Amount, eo.isPaid, eo.Note, eod.UnitPrice, eod.Quantity, ep.EPName "
+                        + "FROM EventOrder eo "
+                        + "JOIN EventOrderDetail eod ON eo.EventOrderId = eod.EventOrderId "
+                        + "JOIN EventProduct ep ON eod.EventProductID = ep.EPId "
+                        + "WHERE eo.EventOrderId = ?";
+
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, eventOrderID);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    int eventOrderId = rs.getInt("EventOrderId");
+                    String fullname = rs.getString("Fullname");
+                    String phone = rs.getString("Phone");
+                    String street = rs.getString("Street");
+                    String city = rs.getString("City");
+                    Timestamp deliveryDate = rs.getTimestamp("DeliveryDate");
+                    int deliveryStaffId = rs.getInt("DeliveryStaffId");
+                    String status = rs.getString("Status");
+                    double amount = rs.getDouble("Amount");
+                    boolean isPaid = rs.getBoolean("isPaid");
+                    String note = rs.getString("Note");
+                    double unitPrice = rs.getDouble("UnitPrice");
+                    int quantity = rs.getInt("Quantity");
+                    String productName = rs.getString("EPName");
+                    DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street, city,
+                            deliveryDate, status, deliveryStaffId, isPaid, note, unitPrice, amount, quantity, productName);
+                    products.add(product);
+                }
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return products;
     }
 
 }
