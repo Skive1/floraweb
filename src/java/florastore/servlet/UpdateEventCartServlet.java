@@ -59,18 +59,17 @@ public class UpdateEventCartServlet extends HttpServlet {
                             int id = Integer.parseInt(request.getParameter("eId"));
                             cart.removeEItemFromCart(key, id);
                         } else if (action != null && !action.isEmpty()) {
-                            String productName = request.getParameter("eventProductName");
+                            int eventProductId = Integer.parseInt(request.getParameter("eventProductId"));
                             String eventName = request.getParameter("eventName");
                             List<EventCartItem> itemList = items.get(eventName);
                             if (itemList != null) {
                                 for (EventCartItem item : itemList) {
-                                    if (item.getEpName().equals(productName)) {
+                                    if (item.getEpId() == eventProductId) {
 //                                        log("Received new quantity: " + newQuantityStr);
                                         EventProductDAO dao = new EventProductDAO();
                                         // Fetch the stock quantity from the database for this product
-                                        int stockQuantity = dao.getProductQuantityByName(productName);
+                                        int stockQuantity = dao.getProductQuantityById(eventProductId);
                                         int currentQuantity = item.getQuantity();
-
                                         if ("plus".equals(action)) {
                                             // Only increase if the current quantity is less than stock
                                             if (currentQuantity < stockQuantity) {
