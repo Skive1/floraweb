@@ -181,5 +181,5 @@ public class MyAppConstants {
         public static final String ONLINE_PAYMENT = "vnpayShopCheckout";
         public static final String CHECKOUT_SUCCESS = "shopCheckouts";
         public static final String CHECKOUT_FAIL = "shopCheckout";
-    }
+    }   
 }

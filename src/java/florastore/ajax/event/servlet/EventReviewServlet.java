@@ -3,18 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.servlet;
+package florastore.ajax.event.servlet;
 
-import florastore.eventProduct.EventProductDAO;
-import florastore.eventProduct.EventProductDTO;
 import florastore.reviewEvent.ReviewEventDAO;
-import florastore.utils.MyAppConstants;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,8 +21,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author ADMIN
  */
-@WebServlet(name = "EventFlowerDetailServlet", urlPatterns = {"/EventFlowerDetailServlet"})
-public class EventFlowerDetailServlet extends HttpServlet {
+@WebServlet(name = "EventReviewServlet", urlPatterns = {"/EventReviewServlet"})
+public class EventReviewServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,40 +38,36 @@ public class EventFlowerDetailServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        //1. Get id of flower
-        int productId = Integer.parseInt(request.getParameter("productId"));
-        int eventId = Integer.parseInt(request.getParameter("eventId"));
 
-        ServletContext context = request.getServletContext();
-        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.EventFlowerFeatures.ERROR_PAGE);
+        String comment = request.getParameter("comment");
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        HttpSession session = request.getSession(false);
+        String user = (String) session.getAttribute("USERNAME");
 
         try {
-            //Check cart place
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                if (session.getAttribute("INSUFFICIENT") != null) {
-                    request.setAttribute("INSUFFICIENT", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
-                    session.removeAttribute("INSUFFICIENT");
-                }
+            ReviewEventDAO dao = new ReviewEventDAO();
+            boolean result = dao.saveComment(user, productId, comment);
+            if (result) {
+                // Trả về bình luận mới dưới dạng HTML
+                PrintWriter out = response.getWriter();
+                out.println("<div class='d-flex'>");
+                out.println("<img src='img/avatar.jpg' class='img-fluid rounded-circle p-3' style='width: 100px; height: 100px;' alt=''>");
+                out.println("<div>");
+                out.println("<p class='mb-2' style='font-size: 14px;'>");
+                out.println(new java.text.SimpleDateFormat("dd/MM/yyyy - HH:mm").format(new java.util.Date()));
+                out.println("</p>");
+                out.println("<div class='d-flex justify-content-between'>");
+                out.println("<h5>" + user + "</h5>");
+                out.println("</div>");
+                out.println("<p>" + comment + "</p>");
+                out.println("</div>");
+                out.println("</div>");
             }
-            //2. Call DAO/Model
-            EventProductDAO dao = new EventProductDAO();
-            //2.1 Get flower detail
-            EventProductDTO flowerDetail = dao.getFlowerDetail(productId);
-            if (flowerDetail != null) {//check flower in detail is available
-                url = (String) siteMap.get(MyAppConstants.EventFlowerFeatures.DETAIL_PAGE);
-                //4. Push to Product Detail
-                request.setAttribute("EPRODUCT_DETAIL", flowerDetail);
-                request.setAttribute("EVENT_ID", eventId);
-            }//check flower in detail is available
         } catch (SQLException ex) {
-            log("ViewProductDetailServlet _SQL_ " + ex.getMessage());
+            log("EventReviewServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
-            log("ViewProductDetailServlet _Naming_ " + ex.getMessage());
+            log("EventReviewServlet _Naming_ " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
         }
     }
 

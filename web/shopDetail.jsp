@@ -47,6 +47,16 @@
                 pointer-events: none;                /* Ngăn thay đổi */
                 cursor: none;
             }
+            .disabled-link {
+                pointer-events: none;  /* Disable click */
+                color: gray;           /* Change appearance */
+                text-decoration: none; /* Remove underline */
+                cursor: default;       /* Change cursor to default */
+            }
+            #commentSection {
+                max-height: 300px; /* Chiều cao tối đa */
+                overflow-y: auto; /* Kích hoạt thanh cuộn theo chiều dọc */
+            }
         </style>
     </head>
 
@@ -271,325 +281,59 @@
                             <div class="col-lg-12">
                                 <nav>
                                     <div class="nav nav-tabs mb-3">
-                                        <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
-                                                id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about"
-                                                aria-controls="nav-about" aria-selected="true">Description</button>
-                                        <button class="nav-link border-white border-bottom-0" type="button" role="tab"
+                                        <button class="nav-link border-white border-bottom-0 active" type="button" role="tab"
                                                 id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
                                                 aria-controls="nav-mission" aria-selected="false">Reviews</button>
                                     </div>
                                 </nav>
+
                                 <div class="tab-content mb-5">
-                                    <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                                        <p>${detail.productDetail}</p>
-                                        <p>${detail.productDetail}</p>
-                                        <div class="px-2">
-                                            <div class="row g-4">
-                                                <div class="col-6">
-                                                    <div class="row bg-light align-items-center text-center justify-content-center py-2">
-                                                        <div class="col-6">
-                                                            <p class="mb-0">Price</p>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <p class="mb-0"><fmt:formatNumber value="${detail.productPrice}" type="number" groupingUsed="true"/>đ</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row text-center align-items-center justify-content-center py-2">
-                                                        <div class="col-6">
-                                                            <p class="mb-0">Type</p>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <p class="mb-0">${detail.productType}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row bg-light text-center align-items-center justify-content-center py-2">
-                                                        <div class="col-6">
-                                                            <p class="mb-0">Quality</p>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <p class="mb-0">${detail.productCondition}</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div id="commentSection">
                                     </div>
-                                    <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
-                                        <div class="d-flex">
-                                            <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
-                                            <div class="">
-                                                <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-                                                <div class="d-flex justify-content-between">
-                                                    <h5>Jason Smith</h5>
-                                                    <div class="d-flex mb-3">
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                                <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic 
-                                                    words etc. Susp endisse ultricies nisi vel quam suscipit </p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
-                                            <div class="">
-                                                <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-                                                <div class="d-flex justify-content-between">
-                                                    <h5>Sam Peters</h5>
-                                                    <div class="d-flex mb-3">
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                                <p class="text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic 
-                                                    words etc. Susp endisse ultricies nisi vel quam suscipit </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="nav-vision" role="tabpanel">
-                                        <p class="text-dark">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                                            amet diam et eos labore. 3</p>
-                                        <p class="mb-0">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore.
-                                            Clita erat ipsum et lorem et sit</p>
-                                    </div>
+                                    <!-- Nút tải thêm bình luận (Load More) -->
+                                    <button id="loadMoreBtn" class="btn btn-secondary">Tải thêm bình luận</button>
+                                    <input type="hidden" id="currentPage" value="1">
+                                    <input type="hidden" id="productId" value="${detail.productId}">
+                                    <input type="hidden" id="productType" value="${detail.productType}">
                                 </div>
                             </div>
-                            <form action="#">
+
+                            <form action="shopReview" id="commentForm" method="POST">
                                 <h4 class="mb-5 fw-bold">Leave a Reply</h4>
                                 <div class="row g-4">
-                                    <div class="col-lg-6">
-                                        <div class="border-bottom rounded">
-                                            <input type="text" class="form-control border-0 me-4" placeholder="Your Name *">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="border-bottom rounded">
-                                            <input type="email" class="form-control border-0" placeholder="Your Email *">
-                                        </div>
-                                    </div>
                                     <div class="col-lg-12">
                                         <div class="border-bottom rounded my-4">
-                                            <textarea name="" id="" class="form-control border-0" cols="30" rows="8" placeholder="Your Review *" spellcheck="false"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="d-flex justify-content-between py-3 mb-5">
-                                            <div class="d-flex align-items-center">
-                                                <p class="mb-0 me-3">Please rate:</p>
-                                                <div class="d-flex align-items-center" style="font-size: 12px;">
-                                                    <i class="fa fa-star text-muted"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
+                                            <textarea name="comment" id="comment" class="form-control border-0" cols="30" rows="8" placeholder="Your Review *" spellcheck="false"<c:if test="${empty sessionScope.USER}">disabled=""</c:if> required=""></textarea>
                                             </div>
-                                            <a href="#" class="btn border border-secondary text-third rounded-pill px-4 py-3"> Post Comment</a>
                                         </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-xl-3">
-                        <div class="row g-4 fruite">
-                            <div class="col-lg-12">
-                                <div class="input-group w-100 mx-auto d-flex mb-4">
-                                    <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                                    <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                                </div>
-                                <div class="mb-4">
-                                    <h4>Categories</h4>
-                                    <ul class="list-unstyled fruite-categorie">
-                                        <c:forEach var="category" items="${requestScope.CATEGORIES_TOP}">
-                                            <li>
-                                                <div class="d-flex justify-content-between fruite-name">
-                                                    <c:url var="urlRewriting" value="category">
-                                                        <c:param name="type" value="${category.productType}"/>
-                                                        <c:param name="page" value="1"/>
-                                                    </c:url>
-                                                    <a href="${urlRewriting}"><i class="fas fa-apple-alt me-2"></i>${category.productType}</a>
-                                                    <span>(${category.productTypeQuantity})</span>
+                                        <div class="col-lg-12">
+                                            <div class="d-flex justify-content-between py-3 mb-5">
+                                                <div class="d-flex align-items-center">
+                                                    <p class="mb-0 me-3">Please rate:</p>
+                                                    <div class="d-flex align-items-center" style="font-size: 12px;">
+                                                        <i class="fa fa-star text-muted"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
                                                 </div>
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <h4 class="mb-4">Featured products</h4>
-                                <div class="d-flex align-items-center justify-content-start">
-                                    <div class="rounded" style="width: 100px; height: 100px;">
-                                        <img src="img/featur-1.jpg" class="img-fluid rounded" alt="Image">
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-2">Big Banana</h6>
-                                        <div class="d-flex mb-2">
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                        <div class="d-flex mb-2">
-                                            <h5 class="fw-bold me-2">2.99 $</h5>
-                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                                <input type="hidden" name="productId" id="productId" value="${detail.productId}">
+                                            <input type="hidden" name="productType" id="productType" value="${detail.productType}">
+                                            <input type="submit" value="Post Comment" id="postCommentBtn" class="btn border border-secondary text-third rounded-pill px-4 py-3" <c:if test="${empty sessionScope.USER}">disabled=""</c:if>/>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-start">
-                                    <div class="rounded" style="width: 100px; height: 100px;">
-                                        <img src="img/featur-2.jpg" class="img-fluid rounded" alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-2">Big Banana</h6>
-                                        <div class="d-flex mb-2">
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                        <div class="d-flex mb-2">
-                                            <h5 class="fw-bold me-2">2.99 $</h5>
-                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-start">
-                                    <div class="rounded" style="width: 100px; height: 100px;">
-                                        <img src="img/featur-3.jpg" class="img-fluid rounded" alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-2">Big Banana</h6>
-                                        <div class="d-flex mb-2">
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                        <div class="d-flex mb-2">
-                                            <h5 class="fw-bold me-2">2.99 $</h5>
-                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-start">
-                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                        <img src="img/vegetable-item-4.jpg" class="img-fluid rounded" alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-2">Big Banana</h6>
-                                        <div class="d-flex mb-2">
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                        <div class="d-flex mb-2">
-                                            <h5 class="fw-bold me-2">2.99 $</h5>
-                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-start">
-                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                        <img src="img/vegetable-item-5.jpg" class="img-fluid rounded" alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-2">Big Banana</h6>
-                                        <div class="d-flex mb-2">
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                        <div class="d-flex mb-2">
-                                            <h5 class="fw-bold me-2">2.99 $</h5>
-                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-start">
-                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                        <img src="img/vegetable-item-6.jpg" class="img-fluid rounded" alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-2">Big Banana</h6>
-                                        <div class="d-flex mb-2">
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                        <div class="d-flex mb-2">
-                                            <h5 class="fw-bold me-2">2.99 $</h5>
-                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-center my-4">
-                                    <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-third w-100">View More</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="position-relative">
-                                    <img src="img/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
-                                    <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
-                                        <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <h1 class="fw-bold mb-0">Related Flowers</h1>
-                <div class="vesitable">
-                    <div class="owl-carousel vegetable-carousel justify-content-center">
-                        <c:forEach var="related" items="${requestScope.RELATED_PRODUCTS}">
-                            <form action="cartAddItem">
-                                <div class="border border-primary rounded position-relative vesitable-item">
-                                    <div class="vesitable-img">
-                                        <img src="${related.imageURL}" class="img-fluid w-100 rounded-top" alt="">
-                                    </div>
-                                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">${related.productType}</div>
-                                    <div class="p-4 pb-0 rounded-bottom">
-                                        <c:url var="urlRewriting" value="productDetail">
-                                            <c:param name="productId" value="${related.productId}"/>
-                                            <c:param name="productType" value="${related.productType}"/>
-                                        </c:url>
-                                        <a href="${urlRewriting}">
-                                            <h4>${related.productName}</h4>
-                                        </a>
-                                        <p>${related.productDetail}</p>
-                                        <div class="d-flex justify-content-between flex-lg-wrap">
-                                            <p class="text-dark fs-5 fw-bold"><fmt:formatNumber value="${related.productPrice}" type="number" groupingUsed="true"/>đ</p>
-                                            <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </c:forEach>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Single Product End -->
+            <!-- Single Product End -->
 
 
-        <!-- Footer Start -->
+            <!-- Footer Start -->
         <jsp:include page="footer.jsp"></jsp:include>
             <!-- Footer End -->
 
@@ -621,6 +365,71 @@
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/lightbox/js/lightbox.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#commentForm').on('submit', function (event) {
+                    event.preventDefault(); // Ngăn chặn hành vi submit mặc định
+
+                    var comment = $('#comment').val();
+                    var productId = $('#productId').val();
+
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'shopReview',
+                        data: {
+                            comment: comment,
+                            productId: productId
+                        },
+                        success: function (response) {
+                            // Thêm bình luận mới vào khu vực hiển thị comment
+                            $('#commentSection').prepend(response);
+                            // Xóa nội dung trong textarea sau khi post
+                            $('#comment').val('');
+                        },
+                        error: function () {
+                            alert('Có lỗi xảy ra khi gửi bình luận.');
+                        }
+                    });
+                });
+            });
+            $(document).ready(function () {
+                // Khi trang load lần đầu, gọi AJAX để tải 5 bình luận đầu tiên
+                loadComments(1);
+
+                $('#loadMoreBtn').click(function () {
+                    var currentPage = parseInt($('#currentPage').val());
+                    loadComments(currentPage + 1);
+                });
+
+                function loadComments(page) {
+                    var productId = $('#productId').val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: 'shopLoadMore',
+                        data: {
+                            page: page,
+                            productId: productId
+                        },
+                        success: function (response) {
+                            $('#commentSection').append(response);
+                            $('#currentPage').val(page);
+                        },
+                        error: function () {
+                            alert('Có lỗi xảy ra khi tải bình luận.');
+                        }
+                    });
+                }
+            });
+        </script>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 var quantityInput = document.getElementById("itemQuantity");
@@ -642,13 +451,7 @@
                 });
             });
         </script>
-        <!-- JavaScript Libraries -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/lightbox/js/lightbox.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
 
         <!-- Template Javascript -->
         <script src="alertPackage/alertJs.js"></script>
