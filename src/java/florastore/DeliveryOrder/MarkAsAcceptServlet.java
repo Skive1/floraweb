@@ -26,28 +26,27 @@ public class MarkAsAcceptServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
 
         HttpSession session = request.getSession();
-        String eventOrderID = request.getParameter("getEventOrderID");
+        String getEventOrderID = request.getParameter("getEventOrderID").trim();
+        String getEventOrderAmount = request.getParameter("getEventOrderAmount");
         String getFullName = (String) session.getAttribute("USERNAME");
-        int intEventOrderID = Integer.parseInt(eventOrderID);
+        int eventOrderID = Integer.parseInt(getEventOrderID);
         int staffID = (int) session.getAttribute("Staff_ID");
-        
+
         try {
+                                                                                //húuuuuuuuuuuuuuuuuuuuuuuuuu
             DeliverDAO dao = new DeliverDAO();
-            boolean result = dao.markAsGet(intEventOrderID, staffID);
-            
+            boolean result = dao.markAsGet(eventOrderID, staffID);
             List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName, staffID);          //lấy danh sách các đơn hàng để đi giao
-            
             session.setAttribute("Total_Order", orderToDelivery.size());
             if (!result) {                                                      //đơn hàng đã bị người khác nhận
                 request.setAttribute("FoundError", "Đơn hàng đã được nhận bởi nhân viên khác!");
             }
-            
             url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
         } catch (SQLException ex) {
             log("EventServlet _SQL_ " + ex.getMessage());
@@ -58,7 +57,7 @@ public class MarkAsAcceptServlet extends HttpServlet {
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-            
+
         }
     }
 

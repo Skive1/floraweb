@@ -35,9 +35,9 @@
                                 <a href="" style="color: white"><i class="ri-file-list-line"></i>Danh sách đơn hàng<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" style="color: white"
-                                           href="delivererOrders">Nhận đơn</a></li>
+                                           href="delivererOrders">Nhận đơn hàng mới</a></li>
                                     <li><a class="ri-arrow-right-s-fill" style="color: white"
-                                           href="viewOrdersForDelivery">Giao đơn</a></li>
+                                           href="viewOrdersForDelivery">Đơn hàng cần giao</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -45,8 +45,7 @@
                 </div>
                 <div class="admin-content">
                     <div class="admin-content-top">
-                        <div class="admin-content-top-left">          
-                        </div>
+                        <div class="admin-content-top-left"></div>
                         <div class="admin-content-top-right">
                             <ul class="flex-box">
                                 <li href="viewOrderForDelivery">
@@ -72,24 +71,24 @@
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
                             <div class="admin-content-main-content-product-list">
-                                <table >
-                                    <c:if test="${requestScope.FoundError != null}">
-                                        <a style="color: red">${requestScope.FoundError}</a>
-                                    </c:if>
-                                    <thead>
-                                    <th>No</th>
-                                    <th>Tên người mua</th>
-                                    <th>Điện thoại</th>
-                                    <th>Địa chỉ</th> 
-                                    <th>Ghi chú</th>
-                                    <th>Chi tiết</th>
-                                    <th>Ngày giao</th>
-                                    <th>Trạng thái</th>
-                                    <th>Tùy chỉnh</th>
-                                    </thead>
-                                    <tbody style="height: 100px;">
-                                        <c:set var="event" value="${requestScope.DELIVERY_LIST}"/>
-                                        <c:if test="${not empty event}">
+                                <c:set var="event" value="${requestScope.DELIVERY_LIST}"/>
+                                <c:if test="${not empty event}">
+                                    <table >
+                                        <c:if test="${requestScope.FoundError != null}">
+                                            <a style="color: red">&#8194;&#8201;${requestScope.FoundError}</a>
+                                        </c:if>
+                                        <thead>
+                                        <th>No</th>
+                                        <th>Tên người mua</th>
+                                        <th>Điện thoại</th>
+                                        <th>Địa chỉ</th> 
+                                        <th>Ghi chú</th>
+                                        <th>Chi tiết</th>
+                                        <th>Ngày giao</th>
+                                        <th>Trạng thái</th>
+                                        <th>Tùy chỉnh</th>
+                                        </thead>
+                                        <tbody style="height: 100px;">
                                             <c:forEach var="eventOrder" items="${requestScope.DELIVERY_LIST}" varStatus="counter">
                                                 <tr>
                                                     <td>${counter.count}</td>
@@ -107,7 +106,7 @@
                                                         </td>
                                                     </c:if>
                                                     <td>                                                                     
-                                                        <a class="btn btn-primary" 
+                                                        <a class="btn btn-primary" style="border: 0"
                                                            href="deliveryInformation?getEventOrderID=${eventOrder.eventOrderId}">Xem thêm</a>
                                                     </td>
                                                     <td>
@@ -141,10 +140,16 @@
                                                                         </div>
                                                                         <div class="modal-body">
                                                                             Bạn có chắc chắn muốn nhận đơn?
+                                                                            <br/>
+                                                                            <a style="color: red; font-weight: bold">
+                                                                                Bạn không thể hủy sau khi nhận
+                                                                            </a>
                                                                         </div>
                                                                         <div class="modal-footer">
-                                                                            <a class="btn btn-secondary" href="delivererGetOrder?getEventOrderID=${eventOrder.eventOrderId}"
-                                                                               style="background-color: green">Có</a>
+                                                                            <a class="btn btn-secondary" 
+                                                                               href="delivererGetOrder?getEventOrderID=${eventOrder.eventOrderId}
+                                                                               &getEventOrderAmount=${eventOrder.amount}"
+                                                                               style="background-color: green;">Có</a>
                                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>          
                                                                         </div>
                                                                     </div>
@@ -152,14 +157,28 @@
                                                             </div>
                                                         </td>
                                                     </c:if>
-                                                    <c:if test="${eventOrder.status == 'Chờ giao' && eventOrder.deliveryStaffId != 0}">
+                                                    <c:if test="${eventOrder.status == 'Chờ giao' && eventOrder.deliveryStaffId != sessionScope.Staff_ID}">
                                                         <td></td>
                                                     </c:if> 
+                                                    <c:if test="${eventOrder.status == 'Chờ giao' && eventOrder.deliveryStaffId == sessionScope.Staff_ID}">
+                                                        <td>
+                                                            <a class="btn btn-primary" style="background-color: #e78f08"
+                                                               href="viewOrdersForDelivery">
+                                                                Xem ngay
+                                                            </a>
+                                                        </td>
+                                                    </c:if>
                                                 </tr>
                                             </c:forEach>
-                                        </c:if>
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </c:if>
+                                <c:if test="${empty event}">
+                                    <a style="color: red">
+                                        &#8194;&#8204;Hiện tại không có đơn hàng nào khả dụng,&#32;
+                                    </a>
+                                    <a href="delivererOrders">tải lại trang</a>
+                                </c:if>
                             </div>
                         </div>
                     </div>
@@ -168,7 +187,6 @@
         </div>
     </div> 
 </section>
-
 <script src="alerJs.js"></script>
 <script src="js/javascript.js"></script>
 </body>

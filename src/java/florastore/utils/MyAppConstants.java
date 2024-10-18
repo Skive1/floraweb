@@ -142,7 +142,7 @@ public class MyAppConstants {
         public static final String ERROR_PAGE = "error404";
         public static final String SHIPPER_ORDER_PAGE = "delivererOrdersPage";
         public static final String SHIPPER_ORDER = "delivererOrders";
-        public static final String SHIPPER_DELIVERING = "viewOrderForDelivery";
+        public static final String SHIPPER_DELIVERING = "viewOrdersForDelivery";
         public static final String SHIPPER_DELIVERING_PAGE = "viewOrdersForDeliveryPage";
         public static final String DELIVERY_INFO_PAGE = "deliveryInformationPage";
     }

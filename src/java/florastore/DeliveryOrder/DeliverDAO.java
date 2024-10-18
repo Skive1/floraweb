@@ -21,12 +21,10 @@ public class DeliverDAO {
 
     public List<DeliverDTO> getDeliveryOrder()
             throws SQLException, NamingException {                              //lấy đơn hàng để nhận
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         List<DeliverDTO> products = new ArrayList<>();
-
         try {
             //1. connect DB
             con = DBHelper.getConnection();
@@ -76,12 +74,10 @@ public class DeliverDAO {
 
     public List<DeliverDTO> getOrder(String getFullname, int staffID) //lấy danh sách đơn hàng để đi giao cho shipper A
             throws SQLException, NamingException {
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         List<DeliverDTO> products = new ArrayList<>();
-
         try {
             //1. connect DB
             con = DBHelper.getConnection();
@@ -111,6 +107,60 @@ public class DeliverDAO {
                                 city, deliveryDate, status, deliveryStaffId, amount, isPaid, note);
                         products.add(product);
                     }
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return products;
+    }
+    
+    public List<DeliverDTO> getOrderInfo(int eventOrderID)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<DeliverDTO> products = new ArrayList<>();
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                String sql = "SELECT eo.EventOrderId, eo.Fullname, eo.Phone, eo.Street, eo.City, eo.DeliveryDate, "
+                        + "eo.DeliveryStaffId, eo.Status, eo.Amount, eo.isPaid, eo.Note, eod.UnitPrice, eod.Quantity, ep.EPName "
+                        + "FROM EventOrder eo "
+                        + "JOIN EventOrderDetail eod ON eo.EventOrderId = eod.EventOrderId "
+                        + "JOIN EventProduct ep ON eod.EventProductID = ep.EPId "
+                        + "WHERE eo.EventOrderId = ?";
+
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, eventOrderID);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int eventOrderId = rs.getInt("EventOrderId");
+                    String fullname = rs.getString("Fullname");
+                    String phone = rs.getString("Phone");
+                    String street = rs.getString("Street");
+                    String city = rs.getString("City");
+                    Timestamp deliveryDate = rs.getTimestamp("DeliveryDate");
+                    int deliveryStaffId = rs.getInt("DeliveryStaffId");
+                    String status = rs.getString("Status");
+                    double amount = rs.getDouble("Amount");
+                    boolean isPaid = rs.getBoolean("isPaid");
+                    String note = rs.getString("Note");
+                    double unitPrice = rs.getDouble("UnitPrice");
+                    int quantity = rs.getInt("Quantity");
+                    String productName = rs.getString("EPName");
+                    DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street, city,
+                            deliveryDate, status, deliveryStaffId, isPaid, note, unitPrice, amount, quantity, productName);
+                    products.add(product);
                 }
             }
         } finally {
@@ -180,11 +230,9 @@ public class DeliverDAO {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-
         LocalDateTime dateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS");
         String formattedDateTime = dateTime.format(formatter);
-
         try {
             con = DBHelper.getConnection();
             if (con != null) {
@@ -213,12 +261,10 @@ public class DeliverDAO {
         return false;
     }
 
-    public int getStaffId(String getFullname) throws SQLException, NamingException {
-
+    public int getDeliveryStaffId(String getFullname) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-
         try {
             //1. connect DB
             con = DBHelper.getConnection();
@@ -245,46 +291,22 @@ public class DeliverDAO {
         return 0;
     }
 
-    public List<DeliverDTO> getOrderInfo(int eventOrderID)
-            throws SQLException, NamingException {
-
+    public double getDeliveryStaffBalance(String getFullname) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        List<DeliverDTO> products = new ArrayList<>();
-
         try {
             //1. connect DB
             con = DBHelper.getConnection();
             if (con != null) {
-                String sql = "SELECT eo.EventOrderId, eo.Fullname, eo.Phone, eo.Street, eo.City, eo.DeliveryDate, "
-                        + "eo.DeliveryStaffId, eo.Status, eo.Amount, eo.isPaid, eo.Note, eod.UnitPrice, eod.Quantity, ep.EPName "
-                        + "FROM EventOrder eo "
-                        + "JOIN EventOrderDetail eod ON eo.EventOrderId = eod.EventOrderId "
-                        + "JOIN EventProduct ep ON eod.EventProductID = ep.EPId "
-                        + "WHERE eo.EventOrderId = ?";
-
+                String sql = "Select Balance "
+                        + "From Delivery Join DeliveryBalance On StaffId = DeliveryStaffId "
+                        + "Where AccountUsername = ?";
                 stm = con.prepareStatement(sql);
-                stm.setInt(1, eventOrderID);
+                stm.setString(1, getFullname);
                 rs = stm.executeQuery();
-                while (rs.next()) {
-                    int eventOrderId = rs.getInt("EventOrderId");
-                    String fullname = rs.getString("Fullname");
-                    String phone = rs.getString("Phone");
-                    String street = rs.getString("Street");
-                    String city = rs.getString("City");
-                    Timestamp deliveryDate = rs.getTimestamp("DeliveryDate");
-                    int deliveryStaffId = rs.getInt("DeliveryStaffId");
-                    String status = rs.getString("Status");
-                    double amount = rs.getDouble("Amount");
-                    boolean isPaid = rs.getBoolean("isPaid");
-                    String note = rs.getString("Note");
-                    double unitPrice = rs.getDouble("UnitPrice");
-                    int quantity = rs.getInt("Quantity");
-                    String productName = rs.getString("EPName");
-                    DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street, city,
-                            deliveryDate, status, deliveryStaffId, isPaid, note, unitPrice, amount, quantity, productName);
-                    products.add(product);
+                if (rs.next()) {
+                    return rs.getDouble("Balance");
                 }
             }
         } finally {
@@ -298,7 +320,7 @@ public class DeliverDAO {
                 con.close();
             }
         }
-        return products;
+        return 0;
     }
 
 }

@@ -34,22 +34,28 @@ public class ViewOrdersServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String getFullName = (String) session.getAttribute("USERNAME");
         int staffID = 0;
+        double staffBalance = 0;
         try {
             DeliverDAO dao = new DeliverDAO();
-            if (session.getAttribute("Staff_ID") == null) {                     //staffID không có thì tạo session cho nó, những lần sau chỉ gần getAttribute
-                staffID = dao.getStaffId(getFullName);
+            if (session.getAttribute("Staff_ID") == null && session.getAttribute("Staff_Balance") == null) {                     
+                staffID = dao.getDeliveryStaffId(getFullName);                  //staffID không có thì tạo session cho nó, những lần sau chỉ gần getAttribute
                 session.setAttribute("Staff_ID", staffID);
+                staffBalance = dao.getDeliveryStaffBalance(getFullName);
+                session.setAttribute("Staff_Balance", staffBalance);
             } else {
                 staffID = (int) session.getAttribute("Staff_ID");
+                staffBalance = (double) session.getAttribute("Staff_Balance");
             }
             
             List<DeliverDTO> orderList = dao.getDeliveryOrder();                //lấy danh sách các đơn hàng để nhận giao
             List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName, staffID);       //lấy danh sách các đơn hàng để đi giao
             if (orderList != null) {
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
                 request.setAttribute("Total_Order", orderToDelivery.size());
                 request.setAttribute("DELIVERY_LIST", orderList);
             }
+            session.removeAttribute("viewOrdersForDelivery");
+            session.setAttribute("viewOrders", "active");
+            url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
         } catch (SQLException ex) {
             log("ViewOrderServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
