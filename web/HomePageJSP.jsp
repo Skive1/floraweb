@@ -72,18 +72,15 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link active">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Shop</a>
-                            <a href="SearchServlet" class="nav-item nav-link">Shop</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="searchAction" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
-                                    <a href="manageAccount" class="nav-item nav-link">Manage Account</a>
                                     <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
-                                </c:if>
-                                <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="viewEvent" class="nav-item nav-link">Manage System</a>
                                 </c:if>
                                 <!--                Delivery Session-->

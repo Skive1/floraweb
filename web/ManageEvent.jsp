@@ -103,8 +103,7 @@
                                                         <fmt:formatDate value="${eventList.endDate}" pattern="dd-MM-yyy HH:mm:ss" />
                                                     </td>     
                                                     <td>                                                                     
-                                                        <a class="delete-class" href="viewEventDetail?getEventID=${eventList.eventId}
-                                                           &getEventName=${eventList.eventName}" style="background-color: green">View</a>
+                                                        <a class="delete-class" href="viewEventDetail?getEventID=${eventList.eventId}&getEventName=${eventList.eventName}" style="background-color: green">View</a>
                                                     </td>
                                                     <td>                                                                     
                                                         <a class="delete-class" href="closeEvent?getEventID=${eventList.eventId}">Close</a>

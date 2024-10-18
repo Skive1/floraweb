@@ -38,6 +38,7 @@ public class EventDAO implements Serializable {
                 //2. Create SQL String
                 String sql = "SELECT AccountUsername, EventId, EventName, EventLocation, EventCity, StartDate, EndDate, EventImg "
                         + "FROM Event "
+                        + "WHERE EventStatus = 1 "
                         + "ORDER BY StartDate";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
@@ -127,7 +128,6 @@ public class EventDAO implements Serializable {
         return products;
     }
 
-    
     public String getEventNameByProductId(int productId)
             throws SQLException, NamingException {
 
@@ -151,7 +151,7 @@ public class EventDAO implements Serializable {
                 //4. Execute Query
                 rs = stm.executeQuery();
                 //5. process result
-                if(rs.next()){
+                if (rs.next()) {
                     //. map
                     //get data from Result Set
                     String eventName = rs.getString("EventName");
@@ -171,7 +171,7 @@ public class EventDAO implements Serializable {
         }
         return result;
     }
-    
+
     public String getEventNameByEventId(int eventId)
             throws SQLException, NamingException {
 
@@ -193,7 +193,7 @@ public class EventDAO implements Serializable {
                 //4. Execute Query
                 rs = stm.executeQuery();
                 //5. process result
-                if(rs.next()){
+                if (rs.next()) {
                     //. map
                     //get data from Result Set
                     String eventName = rs.getString("EventName");
@@ -221,20 +221,12 @@ public class EventDAO implements Serializable {
         try {
             con = DBHelper.getConnection();
             if (con != null) {
-                String sql = "Select EventName From Event Where EventId = ?";
+                String sql = "Update Event Set EventStatus = 0 Where EventId = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, eventID);
-                rs = stm.executeQuery();
-                if (rs.next()) {
-                    String eventName = rs.getString("EventName");
-                    sql = "Update Event Set EventName = ? Where EventId = ?";
-                    stm = con.prepareStatement(sql);
-                    stm.setString(1, (eventName + " (Finished)"));
-                    stm.setString(2, eventID);
-                    int affectedRow = stm.executeUpdate();
-                    if (affectedRow > 0) {
-                        return true;
-                    }
+                int affectedRow = stm.executeUpdate();
+                if (affectedRow > 0) {
+                    return true;
                 }
             }
         } finally {
@@ -267,6 +259,7 @@ public class EventDAO implements Serializable {
                 //2. Create SQL String
                 String sql = "SELECT AccountUsername, EventId, EventName, EventLocation, EventCity, StartDate, EndDate, EventImg "
                         + "FROM Event "
+                        + "WHERE EventStatus = 1 "
                         + "ORDER BY StartDate";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
@@ -284,10 +277,9 @@ public class EventDAO implements Serializable {
                     Timestamp startDate = rs.getTimestamp("StartDate");
                     Timestamp endDate = rs.getTimestamp("EndDate");
                     String eventImg = rs.getString("EventImg");
-                    if (!eventName.contains("(Finished)")) {
-                        event = new EventDTO(eventOwner, eventId, eventName, eventLocation, eventCity, startDate, endDate, eventImg);
-                        events.add(event);
-                    }
+                    event = new EventDTO(eventOwner, eventId, eventName, eventLocation, eventCity, startDate, endDate, eventImg);
+                    events.add(event);
+
                 }//process each record in resultset  
             }//connection has been available 
         } finally {
