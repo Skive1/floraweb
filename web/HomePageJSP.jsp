@@ -88,7 +88,7 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="viewOrderForDelivery" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="delivererOrder" class="nav-item nav-link">Thông tin đơn hàng</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">

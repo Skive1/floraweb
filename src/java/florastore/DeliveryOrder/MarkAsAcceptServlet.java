@@ -5,10 +5,8 @@
  */
 package florastore.DeliveryOrder;
 
-import florastore.account.AccountDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
@@ -43,12 +41,10 @@ public class MarkAsAcceptServlet extends HttpServlet {
             boolean result = dao.markAsGet(intEventOrderID, staffId);
             List<DeliverDTO> orderList = dao.getDeliveryOrder();
             session.setAttribute("Total_Order", orderList.size());
-            if (result) {
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
-            } else {
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
+            if (!result) {
                 request.setAttribute("FoundError", "active");
             }
+            url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
         } catch (SQLException ex) {
             log("EventServlet _SQL_ " + ex.getMessage());
         } catch (ClassNotFoundException ex) {

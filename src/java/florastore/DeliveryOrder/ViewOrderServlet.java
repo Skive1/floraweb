@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package florastore.DeliveryOrder;
-
 
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
@@ -19,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,18 +25,21 @@ public class ViewOrderServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         //1. Get event id
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
 
+        HttpSession session = request.getSession();
+        String fullName = (String) session.getAttribute("USERNAME");
         try {
             DeliverDAO dao = new DeliverDAO();
-            List<DeliverDTO> orderList = dao.getDeliveryOrder();
+            List<DeliverDTO> orderList = dao.getDeliveryOrder();                //lấy danh sách các đơn hàng để nhận giao
+            List<DeliverDTO> orderToDelivery = dao.getOrder(fullName);          //lấy danh sách các đơn hàng để đi giao
             if (orderList != null) {
                 url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
-                request.setAttribute("Total_Order", orderList.size());
+                request.setAttribute("Total_Order", orderToDelivery.size());
                 request.setAttribute("DELIVERY_LIST", orderList);
             }
         } catch (SQLException ex) {
