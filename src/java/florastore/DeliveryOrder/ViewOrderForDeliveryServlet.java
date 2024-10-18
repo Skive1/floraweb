@@ -37,11 +37,6 @@ public class ViewOrderForDeliveryServlet extends HttpServlet {
         try {
             DeliverDAO dao = new DeliverDAO();
             List<DeliverDTO> orderList = dao.getOrder(getFullname);
-
-            if (session.getAttribute("Staff_ID") == null) {
-                int staffId = dao.getStaffId(getFullname);
-                session.setAttribute("Staff_ID", staffId);
-            }
             
             request.setAttribute("DELIVERING_LIST", orderList);
             if (orderList.isEmpty()) {                                          //kiểm tra trước đó deliverer có nhận đơn nào ko

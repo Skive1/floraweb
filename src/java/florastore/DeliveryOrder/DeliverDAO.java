@@ -20,7 +20,7 @@ import javax.naming.NamingException;
 public class DeliverDAO {
 
     public List<DeliverDTO> getDeliveryOrder()
-            throws SQLException, NamingException {
+            throws SQLException, NamingException {                              //lấy đơn hàng để nhận
 
         Connection con = null;
         PreparedStatement stm = null;
@@ -73,15 +73,15 @@ public class DeliverDAO {
         return products;
     }
 
-    public List<DeliverDTO> getOrder(String getFullname)
-            throws SQLException, NamingException {
+    public List<DeliverDTO> getOrder(String getFullname)                        //lấy danh sách đơn hàng để đi giao cho shipper A
+            throws SQLException, NamingException {                              
 
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         List<DeliverDTO> products = new ArrayList<>();
 
-        try {
+        try {                                                                   
             //1. connect DB
             con = DBHelper.getConnection();
             if (con != null) {
@@ -98,8 +98,6 @@ public class DeliverDAO {
                     rs = stm.executeQuery();
                     //5. process result
                     while (rs.next()) {
-                        //. map
-                        //get data from Result Set
                         int eventOrderId = rs.getInt("EventOrderId");
                         String fullname = rs.getString("Fullname");
                         String phone = rs.getString("Phone");
@@ -116,9 +114,9 @@ public class DeliverDAO {
                                     city, deliveryDate, status, deliveryStaffId, amount, isPaid, note);
                             products.add(product);
                         }
-                    }//process each record in resultset  
+                    }  
                 }
-            }//connection has been available 
+            }
         } finally {
             if (rs != null) {
                 rs.close();
@@ -148,6 +146,9 @@ public class DeliverDAO {
                 rs = stmSelectId.executeQuery();
                 if (rs.next()) {
                     int deliveryStaffId = rs.getInt("DeliveryStaffId");
+                    
+                    if (deliveryStaffId == staffId) return true;                //tránh việc A nhận đơn xong reload lại trang rồi hiển thị lỗi đã bị 
+                                                                                //người khác nhận đơn
                     if (deliveryStaffId == 0) {                                 //nếu null thì nhận đơn, không thì đã có người khác nhận
                         String sqlUpdate = "Update EventOrder Set DeliveryStaffId = ? Where EventOrderId = ?";
                         stmUpdate = con.prepareStatement(sqlUpdate);
@@ -158,7 +159,7 @@ public class DeliverDAO {
                             return true;
                         }
                     }
-
+                    //nếu deliveryStaffId != 0 và ko phải do A nhận → có nhân viên khác nhận rồi → hiển thị lỗi và ko cho nhận nữa
                 }
             }
         } finally {

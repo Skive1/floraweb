@@ -33,14 +33,17 @@ public class MarkAsAcceptServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         String eventOrderID = request.getParameter("getEventOrderID");
+        String getFullName = (String) session.getAttribute("USERNAME");
         int intEventOrderID = Integer.parseInt(eventOrderID);
         int staffId = (int) session.getAttribute("Staff_ID");
         
         try {
             DeliverDAO dao = new DeliverDAO();
             boolean result = dao.markAsGet(intEventOrderID, staffId);
-            List<DeliverDTO> orderList = dao.getDeliveryOrder();
-            session.setAttribute("Total_Order", orderList.size());
+            
+            List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName);          //lấy danh sách các đơn hàng để đi giao
+            
+            session.setAttribute("Total_Order", orderToDelivery.size());
             if (!result) {
                 request.setAttribute("FoundError", "active");
             }

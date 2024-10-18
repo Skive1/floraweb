@@ -32,11 +32,16 @@ public class ViewOrderServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
 
         HttpSession session = request.getSession();
-        String fullName = (String) session.getAttribute("USERNAME");
+        String getFullName = (String) session.getAttribute("USERNAME");
         try {
             DeliverDAO dao = new DeliverDAO();
+            if (session.getAttribute("Staff_ID") == null) {
+                int staffId = dao.getStaffId(getFullName);
+                session.setAttribute("Staff_ID", staffId);
+            }
+            
             List<DeliverDTO> orderList = dao.getDeliveryOrder();                //lấy danh sách các đơn hàng để nhận giao
-            List<DeliverDTO> orderToDelivery = dao.getOrder(fullName);          //lấy danh sách các đơn hàng để đi giao
+            List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName);          //lấy danh sách các đơn hàng để đi giao
             if (orderList != null) {
                 url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
                 request.setAttribute("Total_Order", orderToDelivery.size());
