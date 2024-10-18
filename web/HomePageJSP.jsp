@@ -73,6 +73,7 @@
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link active">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Shop</a>
+                            <a href="SearchServlet" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
@@ -82,9 +83,12 @@
                                     <a href="manageAccount" class="nav-item nav-link">Manage Account</a>
                                     <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
                                 </c:if>
+                                <c:if test="${sessionScope.USER.role == 'Admin'}">
+                                    <a href="viewEvent" class="nav-item nav-link">Manage System</a>
+                                </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="#" class="nav-item nav-link">Delivery Order</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">

@@ -104,6 +104,18 @@ public class MyAppConstants {
         public static final String ERROR_PAGE = "error404";
     }
 
+    public class SearchFeature {
+
+        public static final String ERROR = "error404";
+        public static final String PAGE_CONTROL = "searchPageChange";
+        public static final String SUCCESS = "showSearch";
+        public static final String SEARCH = "searchAction";
+        public static final String SEARCH_PRICE_RANGE = "searchPriceRange";
+        public static final String SEARCH_TYPE = "searchType";
+        public static final String SEARCH_COLOR = "searchColor";
+        public static final String ORDER_BY = "orderBy";
+    }
+
     public class EventFeatures {
 
         public static final String EVENT_PAGE = "eventPage";
@@ -114,7 +126,25 @@ public class MyAppConstants {
 
         public static final String DETAIL_PAGE = "EventFlowerDetail";
         public static final String ERROR_PAGE = "error404";
+    }
 
+    public class ManageEvent {
+
+        public static final String ERROR_PAGE = "error404";
+        public static final String VIEW_EVENT_PAGE = "viewEventPage";
+        public static final String VIEW_EVENT = "viewEvent";
+        public static final String DETAIL_PAGE = "eventDetailPage";
+        public static final String MANAGE_EVENT_PAGE = "manageEventPage";
+    }
+
+    public class Delivery {
+
+        public static final String ERROR_PAGE = "error404";
+        public static final String SHIPPER_ORDER_PAGE = "delivererOrdersPage";
+        public static final String SHIPPER_ORDER = "delivererOrders";
+        public static final String SHIPPER_DELIVERING = "viewOrdersForDelivery";
+        public static final String SHIPPER_DELIVERING_PAGE = "viewOrdersForDeliveryPage";
+        public static final String DELIVERY_INFO_PAGE = "deliveryInformationPage";
     }
 
     public class DashBoardFeatures {
