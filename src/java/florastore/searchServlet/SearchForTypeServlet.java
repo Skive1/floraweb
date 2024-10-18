@@ -3,7 +3,7 @@ package florastore.searchServlet;
 import florastore.searchProduct.ProductDAO;
 import florastore.searchProduct.ProductDTO;
 import florastore.utils.MyAppConstants;
-import florastore.utils.ServiceLayer;
+import florastore.searchProduct.ServiceLayer;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.utils;
+package florastore.searchProduct;
 
 import florastore.searchProduct.ProductDTO;
 import java.util.ArrayList;
