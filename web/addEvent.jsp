@@ -51,8 +51,8 @@
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Order<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="">Danh sách đơn hàng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="">Delivery</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction?accountUsername=${sessionScope.USER.username}">Đơn hàng chờ giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction?accountUsername=${sessionScope.USER.username}">Đơn hàng đã giao</a></li>
                                 </ul>
                             </li>
                         </ul>

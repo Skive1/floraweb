@@ -1,3 +1,11 @@
+<%-- 
+    Document   : orderList
+    Created on : Oct 17, 2024, 12:53:19 AM
+    Author     : Admin
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -44,13 +52,12 @@
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Order<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="">Danh sách đơn hàng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="">Delivery</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction?accountUsername=${sessionScope.USER.username}">Đơn hàng chờ giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction?accountUsername=${sessionScope.USER.username}">Đơn hàng đã giao</a></li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
-
                 </div>
                 <div class="admin-content">
                     <div class="admin-content-top">
@@ -70,7 +77,7 @@
                                 <li><i class="ri-message-2-line" number="5"></i></li>
                                 <li class="flex-box">
                                     <img style="width: 50px;" src="" alt="">
-                                    <p>Văn A<i class="ri-arrow-down-s-fill"></i></p>
+                                    <p>${sessionScope.USER.fullName}<i class="ri-arrow-down-s-fill"></i></p>
                                 </li>
                             </ul>
                         </div>
@@ -82,50 +89,44 @@
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
                             <div class="admin-content-main-content-product-list">
-                                <table >
+                                <table id="orderTable">
                                     <thead>
-                                    <th>Id</th>
-                                    <th>Tên người mua</th>
-                                    <th>Điện thoại</th>
-                                    <th>Email</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Ghi chú</th>
-                                    <th>Chi tiết</th>
-                                    <th>Ngày</th>
-                                    <th>Trạng thái</th>
-                                    <th>Tùy chỉnh</th>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tên người mua</th>
+                                            <th>Điện thoại</th>
+                                            <th>Địa chỉ</th>
+                                            <th>Ghi chú</th>
+                                            <th>Chi tiết</th>
+                                            <th>Ngày đặt</th>
+                                            <th>Trạng thái</th>
+                                            <th>Tùy chỉnh</th>
+                                        </tr>
                                     </thead>
-                                    <tbody style="height: 100px;">
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Nguyễn Văn A</td>
-                                            <td>1234567890</td>
-                                            <td>NvanA@gmail.com</td>
-                                            <td>127A ABC CDE TPHCM</td>
-                                            <td>Giao hàng nhanh</td> 
-                                            <td><a href="" class="show-class">Xem</a></td>                        
-                                            <td>10-4-2024</td>
-                                            <td><div class="confirm-class">Đã xác nhận</div></td>
-                                            <td>                                  
-                                                <a class="delete-class" href="">Xóa</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Nguyễn Văn A</td>
-                                            <td>1234567890</td>
-                                            <td>NvanA@gmail.com</td>
-                                            <td>127A ABC CDE TPHCM</td>
-                                            <td>Giao hàng nhanh</td> 
-                                            <td><a href="" class="show-class">Xem</a></td>                        
-                                            <td>10-4-2024</td>
-                                            <td><div class="delay-class">Chưa xác nhận</div></td>
-                                            <td>                                  
-                                                <a class="delete-class" href="">Xóa</a>
-                                            </td>
-                                        </tr>
+                                    <tbody>
+                                        <c:forEach var="order" items="${sessionScope.orderList}">
+                                            <tr>
+                                                <td>${status.index + 1}</td>
+                                                <td>${order.fullname}</td>
+                                                <td>${order.phone}</td>
+                                                <td>${order.street}</td>
+                                                <td>${order.note}</td>
+                                                <td><a href="" class="show-class">Xem</a></td>
+                                                <td>${order.orderDate}</td>
+                                                <td>
+                                                    <div class="${order.status == 'Chờ giao' ? 'delay-class' : 'confirm-class'}">
+                                                        ${order.status}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <form action="updateOrder?eventOrderId=${order.eventOrderId}" method="post" style="display:inline;">
+                                                        <button type="submit" name="action" value="confirm" class="confirm-class">Xác nhận</button>
+                                                        <button type="submit" name="action" value="cancel" class="delete-class">Hủy</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>

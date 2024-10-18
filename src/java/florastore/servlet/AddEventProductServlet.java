@@ -79,7 +79,7 @@ public class AddEventProductServlet extends HttpServlet {
 
             if (isProductAdded) {
                 // Redirect to event detail page with success message
-                url = "eventDetail?eventId=" + categoryId;
+                url = "eventDetail?eventId=" + eventId;
             } else {
                 // Redirect back to add product page with error message
                 url = MyAppConstants.AddEventProductFeatures.ERROR_PAGE;

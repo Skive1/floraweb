@@ -138,4 +138,9 @@ public class MyAppConstants {
         public static final String ADD_EVENT_PRODUCT_PAGE = "addEventProductPage";
         public static final String ERROR_PAGE = "error404";
     }
+    
+    public class ViewEventOrderFeatures{
+        public static final String ORDER_LIST_PAGE = "orderList";
+        public static final String DELIVERED_LIST_PAGE = "deliveredList";
+    }
 }
