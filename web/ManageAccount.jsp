@@ -259,7 +259,6 @@
                 </div>
             </div>
         </div>
-    </a>
     <script src="js/manager.js" type="text/javascript"></script>
     <script>
         $(document).ready(function () {

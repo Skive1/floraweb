@@ -3,35 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.servlet;
+package florastore.ajax.event.servlet;
 
-import florastore.cart.CartBean;
-import florastore.cart.CartItem;
-import florastore.flowerProducts.FlowerProductsDAO;
-import florastore.flowerProducts.FlowerProductsDTO;
-import florastore.utils.MyAppConstants;
+import florastore.reviewEvent.ReviewEventDAO;
+import florastore.reviewEvent.ReviewEventDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "HomeServlet", urlPatterns = {"/HomeServlet"})
-public class HomeServlet extends HttpServlet {
+@WebServlet(name = "LoadMoreCommentsServlet", urlPatterns = {"/LoadMoreCommentsServlet"})
+public class LoadMoreCommentsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,37 +37,39 @@ public class HomeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
-        ServletContext context = request.getServletContext();
-        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.HomeFeatures.ERROR_PAGE);
+        int page = Integer.parseInt(request.getParameter("page"));
+        int productId = Integer.parseInt(request.getParameter("productId"));
+
+        int commentsPerPage = 5; // Số bình luận mỗi trang
+        int offset = (page - 1) * commentsPerPage;
 
         try {
-            //1. Call DAO/Models
-            FlowerProductsDAO dao = new FlowerProductsDAO();
-            //1.1 Get best seller products
-            dao.getBestSeller();
-            //1.2 Get new arrival products
-            dao.getNewArrival();
-            //2. Process result
-            List<FlowerProductsDTO> bestSeller = dao.getBestSellers();
-            List<FlowerProductsDTO> newArrival = dao.getNewArrivals();
-            FlowerProductsDTO cheapestFlower = dao.getCheapestFlower();
-
-            if (bestSeller != null && newArrival != null) {//check flower list is available
-                //3. To Home Page
-                url = (String) siteMap.get(MyAppConstants.HomeFeatures.HOME_PAGE);
-                request.setAttribute("BEST_SELLER", bestSeller);
-                request.setAttribute("NEW_ARRIVAL", newArrival);
-                request.setAttribute("CHEAPEST_FLOWER", cheapestFlower);
-            }//check flower list is available
+            ReviewEventDAO reviewDAO = new ReviewEventDAO();
+            List<ReviewEventDTO> commentList = reviewDAO.getCommentByProductId(productId, commentsPerPage, offset);
+            PrintWriter out = response.getWriter();
+            for (ReviewEventDTO comment : commentList) {
+                out.println("<div class='d-flex'>");
+                out.println("<img src='img/avatar.jpg' class='img-fluid rounded-circle p-3' style='width: 100px; height: 100px;' alt=''>");
+                out.println("<div>");
+                out.println("<p class='mb-2' style='font-size: 14px;'>");
+                out.println(new java.text.SimpleDateFormat("dd/MM/yyyy - HH:mm").format(comment.getReviewDate()));
+                out.println("</p>");
+                out.println("<div class='d-flex justify-content-between'>");
+                out.println("<h5>" + comment.getUsername() + "</h5>");
+                out.println("</div>");
+                out.println("<p>" + comment.getStatus() + "</p>");
+                out.println("</div>");
+                out.println("</div>");
+            }
         } catch (SQLException ex) {
-            log("StoreViewServlet _ SQL " + ex.getMessage());
+            log("LoadMoreCommentsServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
-            log("StoreViewServlet _ Naming " + ex.getMessage());
+            log("LoadMoreCommentsServlet _Naming_ " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+
         }
     }
 

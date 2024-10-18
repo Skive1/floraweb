@@ -3,22 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.servlet;
+package florastore.ajax.shop.servlet;
 
-import florastore.cart.CartBean;
-import florastore.cart.CartItem;
-import florastore.flowerProducts.FlowerProductsDAO;
-import florastore.flowerProducts.FlowerProductsDTO;
-import florastore.utils.MyAppConstants;
+import florastore.reviewShopProduct.ReviewShopProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,8 +21,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author ADMIN
  */
-@WebServlet(name = "HomeServlet", urlPatterns = {"/HomeServlet"})
-public class HomeServlet extends HttpServlet {
+@WebServlet(name = "ShopReviewServlet", urlPatterns = {"/ShopReviewServlet"})
+public class ShopReviewServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,37 +36,38 @@ public class HomeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
-        ServletContext context = request.getServletContext();
-        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.HomeFeatures.ERROR_PAGE);
+        String comment = request.getParameter("comment");
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        HttpSession session = request.getSession(false);
+        String user = (String) session.getAttribute("USERNAME");
 
         try {
-            //1. Call DAO/Models
-            FlowerProductsDAO dao = new FlowerProductsDAO();
-            //1.1 Get best seller products
-            dao.getBestSeller();
-            //1.2 Get new arrival products
-            dao.getNewArrival();
-            //2. Process result
-            List<FlowerProductsDTO> bestSeller = dao.getBestSellers();
-            List<FlowerProductsDTO> newArrival = dao.getNewArrivals();
-            FlowerProductsDTO cheapestFlower = dao.getCheapestFlower();
-
-            if (bestSeller != null && newArrival != null) {//check flower list is available
-                //3. To Home Page
-                url = (String) siteMap.get(MyAppConstants.HomeFeatures.HOME_PAGE);
-                request.setAttribute("BEST_SELLER", bestSeller);
-                request.setAttribute("NEW_ARRIVAL", newArrival);
-                request.setAttribute("CHEAPEST_FLOWER", cheapestFlower);
-            }//check flower list is available
+            ReviewShopProductDAO dao = new ReviewShopProductDAO();
+            boolean result = dao.saveComment(user, productId, comment);
+            if (result) {
+                // Trả về bình luận mới dưới dạng HTML
+                PrintWriter out = response.getWriter();
+                out.println("<div class='d-flex'>");
+                out.println("<img src='img/avatar.jpg' class='img-fluid rounded-circle p-3' style='width: 100px; height: 100px;' alt=''>");
+                out.println("<div>");
+                out.println("<p class='mb-2' style='font-size: 14px;'>");
+                out.println(new java.text.SimpleDateFormat("dd/MM/yyyy - HH:mm").format(new java.util.Date()));
+                out.println("</p>");
+                out.println("<div class='d-flex justify-content-between'>");
+                out.println("<h5>" + user + "</h5>");
+                out.println("</div>");
+                out.println("<p>" + comment + "</p>");
+                out.println("</div>");
+                out.println("</div>");
+            }
         } catch (SQLException ex) {
-            log("StoreViewServlet _ SQL " + ex.getMessage());
+            log("ShopReviewServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
-            log("StoreViewServlet _ Naming " + ex.getMessage());
+            log("ShopReviewServlet _Naming_ " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
         }
     }
 

@@ -14,6 +14,7 @@ public class EventDTO implements Serializable{
     private Timestamp startDate;
     private Timestamp endDate;
     private String eventImg;
+    private boolean eventStatus;
 
     public EventDTO() {
     }
@@ -139,6 +140,20 @@ public class EventDTO implements Serializable{
      */
     public void setEventImg(String eventImg) {
         this.eventImg = eventImg;
+    }
+
+    /**
+     * @return the eventStatus
+     */
+    public boolean isEventStatus() {
+        return eventStatus;
+    }
+
+    /**
+     * @param eventStatus the eventStatus to set
+     */
+    public void setEventStatus(boolean eventStatus) {
+        this.eventStatus = eventStatus;
     }
     
     

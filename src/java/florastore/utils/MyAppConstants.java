@@ -78,8 +78,7 @@ public class MyAppConstants {
     }
 
     public class ManageAccountFeatures {
-
-        public static final String MANAGE_ACCOUNT_PAGE = "manageAccountPage";
+        public static final String MANAGE_ACCOUNT_PAGE = "adminManageAccount";
         public static final String ERROR_PAGE = "error404";
     }
 
@@ -213,5 +212,5 @@ public class MyAppConstants {
         public static final String ONLINE_PAYMENT = "vnpayShopCheckout";
         public static final String CHECKOUT_SUCCESS = "shopCheckouts";
         public static final String CHECKOUT_FAIL = "shopCheckout";
-    }
+    }   
 }
