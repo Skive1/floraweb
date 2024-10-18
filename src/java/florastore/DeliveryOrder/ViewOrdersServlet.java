@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package florastore.DeliveryOrder;
 
 import florastore.utils.MyAppConstants;
@@ -20,8 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "ViewOrderForDeliveryServlet", urlPatterns = {"/ViewOrderForDeliveryServlet"})
-public class ViewOrderForDeliveryServlet extends HttpServlet {
+/**
+ *
+ * @author ASUS
+ */
+@WebServlet(name = "ViewOrdersServlet", urlPatterns = {"/ViewOrdersServlet"})
+public class ViewOrdersServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,18 +32,23 @@ public class ViewOrderForDeliveryServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
 
         HttpSession session = request.getSession();
-        String getFullname = (String) session.getAttribute("USERNAME");
+        String getFullName = (String) session.getAttribute("USERNAME");
+        int staffID = 0;
         try {
             DeliverDAO dao = new DeliverDAO();
-            List<DeliverDTO> orderList = dao.getOrder(getFullname);
-            
-            request.setAttribute("DELIVERING_LIST", orderList);
-            if (orderList.isEmpty()) {                                          //kiểm tra trước đó deliverer có nhận đơn nào ko
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
+            if (session.getAttribute("Staff_ID") == null) {                     //staffID không có thì tạo session cho nó, những lần sau chỉ gần getAttribute
+                staffID = dao.getStaffId(getFullName);
+                session.setAttribute("Staff_ID", staffID);
             } else {
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING_PAGE);
-                session.setAttribute("Total_Order", orderList.size());
-                request.setAttribute("ORDER_LIST", orderList);
+                staffID = (int) session.getAttribute("Staff_ID");
+            }
+            
+            List<DeliverDTO> orderList = dao.getDeliveryOrder();                //lấy danh sách các đơn hàng để nhận giao
+            List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName, staffID);       //lấy danh sách các đơn hàng để đi giao
+            if (orderList != null) {
+                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
+                request.setAttribute("Total_Order", orderToDelivery.size());
+                request.setAttribute("DELIVERY_LIST", orderList);
             }
         } catch (SQLException ex) {
             log("ViewOrderServlet _SQL_ " + ex.getMessage());

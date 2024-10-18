@@ -35,18 +35,19 @@ public class MarkAsAcceptServlet extends HttpServlet {
         String eventOrderID = request.getParameter("getEventOrderID");
         String getFullName = (String) session.getAttribute("USERNAME");
         int intEventOrderID = Integer.parseInt(eventOrderID);
-        int staffId = (int) session.getAttribute("Staff_ID");
+        int staffID = (int) session.getAttribute("Staff_ID");
         
         try {
             DeliverDAO dao = new DeliverDAO();
-            boolean result = dao.markAsGet(intEventOrderID, staffId);
+            boolean result = dao.markAsGet(intEventOrderID, staffID);
             
-            List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName);          //lấy danh sách các đơn hàng để đi giao
+            List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName, staffID);          //lấy danh sách các đơn hàng để đi giao
             
             session.setAttribute("Total_Order", orderToDelivery.size());
-            if (!result) {
-                request.setAttribute("FoundError", "active");
+            if (!result) {                                                      //đơn hàng đã bị người khác nhận
+                request.setAttribute("FoundError", "Đơn hàng đã được nhận bởi nhân viên khác!");
             }
+            
             url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
         } catch (SQLException ex) {
             log("EventServlet _SQL_ " + ex.getMessage());

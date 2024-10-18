@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package florastore.DeliveryOrder;
 
 import florastore.utils.MyAppConstants;
@@ -15,12 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author ASUS
- */
-@WebServlet(name = "ViewOrderServlet", urlPatterns = {"/ViewOrderServlet"})
-public class ViewOrderServlet extends HttpServlet {
+@WebServlet(name = "ViewOrdersForDeliveryServlet", urlPatterns = {"/ViewOrdersForDeliveryServlet"})
+public class ViewOrdersForDeliveryServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -32,21 +33,19 @@ public class ViewOrderServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
 
         HttpSession session = request.getSession();
-        String getFullName = (String) session.getAttribute("USERNAME");
+        String getFullname = (String) session.getAttribute("USERNAME");
+        int staffID = (int) session.getAttribute("Staff_ID");
         try {
             DeliverDAO dao = new DeliverDAO();
-            if (session.getAttribute("Staff_ID") == null) {
-                int staffId = dao.getStaffId(getFullName);
-                session.setAttribute("Staff_ID", staffId);
-            }
+            List<DeliverDTO> orderList = dao.getOrder(getFullname, staffID);    //lấy đơn hàng để A đi giao
             
-            List<DeliverDTO> orderList = dao.getDeliveryOrder();                //lấy danh sách các đơn hàng để nhận giao
-            List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName);          //lấy danh sách các đơn hàng để đi giao
-            if (orderList != null) {
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
-                request.setAttribute("Total_Order", orderToDelivery.size());
-                request.setAttribute("DELIVERY_LIST", orderList);
+            request.setAttribute("DELIVERING_LIST", orderList);
+            session.removeAttribute("Total_Order");
+            if (!orderList.isEmpty()) {
+                session.setAttribute("Total_Order", orderList.size());
+                request.setAttribute("ORDER_LIST", orderList);
             }
+            url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING_PAGE);
         } catch (SQLException ex) {
             log("ViewOrderServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
