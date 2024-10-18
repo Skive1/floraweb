@@ -1,9 +1,3 @@
-<%-- 
-    Document   : shop
-    Created on : Sep 20, 2024, 9:23:58 PM
-    Author     : Admin
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -72,23 +66,25 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link active">Event</a>
+                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="searchAction" class="nav-item nav-link">Shop</a>
+                            <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
-                                    <a href="manageAccount" class="nav-item nav-link">Manage Account</a>
+                                    <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
+                                    <a href="viewEvent" class="nav-item nav-link">Manage System</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="#" class="nav-item nav-link">Delivery Order</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
-                                    <a href="ProductManagementAction" class="nav-item nav-link">Manage Shop</a>
+                                    <a href="showStoreName" class="nav-item nav-link">Manage Shop</a>
                                 </c:if>
                             </c:if>
 
@@ -97,6 +93,7 @@
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
                                 <i class="fas fa-search text-third"></i>
                             </button>
+
                             <c:if test="${empty sessionScope.USER}">
                                 <a href="loginPage" class="position-relative me-4">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
@@ -142,6 +139,7 @@
             </div>
         </div>
         <!-- Navbar End -->
+
 
 
         <!-- Modal Search Start -->

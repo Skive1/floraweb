@@ -12,7 +12,6 @@ import florastore.account.AccountDTO;
 import florastore.googleAccount.GoogleAccount;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;

@@ -21,8 +21,7 @@ select::after {
   height: 0px;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-bottom: 8px solid   
- #ccc; /* Adjust color to match border */
+  border-bottom: 8px solid #ccc; /* Adjust color to match border */
   margin-left: 0.5rem; /* Position the arrow correctly */
   transition: transform 0.2s ease-in-out; /* Smooth transition */
 }

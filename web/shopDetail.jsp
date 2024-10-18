@@ -62,9 +62,9 @@
 
     <body>
 
-        <!-- Spinner Start -->
+     <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-            <div class="spinner-grow text-primary" role="status"></div>
+            <div class="spinner-grow text-third" role="status"></div>
         </div>
         <!-- Spinner End -->
 
@@ -92,23 +92,25 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link active">Shop</a>
+                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="searchAction" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
-                                    <a href="#" class="nav-item nav-link">Manage Product</a>
+                                    <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
+                                    <a href="viewEvent" class="nav-item nav-link">Manage System</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="#" class="nav-item nav-link">Delivery Order</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
-                                    <a href="#" class="nav-item nav-link">Manage Shop</a>
+                                    <a href="showStoreName" class="nav-item nav-link">Manage Shop</a>
                                 </c:if>
                             </c:if>
 
