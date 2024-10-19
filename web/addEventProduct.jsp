@@ -4,7 +4,7 @@
     Author     : Admin
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,6 +68,7 @@
                             <!-- Nội dung ở đây -->
                             <!--                            <form action="addEventAction" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">-->
                             <form action="addEventProductAction?eventId=${requestScope.EVENT_ID}" method="POST" accept-charset="UTF-8">
+                                <c:set var="success" value="${requestScope.SUCCESS}"/>
                                 <div class="admin-content-main-event-add">
                                     <div class="admin-content-main-content-left">
                                         <input type="hidden" name="accountUsername" value="${sessionScope.USER.username}" />
@@ -101,11 +102,6 @@
 
                                     <div class="admin-content-main-content-right">
                                         <div class="admin-content-main-content-right-img">
-                                            <!--                                            <label for="file">Ảnh sự kiện</label>
-                                                                                        <input id="file" name="eventImg" type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'image-show')">
-                                                                                        <div class="image-show">
-                                                                                            <img id="event-image-preview" src="" alt="Preview" style="max-width: 100%; display: none;">
-                                                                                        </div>-->
                                             <label for="flowerImgUrl">Ảnh sản phẩm</label>
                                             <input id="flowerImgUrl" name="flowerImgUrl" type="text" class="form-control" placeholder="Enter image URL">
                                             <div class="image-show">
@@ -120,80 +116,83 @@
                                                                                         <img id="flower-image-preview" src="" alt="Preview" style="max-width: 70%; display: none;">
                                                                                     </div>
                                                                                 </div>-->
-                                    </div> 
+                                        <a href="event">Go To Event Page</a>
+                                    </div>
+                                    <c:if test="${not empty success.eventProductAddSuccess}">
+                                        <font color="green">
+                                        ${success.eventProductAddSuccess}
+                                        </font>
+                                    </c:if>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div> 
-</section>
+            </div
+        </section>
 
-<script src="js/javascript.js"></script>
-<script type="importmap">
-    {
-    "imports": {
-    "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.js",
-    "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.2.0/"
-    }
-    }
-</script>
-<script type="module" src="ckeditor5-builder-43.2.0/main.js"></script>
-<script type="module">
-    import {
-    ClassicEditor,
-    Essentials,
-    Bold,
-    Italic,
-    Font,
-    Paragraph
-    } from 'ckeditor5';
+        <script src="js/javascript.js"></script>
+        <script type="importmap">
+            {
+            "imports": {
+            "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.js",
+            "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.2.0/"
+            }
+            }
+        </script>
+        <script type="module" src="ckeditor5-builder-43.2.0/main.js"></script>
+        <script type="module">
+            import {
+            ClassicEditor,
+            Essentials,
+            Bold,
+            Italic,
+            Font,
+            Paragraph
+            } from 'ckeditor5';
 
-    ClassicEditor
-    .create( document.querySelector( '#editor' ), {
-    plugins: [ Essentials, Bold, Italic, Font, Paragraph ],
-    toolbar: [
-    'undo', 'redo', '|', 'bold', 'italic', '|',
-    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
-    ]
-    } )
-    .then( /* ... */ )
-    .catch( /* ... */ );
-    ClassicEditor
-    .create( document.querySelector( '#editor1' ), {
-    plugins: [ Essentials, Bold, Italic, Font, Paragraph ],
-    toolbar: [
-    'undo', 'redo', '|', 'bold', 'italic', '|',
-    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
-    ]
-    } )
-    .then( editor => {
-    // ...
-    } )
-    .catch( error => {
-    // ...
-    } );
+            ClassicEditor
+            .create( document.querySelector( '#editor' ), {
+            plugins: [ Essentials, Bold, Italic, Font, Paragraph ],
+            toolbar: [
+            'undo', 'redo', '|', 'bold', 'italic', '|',
+            'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+            ]
+            } )
+            .then( /* ... */ )
+            .catch( /* ... */ );
+            ClassicEditor
+            .create( document.querySelector( '#editor1' ), {
+            plugins: [ Essentials, Bold, Italic, Font, Paragraph ],
+            toolbar: [
+            'undo', 'redo', '|', 'bold', 'italic', '|',
+            'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+            ]
+            } )
+            .then( editor => {
+            // ...
+            } )
+            .catch( error => {
+            // ...
+            } );
 
-    ClassicEditor
-    .create( document.querySelector( '#editor2' ), {
-    plugins: [ Essentials, Bold, Italic, Font, Paragraph ],
-    toolbar: [
-    'undo', 'redo', '|', 'bold', 'italic', '|',
-    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
-    ]
-    } )
-    .then( editor => {
-    // ...
-    } )
-    .catch( error => {
-    // ...
-    } );    
-</script>
+            ClassicEditor
+            .create( document.querySelector( '#editor2' ), {
+            plugins: [ Essentials, Bold, Italic, Font, Paragraph ],
+            toolbar: [
+            'undo', 'redo', '|', 'bold', 'italic', '|',
+            'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+            ]
+            } )
+            .then( editor => {
+            // ...
+            } )
+            .catch( error => {
+            // ...
+            } );    
+        </script>
 
-<script>
+        <script>
 //                                                function previewImage(event, containerClass) {
 //                                                    const input = event.target;
 //                                                    const file = input.files[0];
@@ -212,18 +211,18 @@
 //                                                    }
 //                                                }
 
-    document.getElementById("flowerImgUrl").addEventListener("input", function () {
-        var url = document.getElementById("flowerImgUrl").value;
-        var img = document.getElementById("flower-image-preview");
-        if (url.match(/^(http|https):\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}(\/[a-zA-Z0-9.-]+)*\/?$/)) {
-            img.src = url;
-            img.style.display = "block";
-        } else {
-            img.src = "";
-            img.style.display = "none";
-        }
-    });
-</script>
+document.getElementById("flowerImgUrl").addEventListener("input", function () {
+    var url = document.getElementById("flowerImgUrl").value;
+    var img = document.getElementById("flower-image-preview");
+    if (url.match(/^(http|https):\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}(\/[a-zA-Z0-9.-]+)*\/?$/)) {
+        img.src = url;
+        img.style.display = "block";
+    } else {
+        img.src = "";
+        img.style.display = "none";
+    }
+});
+        </script>
 
-</body>
+    </body>
 </html>

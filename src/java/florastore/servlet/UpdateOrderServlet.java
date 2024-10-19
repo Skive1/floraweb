@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,7 +45,7 @@ public class UpdateOrderServlet extends HttpServlet {
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ViewEventOrderFeatures.ORDER_LIST_PAGE);
 
-        String orderIdStr = request.getParameter("orderId");
+        String orderIdStr = request.getParameter("eventOrderId");
         String action = request.getParameter("action");
 
         int orderId = Integer.parseInt(orderIdStr);
@@ -61,7 +62,8 @@ public class UpdateOrderServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("UpdateOrderServlet _Naming_" + ex.getMessage());
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

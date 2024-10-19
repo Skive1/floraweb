@@ -112,7 +112,7 @@
                                                 <td>${order.street}</td>
                                                 <td>${order.note}</td>
                                                 <td><a href="" class="show-class">Xem</a></td>
-                                                <td>${order.orderDate}</td>
+                                                <td>${order.deliveryDate}</td>
                                                 <td>
                                                     <div class="${order.status == 'Chờ giao' ? 'delay-class' : 'confirm-class'}">
                                                         ${order.status}

@@ -6,6 +6,7 @@
 package florastore.servlet;
 
 import florastore.event.EventDAO;
+import florastore.event.EventProductAddNotification;
 import florastore.event.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
@@ -68,6 +69,8 @@ public class AddEventProductServlet extends HttpServlet {
         int quantity = Integer.parseInt(quantityStr);
         double price = Double.parseDouble(priceStr);
         double discount = Double.parseDouble(discountStr);
+        
+        EventProductAddNotification success = new EventProductAddNotification();
 
         try {
             // Create a new EventProduct object and save to the database (pseudo code)
@@ -79,7 +82,9 @@ public class AddEventProductServlet extends HttpServlet {
 
             if (isProductAdded) {
                 // Redirect to event detail page with success message
-                url = "eventDetail?eventId=" + eventId;
+                url = MyAppConstants.AddEventProductFeatures.ADD_EVENT_PRODUCT_PAGE;
+                success.setEventProductAddSuccess("Product added successfully!!!");
+                request.setAttribute("SUCCESS", success);
             } else {
                 // Redirect back to add product page with error message
                 url = MyAppConstants.AddEventProductFeatures.ERROR_PAGE;

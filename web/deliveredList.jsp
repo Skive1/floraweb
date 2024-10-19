@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -103,7 +104,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <c:set var="deliveredList" value="${sessionScope.DELIVERED}"/>
+                                    <c:set var="deliveredList" value="${sessionScope.DELIVERRED}"/>
                                     <c:forEach var="delivered" items="deliveredList">
                                         <tr>
                                             <td>${counter.count}</td>

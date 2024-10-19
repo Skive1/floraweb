@@ -330,10 +330,10 @@ public class EventDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 // 2. Create SQL String to get the next 5 orders with pagination
-                String sql = "select eo.Fullname, eo.Phone,eo.Street, eo.Note, eo.Status, eo.OrderDate "
+                String sql = "select eo.Fullname, eo.EventOrderId, eo.Phone,eo.Street, eo.Note, eo.Status, eo.OrderDate "
                         + "from EventOrder eo "
                         + "join Event e on eo.EventId = e.EventId "
-                        + "where e.AccountUsername = ? AND eo.Status = 'Chờ giao'";
+                        + "where e.AccountUsername = ?";
                 // 3. Create Statement Object
                 stm = con.prepareStatement(sql);
                 stm.setString(1, username); // Set the offset parameter
@@ -342,6 +342,7 @@ public class EventDAO implements Serializable {
                 rs = stm.executeQuery(); // Execute the query
                 while (rs.next()) {
                     String fullName = rs.getString("Fullname");
+                    int eventOrderId = rs.getInt("eventOrderId");
                     String phone = rs.getString("Phone");
                     String street = rs.getString("Street");
                     String note = rs.getString("Note");
@@ -349,7 +350,7 @@ public class EventDAO implements Serializable {
                     Timestamp orderDate = rs.getTimestamp("OrderDate");
                     if ("Chờ giao".equals(status)) {
                         EventOrderDTO dto
-                                = new EventOrderDTO(0, 0,
+                                = new EventOrderDTO(0, eventOrderId,
                                         fullName, phone, street, "",
                                         orderDate, "", status,
                                         0, 0, false, "", note);
@@ -380,10 +381,11 @@ public class EventDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 // 2. Write SQL string
-                String sql = "UPDATE EventOrder SET Status = 'Đã giao' WHERE eventOrderId = ?";
+                String sql = "UPDATE EventOrder SET Status = ? WHERE eventOrderId = ?";
                 // 3. Create Statement Object
                 stm = con.prepareStatement(sql);
-                stm.setInt(1, orderId);
+                stm.setString(1, "Chưa nhận");
+                stm.setInt(2, orderId);
                 // 4. Execute the update
                 stm.executeUpdate(); // No need to check affected rows if we don't return a value
             }
@@ -406,10 +408,11 @@ public class EventDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 // 2. Write SQL string
-                String sql = "UPDATE EventOrder SET Status = 'Hủy' WHERE eventOrderId = ?";
+                String sql = "UPDATE EventOrder SET Status = ? WHERE eventOrderId = ?";
                 // 3. Create Statement Object
                 stm = con.prepareStatement(sql);
-                stm.setInt(1, orderId);
+                stm.setString(1, "Hủy");
+                stm.setInt(2, orderId);
                 // 4. Execute the update
                 stm.executeUpdate(); // No need to check affected rows if we don't return a value
             }
@@ -435,7 +438,7 @@ public class EventDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 // 2. Create SQL String to get the next 5 orders with pagination
-                String sql = "select eo.Fullname, eo.Phone,eo.Street, eo.Note, eo.Status, eo.OrderDate "
+                String sql = "select eo.Fullname, eo.EventOrderId, eo.Phone,eo.Street, eo.Note, eo.Status, eo.OrderDate "
                         + "from EventOrder eo "
                         + "join Event e on eo.EventId = e.EventId "
                         + "where e.AccountUsername = ?";
@@ -446,6 +449,7 @@ public class EventDAO implements Serializable {
                 rs = stm.executeQuery(); // Execute the query
                 while (rs.next()) {
                     String fullName = rs.getString("Fullname");
+                    int eventOrderId = rs.getInt("EventOrderId");
                     String phone = rs.getString("Phone");
                     String street = rs.getString("Street");
                     String note = rs.getString("Note");
@@ -453,7 +457,7 @@ public class EventDAO implements Serializable {
                     Timestamp orderDate = rs.getTimestamp("OrderDate");
                     if ("Đã giao".equals(status)) {
                         EventOrderDTO dto
-                                = new EventOrderDTO(0, 0,
+                                = new EventOrderDTO(0, eventOrderId,
                                         fullName, phone, street, "",
                                         orderDate, "", status,
                                         0, 0, false, "", note);
