@@ -5,12 +5,16 @@
  */
 package florastore.servlet;
 
+import florastore.event.EventAddNotification;
 import florastore.event.EventDAO;
 import florastore.event.EventDTO;
 import florastore.event.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Properties;
@@ -21,9 +25,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import javax.naming.NamingException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
@@ -57,39 +58,69 @@ public class AddEventServlet extends HttpServlet {
         String eventName = request.getParameter("eventName");
         String accountUsername = request.getParameter("accountUsername");
 
-        String eventImg = request.getParameter("eventImgUrl");
-
-        // event description
-        String eventDescriptionParam = request.getParameter("eventDescription");
-        if (eventDescriptionParam == null || eventDescriptionParam.trim().isEmpty()) {
-            throw new ServletException("eventDescription is required.");
-        }
-
-        String[] eventDescription = eventDescriptionParam.split("\\s*,\\s*");
-        String eventLocation = eventDescription[0].replaceAll("<.*?>", "");
-        String city = eventDescription[1].replaceAll("<.*?>", "");
-        String startDateStr = request.getParameter("startDate");
-        String endDateStr = request.getParameter("endDate");
-        // Convert the strings to Timestamp
-        Timestamp startDate = Timestamp.valueOf(startDateStr.replace("T", " ") + ":00");
-        Timestamp endDate = Timestamp.valueOf(endDateStr.replace("T", " ") + ":00");
-
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.AddEventFeatures.ADD_EVENT_PAGE);
 
+        EventAddNotification success = new EventAddNotification();
+        EventAddNotification error = new EventAddNotification();
+        boolean bErr = false;
+
         try {
-            
-            EventDAO dao = new EventDAO();
-            EventDTO eDTO = new EventDTO(accountUsername, 0, eventName, eventLocation, city, startDate, endDate, eventImg);
-            
-            boolean result = dao.addEvent(eDTO);
-            
-            if (result) {
-                url = (String) siteMap.get(MyAppConstants.AddEventFeatures.ADD_EVENT_PAGE);
+//            Part eventImg = request.getPart("eventImg");
+            String eventImgUrl = request.getParameter("eventImgUrl");
+            if (eventImgUrl == null) {
+                System.out.println("eventImg is null");
+                // Set an error message and forward to the error page
+                error.setUploadImgError("Image upload failed. Please try again.");
+                bErr = true;
             }
+
+//            String realPath = request.getServletContext().getRealPath("/uploads");
+//            Path uploadPath = Paths.get(realPath);
+//            String filename = eventImg.getSubmittedFileName();
+//            System.out.println("Uploading file: " + filename + " to path: " + uploadPath);
+//             Check if the directory exists, and if not, create it
+//            if (!Files.exists(uploadPath)) {
+//                Files.createDirectories(uploadPath);
+//                System.out.println("Created upload directory: " + uploadPath);
+//            }
+//
+//            eventImg.write(uploadPath + "/" + filename);
+
+            // event description
+            String eventDescriptionParam = request.getParameter("eventDescription");
+            String[] eventDescription = eventDescriptionParam.split("\\s*,\\s*");
+            String eventLocation = eventDescription[0].replaceAll("<.*?>", "");
+            String city = eventDescription[1].replaceAll("<.*?>", "");
+            String startDateStr = request.getParameter("startDate");
+            String endDateStr = request.getParameter("endDate");
+
+            // Convert the strings to Timestamp
+            Timestamp startDate = Timestamp.valueOf(startDateStr.replace("T", " ") + ":00");
+            Timestamp endDate = Timestamp.valueOf(endDateStr.replace("T", " ") + ":00");
+
+            if (bErr) {
+                request.setAttribute("ERROR", error);
+            } else {
+                EventDAO dao = new EventDAO();
+                EventDTO eDTO = new EventDTO(accountUsername, 0, eventName, eventLocation, city, startDate, endDate, eventImgUrl, true);
+
+                boolean result = dao.addEvent(eDTO);
+
+                if (result) {
+                    success.setEventAddSuccess("Event added successfully!");
+                    request.setAttribute("SUCCESS_MESSAGE", success);
+                }
+            }
+
         } catch (SQLException ex) {
-            log("AddEventServlet _ SQL " + ex.getMessage());
+            String msg = ex.getMessage();
+            log("AddEventServlet _ SQL " + msg);
+            if (msg.contains("duplicate")) {
+                error.setEventNameError(eventName + " is already existed in the system.");
+                request.setAttribute("ERROR", error);
+            }
         } catch (NamingException ex) {
             log("AddEventServlet _ Naming " + ex.getMessage());
         } finally {
@@ -97,17 +128,6 @@ public class AddEventServlet extends HttpServlet {
             rd.forward(request, response);
         }
     }
-    // Extract the file name from the Part
-
-//    private String extractFileName(Part part) {
-//        String contentDisposition = part.getHeader("content-disposition");
-//        for (String cd : contentDisposition.split(";")) {
-//            if (cd.trim().startsWith("filename")) {
-//                return cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
-//            }
-//        }
-//        return null;
-//    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

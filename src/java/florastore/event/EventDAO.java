@@ -35,7 +35,7 @@ public class EventDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String
-                String sql = "SELECT AccountUsername, EventId, EventName, EventLocation, EventCity, StartDate, EndDate, EventImg "
+                String sql = "SELECT AccountUsername, EventId, EventName, EventLocation, EventCity, StartDate, EndDate, EventImg, EventStatus "
                         + "FROM Event "
                         + "ORDER BY StartDate";
                 //3. Create Statement Object
@@ -54,8 +54,9 @@ public class EventDAO implements Serializable {
                     Timestamp startDate = rs.getTimestamp("StartDate");
                     Timestamp endDate = rs.getTimestamp("EndDate");
                     String eventImg = rs.getString("EventImg");
+                    boolean eventStatus = rs.getBoolean("EventStatus");
                     EventDTO event
-                            = new EventDTO(eventOwner, eventId, eventName, eventLocation, eventCity, startDate, endDate, eventImg);
+                            = new EventDTO(eventOwner, eventId, eventName, eventLocation, eventCity, startDate, endDate, eventImg, eventStatus);
                     events.add(event);
                 }//process each record in resultset  
             }//connection has been available 
@@ -190,8 +191,8 @@ public class EventDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 // 2. Create SQL String with RETURN_GENERATED_KEYS to get eventId
-                String sql = "INSERT INTO Event (AccountUsername, EventName, EventLocation, EventCity, StartDate, EndDate, EventImg) "
-                        + "VALUES (?, ?, ?, ?, ?, ?, ?);";
+                String sql = "INSERT INTO Event (AccountUsername, EventName, EventLocation, EventCity, StartDate, EndDate, EventImg, EventStatus) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
                 // 3. Create Statement Object
                 stm = con.prepareStatement(sql);
                 stm.setString(1, dto.getEventOwner());
@@ -201,6 +202,7 @@ public class EventDAO implements Serializable {
                 stm.setTimestamp(5, dto.getStartDate());
                 stm.setTimestamp(6, dto.getEndDate());
                 stm.setString(7, dto.getEventImg());
+                stm.setBoolean(8, dto.isEventStatus());
                 // 4. Execute the update
                 int affectedRows = stm.executeUpdate();
 

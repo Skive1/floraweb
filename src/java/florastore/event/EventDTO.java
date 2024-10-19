@@ -22,11 +22,12 @@ public class EventDTO implements Serializable{
     private Timestamp startDate;
     private Timestamp endDate;
     private String eventImg;
+    private boolean eventStatus;
 
     public EventDTO() {
     }
 
-    public EventDTO(String eventOwner, int eventId, String eventName, String eventLocation, String eventCity, Timestamp startDate, Timestamp endDate, String eventImg) {
+    public EventDTO(String eventOwner, int eventId, String eventName, String eventLocation, String eventCity, Timestamp startDate, Timestamp endDate, String eventImg, boolean eventStatus) {
         this.eventOwner = eventOwner;
         this.eventId = eventId;
         this.eventName = eventName;
@@ -35,6 +36,7 @@ public class EventDTO implements Serializable{
         this.startDate = startDate;
         this.endDate = endDate;
         this.eventImg = eventImg;
+        this.eventStatus = eventStatus;
     }
 
     /**
@@ -147,6 +149,14 @@ public class EventDTO implements Serializable{
      */
     public void setEventImg(String eventImg) {
         this.eventImg = eventImg;
+    }
+
+    public boolean isEventStatus() {
+        return eventStatus;
+    }
+
+    public void setEventStatus(boolean eventStatus) {
+        this.eventStatus = eventStatus;
     }
     
     
