@@ -117,11 +117,6 @@
                                                             Chưa nhận
                                                         </td>
                                                     </c:if>
-                                                    <c:if test="${eventOrder.status == 'Chờ giao' && eventOrder.deliveryStaffId != 0}">
-                                                        <td style="color: green">
-                                                            Đã nhận
-                                                        </td>
-                                                    </c:if>
                                                     <c:if test="${eventOrder.status == 'Chờ giao' && eventOrder.deliveryStaffId == 0}">
                                                         <td>
                                                             <button type="button" class="btn btn-primary" data-toggle="modal" 
@@ -155,17 +150,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </td>
-                                                    </c:if>
-                                                    <c:if test="${eventOrder.status == 'Chờ giao' && eventOrder.deliveryStaffId != sessionScope.Staff_ID}">
-                                                        <td></td>
-                                                    </c:if> 
-                                                    <c:if test="${eventOrder.status == 'Chờ giao' && eventOrder.deliveryStaffId == sessionScope.Staff_ID}">
-                                                        <td>
-                                                            <a class="btn btn-primary" style="background-color: #e78f08"
-                                                               href="viewOrdersForDelivery">
-                                                                Xem ngay
-                                                            </a>
                                                         </td>
                                                     </c:if>
                                                 </tr>

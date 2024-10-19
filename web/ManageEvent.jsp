@@ -99,7 +99,7 @@
                                                     <td>${eventList.eventCity}</td>
                                                     <td>
                                                         <fmt:formatDate value="${eventList.startDate}" pattern="dd-MM-yyy HH:mm:ss" />
-                                                        -
+                                                        đến
                                                         <fmt:formatDate value="${eventList.endDate}" pattern="dd-MM-yyy HH:mm:ss" />
                                                     </td>     
                                                     <td>                                                                     

@@ -74,7 +74,6 @@ public class FindErrorServlet extends HttpServlet {
                 url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_PRICE_RANGE);    //sau khi search price xong sẽ chuyển sang search color
             }                                                                                   //nếu user chỉ search price thì dù có qua search color cũng 
                                                                                                 //không bị sai data vì txtColor là tìm toàn bộ
-            System.out.println(paramPriceFrom + " " + paramPriceTo + " " + txtColor);
             session.removeAttribute("PriceFrom");
             session.removeAttribute("PriceTo");
             session.setAttribute("PriceFrom", paramPriceFrom);

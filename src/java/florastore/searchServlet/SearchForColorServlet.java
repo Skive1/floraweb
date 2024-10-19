@@ -88,7 +88,6 @@ public class SearchForColorServlet extends HttpServlet {
                     session.setAttribute("PriceTo", session.getAttribute("PriceToSave"));
                 }
             }
-            System.out.println(oldColor);
             session.removeAttribute("oldColor");
             session.setAttribute("oldColor", getColor);                       //dùng để search lại giá trị cũ - sửa thành giá trị getCategories
             if ("All type".equals(getColor)) {
@@ -104,7 +103,7 @@ public class SearchForColorServlet extends HttpServlet {
             session.removeAttribute("productOrdered");
             session.setAttribute("productOrdered", divideResult);               //dùng để in theo giá giảm/tăng
 
-            request.setAttribute("requestColor", service.chooseColor());
+            request.setAttribute("requestColor", service.chooseColor(totalProduct));
 
             session.setAttribute("currentColor", getColor);                     //dùng cho ordered by và show giá trị color
 

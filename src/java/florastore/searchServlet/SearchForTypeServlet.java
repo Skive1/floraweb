@@ -140,7 +140,7 @@ public class SearchForTypeServlet extends HttpServlet {
             dao.searchTotalProduct("", true);                                   //giữ cho categories luôn cập nhật sản phẩm mới
             List<ProductDTO> categoryUpdate = dao.getTotalProduct();
 
-            request.setAttribute("requestColor", service.chooseColor());
+            request.setAttribute("requestColor", service.chooseColor(totalProduct));
 
             request.removeAttribute("requestNewProduct");
             request.setAttribute("requestNewProduct", service.getNewProduct(categoryUpdate));

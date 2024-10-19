@@ -114,7 +114,7 @@ public class ShowOrderedByServlet extends HttpServlet {
 //                divideResult = totalProduct;
             }
 
-            request.setAttribute("requestColor", service.chooseColor());
+            request.setAttribute("requestColor", service.chooseColor(totalProduct));
 
 //            request.removeAttribute("currentColor");
 //            request.setAttribute("currentColor", getColor);

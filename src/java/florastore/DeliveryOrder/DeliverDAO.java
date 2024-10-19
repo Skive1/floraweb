@@ -51,7 +51,7 @@ public class DeliverDAO {
                     double amount = rs.getDouble("Amount");
                     boolean isPaid = rs.getBoolean("isPaid");
                     String note = rs.getString("Note");
-                    if ("Chờ giao".equals(status)) {
+                    if ("Chờ giao".equals(status) && deliveryStaffId == 0) {
                         DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street,
                                 city, deliveryDate, status, deliveryStaffId, amount, isPaid, note);
                         products.add(product);
