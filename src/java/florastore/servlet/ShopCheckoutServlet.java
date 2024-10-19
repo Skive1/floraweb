@@ -7,16 +7,11 @@ package florastore.servlet;
 
 import florastore.cart.CartBean;
 import florastore.cart.CartItem;
-import florastore.flowerProducts.FlowerProductsCategoryDTO;
-import florastore.flowerProducts.FlowerProductsDAO;
-import florastore.flowerProducts.FlowerProductsDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -30,8 +25,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author ADMIN
  */
-@WebServlet(name = "ViewProductDetailServlet", urlPatterns = {"/ViewProductDetailServlet"})
-public class ViewProductDetailServlet extends HttpServlet {
+@WebServlet(name = "ShopCheckoutServlet", urlPatterns = {"/ShopCheckoutServlet"})
+public class ShopCheckoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,60 +42,31 @@ public class ViewProductDetailServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        //1. Get id of flower
-        int productId = Integer.parseInt(request.getParameter("productId"));
-        String relatedType = request.getParameter("productType");
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.ViewProductDetailFeatures.ERROR_PAGE);
+        String url = (String) siteMap.get(MyAppConstants.ShopCheckoutFeatures.CART_PAGE);
+        String totalAmount = request.getParameter("totalShop");
+        double total = Double.parseDouble(totalAmount);
 
-        //initial quantity
-        int itemQuantity = 1;
         try {
-            //Check cart place
+            //1.Cust goes to his/her carts place
             HttpSession session = request.getSession(false);
             if (session != null) {
-                if (session.getAttribute("INSUFFICIENTSHOP") != null) {
-                    request.setAttribute("INSUFFICIENTSHOP", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
-                    session.removeAttribute("INSUFFICIENTSHOP");
-                }
-                //Check user cart
+                //2.Cust takes his/her cart
                 CartBean cart = (CartBean) session.getAttribute("CART");
                 if (cart != null) {
-                    //Check items
+                    //3. Cust gets items
                     Map<String, List<CartItem>> items = cart.getItems();
                     if (items != null) {
-                        int pendingItems = cart.getUniqueItemCount();
-                        session.setAttribute("PENDING_ITEMS", pendingItems);
-                    }
-                }
-                int pendingItems = 0;
-                session.setAttribute("PENDING_ITEMS", pendingItems);
+                        url = (String) siteMap.get(MyAppConstants.ShopCheckoutFeatures.CHECKOUT);
+                        request.setAttribute("TOTAL_AMOUNT", total);
+                    }//items existed
+                }//cart existed
+            }//cart place existed
+            else if(session == null){
+                url = (String) siteMap.get(MyAppConstants.ShopCheckoutFeatures.ERROR_PAGE);
             }
-            //2. Call DAO/Model
-            FlowerProductsDAO dao = new FlowerProductsDAO();
-            //2.1 Get flower detail
-            FlowerProductsDTO flowerDetail = dao.getFlowerDetail(productId);
-            //2.2 Get top categories
-            List<FlowerProductsCategoryDTO> topCategories = dao.getProductsTypeAndQuantity();
-            //2.3 Get related flowers
-            dao.getRelatedProduct(productId, relatedType);
-            //3. Process result
-            List<FlowerProductsDTO> relatedProducts = dao.getRelatedProducts();
-
-            if (flowerDetail != null) {//check flower in detail is available
-                url = (String) siteMap.get(MyAppConstants.ViewProductDetailFeatures.DETAIL_PAGE);
-                //4. Push to Product Detail
-                request.setAttribute("PRODUCT_DETAIL", flowerDetail);
-                request.setAttribute("CATEGORIES_TOP", topCategories);
-                request.setAttribute("RELATED_PRODUCTS", relatedProducts);
-                request.setAttribute("ITEM_QUANTITY", itemQuantity);
-            }//check flower in detail is available
-        } catch (SQLException ex) {
-            log("ViewProductDetailServlet _SQL_ " + ex.getMessage());
-        } catch (NamingException ex) {
-            log("ViewProductDetailServlet _Naming_ " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

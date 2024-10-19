@@ -1,6 +1,6 @@
 <%-- 
-    Document   : checkOutSuccess
-    Created on : Oct 9, 2024, 10:02:31 AM
+    Document   : shopCheckoutSuccess
+    Created on : Oct 16, 2024, 10:41:52 PM
     Author     : ADMIN
 --%>
 
@@ -59,12 +59,12 @@
                                     <div class="d-flex justify-content-center mb-5 flex-column align-items-center"> 
                                         <span class="check1"><i class="fa fa-check"></i></span> 
                                         <span class="font-weight-bold">Giao dịch thành công</span> 
-                                        <small class="mt-2">Cảm ơn ${sessionScope.CUST_NAME} đã mua hàng trên nền tảng chúng tôi</small> 
+                                        <small class="mt-2">Cảm ơn ${sessionScope.CUST_NAME_SHOP} đã mua hàng trên nền tảng chúng tôi</small> 
                                         <p>Tình trạng: </p>
-                                        <c:if test="${sessionScope.PAYMENT_STATUS == true}">
+                                        <c:if test="${sessionScope.PAYMENT_STATUS_SHOP == true}">
                                             <p class="green bold">Đã thanh toán</p>
                                         </c:if>
-                                        <c:if test="${sessionScope.PAYMENT_STATUS == false}">
+                                        <c:if test="${sessionScope.PAYMENT_STATUS_SHOP == false}">
                                             <p class="red bold">Chưa thanh toán</p>
                                         </c:if>
                                     </div> 
@@ -74,14 +74,14 @@
                                 </div>
                                 <div class="text-center-content">
                                     <div class="admin-left-content-left">
-                                        <div class="admin-left-content-left-input">Số điện thoại liên hệ:<p>${sessionScope.CUST_PHONE}</p></div>
-                                        <div class="admin-left-content-left-input">Địa chỉ giao hàng:<p>${sessionScope.CUST_ADDRESS}, ${sessionScope.CUST_CITY}</p></div>
+                                        <div class="admin-left-content-left-input">Số điện thoại liên hệ:<p>${sessionScope.CUST_PHONE_SHOP}</p></div>
+                                        <div class="admin-left-content-left-input">Địa chỉ giao hàng:<p>${sessionScope.CUST_ADDRESS_SHOP}, ${sessionScope.CUST_CITY_SHOP}</p></div>
                                     </div>
                                     <div class="admin-left-content-right">
-                                        <div class="admin-left-content-right-input">Phương thức vận chuyển:<p><c:if test="${sessionScope.SHIPPING == 'Delivery'}">Giao hàng bởi Flora Delivery</c:if>
-                                                <c:if test="${sessionScope.SHIPPING == 'Pick Up'}">Lấy hàng tại điểm bán</c:if></p></div>
-                                        <div class="admin-left-content-right-input">Phương thức thanh toán:<p><c:if test="${sessionScope.CUST_PAYMENT == 'COD'}">Thanh toán khi nhận hàng</c:if>
-                                                <c:if test="${sessionScope.CUST_PAYMENT == 'ONLINE'}">Thanh toán trực tuyến</c:if></p></div>
+                                        <div class="admin-left-content-right-input">Phương thức vận chuyển:<p><c:if test="${sessionScope.SHIPPING_SHOP == 'Delivery'}">Giao hàng bởi Flora Delivery</c:if>
+                                                <c:if test="${sessionScope.SHIPPING_SHOP == 'Pick Up'}">Lấy hàng tại điểm bán</c:if></p></div>
+                                        <div class="admin-left-content-right-input">Phương thức thanh toán:<p><c:if test="${sessionScope.CUST_PAYMENT_SHOP == 'COD'}">Thanh toán khi nhận hàng</c:if>
+                                                <c:if test="${sessionScope.CUST_PAYMENT_SHOP == 'ONLINE'}">Thanh toán trực tuyến</c:if></p></div>
                                         </div>
                                     </div>
                                 </div>
@@ -104,11 +104,11 @@
                                                     <a href="#" data-toggle="collapse" class="admin-sidebar-content-detail">Thông tin chi tiết</a>
                                                     <ul class="sub-menu">
                                                         <div class="admin-content-main-content-product-list">
-                                                        <c:set var="bill" value="${sessionScope.ORDER_ITEMS}"/>
+                                                        <c:set var="bill" value="${sessionScope.ORDER_ITEMS_SHOP}"/>
                                                         <c:forEach var="entry" items="${bill.items}">
-                                                            <c:set var="eventName" value="${entry.key}"/>
-                                                            <c:set var="eventItems" value="${entry.value}"/>
-                                                            <h5>Sự kiện: ${eventName}</h5>
+                                                            <c:set var="shopName" value="${entry.key}"/>
+                                                            <c:set var="shopItems" value="${entry.value}"/>
+                                                            <h5>Sự kiện: ${shopName}</h5>
                                                             <table>
                                                                 <thead>
                                                                 <th>Sản phẩm</th>
@@ -118,12 +118,12 @@
                                                                 <th>Thành tiền</th>                               
                                                                 </thead>
                                                                 <tbody style="height: 100px;">
-                                                                    <c:set var="totalEvent" value="0"/>
-                                                                    <c:forEach var="item" items="${eventItems}">
-                                                                        <c:set var="totalEvent" value="${totalEvent + (item.unitPrice * item.quantity)}"/>
+                                                                    <c:set var="totalShop" value="0"/>
+                                                                    <c:forEach var="item" items="${shopItems}">
+                                                                        <c:set var="totalShop" value="${totalShop + (item.unitPrice * item.quantity)}"/>
                                                                         <tr>
-                                                                            <td><img src="${item.img}" class="img-fluid rounded-circle" style="width: 50px; height: 50px;" alt=""></td>
-                                                                            <td>${item.epName}</td>
+                                                                            <td><img src="${item.imageURL}" class="img-fluid rounded-circle" style="width: 50px; height: 50px;" alt=""></td>
+                                                                            <td>${item.name}</td>
                                                                             <td><fmt:formatNumber value="${item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
                                                                             <td>${item.quantity}</td>
                                                                             <td><fmt:formatNumber value="${item.quantity * item.unitPrice}" type="number" groupingUsed="true"/>đ</td>                                                     
@@ -131,7 +131,7 @@
                                                                     </c:forEach>
                                                                     <tr>
                                                                         <td style="font-weight: 700;" colspan="4">Tổng cộng:</td>
-                                                                        <td style="font-weight: 700;" ><fmt:formatNumber value="${totalEvent}" type="number" groupingUsed="true"/>đ</td>  
+                                                                        <td style="font-weight: 700;" ><fmt:formatNumber value="${totalShop}" type="number" groupingUsed="true"/>đ</td>  
                                                                         <td></td>  
                                                                     </tr>                    
                                                                 </tbody>

@@ -129,7 +129,7 @@ public class MyAppConstants {
 
         public static final String SHOP_VIEW = "shoppingAction";
         public static final String VIEW_CART_PAGE = "cartPage";
-        public static final String ERROR_PAGE = "insufficient.html";
+        public static final String ERROR_PAGE = "productDetail";
     }
 
     public class CartFeatures {
@@ -165,5 +165,23 @@ public class MyAppConstants {
         public static final String ONLINE_PAYMENT = "vnpayCheckout";
         public static final String CHECKOUT_SUCCESS = "checkouts";
         public static final String CHECKOUT_FAIL = "checkout";
+    }
+
+    public class ShopCheckoutFeatures {
+
+        public static final String ERROR_PAGE = "sessionExpired";
+        public static final String CHECKOUT = "shopCheckoutPage";
+        public static final String CART_PAGE = "cartPage";
+    }
+
+    public class ShopPlaceOrderFeatures {
+
+        public static final String CART_PAGE = "cartPage";
+        public static final String ERROR_PAGE = "sessionExpired";
+        public static final String ORDER_PAGE = "orderShop";
+        public static final String BILL_PAGE = "confirmShopCheckoutPage";
+        public static final String ONLINE_PAYMENT = "vnpayShopCheckout";
+        public static final String CHECKOUT_SUCCESS = "shopCheckouts";
+        public static final String CHECKOUT_FAIL = "shopCheckout";
     }
 }

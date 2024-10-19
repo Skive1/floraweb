@@ -81,6 +81,7 @@
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="manageAccount" class="nav-item nav-link">Manage Account</a>
+                                    <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
@@ -88,7 +89,7 @@
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
-                                    <a href="ProductManagementAction" class="nav-item nav-link">Manage Shop</a>
+                                    <a href="showStoreName" class="nav-item nav-link">Manage Shop</a>
                                 </c:if>
                             </c:if>
 
@@ -97,6 +98,7 @@
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
                                 <i class="fas fa-search text-third"></i>
                             </button>
+
                             <c:if test="${empty sessionScope.USER}">
                                 <a href="loginPage" class="position-relative me-4">
                                     <i class="fa fa-shopping-bag fa-2x"></i>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.eventOrder;
+package florastore.order;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -12,10 +12,10 @@ import java.sql.Timestamp;
  *
  * @author ADMIN
  */
-public class EventOrderDTO implements Serializable {
+public class OrderDTO implements Serializable {
 
     private String username;
-    private int eventId;
+    private int storeId;
     private String fullname;
     private String phone;
     private String street;
@@ -28,7 +28,7 @@ public class EventOrderDTO implements Serializable {
     private boolean paid;
     private String note;
 
-    public EventOrderDTO(String fullname, String phone, String street, String city, String deliveryOptions, String paymentOptions, String note) {
+    public OrderDTO(String fullname, String phone, String street, String city, String deliveryOptions, String paymentOptions, String note) {
         this.fullname = fullname;
         this.phone = phone;
         this.street = street;
@@ -38,9 +38,9 @@ public class EventOrderDTO implements Serializable {
         this.note = note;
     }
 
-    public EventOrderDTO(String username, int eventId, String fullname, String phone, String street, String city, Timestamp deliveryDate, String deliveryOptions, String paymentOptions, String status, double ammount, boolean paid, String note) {
+    public OrderDTO(String username, int storeId, String fullname, String phone, String street, String city, Timestamp deliveryDate, String deliveryOptions, String paymentOptions, String status, double ammount, boolean paid, String note) {
         this.username = username;
-        this.eventId = eventId;
+        this.storeId = storeId;
         this.fullname = fullname;
         this.phone = phone;
         this.street = street;
@@ -69,17 +69,17 @@ public class EventOrderDTO implements Serializable {
     }
 
     /**
-     * @return the eventId
+     * @return the storeId
      */
-    public int getEventId() {
-        return eventId;
+    public int getStoreId() {
+        return storeId;
     }
 
     /**
-     * @param eventId the eventId to set
+     * @param storeId the storeId to set
      */
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 
     /**
