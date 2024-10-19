@@ -122,7 +122,7 @@ public class DeliverDAO {
         }
         return products;
     }
-    
+
     public List<DeliverDTO> getOrderInfo(int eventOrderID)
             throws SQLException, NamingException {
         Connection con = null;
@@ -321,6 +321,35 @@ public class DeliverDAO {
             }
         }
         return 0;
+    }
+
+    public void setDeliveryStaffBalance(int staffID, double balance) throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                String sql = "Update DeliveryBalance "
+                        + "Set Balance = ? "
+                        + "Where DeliveryStaffId = ?";
+                stm = con.prepareStatement(sql);
+                stm.setDouble(1, balance);
+                stm.setInt(2, staffID);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 
 }

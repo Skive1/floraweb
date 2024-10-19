@@ -44,7 +44,6 @@ public class ViewOrdersServlet extends HttpServlet {
                 session.setAttribute("Staff_Balance", staffBalance);
             } else {
                 staffID = (int) session.getAttribute("Staff_ID");
-                staffBalance = (double) session.getAttribute("Staff_Balance");
             }
             
             List<DeliverDTO> orderList = dao.getDeliveryOrder();                //lấy danh sách các đơn hàng để nhận giao

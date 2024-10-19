@@ -35,17 +35,28 @@ public class MarkAsAcceptServlet extends HttpServlet {
         String getEventOrderID = request.getParameter("getEventOrderID").trim();
         String getEventOrderAmount = request.getParameter("getEventOrderAmount");
         String getFullName = (String) session.getAttribute("USERNAME");
+
         int eventOrderID = Integer.parseInt(getEventOrderID);
         int staffID = (int) session.getAttribute("Staff_ID");
 
+        double staffBalance = (double) session.getAttribute("Staff_Balance");
+        double eventOrderAmount = Double.parseDouble(getEventOrderAmount);
+        double balance = staffBalance - eventOrderAmount;
         try {
-                                                                                //húuuuuuuuuuuuuuuuuuuuuuuuuu
-            DeliverDAO dao = new DeliverDAO();
-            boolean result = dao.markAsGet(eventOrderID, staffID);
-            List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName, staffID);          //lấy danh sách các đơn hàng để đi giao
-            session.setAttribute("Total_Order", orderToDelivery.size());
-            if (!result) {                                                      //đơn hàng đã bị người khác nhận
-                request.setAttribute("FoundError", "Đơn hàng đã được nhận bởi nhân viên khác!");
+            if (balance >= 0) {
+                DeliverDAO dao = new DeliverDAO();
+                boolean result = dao.markAsGet(eventOrderID, staffID);
+                List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName, staffID);          //lấy danh sách các đơn hàng để đi giao
+                session.setAttribute("Total_Order", orderToDelivery.size());
+                if (!result) {                                                      //đơn hàng đã bị người khác nhận
+                    request.setAttribute("FoundError", "Đơn hàng đã được nhận bởi nhân viên khác!");
+                } else {
+                    dao.setDeliveryStaffBalance(staffID, balance);
+                    session.removeAttribute("Staff_Balance");
+                    session.setAttribute("Staff_Balance", balance);
+                }
+            } else {
+                request.setAttribute("FoundError2", "Số dư trong tài khoản của bạn không đủ để nhận đơn hàng này!");
             }
             url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER);
         } catch (SQLException ex) {

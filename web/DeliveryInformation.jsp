@@ -62,6 +62,7 @@
                         </div>
                         <div class="admin-content-top-right">
                             <ul class="flex-box">
+                                <i>Số dư tài khoản: <fmt:formatNumber value="${sessionScope.Staff_Balance}" pattern="#,###"/></i>
                                 <li>
                                     <c:if test="${sessionScope.Total_Order != null}">
                                         <i class="ri-notification-4-line" number="${sessionScope.Total_Order}"></i>

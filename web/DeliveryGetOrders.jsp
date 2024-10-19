@@ -48,6 +48,22 @@
                         <div class="admin-content-top-left"></div>
                         <div class="admin-content-top-right">
                             <ul class="flex-box">
+                                <c:if test="${requestScope.FoundError2 != null}">
+                                    <i>
+                                        Số dư tài khoản: 
+                                        <i style="color: red; font-weight: bold">
+                                            <fmt:formatNumber value="${sessionScope.Staff_Balance}" pattern="#,###"/>
+                                        </i>
+                                    </i>
+                                </c:if>
+                                <c:if test="${requestScope.FoundError2 == null}">
+                                    <i>
+                                        Số dư tài khoản: 
+                                        <i style="font-weight: bold">
+                                            <fmt:formatNumber value="${sessionScope.Staff_Balance}" pattern="#,###"/>
+                                        </i>
+                                    </i>
+                                </c:if>
                                 <li href="viewOrderForDelivery">
                                     <c:if test="${sessionScope.Total_Order != null}">
                                         <i class="ri-notification-4-line" number="${sessionScope.Total_Order}"></i>
@@ -77,6 +93,9 @@
                                         <c:if test="${requestScope.FoundError != null}">
                                             <a style="color: red">&#8194;&#8201;${requestScope.FoundError}</a>
                                         </c:if>
+                                        <c:if test="${requestScope.FoundError2 != null}">
+                                            <a style="color: red">&#8194;&#8201;${requestScope.FoundError2}</a>
+                                        </c:if>  
                                         <thead>
                                         <th>No</th>
                                         <th>Tên người mua</th>
