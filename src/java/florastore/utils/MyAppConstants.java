@@ -170,6 +170,7 @@ public class MyAppConstants {
         public static final String EVENT_VIEW = "eventDetail";
         public static final String VIEW_ECART_PAGE = "eventCart";
         public static final String ERROR_PAGE = "flowerDetail";
+        public static final String CATE_VIEW = "category";
     }
 
     public class EventCartFeatures {

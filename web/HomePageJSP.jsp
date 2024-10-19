@@ -343,42 +343,40 @@
             <div class="container py-5">
                 <div class="row g-4 justify-content-center">
                     <div class="col-md-6 col-lg-4">
-                        <a href="#">
                             <div class="service-item bg-secondary rounded border border-secondary">
                                 <img src="img/eventwaste.png" class="img-fluid rounded-top w-100" alt="">
                                 <div class="px-5 rounded-bottom">
                                     <div class=" bg-primary text-center p-4 rounded">
-                                        <h5 class="text-white">Event Waste</h5>
+                                        <h5 class="text-white">Lãng phí</h5>
                                     </div>
                                 </div>
                             </div>
-                        </a>
+    
                     </div>
                     <div class="col-md-6 col-lg-4">
-                        <a href="#">
+            
                             <div class="service-item bg-dark rounded border border-dark">
-                                <img src="img/featur-2.jpg" class="img-fluid rounded-top w-100" alt="">
+                                <img src="img/surplusFlower.png" class="img-fluid rounded-top w-100" alt="">
                                 <div class="px-4 rounded-bottom">
                                     <div class="service-content bg-light text-center p-4 rounded">
-                                        <h5 class="text-third">Tasty Fruits</h5>
-                                        <h3 class="mb-0">Free delivery</h3>
+                                        <h5 class="text-third">Giảm Lãng Phí</h5>
+                                        <h3 class="mb-0">Hoa thừa</h3>
                                     </div>
                                 </div>
                             </div>
-                        </a>
+         
                     </div>
                     <div class="col-md-6 col-lg-4">
-                        <a href="#">
-                            <div class="service-item bg-primary rounded border border-primary">
-                                <img src="img/featur-3.jpg" class="img-fluid rounded-top w-100" alt="">
-                                <div class="px-4 rounded-bottom">
-                                    <div class="service-content bg-secondary text-center p-4 rounded">
-                                        <h5 class="text-white">Exotic Vegitable</h5>
-                                        <h3 class="mb-0">Discount 30$</h3>
+             
+                            <div class="service-item bg-secondary rounded border border-secondary">
+                                <img src="img/trader.png" class="img-fluid rounded-top w-100" alt="">
+                                <div class="px-5 rounded-bottom">
+                                    <div class=" bg-primary text-center p-4 rounded">
+                                        <h5 class="text-white">Buôn bán</h5>
                                     </div>
                                 </div>
                             </div>
-                        </a>
+            
                     </div>
                 </div>
             </div>
@@ -515,7 +513,7 @@
         <div class="container-fluid testimonial py-5">
             <div class="container py-5">
                 <div class="testimonial-header text-center">
-                    <h4 class="text-third">Our Testimonial</h4>
+                    <h4 class="text-third">Our Team</h4>
                     <h1 class="display-5 mb-5 text-dark">Our Client Saying!</h1>
                 </div>
                 <div class="owl-carousel testimonial-carousel">
@@ -528,36 +526,11 @@
                             </div>
                             <div class="d-flex align-items-center flex-nowrap">
                                 <div class="bg-secondary rounded">
-                                    <img src="img/testimonial-1.jpg" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
+                                    <img src="avatar/lgb.jpg" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
                                 </div>
                                 <div class="ms-4 d-block">
-                                    <h4 class="text-dark">Client Name</h4>
-                                    <p class="m-0 pb-3">Profession</p>
-                                    <div class="d-flex pe-5">
-                                        <i class="fas fa-star text-third"></i>
-                                        <i class="fas fa-star text-third"></i>
-                                        <i class="fas fa-star text-third"></i>
-                                        <i class="fas fa-star text-third"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item img-border-radius bg-light rounded p-4">
-                        <div class="position-relative">
-                            <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
-                            <div class="mb-4 pb-4 border-bottom border-secondary">
-                                <p class="mb-0">Lorem Ipsum is simply dummy text of the printing Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center flex-nowrap">
-                                <div class="bg-secondary rounded">
-                                    <img src="img/testimonial-1.jpg" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
-                                </div>
-                                <div class="ms-4 d-block">
-                                    <h4 class="text-dark">Client Name</h4>
-                                    <p class="m-0 pb-3">Profession</p>
+                                    <h4 class="text-dark">Lữ Gia Bảo</h4>
+                                    <p class="m-0 pb-3">SE182759</p>
                                     <div class="d-flex pe-5">
                                         <i class="fas fa-star text-third"></i>
                                         <i class="fas fa-star text-third"></i>
@@ -578,11 +551,61 @@
                             </div>
                             <div class="d-flex align-items-center flex-nowrap">
                                 <div class="bg-secondary rounded">
-                                    <img src="img/testimonial-1.jpg" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
+                                    <img src="avatar/pmt.jpg" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
                                 </div>
                                 <div class="ms-4 d-block">
-                                    <h4 class="text-dark">Client Name</h4>
-                                    <p class="m-0 pb-3">Profession</p>
+                                    <h4 class="text-dark">Phạm Minh Tuấn</h4>
+                                    <p class="m-0 pb-3">SE182869</p>
+                                    <div class="d-flex pe-5">
+                                        <i class="fas fa-star text-third"></i>
+                                        <i class="fas fa-star text-third"></i>
+                                        <i class="fas fa-star text-third"></i>
+                                        <i class="fas fa-star text-third"></i>
+                                        <i class="fas fa-star text-third"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-item img-border-radius bg-light rounded p-4">
+                        <div class="position-relative">
+                            <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
+                            <div class="mb-4 pb-4 border-bottom border-secondary">
+                                <p class="mb-0">Lorem Ipsum is simply dummy text of the printing Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                </p>
+                            </div>
+                            <div class="d-flex align-items-center flex-nowrap">
+                                <div class="bg-secondary rounded">
+                                    <img src="avatar/nnt.jpg" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
+                                </div>
+                                <div class="ms-4 d-block">
+                                    <h4 class="text-dark">Nguyễn Ngọc Trai</h4>
+                                    <p class="m-0 pb-3">SE182916</p>
+                                    <div class="d-flex pe-5">
+                                        <i class="fas fa-star text-third"></i>
+                                        <i class="fas fa-star text-third"></i>
+                                        <i class="fas fa-star text-third"></i>
+                                        <i class="fas fa-star text-third"></i>
+                                        <i class="fas fa-star text-third"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-item img-border-radius bg-light rounded p-4">
+                        <div class="position-relative">
+                            <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
+                            <div class="mb-4 pb-4 border-bottom border-secondary">
+                                <p class="mb-0">Lorem Ipsum is simply dummy text of the printing Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                </p>
+                            </div>
+                            <div class="d-flex align-items-center flex-nowrap">
+                                <div class="bg-secondary rounded">
+                                    <img src="avatar/hak.jpg" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
+                                </div>
+                                <div class="ms-4 d-block">
+                                    <h4 class="text-dark">Hà Anh Khang</h4>
+                                    <p class="m-0 pb-3">SE182765</p>
                                     <div class="d-flex pe-5">
                                         <i class="fas fa-star text-third"></i>
                                         <i class="fas fa-star text-third"></i>

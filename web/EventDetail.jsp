@@ -220,12 +220,12 @@
                                                                 <c:param name="eventId" value="${requestScope.EVENT_ID}"/>
                                                                 <c:param name="page" value="1"/>
                                                                 <c:param name="condition" value="${category.eventProductCondition}"/>
-                                                                
+
                                                             </c:url>
                                                             <a href="${urlRewriting}" 
-                                                               <c:if test="${CATEGORIES == category.eventProductCondition}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>${category.eventProductCondition}</a>
-                                                        </div>
-                                                    </li>
+                                                               <c:if test="${requestScope.CATEGORIES == category.eventProductCondition}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>${category.eventProductCondition}</a>
+                                                            </div>
+                                                        </li>
                                                 </c:forEach>
                                             </ul>
                                         </div>
@@ -247,7 +247,13 @@
                                         <c:forEach var="flower" items="${requestScope.PRODUCTS}">
                                             <div class="col-md-6 col-lg-6 col-xl-4">
                                                 <form action="cartAddEventItem">
-                                                    <input type="hidden" name="page" value="eventDetail"/>
+                                                    <c:if test="${not empty requestScope.CATEGORIES}">
+                                                        <input type="hidden" name="page" value="conditionCate"/>
+                                                        <input type="hidden" name="condition" value="${requestScope.CATEGORIES}" />
+                                                    </c:if>
+                                                    <c:if test="${empty requestScope.CATEGORIES}">
+                                                        <input type="hidden" name="page" value="eventDetail"/>
+                                                    </c:if>
                                                     <input type="hidden" name="pageIndex" value="${currentPage}"/>
                                                     <div class="rounded position-relative fruite-item">
                                                         <div class="fruite-img">
