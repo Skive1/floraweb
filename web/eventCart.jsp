@@ -1,4 +1,4 @@
-<%-- 
+searchAction<%-- 
     Document   : eventCartJSP
     Created on : Sep 14, 2024, 1:29:47 PM
     Author     : ADMIN
@@ -36,6 +36,7 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+         <link rel="stylesheet" href="alertPackage/alertCss.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
         <style>
@@ -51,9 +52,9 @@
                 const prevPage = sessionStorage.getItem('prevPage');
                 const url = "http://localhost:8084/FloraRewind/order";
                 console.log(prevPage);
-                    if (url.includes(prevPage)) {
-                        sessionStorage.removeItem('prevPage');
-                        window.location.reload();
+                if (url.includes(prevPage)) {
+                    sessionStorage.removeItem('prevPage');
+                    window.location.reload();
                 }
             };
         </script>
@@ -91,20 +92,21 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link active">Event</a>
+                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="searchAction" class="nav-item nav-link">Shop</a>
+                            <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
-                                    <a href="manageAccount" class="nav-item nav-link">Manage Account</a>
                                     <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
+                                    <a href="viewEvent" class="nav-item nav-link">Manage System</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="#" class="nav-item nav-link">Delivery Order</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -128,17 +130,26 @@
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
                                         <i class="fa fa-shopping-bag fa-2x"></i>
+                                        <c:if test="${sessionScope.PENDING_EITEMS != 0 || sessionScope.PENDING_ITEMS != 0}">
+                                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 4px; left: 39px; height: 10px; min-width: 10px;"></span>
+                                        </c:if>
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                         <a href="cartPage" class="dropdown-item">Cart</a>
+                                        <c:if test="${sessionScope.PENDING_ITEMS != 0}">
+                                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 15px; left: 122px; height: 18px; min-width: 18px;">${sessionScope.PENDING_ITEMS}</span>
+                                        </c:if>
                                         <a href="eventCart" class="dropdown-item">Event Cart</a>
+                                        <c:if test="${sessionScope.PENDING_EITEMS != 0}">
+                                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 47px; left: 122px; height: 18px; min-width: 18px;">${sessionScope.PENDING_EITEMS}</span>
+                                        </c:if>
                                     </div>
                                 </div>
 
                                 <div class="nav-item dropdown">
-                                    <a href="" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -154,6 +165,7 @@
             </div>
         </div>
         <!-- Navbar End -->
+
 
 
         <!-- Modal Search Start -->
@@ -313,21 +325,32 @@
 
             <!-- Footer Start -->
         <jsp:include page="footer.jsp"></jsp:include>
-        <!-- Footer End -->
+            <!-- Footer End -->
 
-        <!-- Copyright Start -->
-        <div class="container-fluid copyright bg-dark py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+            <!-- Copyright Start -->
+            <div class="container-fluid copyright bg-dark py-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Copyright End -->
-
-
+            <!-- Copyright End -->
+        <c:if test="${not empty requestScope.ERROR_QUANTITY}">
+            <div id="modal-alert" class="modal-alert">
+                <div class="modal-alert-fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="" role="document">
+                        <div class="modal-content-alert">
+                            <h5 class="modal-title-alert">${requestScope.ERROR_QUANTITY}</h5>
+                            <p>Hãy điều chỉnh số lượng để phù hợp</p>
+                            <button class="btn-secondary-alert">Ok</button>
+                        </div>                     `
+                    </div>
+                </div>
+            </div>
+        </c:if>
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
@@ -342,6 +365,7 @@
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
         <!-- Template Javascript -->
+        <script src="alertPackage/alertJs.js"></script>
         <script src="js/main.js"></script>
     </body>
 </html>

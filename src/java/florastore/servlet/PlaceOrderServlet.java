@@ -189,7 +189,7 @@ public class PlaceOrderServlet extends HttpServlet {
                                 if ("Paid".equals(status)) {//Update paymentStatus
                                     paymentStatus = true;
                                 }//Update paymentStatus
-                                EventOrderDTO orderInfo = new EventOrderDTO(username, eventId, fullname, phone, address, city, deliveryDate, shipping, payment, "To Do", total, paymentStatus, note);
+                                EventOrderDTO orderInfo = new EventOrderDTO(username, eventId, fullname, phone, address, city, deliveryDate, shipping, payment, "Chờ giao", total, paymentStatus, note);
                                 //Call DAO/Model   
                                 EventOrderDAO EOrderDao = new EventOrderDAO();
                                 //Saving order by each event
