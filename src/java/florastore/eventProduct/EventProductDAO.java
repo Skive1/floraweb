@@ -210,4 +210,49 @@ public class EventProductDAO implements Serializable {
         }
         return result;
     }
+
+    public List<EventProductDTO> getAllCondition(int id)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<EventProductDTO> result = new ArrayList<>();
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String 
+                String sql = "Select EPCondition "
+                        + "FROM EventProduct "
+                        + "WHERE EventEventId = ? "
+                        + "GROUP BY EPCondition";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, id);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    String EPCondition = rs.getString("EPCondition");
+                    EventProductDTO condition = new EventProductDTO(EPCondition);
+                    result.add(condition);
+                }//flower detail is loaded
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+
 }

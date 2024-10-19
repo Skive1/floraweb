@@ -116,7 +116,6 @@ public class MyAppConstants {
     }
 
     public class EventFeatures {
-
         public static final String EVENT_PAGE = "eventPage";
         public static final String DETAIL_PAGE = "eventDetailPage";
     }

@@ -202,22 +202,24 @@
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
                                                     <div class="d-flex justify-content-between fruite-name"> 
-                                                        <a href="shoppingAction"><i class="fas fa-apple-alt me-2"></i>All products</a>
-                                                        <span>(${requestScope.allProducts})</span>
+                                                        <a href="event"><i class="fas fa-apple-alt me-2"></i>All Events</a>
                                                     </div>
                                                 </li>
-                                                <c:forEach var="category" items="${categories}">
-                                                    <li>
-                                                        <div class="d-flex justify-content-between fruite-name"> 
-                                                            <c:url var="urlRewriting" value="category">
-                                                                <c:param name="type" value="${category.key}"/>
-                                                                <c:param name="page" value="1"/>
-                                                            </c:url>
-                                                            <a href="${urlRewriting}"><i class="fas fa-apple-alt me-2"></i>${category.key}</a>
-                                                            <span>(${category.value})</span>
-                                                        </div>
-                                                    </li>
-                                                </c:forEach>
+                                                <li>
+                                                    <div class="d-flex justify-content-between fruite-name"> 
+                                                        <a href="events?status=comingsoon"><i class="fas fa-apple-alt me-2"></i>Sắp diễn ra</a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="d-flex justify-content-between fruite-name"> 
+                                                        <a href="events?status=in-progress"><i class="fas fa-apple-alt me-2"></i>Đang diễn ra</a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="d-flex justify-content-between fruite-name"> 
+                                                        <a href="events?status=end"><i class="fas fa-apple-alt me-2"></i>Đã kết thúc</a>
+                                                    </div>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -255,7 +257,7 @@
                                         </c:forEach>
                                     </c:if>
                                     <c:if test="${empty event}">
-                                        <h1>Hiện tại không có event nào được tạo!!!</h1>
+                                        <h1 style="text-align: center">Hiện tại không có event nào!!!</h1>
                                     </c:if>
                                 </div>
                             </div>
