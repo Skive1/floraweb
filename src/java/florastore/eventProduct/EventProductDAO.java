@@ -255,4 +255,56 @@ public class EventProductDAO implements Serializable {
         return result;
     }
 
+    public List<EventProductDTO> getFlowerByCondition(int eventId, String condition)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<EventProductDTO> products = new ArrayList<>();
+
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "Select EPId, EPName, EPType, EPCondition, EPDetail, Img, EPQuantity, EPPrice "
+                        + "From EventProduct ep "
+                        + "Where EventEventId = ? AND EPCondition = ?";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, eventId);
+                stm.setString(2, condition);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    int epId = rs.getInt("EPId");
+                    String epName = rs.getString("EPName");
+                    String epType = rs.getString("EPType");
+                    String epCondition = rs.getString("EPCondition");
+                    String epDetail = rs.getString("EPDetail");
+                    String img = rs.getString("Img");
+                    int epQuantity = rs.getInt("EPQuantity");
+                    double epPrice = rs.getDouble("EPPrice");
+                    EventProductDTO product
+                            = new EventProductDTO(epId, epName, epType, epCondition, epDetail, img, epQuantity, epPrice);
+                    products.add(product);
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return products;
+    }
 }

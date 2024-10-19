@@ -72,10 +72,10 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
                             <a href="searchAction" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link">Event</a>
+                            <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
@@ -202,22 +202,26 @@
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
                                                     <div class="d-flex justify-content-between fruite-name"> 
-                                                        <a href="event"><i class="fas fa-apple-alt me-2"></i>All Events</a>
+                                                        <a href="event" 
+                                                           <c:if test="${empty STATUS}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2" ></i>All Events</a>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="d-flex justify-content-between fruite-name"> 
-                                                        <a href="events?status=comingsoon"><i class="fas fa-apple-alt me-2"></i>Sắp diễn ra</a>
+                                                        <a href="events?status=comingsoon" 
+                                                           <c:if test="${STATUS == 'comingsoon'}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>Sắp diễn ra</a>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="d-flex justify-content-between fruite-name"> 
-                                                        <a href="events?status=in-progress"><i class="fas fa-apple-alt me-2"></i>Đang diễn ra</a>
+                                                        <a href="events?status=in-progress" 
+                                                           <c:if test="${STATUS == 'in-progress'}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>Đang diễn ra</a>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="d-flex justify-content-between fruite-name"> 
-                                                        <a href="events?status=end"><i class="fas fa-apple-alt me-2"></i>Đã kết thúc</a>
+                                                        <a href="events?status=end"
+                                                           <c:if test="${STATUS == 'end'}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>Đã kết thúc</a>
                                                     </div>
                                                 </li>
                                             </ul>

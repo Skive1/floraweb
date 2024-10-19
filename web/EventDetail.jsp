@@ -66,10 +66,10 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
                             <a href="searchAction" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link">Event</a>
+                            <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
@@ -209,17 +209,21 @@
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
                                                     <div class="d-flex justify-content-between fruite-name"> 
-                                                        <a href="eventDetail?eventId=${requestScope.EVENT_ID}&page=${currentPage}"><i class="fas fa-apple-alt me-2"></i>All products</a>
-                                                    </div>
-                                                </li>
+                                                        <a href="eventDetail?eventId=${requestScope.EVENT_ID}&page=${currentPage}" 
+                                                           <c:if test="${empty CATEGORIES}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>All products</a>
+                                                        </div>
+                                                    </li>
                                                 <c:forEach var="category" items="${requestScope.CATEGORY_CONDITION}">
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name"> 
                                                             <c:url var="urlRewriting" value="category">
-                                                                <c:param name="type" value="${category.eventProductCondition}"/>
+                                                                <c:param name="eventId" value="${requestScope.EVENT_ID}"/>
                                                                 <c:param name="page" value="1"/>
+                                                                <c:param name="condition" value="${category.eventProductCondition}"/>
+                                                                
                                                             </c:url>
-                                                            <a href="${urlRewriting}"><i class="fas fa-apple-alt me-2"></i>${category.eventProductCondition}</a>
+                                                            <a href="${urlRewriting}" 
+                                                               <c:if test="${CATEGORIES == category.eventProductCondition}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>${category.eventProductCondition}</a>
                                                         </div>
                                                     </li>
                                                 </c:forEach>

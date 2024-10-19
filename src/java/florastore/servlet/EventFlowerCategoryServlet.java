@@ -6,13 +6,12 @@
 package florastore.servlet;
 
 import florastore.event.EventDAO;
-import florastore.event.EventDTO;
+import florastore.eventProduct.EventProductDAO;
+import florastore.eventProduct.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
@@ -23,13 +22,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "EventByDateServlet", urlPatterns = {"/EventByDateServlet"})
-public class EventByDateServlet extends HttpServlet {
+@WebServlet(name = "EventFlowerCategoryServlet", urlPatterns = {"/EventFlowerCategoryServlet"})
+public class EventFlowerCategoryServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,30 +43,55 @@ public class EventByDateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
+        //1. Get parameter from browser
+        String condition = request.getParameter("condition");
+        int eventId = Integer.parseInt(request.getParameter("eventId"));
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.EventFeatures.EVENT_PAGE);
-        String status = request.getParameter("status");
-        Timestamp currentDate = new Timestamp(System.currentTimeMillis());
-        List<EventDTO> listEvent = new ArrayList<>();
+        String url = (String) siteMap.get(MyAppConstants.EventFeatures.DETAIL_PAGE);
         try {
-            EventDAO dao = new EventDAO();
-            if ("comingsoon".equals(status)) {
-                listEvent = dao.getComingEvent(currentDate);
-            } else if ("in-progress".equals(status)) {
-                listEvent = dao.getInProgressEvent(currentDate);
-            } else if ("end".equals(status)) {
-                listEvent = dao.getEndEvent(currentDate);
+            //Check cart place
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                if (session.getAttribute("INSUFFICIENT") != null) {
+                    request.setAttribute("INSUFFICIENT", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
+                    session.removeAttribute("INSUFFICIENT");
+                }
             }
-            if (listEvent != null) {
-                request.setAttribute("EVENT_LIST", listEvent);
-                request.setAttribute("STATUS", status);
+            //2. Call DAO/Models
+            EventProductDAO dao = new EventProductDAO();
+            EventDAO eDao = new EventDAO();
+            String eventName = eDao.getEventNameByEventId(eventId);
+            List<EventProductDTO> listFlowers = dao.getFlowerByCondition(eventId, condition);
+            List<EventProductDTO> conditionCate = dao.getAllCondition(eventId);
+            if (listFlowers != null) {
+                // Paging
+                int pageSize = 9; // Number of products per page
+                String pageParam = request.getParameter("page"); // Get the current page number from the request
+                int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
+                int totalProducts = listFlowers.size();
+                int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+                // Calculate the starting and ending indexes for the sublist of products to display
+                int start = (currentPage - 1) * pageSize;
+                int end = Math.min(start + pageSize, totalProducts);
+                List<EventProductDTO> productsForPage = listFlowers.subList(start, end);
+
+                request.setAttribute("CATEGORIES", condition);
+                request.setAttribute("CATEGORY_CONDITION", conditionCate);
+                request.setAttribute("PRODUCTS", productsForPage);
+                request.setAttribute("currentPage", currentPage);
+                request.setAttribute("totalPages", totalPages);
+                request.setAttribute("FLOWER_LIST", listFlowers);
+                request.setAttribute("EVENT_ID", eventId);
+                request.setAttribute("EVENT_NAME", eventName);
             }
         } catch (SQLException ex) {
-            log("EventByDateServlet _SQL_ " + ex.getMessage());
+            log("EventFlowerCategoryServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
-            log("EventByDateServlet _Naming_ " + ex.getMessage());
+            log("EventFlowerCategoryServlet _Naming_ " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
