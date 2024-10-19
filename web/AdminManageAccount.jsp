@@ -128,11 +128,11 @@
                                                         ${dto.fullName}
                                                     </td>
                                                     <td>
-                                                        <select name="txtRole">
-                                                            <option value="Admin"    
-                                                                    <c:if test="${dto.role == 'Admin'}">
-                                                                        selected="selected"
-                                                                    </c:if>>Admin</option>
+                                                        <select name="txtRole" <c:if test="${dto.role == 'Delivery'}">disabled=""</c:if>>
+                                                                <option value="Admin"    
+                                                                <c:if test="${dto.role == 'Admin'}">
+                                                                    selected="selected"
+                                                                </c:if>>Admin</option>
                                                             <option value="Seller" 
                                                                     <c:if test="${dto.role == 'Seller'}">
                                                                         selected="selected"
@@ -155,6 +155,7 @@
                                                     </td>
                                                     <td>
                                                         ${dto.phone}
+                                                        <input type="hidden" name="txtPhone" value="${dto.phone}"/>
                                                     </td>                           
                                                     <td>
                                                         ${dto.street}
