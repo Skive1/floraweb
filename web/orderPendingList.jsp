@@ -104,14 +104,23 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var="order" items="${sessionScope.orderList}">
+                                        <c:forEach var="order" items="${sessionScope.orderList}" varStatus="counter">
                                             <tr>
-                                                <td>${status.index + 1}</td>
+                                                <td>${counter.count}</td>
                                                 <td>${order.fullname}</td>
                                                 <td>${order.phone}</td>
                                                 <td>${order.street}</td>
-                                                <td>${order.note}</td>
-                                                <td><a href="" class="show-class">Xem</a></td>
+                                                <td>
+                                                    <c:if test="${not empty order.note}">
+                                                        ${order.note}
+                                                    </c:if>
+                                                    <c:if test="${empty order.note}">
+                                                        -
+                                                    </c:if>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0);" class="show-class" onclick="toggleDetails(${counter.count});">Xem</a>
+                                                </td>
                                                 <td>${order.deliveryDate}</td>
                                                 <td>
                                                     <div class="${order.status == 'Chờ giao' ? 'delay-class' : 'confirm-class'}">
@@ -123,6 +132,16 @@
                                                         <button type="submit" name="action" value="confirm" class="confirm-class">Xác nhận</button>
                                                         <button type="submit" name="action" value="cancel" class="delete-class">Hủy</button>
                                                     </form>
+                                                </td>
+                                            </tr>
+                                            <tr id="details-${counter.count}" style="display:none;">
+                                                <td colspan="8">
+                                                    <div>
+                                                        <strong>Order Details:</strong>
+                                                        <c:forEach var="detail" items="${sessionScope.DETAILS[order.eventOrderId]}">
+                                                            <p>EPName: ${detail.eventProductName}, Quantity: ${detail.quantity}, UnitPrice: ${detail.unitPrice}, Discount: ${detail.discount}, Total: ${detail.total}</p>
+                                                        </c:forEach>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -138,5 +157,17 @@
 </section>
 
 <script src="js/javascript.js"></script>
+<script>
+                                                        function toggleDetails(index) {
+                                                            var detailsRow = document.getElementById("details-" + index);
+                                                            if (detailsRow.style.display === "none") {
+                                                                detailsRow.style.display = "table-row"; // Show the details row
+                                                            } else {
+                                                                detailsRow.style.display = "none"; // Hide the details row
+                                                            }
+                                                        }
+</script>
+
+
 </body>
 </html>

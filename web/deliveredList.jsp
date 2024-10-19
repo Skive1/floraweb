@@ -104,18 +104,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="delivered" items="${sessionScope.DELIVERED}">
-                                        <tr>
-                                            <td>${counter.count}</td>
-                                            <td>${delivered.fullname}</td>
-                                            <td>${delivered.phone}</td>
-                                            <td>${delivered.street}</td>
-                                            <td>${delivered.note}</td>
-                                            <td><a href="" class="show-class">Xem</a></td>
-                                            <td>${delivered.deliveryDate}</td>
-                                            <td>${delivered.status}</td>
-                                        </tr>
-                                    </c:forEach>
+                                        <c:forEach var="delivered" items="${sessionScope.DELIVERED}" varStatus="counter">
+                                            <tr>
+                                                <td>${counter.count}</td>
+                                                <td>${delivered.fullname}</td>
+                                                <td>${delivered.phone}</td>
+                                                <td>${delivered.street}</td>
+                                                <td>${delivered.note}</td>
+                                                <td><a href="" class="show-class">Xem</a></td>
+                                                <td>${delivered.deliveryDate}</td>
+                                                <td>${delivered.status}</td>
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

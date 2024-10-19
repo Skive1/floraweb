@@ -478,4 +478,51 @@ public class EventDAO implements Serializable {
         }
         return delivered;
     }
+
+    public List<EventOrderDetailDTO> getOrderDetails(int eventOrderId)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<EventOrderDetailDTO> details = new ArrayList<>();
+
+        try {
+            // 1. Connect to DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                // 2. Create SQL String to get the next 5 orders with pagination
+                String sql = "select eod.Quantity, eod.UnitPrice, eod.Discount, eod.Total, ep.EPName "
+                        + "from EventOrderDetail eod "
+                        + "join EventProduct ep on eod.EventProductID = ep.EPId "
+                        + "where EventOrderId = ?";
+                // 3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, eventOrderId);
+                // 4. Process result
+                rs = stm.executeQuery(); // Execute the query
+                while (rs.next()) {
+                    String productName = rs.getString("EPName");
+                    int quantity = rs.getInt("Quantity");
+                    double uPrice = rs.getDouble("UnitPrice");
+                    double discount = rs.getDouble("Discount");
+                    double total = rs.getDouble("Total");
+                    
+                    EventOrderDetailDTO dto
+                            = new EventOrderDetailDTO(quantity, uPrice, discount, total, eventOrderId, productName);
+                    details.add(dto);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return details;
+    }
 }

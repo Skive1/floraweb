@@ -8,10 +8,13 @@ package florastore.servlet;
 import com.google.gson.Gson;
 import florastore.event.EventDAO;
 import florastore.event.EventOrderDTO;
+import florastore.event.EventOrderDetailDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -52,8 +55,24 @@ public class ViewOrderServlet extends HttpServlet {
         String username = request.getParameter("accountUsername");
 
         try {
+            //call method of order list
             EventDAO dao = new EventDAO();
             List<EventOrderDTO> orders = dao.getOrders(username);
+
+            //call method of order detail
+            // Map to store order details for each order
+            Map<Integer, List<EventOrderDetailDTO>> allOrderDetails = new HashMap<>();
+
+            for (EventOrderDTO order : orders) {
+                // Call method to get the details for each order
+                List<EventOrderDetailDTO> details = dao.getOrderDetails(order.getEventOrderId());
+
+                // Store the details in the map with the eventOrderId as the key
+                allOrderDetails.put(order.getEventOrderId(), details);
+            }
+
+            session.setAttribute("DETAILS", allOrderDetails);
+            System.out.println("Order details: " + session.getAttribute("DETAILS"));
             session.setAttribute("orderList", orders);
         } catch (SQLException ex) {
             log("ViewOrderServlet_SQL_" + ex.getMessage());
