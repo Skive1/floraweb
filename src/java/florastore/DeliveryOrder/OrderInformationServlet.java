@@ -43,14 +43,17 @@ public class OrderInformationServlet extends HttpServlet {
         String totalOut;
         try {
             DeliverDAO dao = new DeliverDAO();
-            List<DeliverDTO> orderList = dao.getOrderInfo(eventOrderID);
-            if (orderList != null) {                                          //kiểm tra trước đó deliverer có nhận đơn nào ko
-                for (DeliverDTO orderPrice : orderList) {
+            List<DeliverDTO> orderInfoList = dao.getOrderInfo(eventOrderID);
+            if (orderInfoList != null) {                                          //kiểm tra trước đó deliverer có nhận đơn nào ko
+                for (DeliverDTO orderPrice : orderInfoList) {
                     total += orderPrice.getUnitPrice()* orderPrice.getQuantity();
                 }
                 totalOut = df.format(total);
+                if (orderInfoList.get(0).getIsPaid()) {
+                    request.setAttribute("Paid", "Đã thanh toán");
+                }
                 request.setAttribute("TOTAL", totalOut);
-                request.setAttribute("DELIVERING_DETAIL", orderList);
+                request.setAttribute("DELIVERING_DETAIL", orderInfoList);
                 url = (String) siteMap.get(MyAppConstants.Delivery.DELIVERY_INFO_PAGE);
             } 
         } catch (SQLException ex) {

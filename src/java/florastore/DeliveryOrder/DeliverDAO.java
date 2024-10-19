@@ -134,7 +134,8 @@ public class DeliverDAO {
             con = DBHelper.getConnection();
             if (con != null) {
                 String sql = "SELECT eo.EventOrderId, eo.Fullname, eo.Phone, eo.Street, eo.City, eo.DeliveryDate, "
-                        + "eo.DeliveryStaffId, eo.Status, eo.Amount, eo.isPaid, eo.Note, eod.UnitPrice, eod.Quantity, ep.EPName "
+                        + "eo.DeliveryStaffId, eo.Status, eo.Amount, eo.isPaid, eo.Note, eod.UnitPrice, eod.Quantity, "
+                        + "ep.EPName, eo.OrderDate, eo.PaymentOptions, ep.EPType, ep.EPCondition "
                         + "FROM EventOrder eo "
                         + "JOIN EventOrderDetail eod ON eo.EventOrderId = eod.EventOrderId "
                         + "JOIN EventProduct ep ON eod.EventProductID = ep.EPId "
@@ -149,17 +150,22 @@ public class DeliverDAO {
                     String phone = rs.getString("Phone");
                     String street = rs.getString("Street");
                     String city = rs.getString("City");
+                    Timestamp orderDate = rs.getTimestamp("OrderDate");
                     Timestamp deliveryDate = rs.getTimestamp("DeliveryDate");
                     int deliveryStaffId = rs.getInt("DeliveryStaffId");
                     String status = rs.getString("Status");
+                    String paymentOptions = rs.getString("PaymentOptions");
+                    String productType = rs.getString("EPType");
+                    String productCondition = rs.getString("EPCondition");
                     double amount = rs.getDouble("Amount");
                     boolean isPaid = rs.getBoolean("isPaid");
                     String note = rs.getString("Note");
                     double unitPrice = rs.getDouble("UnitPrice");
                     int quantity = rs.getInt("Quantity");
                     String productName = rs.getString("EPName");
-                    DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street, city,
-                            deliveryDate, status, deliveryStaffId, isPaid, note, unitPrice, amount, quantity, productName);
+                    DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street, city, 
+                            orderDate, paymentOptions, deliveryDate, status, deliveryStaffId, isPaid, note, unitPrice, 
+                            amount, quantity, productName, productType, productCondition);
                     products.add(product);
                 }
             }

@@ -91,6 +91,9 @@
                                     <th>No</th>
                                     <th>Ngày đặt</th>
                                     <th>Tên mặt hàng</th>
+                                    <th>Phân loại</th>
+                                    <th>Tình trạng</th>
+                                    <th>Hình thức thanh toán</th>
                                     <th>Giá tiền/sản phẩm</th>
                                     <th>Số lượng</th>
                                     </thead>
@@ -100,12 +103,21 @@
                                             <c:forEach var="eventOrder" items="${requestScope.DELIVERING_DETAIL}" varStatus="counter">
                                                 <tr>
                                                     <td>${counter.count}</td>
-                                                    
+
                                                     <td>
-                                                        <fmt:formatDate value="${eventOrder.deliveryDate}" pattern="dd-MM-yyy" />
+                                                        <fmt:formatDate value="${eventOrder.orderDate}" pattern="dd-MM-yyy" />
                                                     </td>
                                                     <td>                                                                     
                                                         ${eventOrder.productName}
+                                                    </td>
+                                                    <td>
+                                                        ${eventOrder.productType}
+                                                    </td>
+                                                    <td>
+                                                        ${eventOrder.productCondition}
+                                                    </td>
+                                                    <td>
+                                                        ${eventOrder.paymentOptions}
                                                     </td>
                                                     <td>                                                                     
                                                         <fmt:formatNumber value="${eventOrder.unitPrice}" pattern="#,###"/>
@@ -115,12 +127,21 @@
                                                     </td>
                                                 </tr>
                                             </c:forEach>
-                                            <tr>
-                                                <td colspan="3"></td>
-                                                <td style="font-weight: 700;">Total:</td>
-                                                <td style="font-weight: 700;" >${requestScope.TOTAL}</td> 
-
-                                            </tr> 
+                                            <c:if test="${requestScope.Paid == null}">
+                                                <tr>
+                                                    <td colspan="6"></td>
+                                                    <td style="font-weight: 700;">Total:</td>
+                                                    <td style="font-weight: 700;">${requestScope.TOTAL}</td> 
+                                                </tr>
+                                            </c:if>
+                                            <c:if test="${requestScope.Paid != null}">
+                                                <tr>
+                                                    <td colspan="5"></td>
+                                                    <td style="color: green; font-weight: bold">Đơn hàng đã được thanh toán</td>
+                                                    <td style="font-weight: 700;">Total:</td>
+                                                    <td style="font-weight: 700;">${requestScope.TOTAL}</td> 
+                                                </tr>
+                                            </c:if>
                                         </c:if>
                                         <c:if test="${empty event}">
                                             Hiện tại không có sản phẩm để xem thông tin
