@@ -81,7 +81,6 @@
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
-                                    <a href="viewEvent" class="nav-item nav-link">Manage System</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">

@@ -36,7 +36,7 @@
                                 <a href=""><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="">Account</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="ShowEventServlet">Event</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewEvent">Event</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -83,7 +83,7 @@
                                     <th>Condition</th>
                                     <th>Detail</th>
                                     <th>Quantity</th>        
-                                    <th>Price</th>
+                                    <th>Price per product</th>
                                     </thead>
                                     <tbody style="height: 100px;">
                                         <c:set var="flowerList" value="${requestScope.FLOWER_LIST}"/>
@@ -99,7 +99,7 @@
                                                         <fmt:formatNumber value="${eventList.eventProductQuantity}" pattern="#,###"/>
                                                     </td>  
                                                     <td>
-                                                        <fmt:formatNumber value="${eventList.eventProductPrice.intValue() * eventList.eventProductQuantity.intValue()}"
+                                                        <fmt:formatNumber value="${eventList.eventProductPrice.intValue()}"
                                                                           pattern="#,###"/>
                                                     </td>  
                                                 </tr>

@@ -37,7 +37,7 @@
                                 <a href=""><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="">Account</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="ShowEventServlet">Event</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewEvent">Event</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -93,7 +93,7 @@
                                             <c:forEach var="eventList" items="${requestScope.EVENT_LIST}" varStatus="counter">
                                                 <tr>
                                                     <td>${counter.count}</td>
-                                                    <td>X${eventList.eventOwner}X</td>
+                                                    <td>${eventList.eventOwner}</td>
                                                     <td>${eventList.eventName}</td>
                                                     <td>${eventList.eventLocation}</td>
                                                     <td>${eventList.eventCity}</td>
