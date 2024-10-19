@@ -5,6 +5,7 @@
  */
 package florastore.servlet;
 
+import florastore.account.AccountDTO;
 import florastore.revenue.revenueDAO;
 import florastore.revenue.revenueDTO;
 import florastore.revenue.yearlyRevenueDAO;
@@ -53,7 +54,9 @@ public class MonthlyRevenueServlet extends HttpServlet {
 
         String monthStr = request.getParameter("month");
         String yearStr = request.getParameter("year");
-
+        HttpSession session = request.getSession(false);
+        AccountDTO dto = (AccountDTO) session.getAttribute("USER");
+        String name = dto.getFullName();
         if (monthStr == null || monthStr.isEmpty()) {
             month = 10;
         } else {
@@ -98,11 +101,13 @@ public class MonthlyRevenueServlet extends HttpServlet {
             request.setAttribute("month11", listYear.get(10));
             request.setAttribute("month12", listYear.get(11));
             request.setAttribute("allMonth", listYear);
-
+            request.setAttribute("fullName", name);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            String msg = ex.getMessage();
+            log("MonthlyRevenueServlet _ SQL: " + msg);
         } catch (NamingException ex) {
-            ex.printStackTrace();
+             String msg = ex.getMessage();
+            log("MonthlyRevenueServlet _ SQL: " + msg);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

@@ -122,7 +122,7 @@ public class MyAppConstants {
         public static final String DASHBOARD_PAGE = "dashBoard";
         public static final String ERROR_PAGE = "error404";
         public static final String MONTHLY_PAGE = "monthlyBoard";
-
+        public static final String WEAKLY_PAGE = "weeklyBoard";
     }
 
     public class CartAddItemFeatures {
@@ -150,12 +150,14 @@ public class MyAppConstants {
     }
 
     public class CheckoutFeatures {
+
         public static final String ERROR_PAGE = "sessionExpired";
         public static final String CHECKOUT = "checkoutPage";
         public static final String CART_PAGE = "eventCart";
     }
-    
+
     public class PlaceOrderFeatures {
+
         public static final String CART_PAGE = "eventCart";
         public static final String ERROR_PAGE = "sessionExpired";
         public static final String ORDER_PAGE = "order";

@@ -21,8 +21,23 @@
         <link rel="stylesheet" href="css/css/style.css" />
         <link rel="stylesheet" href="css/css/admincss.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>       
         <title>Admin</title>
+        <style>
+            .form-container {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .form-left {
+                width: 30%;
+            }
+
+            .form-right {
+                width: 70%;
+            }
+        </style>
     </head>
     <body>
         <section class="admin">
@@ -34,8 +49,9 @@
                     <div class="admin-sidebar-content">
                         <ul>
                             <li>
-                                <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
-
+                                <a href="">
+                                    <i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i>
+                                </a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="">Event theo tháng</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event theo tuần</a></li>
@@ -61,10 +77,11 @@
                     </div>
 
                 </div>
+
                 <div class="admin-content">
                     <div class="admin-content-top">
                         <div class="admin-content-top-left">
-                            <ul class="flex-box"> 
+                            <ul class="flex-box">   
                                 <a style="padding-left:20px" href="homePage"/><button type="button" class="btn btn-primary">BACK TO STORE</button></a>    
                             </ul>          
                         </div>
@@ -80,98 +97,135 @@
                         </div>
                     </div> 
                     <div class="admin-content-main">
-                        <!--                        <c:if test="${empty requestScope.MonthList}">
-                                                    <p>Không có sản phẩm được bán trong tháng/năm này</p>
-                        </c:if>                      -->
-                        <h1 style="text-align: center;">Dashboard</h1>                    
-                        <h3 class="mb-0 text-center">
-                            <strong>Revenue by month</strong>
-                            <form id="f1" method="get" action="monthlyRevenue">
-                                <div style="padding-left: 20px">
-                                    <select name="year" class="form-control" id="dropdownYear" style="width: 120px;" onchange="getYear(this)">
-                                        <c:set var="currentYear" value="2024"/>
-                                        <c:set var="endYear" value="2018"/>
-                                        <c:forEach var="year" begin="0" end="${currentYear - endYear}">
-                                            <option  value="${currentYear - year}">${currentYear - year}</option>
-                                        </c:forEach>
-                                    </select>
-
-                                    <select name="month" class="form-control" id="dropdownMonth" style="width: 120px;">
-                                        <option value="" selected="" disabled="">-- Select Month --</option>
-                                        <c:forEach var="month" begin="1" end="12">
-                                            <option  value="${month}">${month}</option>
-                                        </c:forEach>
-                                    </select>                               
-                                    <button style="width: 100px; padding: 0" class="form-control" type="submit">Submit</button>
-                                </div>
-                            </form>
-                        </h3>
-                        <div class="admin-content-main-chart">
-                            <div class="admin-content-main-chart-line">            
-                                <canvas id="myChart"></canvas>
-                            </div>
-
-                            <div class="admin-content-main-chart-bar-chart">
-                                <canvas id="myBarChart"></canvas>
-                            </div>
-                        </div>
-                    </div>                             
+                        <h1 style="text-align: center;">Revenue by Week</h1>
+                        <!--                        <form id="f1" method="get" action="weeklyRevenue">
+                                                    <div style="padding-left: 20px">
+                                                        <select name="year" class="form-control" id="dropdownYear" style="width: 120px;">
+                        <c:set var="currentYear" value="2024"/>
+                        <c:set var="endYear" value="2018"/>
+                        <c:forEach var="year" begin="0" end="${currentYear - endYear}">
+                            <option ${requestScope.year == (currentYear - year) ? "selected" : ""} value="${currentYear - year}">${currentYear - year}
+                            </option>
+                        </c:forEach>
+                    </select>
+                    <input style="width: 200px;" value="" type="week" class="form-control" id="weekInput" onclick="setDefaultWeek()">
+                    <input value="" type="hidden" class="form-control" name="from" id="from">
+                    <input value="" type="hidden" class="form-control" name="to" id="to">
+                    <input value="" type="hidden" class="form-control" name="month" id="month">
+                    <button style="width: 100px; padding: 0" class="form-control" type="button" onclick="submitForm()">Submit</button>
                 </div>
-            </div>
+            </form>
 
+            <div class="admin-content-main-chart">
+                Chart
+                <div class="card-body">
+                    <canvas class="my-4 w-100" id="pieChart" height="380"></canvas>
+                </div>                                                    
+            </div>-->
+                        <div class="form-container">
+                            <div class="form-left">
+                                <form id="f1" method="get" action="weeklyRevenue">
+                                    <div style="padding-left: 20px">
+                                        <select name="year" class="form-control" id="dropdownYear" style="width: 120px;">
+                                            <c:set var="currentYear" value="2024"/>
+                                            <c:set var="endYear" value="2018"/>
+                                            <c:forEach var="year" begin="0" end="${currentYear - endYear}">
+                                                <option ${requestScope.year == (currentYear - year) ? "selected" : ""} value="${currentYear - year}">${currentYear - year}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                        <input style="width: 200px;" value="" type="week" class="form-control" id="weekInput" onclick="setDefaultWeek()">
+                                        <input value="" type="hidden" class="form-control" name="from" id="from">
+                                        <input value="" type="hidden" class="form-control" name="to" id="to">
+                                        <input value="" type="hidden" class="form-control" name="month" id="month">
+                                        <button style="width: 100px; padding: 0" class="form-control" type="button" onclick="submitForm()">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="form-right">
+                                <div class="admin-content-main-chart">
+                                    <div class="card-body">
+                                        <canvas class="my-4 w-100" id="pieChart" height="380"></canvas>
+                                    </div>
+                                </div>
+                            </div>                                         
+                        </div>                                           
+                    </div>                                  
+                </div>                            
+            </div>
         </div>
     </div>
 </div> 
 
 </section>
-<script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            datasets: [{
-                    label: 'Biểu đồ doanh thu tổng của cả năm',
-                    data: [${requestScope.month1.total}, ${requestScope.month2.total}, ${requestScope.month3.total}, ${requestScope.month4.total}, ${requestScope.month5.total}
-                        , ${requestScope.month6.total}, ${requestScope.month7.total}, ${requestScope.month8.total}, ${requestScope.month9.total}, ${requestScope.month10.total}
-                        , ${requestScope.month11.total}, ${requestScope.month12.total}],
-                    fill: false,
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1
-                }]
-        },
-        options: {}
-    });
-</script>
+<script type="text/javascript">
+    var ctxP = document.getElementById("pieChart").getContext('2d');
 
-<script>
-    var xValues = ["${requestScope.pro1.productName}", "${requestScope.pro2.productName}", "${requestScope.pro3.productName}", "${requestScope.pro4.productName}", "${requestScope.pro5.productName}"];
-//    var xValues = [1, 2, 3, 4, 5];
-    var yValues = [${requestScope.pro1.total}, ${requestScope.pro2.total}, ${requestScope.pro3.total}, ${requestScope.pro4.total}, ${requestScope.pro5.total}];
-    var barColors = ["red", "green", "blue", "orange", "brown"];
-
-    new Chart("myBarChart", {
-        type: "bar",
+    var myPieChart = new Chart(ctxP, {
+        type: 'pie',
         data: {
-            labels: xValues,
+            labels: ["Sunday", "Saturday", "Friday", "Thursday", "Wednesday", "Tuesday", "Monday"],
             datasets: [{
-                    label: 'Biểu đồ Top 5 sản phẩm bán chạy theo tháng',
-                    backgroundColor: barColors,
-                    data: yValues,
-                    borderColor: 'rgb(75, 192, 192)'
+                    data: [${totalMoney1}, ${totalMoney7}, ${totalMoney6}, ${totalMoney5}, ${totalMoney4}, ${totalMoney3}, ${totalMoney2}],
+                    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360", "#1874CD", "#CDB5CD"],
+                    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774", "#1E90FF", "#FFE1FF"]
                 }]
         },
         options: {
-            legend: {display: false},
-            title: {
-                display: true,
-                text: "TOP 5 Best Selling Product"
-            }
+            responsive: true
         }
     });
 
+    function submitForm(obj) {
+        var year = document.getElementById("dropdownYear").value;
+        const weekInput = document.getElementById('weekInput');
+        const selectedWeek = weekInput.value;
+        const [, week] = selectedWeek.split('-W');
 
+        const startDate = getDateFromWeek(year, parseInt(week));
+
+        const endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 6);
+
+        const month = startDate.toLocaleString('en-US', {month: 'long'});
+        const monthNumber = getMonthNumber(month);
+
+        const startDay = startDate.getDate();
+        const endDay = endDate.getDate();
+
+        document.getElementById("from").value = startDay;
+        document.getElementById("to").value = endDay;
+        document.getElementById("month").value = monthNumber;
+        document.getElementById("f1").submit();
+    }
+
+    function getDateFromWeek(year, week) {
+        const januaryFourth = new Date(year, 0, 4);
+        const daysToAdd = (week - 1) * 7;
+        januaryFourth.setDate(januaryFourth.getDate() + daysToAdd - januaryFourth.getDay() + 1);
+        return januaryFourth;
+    }
+
+    function getMonthNumber(monthName) {
+        const monthsMap = {
+            'January': 1,
+            'February': 2,
+            'March': 3,
+            'April': 4,
+            'May': 5,
+            'June': 6,
+            'July': 7,
+            'August': 8,
+            'September': 9,
+            'October': 10,
+            'November': 11,
+            'December': 12
+        };
+
+        return monthsMap[monthName];
+    }
 </script>
+
 <script src="js/javascript.js"></script>
 </body>
 </html>

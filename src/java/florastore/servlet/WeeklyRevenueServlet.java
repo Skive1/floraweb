@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,14 +5,15 @@
  */
 package florastore.servlet;
 
-import florastore.account.AccountDTO;
-import florastore.managerProduct.ManagerProductDAO;
-import florastore.managerProduct.ManagerProductDTO;
-import florastore.managerProduct.ProductTypeDTO;
+import florastore.revenue.EventRevenueDAO;
+import florastore.revenue.EventRevenueDTO;
+import florastore.revenue.revenueDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Properties;
 import javax.naming.NamingException;
@@ -24,14 +24,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author acer
  */
-@WebServlet(name = "DelProManagementServlet", urlPatterns = {"/DelProManagementServlet"})
-public class DelProManagementServlet extends HttpServlet {
+@WebServlet(name = "WeeklyRevenueServlet", urlPatterns = {"/WeeklyRevenueServlet"})
+public class WeeklyRevenueServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,25 +44,54 @@ public class DelProManagementServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
-
-        String proId = request.getParameter("proId");
-        String storeId = request.getParameter("storeId");
-        String currentPage = request.getParameter("page");
+        String url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.WEAKLY_PAGE);
+        String year_raw = request.getParameter("year");
+        String month_raw = request.getParameter("month");
+        String from_raw = request.getParameter("from");
+        String to_raw = request.getParameter("to");
         try {
-            ManagerProductDAO dao = new ManagerProductDAO();
-            boolean result = dao.deleteProductByUpdate(proId);
-            if (result) {
-                url = "ProductManagementServlet?storeInfo=" + storeId + "&index=" + currentPage;
-            }
+            //Tìm ngày hiện tại của hệ thống
+            LocalDate currentDate = LocalDate.now();
+            //Tìm ngày thứ 2 của tuần hiện tại
+            LocalDate startOfWeek = currentDate.with(DayOfWeek.MONDAY);
+            //Tìm ngày chủ nhật
+            LocalDate endOfWeek = startOfWeek.plusDays(6);
+            int startDay = startOfWeek.getDayOfMonth();
+            int endDay = endOfWeek.getDayOfMonth();
+            int monthValue = startOfWeek.getMonthValue();
+
+            int year = (year_raw == null ? 2024 : Integer.parseInt(year_raw));
+            int month = (month_raw == null ? monthValue : Integer.parseInt(month_raw));
+            int from = (from_raw == null ? startDay : Integer.parseInt(from_raw));
+            int to = (to_raw == null ? endDay : Integer.parseInt(to_raw));
+
+            EventRevenueDAO dao = new EventRevenueDAO();
+            double monday = dao.loadEventTotalAmount(year, month, from, to, 2);
+            double tuesday = dao.loadEventTotalAmount(year, month, from, to, 3);
+            double wednesday = dao.loadEventTotalAmount(year, month, from, to, 4);
+            double thursday = dao.loadEventTotalAmount(year, month, from, to, 5);
+            double friday = dao.loadEventTotalAmount(year, month, from, to, 6);
+            double saturday = dao.loadEventTotalAmount(year, month, from, to, 7);
+            double sunday = dao.loadEventTotalAmount(year, month, from, to, 1);
+            
+            request.setAttribute("totalMoney2", monday);
+            request.setAttribute("totalMoney3", tuesday);
+            request.setAttribute("totalMoney4", wednesday);
+            request.setAttribute("totalMoney5", thursday);
+            request.setAttribute("totalMoney6", friday);
+            request.setAttribute("totalMoney7", saturday);
+            request.setAttribute("totalMoney1", sunday);
+            request.setAttribute("year", year);
+            
         } catch (SQLException ex) {
             String msg = ex.getMessage();
-            log("DelProManagementServlet _ SQL: " + msg);
+            log("WeeklyRevenueServlet _ SQL: " + msg);
         } catch (NamingException ex) {
             String msg = ex.getMessage();
-            log("DelProManagementServlet _ SQL: " + msg);
+            log("WeeklyRevenueServlet _ SQL: " + msg);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
