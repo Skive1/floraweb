@@ -55,7 +55,7 @@ public class ViewDeliveredListServlet extends HttpServlet {
         try {
              EventDAO dao = new EventDAO();
              List<EventOrderDTO> delivered = dao.getDeliveredOrder(username);
-             session.setAttribute("DELIVERRED", delivered);
+             session.setAttribute("DELIVERED", delivered);
         } catch(SQLException ex) {
             log("ViewDeliveredListServlet_SQL_" + ex.getMessage());
         } catch(NamingException ex) {

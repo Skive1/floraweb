@@ -104,11 +104,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <c:set var="deliveredList" value="${sessionScope.DELIVERRED}"/>
-                                    <c:forEach var="delivered" items="deliveredList">
+                                    <c:forEach var="delivered" items="${sessionScope.DELIVERED}">
                                         <tr>
                                             <td>${counter.count}</td>
-                                            <td>${delivered.fullName}</td>
+                                            <td>${delivered.fullname}</td>
                                             <td>${delivered.phone}</td>
                                             <td>${delivered.street}</td>
                                             <td>${delivered.note}</td>

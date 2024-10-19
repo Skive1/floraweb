@@ -142,5 +142,6 @@ public class MyAppConstants {
     public class ViewEventOrderFeatures{
         public static final String ORDER_LIST_PAGE = "orderList";
         public static final String DELIVERED_LIST_PAGE = "deliveredList";
+        public static final String VIEW_ORDER_LIST = "viewOrderAction";
     }
 }

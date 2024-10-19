@@ -9,6 +9,7 @@ import florastore.event.EventDAO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
@@ -43,12 +44,14 @@ public class UpdateOrderServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.ViewEventOrderFeatures.ORDER_LIST_PAGE);
+        String url = (String) siteMap.get(MyAppConstants.ViewEventOrderFeatures.VIEW_ORDER_LIST);
 
         String orderIdStr = request.getParameter("eventOrderId");
         String action = request.getParameter("action");
 
         int orderId = Integer.parseInt(orderIdStr);
+        
+        String username = request.getParameter("accountUsername");
 
         try {
             EventDAO dao = new EventDAO();
@@ -57,13 +60,13 @@ public class UpdateOrderServlet extends HttpServlet {
             } else if ("cancel".equals(action)) {
                 dao.cancelOrder(orderId); // Call the cancel method
             }
+            url = url + "?accountUsername=" + URLEncoder.encode(username, "UTF-8");
         } catch (SQLException ex) {
             log("UpdateOrderServlet _SQL_" + ex.getMessage());
         } catch (NamingException ex) {
             log("UpdateOrderServlet _Naming_" + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
         }
     }
 

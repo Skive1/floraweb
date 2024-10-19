@@ -119,7 +119,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <form action="updateOrder?eventOrderId=${order.eventOrderId}" method="post" style="display:inline;">
+                                                    <form action="updateOrder?eventOrderId=${order.eventOrderId}&accountUsername=${sessionScope.USER.username}" method="post" style="display:inline;">
                                                         <button type="submit" name="action" value="confirm" class="confirm-class">Xác nhận</button>
                                                         <button type="submit" name="action" value="cancel" class="delete-class">Hủy</button>
                                                     </form>

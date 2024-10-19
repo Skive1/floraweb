@@ -5,11 +5,14 @@
         <group>
             <file>file:/D:/Uni/SWP/GitHub/floraweb/web/deliveredList.jsp</file>
             <file>file:/D:/Uni/SWP/GitHub/floraweb/web/orderPendingList.jsp</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/web/WEB-INF/siteMap.properties</file>
             <file>file:/D:/Uni/SWP/GitHub/floraweb/src/java/florastore/event/EventDAO.java</file>
             <file>file:/D:/Uni/SWP/GitHub/floraweb/src/java/florastore/event/EventOrderDTO.java</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/src/java/florastore/servlet/UpdateOrderServlet.java</file>
             <file>file:/D:/Uni/SWP/GitHub/floraweb/src/java/florastore/servlet/ViewOrderServlet.java</file>
             <file>file:/D:/Uni/SWP/GitHub/floraweb/src/java/florastore/utils/MyAppConstants.java</file>
             <file>file:/D:/Uni/SWP/GitHub/floraweb/src/java/florastore/servlet/ViewDeliveredListServlet.java</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/web/HomePageJSP.jsp</file>
         </group>
     </open-files>
 </project-private>
