@@ -239,6 +239,7 @@ public class ShopPlaceOrderServlet extends HttpServlet {
                 }//cart existed
                 session.removeAttribute("TEMPORARY_INFO_SHOP");
                 ShopSession.removeAttribute("CART");
+                ShopSession.setAttribute("PENDING_ITEMS", 0);
             }//cart place existed
         } catch (SQLException ex) {
             log("ShopPlaceOrderServlet _SQL_ " + ex.getMessage());

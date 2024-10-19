@@ -239,6 +239,7 @@ public class PlaceOrderServlet extends HttpServlet {
                 }//cart existed
                 session.removeAttribute("TEMPORARY_INFO");
                 ECartSession.removeAttribute("ECART");
+                ECartSession.setAttribute("PENDING_EITEMS", 0);
             }//cart place existed
         } catch (SQLException ex) {
             log("PlaceOrderServlet _SQL_ " + ex.getMessage());
