@@ -7,11 +7,14 @@ package florastore.servlet;
 
 import florastore.eventCart.EventCartBean;
 import florastore.eventCart.EventCartItem;
+import florastore.eventProduct.EventProductDAO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -46,6 +49,7 @@ public class CheckoutServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.CheckoutFeatures.CART_PAGE);
         String totalAmount = request.getParameter("total");
         double total = Double.parseDouble(totalAmount);
+        boolean result = true;
 
         try {
             //1.Cust goes to his/her carts place
@@ -57,15 +61,33 @@ public class CheckoutServlet extends HttpServlet {
                     //3. Cust gets items
                     Map<String, List<EventCartItem>> items = cart.getItems();
                     if (items != null) {
-                        url = (String) siteMap.get(MyAppConstants.CheckoutFeatures.CHECKOUT);
-                        request.setAttribute("TOTAL_AMOUNT", total);
+                        for (Map.Entry<String, List<EventCartItem>> entry : items.entrySet()) {
+                            List<EventCartItem> itemList = entry.getValue();
+                            for (EventCartItem item : itemList) {
+                                EventProductDAO dao = new EventProductDAO();
+                                int stock = dao.getProductQuantityById(item.getEpId());
+                                if (item.getQuantity() > stock) {
+                                    result = false;
+                                    request.setAttribute("ERROR_QUANTITY", "Trong giỏ hàng đang có sản phẩm vượt quá số lượng kho");
+                                    break;
+                                }
+                            }
+                        }
+                        if (result) {
+                            url = (String) siteMap.get(MyAppConstants.CheckoutFeatures.CHECKOUT);
+                            request.setAttribute("TOTAL_AMOUNT", total);
+                        }
                     }//items existed
                 }//cart existed
             }//cart place existed
-            else if(ECartSession == null){
+            else if (ECartSession == null) {
                 url = (String) siteMap.get(MyAppConstants.CheckoutFeatures.ERROR_PAGE);
             }
-        } finally {
+        } catch(SQLException ex){
+            log("CheckoutServlet _SQL_ " + ex.getMessage());
+        }catch(NamingException ex){
+            log("CheckoutServlet _Naming_ " + ex.getMessage());
+        }finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

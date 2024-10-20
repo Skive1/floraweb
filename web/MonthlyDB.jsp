@@ -46,7 +46,7 @@
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="">Account</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="manageAccount">Account</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="">Event</a></li>
                                 </ul>
                             </li>

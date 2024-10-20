@@ -189,7 +189,7 @@ public class ShopPlaceOrderServlet extends HttpServlet {
                                 if ("Paid".equals(status)) {//Update paymentStatus
                                     paymentStatus = true;
                                 }//Update paymentStatus
-                                OrderDTO orderInfo = new OrderDTO(username, storeId, fullname, phone, address, city, deliveryDate, shipping, payment, "Đang chờ", total, paymentStatus, note);
+                                OrderDTO orderInfo = new OrderDTO(username, storeId, fullname, phone, address, city, deliveryDate, shipping, payment, "Chờ giao", total, paymentStatus, note);
                                 //Call DAO/Model   
                                 OrderDAO OrderDao = new OrderDAO();
                                 //Saving order by each shop
