@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="css/css/jquery-ui.css">
         <link rel="stylesheet" href="css/css/style.css" />
         <link rel="stylesheet" href="css/css/admincss.css" />
+        <link rel="icon" href="img/flora-favicon.png"/>
         <title>Manage Event</title>
     </head>
     <body>

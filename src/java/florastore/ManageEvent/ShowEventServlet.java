@@ -63,9 +63,6 @@ public class ShowEventServlet extends HttpServlet {
                         totalPrint.add(result);
                     }
                 }
-                for (TotalPriceDTO eventDTO : totalPrint) {
-                    System.out.println(eventDTO.getEventId());
-                }
                 request.setAttribute("FLOWER_LIST", productList);
                 request.setAttribute("TOTAL", totalPrint);
             }
