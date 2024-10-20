@@ -23,8 +23,119 @@ public class EventRevenueDAO implements Serializable {
 
     private ArrayList<EventRevenueDTO> listWeeklyEvent;
 
-    private ArrayList<EventRevenueDTO> getEventAmountByWeek() {
+    public ArrayList<EventRevenueDTO> getEventAmountByWeek() {
         return listWeeklyEvent;
+    }
+
+    private ArrayList<EventRevenueDTO> listMonthlyEvent;
+
+    public ArrayList<EventRevenueDTO> getEventAmountByMonth() {
+        return listMonthlyEvent;
+    }
+
+    private ArrayList<yearlyRevenueDTO> listEventOfYear;
+
+    public ArrayList<yearlyRevenueDTO> getListYearEvent() {
+        return listEventOfYear;
+    }
+
+    public void loadTotalEventOfAllMonthByYear(int year) throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            //1. Get connection
+            con = DBHelper.getConnection();
+            if (con != null) {
+//                String sql = "SELECT Month(Cast(eo.OrderDate as DATE)) AS [Month], "
+//                        + "SUM(eod.Total) AS TotalRevenue "
+//                        + "FROM EventProduct ep "
+//                        + "JOIN EventOrderDetail eod ON ep.EPId = eod.EventProductID "
+//                        + "JOIN EventOrder eo ON eod.EventOrderId = eo.EventOrderId "
+//                        + "WHERE eo.Status = 'Đã giao' AND YEAR(OrderDate) = ? "
+//                        + "GROUP BY Month(Cast(eo.OrderDate as DATE))";
+                String sql = "SELECT "
+                        + "Month(Cast(eo.OrderDate as DATE)) AS [Month],"
+                        + "SUM(eod.Quantity) AS TotalProductsSold, "
+                        + "SUM(eod.Total) AS TotalRevenue "
+                        + "FROM EventProduct ep "
+                        + "JOIN EventOrderDetail eod ON ep.EPId = eod.EventProductID "
+                        + "JOIN EventOrder eo ON eod.EventOrderId = eo.EventOrderId "
+                        + "WHERE eo.Status = 'Đã giao' AND YEAR(OrderDate) = ? "
+                        + "GROUP BY Month(Cast(eo.OrderDate as DATE));";
+                //2. Create stm obj
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, year);
+                //3. Excute Query
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int allMonth = rs.getInt("Month");
+                    int sold = rs.getInt("TotalProductsSold");
+                    float total = rs.getFloat("TotalRevenue");
+                    yearlyRevenueDTO items = new yearlyRevenueDTO(allMonth, total, sold);
+                    if (this.listEventOfYear == null) {
+                        listEventOfYear = new ArrayList<>();
+                    }//end if list is empty
+                    listEventOfYear.add(items);
+                } //end while loop
+            } //end if connection is success
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+    public void loadEventAmountByMonth(int month, int year) throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            //1. Get connection
+            con = DBHelper.getConnection();
+            if (con != null) {
+                String sql = "SELECT TOP 5 ep.EPId, ep.EPName, eod.UnitPrice, SUM(eod.Quantity) as Sold, SUM(eod.Total) as TotalAmount "
+                        + "From EventProduct ep "
+                        + "JOIN EventOrderDetail eod on ep.EPId = eod.EventProductID "
+                        + "JOIN EventOrder eo on eod.EventOrderId = eo.EventOrderId "
+                        + "WHERE eo.Status = 'Đã giao' And Month(OrderDate) = ? And Year(OrderDate) = ? "
+                        + "GROUP BY ep.EPName, ep.EPId, eod.UnitPrice";
+                //2. Create stm obj
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, month);
+                stm.setInt(2, year);
+                //3. Excute Query
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String productId = rs.getString("EPId");
+                    String productName = rs.getString("EPName");
+                    double unitPrice = rs.getDouble("UnitPrice");
+                    int sold = rs.getInt("Sold");
+                    float total = rs.getFloat("TotalAmount");
+                    EventRevenueDTO items = new EventRevenueDTO(productId, productName, unitPrice, sold, unitPrice);
+                    if (this.listMonthlyEvent == null) {
+                        listMonthlyEvent = new ArrayList<>();
+                    }//end if list is empty
+                    listMonthlyEvent.add(items);
+                } //end while loop
+            } //end if connection is success      
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 
     public void loadEventTotalAmountOfWeek(int year, int month, int from, int to, int day) throws SQLException, NamingException {
