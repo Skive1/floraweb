@@ -42,7 +42,9 @@ public class ManageAccountServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ManageAccountFeatures.ERROR_PAGE);
@@ -80,6 +82,7 @@ public class ManageAccountServlet extends HttpServlet {
                 request.setAttribute("TOTAL_ACCOUNT", count);
                 request.setAttribute("TAG", page);
                 request.setAttribute("ACCOUNT_LIST", accountList);
+                request.setAttribute("ACCOUNT_PER_PAGE", accountList.size());
             }
         } catch (SQLException ex) {
             log("ManageAccountServlet _ SQL " + ex.getMessage());

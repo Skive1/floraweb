@@ -65,18 +65,6 @@ public class ViewProductDetailServlet extends HttpServlet {
                     request.setAttribute("INSUFFICIENTSHOP", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
                     session.removeAttribute("INSUFFICIENTSHOP");
                 }
-                //Check user cart
-                CartBean cart = (CartBean) session.getAttribute("CART");
-                if (cart != null) {
-                    //Check items
-                    Map<String, List<CartItem>> items = cart.getItems();
-                    if (items != null) {
-                        int pendingItems = cart.getUniqueItemCount();
-                        session.setAttribute("PENDING_ITEMS", pendingItems);
-                    }
-                }
-                int pendingItems = 0;
-                session.setAttribute("PENDING_ITEMS", pendingItems);
             }
             //2. Call DAO/Model
             FlowerProductsDAO dao = new FlowerProductsDAO();

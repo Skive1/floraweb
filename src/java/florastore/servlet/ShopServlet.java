@@ -47,11 +47,11 @@ public class ShopServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        
+
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ShopFeatures.SHOP_PAGE);
-       
+
         try {
             //Check cart place
             HttpSession session = request.getSession(false);
@@ -60,19 +60,7 @@ public class ShopServlet extends HttpServlet {
                     request.setAttribute("INSUFFICIENTSHOP", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
                     session.removeAttribute("INSUFFICIENTSHOP");
                 }
-                //Check user cart
-                CartBean cart = (CartBean) session.getAttribute("CART");
-                if (cart != null) {
-                    //Check items
-                    Map<String, List<CartItem>> items = cart.getItems();
-                    if (items != null) {
-                        int pendingItems = cart.getUniqueItemCount();
-                        session.setAttribute("PENDING_ITEMS", pendingItems);
-                    }
-                }
-                int pendingItems = 0;
-                session.setAttribute("PENDING_ITEMS", pendingItems);
-            }  
+            }
             FlowerProductsDAO dao = new FlowerProductsDAO();
             List<FlowerProductsDTO> products = dao.getAllProducts();
             // Paging
@@ -81,7 +69,7 @@ public class ShopServlet extends HttpServlet {
             int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
             int totalProducts = products.size();
             int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
-            
+
             // Calculate the starting and ending indexes for the sublist of products to display
             int start = (currentPage - 1) * pageSize;
             int end = Math.min(start + pageSize, totalProducts);           // Get the products for the current page
@@ -97,12 +85,12 @@ public class ShopServlet extends HttpServlet {
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("categories", categoriesMap);
             request.setAttribute("allProducts", totalProducts);
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             log("ShopServlet_SQL_" + ex.getMessage());
-        } catch (NamingException ex){
+        } catch (NamingException ex) {
             log("ShopServlet_Naming_" + ex.getMessage());
         } finally {
-            
+
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
