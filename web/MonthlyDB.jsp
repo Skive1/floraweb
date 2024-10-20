@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="css/css/admincss.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <title>Monthly Product DashBoard</title>
+        <title>Admin</title>
     </head>
     <body>
         <section class="admin">
@@ -37,7 +37,7 @@
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
 
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="">Event theo tháng</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event theo tuần</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Sản phẩm theo tháng</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="">Sản phẩm theo tuần</a></li>
@@ -46,7 +46,7 @@
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="manageAccount">Account</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="">Account</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="">Event</a></li>
                                 </ul>
                             </li>

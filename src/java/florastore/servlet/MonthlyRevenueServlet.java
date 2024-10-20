@@ -73,7 +73,7 @@ public class MonthlyRevenueServlet extends HttpServlet {
             revenueDAO dao = new revenueDAO();
             //2. Call method
             dao.loadAmountByMonth(month, year);
-            //3. Get list
+//            //3. Get list
             ArrayList<revenueDTO> list = dao.getMonthList();
 
             yearlyRevenueDAO yearDao = new yearlyRevenueDAO();

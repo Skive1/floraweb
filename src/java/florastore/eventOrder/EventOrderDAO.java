@@ -32,9 +32,9 @@ public class EventOrderDAO implements Serializable {
             if (con != null) {
                 //2. Create SQL String 
                 String sql = "Insert Into EventOrder( "
-                        + "AccountUsername, EventId, Fullname, Phone, Street, City, DeliveryDate, DeliveryOption, Status, Amount, isPaid, PaymentOptions, Note "
+                        + "AccountUsername, EventId, Fullname, Phone, Street, City, DeliveryDate, DeliveryOption, Status, Amount, isPaid, PaymentOptions "
                         + ") Values( "
-                        + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? "
+                        + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? "
                         + ")";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
@@ -50,7 +50,6 @@ public class EventOrderDAO implements Serializable {
                 stm.setDouble(10, order.getAmmount());
                 stm.setBoolean(11, order.isPaid());
                 stm.setString(12, order.getPaymentOptions());
-                stm.setString(13, order.getNote());
                 //4. Execute Query
                 int affectedRows = stm.executeUpdate();
                 //5. process result
@@ -97,7 +96,6 @@ public class EventOrderDAO implements Serializable {
                         + "AND Amount = ? "
                         + "AND isPaid = ? "
                         + "AND PaymentOptions = ? "
-                        + "AND Note = ? "
                         + "ORDER BY EventOrderId DESC";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
@@ -112,7 +110,6 @@ public class EventOrderDAO implements Serializable {
                 stm.setDouble(9, order.getAmmount());
                 stm.setBoolean(10, order.isPaid());
                 stm.setString(11, order.getPaymentOptions());
-                stm.setString(12, order.getNote());
                 //4. Execute Query
                 rs = stm.executeQuery();
                 //5. process result

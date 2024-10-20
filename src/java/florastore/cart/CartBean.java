@@ -23,21 +23,23 @@ public class CartBean implements Serializable {
         return items;
     }
 
-    public boolean addItemToCart(int productId, int storeId, String storeName, String img, String name, int quantity, double unitPrice, int stockQuantity) {
-        boolean result = false;
+    public void addItemToCart(int productId, int storeId, String storeName, String img, String name, int quantity, double unitPrice, int stockQuantity) {
         if (name == null || name.trim().isEmpty()) {
-            return false;
+            return;
         }
+
         // Khởi tạo items map nếu nó null
         if (this.items == null) {
             this.items = new HashMap<>();
         }
+
         // Kiểm tra xem storeId đã tồn tại chưa
         List<CartItem> storeItems = items.get(storeName);
         if (storeItems == null) {
             storeItems = new ArrayList<>(); // Tạo mới danh sách sản phẩm cho storeId
             items.put(storeName, storeItems);
         }
+
         CartItem existingItem = null;
         for (CartItem item : storeItems) {
             if (item.getProductId() == productId) {
@@ -49,17 +51,10 @@ public class CartBean implements Serializable {
             // Sản phẩm mới, thêm vào danh sách
             CartItem newItem = new CartItem(productId, storeId, storeName, img, name, quantity, unitPrice, stockQuantity);
             storeItems.add(newItem);
-            result = true;
         } else {
-            if (existingItem.getQuantity() < stockQuantity && (existingItem.getQuantity() + quantity) <= stockQuantity) {
-                // Sản phẩm đã tồn tại, tăng số lượng
-                existingItem.setQuantity(existingItem.getQuantity() + quantity);
-                result = true;
-            } else if (existingItem.getQuantity() == stockQuantity) {
-                result = false;
-            }
+            // Sản phẩm đã tồn tại, tăng số lượng
+            existingItem.setQuantity(existingItem.getQuantity() + quantity);
         }
-        return result;
     }
 
     public void removeItemFromCart(String storeName, int id) {
@@ -90,9 +85,27 @@ public class CartBean implements Serializable {
         if (storeItems.isEmpty()) {
             items.remove(storeName);
         }
+//        if (item == null) {
+//            return;
+//        }
+//        if (item.trim().isEmpty()) {
+//            return;
+//        }
+//        //1. check existed items
+//        if (this.items == null) {
+//            return;
+//        }
+//        //2. check existed item
+//        if (this.items.containsValue(item)) {
+//            //3. remove item from items
+//            this.items.remove(item);
+//            if (this.items.isEmpty()) {
+//                this.items = null;
+//            }
+//        }
     }
 
-// Phương thức tính tổng giỏ hàng
+    // Phương thức tính tổng giỏ hàng
     public double calculateTotal() {
         double total = 0.0;
         for (List<CartItem> storeItems : items.values()) {

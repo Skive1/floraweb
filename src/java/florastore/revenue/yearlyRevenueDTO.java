@@ -14,8 +14,7 @@ import java.io.Serializable;
 public class yearlyRevenueDTO implements Serializable{
     private int month;
     private float total;
-    private int sold;
-    
+
     public yearlyRevenueDTO() {
     }
 
@@ -24,13 +23,6 @@ public class yearlyRevenueDTO implements Serializable{
         this.total = total;
     }
 
-    public yearlyRevenueDTO(int month, float total, int sold) {
-        this.month = month;
-        this.total = total;
-        this.sold = sold;
-    }
-    
-    
     /**
      * @return the month
      */
@@ -57,20 +49,6 @@ public class yearlyRevenueDTO implements Serializable{
      */
     public void setTotal(float total) {
         this.total = total;
-    }
-
-    /**
-     * @return the sold
-     */
-    public int getSold() {
-        return sold;
-    }
-
-    /**
-     * @param sold the sold to set
-     */
-    public void setSold(int sold) {
-        this.sold = sold;
     }
     
 }

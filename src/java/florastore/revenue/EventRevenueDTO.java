@@ -26,14 +26,6 @@ public class EventRevenueDTO implements Serializable{
     public EventRevenueDTO(double total) {
         this.total = total;
     }
-
-    public EventRevenueDTO(String eId, String name, double price, int sold, double total) {
-        this.eId = eId;
-        this.name = name;
-        this.price = price;
-        this.sold = sold;
-        this.total = total;
-    }
     
     public EventRevenueDTO(Date oderDate, String eId, String name, double price, int sold, double total) {
         this.oderDate = oderDate;
@@ -126,5 +118,7 @@ public class EventRevenueDTO implements Serializable{
      */
     public void setTotal(double total) {
         this.total = total;
-    } 
+    }
+    
+    
 }

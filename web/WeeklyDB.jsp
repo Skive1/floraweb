@@ -23,7 +23,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>       
-        <title>Weekly Event DashBoard</title>
+        <title>Admin</title>
         <style>
             .form-container {
                 display: flex;
@@ -53,7 +53,7 @@
                                     <i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i>
                                 </a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="">Event theo tháng</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event theo tuần</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Sản phẩm theo tháng</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="">Sản phẩm theo tuần</a></li>
