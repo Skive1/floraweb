@@ -213,4 +213,8 @@ public class MyAppConstants {
         public static final String CHECKOUT_SUCCESS = "shopCheckouts";
         public static final String CHECKOUT_FAIL = "shopCheckout";
     }   
+    
+    public class PurchasedOrderFeatures {
+        public static final String PURCHASED_ORDER = "purchasedOrderPage";
+    }
 }

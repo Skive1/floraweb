@@ -5,11 +5,12 @@
  */
 package florastore.servlet;
 
-import florastore.account.AccountDAO;
-import florastore.account.AccountDTO;
+import florastore.eventOrder.EventOrderDAO;
+import florastore.eventOrder.EventOrderDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -25,8 +26,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author ADMIN
  */
-@WebServlet(name = "StartUpServlet", urlPatterns = {"/StartUpServlet"})
-public class StartUpServlet extends HttpServlet {
+@WebServlet(name = "ViewPurchasedOrderServlet", urlPatterns = {"/ViewPurchasedOrderServlet"})
+public class ViewPurchasedOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,31 +41,41 @@ public class StartUpServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
-        String url = MyAppConstants.StartUpFeatures.DEFAULT_PAGE;
-
+        
+        ServletContext context = request.getServletContext();
+        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
+        String url = (String) siteMap.get(MyAppConstants.PurchasedOrderFeatures.PURCHASED_ORDER);
+        //1. Get username
+        String username = null;
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            username = (String) session.getAttribute("USERNAME");
+        }
         try {
-            //1. Get session
-            HttpSession session = request.getSession(false);
-            //2. Check existed session
-            if (session != null) {
-                //3. Get username and password
-                String username = (String) session.getAttribute("USERNAME");
-                String password = (String) session.getAttribute("PASSWORD");
-                //4. call method of Model/DAO
-                AccountDAO dao = new AccountDAO();
-                AccountDTO result = dao.getAccountByLogin(username, password);
-                //5. process result
-                if (result != null) {
-                    url = MyAppConstants.StartUpFeatures.HOME_PAGE;
-                }//authentication is ok
-            }//more than one times         
+            //2. Call DAO/Models
+            EventOrderDAO dao = new EventOrderDAO();
+            List<EventOrderDTO> listPending = dao.getPendingOrder(username);
+            List<EventOrderDTO> listConfirmed = dao.getConfirmedOrder(username);
+            List<EventOrderDTO> listShipping = dao.getShippingOrder(username);
+            List<EventOrderDTO> listReceived = dao.getReceivedOrder(username);
+            List<EventOrderDTO> listCancelled = dao.getCancelledOrder(username);
+            //3. set list purchased order with each status
+            request.setAttribute("LIST_PENDING", listPending);
+            request.setAttribute("LIST_CONFIRM", listConfirmed);
+            request.setAttribute("LIST_SHIPPING", listShipping);
+            request.setAttribute("LIST_RECEIVE", listReceived);
+            request.setAttribute("LIST_CANCEL", listCancelled);
+            
         } catch (SQLException ex) {
-            log("StartUpServlet _ SQL " + ex.getMessage());
+            log("ViewPurchasedOrderServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
-            log("StartUpServlet _ Naming " + ex.getMessage());
+            log("ViewPurchasedOrderServlet _Naming_ " + ex.getMessage());
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 
@@ -106,5 +117,5 @@ public class StartUpServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-}
 
+}

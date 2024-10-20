@@ -3,30 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.servlet;
+package florastore.ajax.event.servlet;
 
-import florastore.account.AccountDAO;
-import florastore.account.AccountDTO;
-import florastore.utils.MyAppConstants;
+import florastore.eventOrderDetail.EventOrderDetailDAO;
+import florastore.eventOrderDetail.PurchasedOrderDetailDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.util.List;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "StartUpServlet", urlPatterns = {"/StartUpServlet"})
-public class StartUpServlet extends HttpServlet {
+@WebServlet(name = "PurchasedOrderDetailServlet", urlPatterns = {"/PurchasedOrderDetailServlet"})
+public class PurchasedOrderDetailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,35 +37,38 @@ public class StartUpServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
-        String url = MyAppConstants.StartUpFeatures.DEFAULT_PAGE;
+        // Lấy orderId từ request
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
 
-        try {
-            //1. Get session
-            HttpSession session = request.getSession(false);
-            //2. Check existed session
-            if (session != null) {
-                //3. Get username and password
-                String username = (String) session.getAttribute("USERNAME");
-                String password = (String) session.getAttribute("PASSWORD");
-                //4. call method of Model/DAO
-                AccountDAO dao = new AccountDAO();
-                AccountDTO result = dao.getAccountByLogin(username, password);
-                //5. process result
-                if (result != null) {
-                    url = MyAppConstants.StartUpFeatures.HOME_PAGE;
-                }//authentication is ok
-            }//more than one times         
+        try (PrintWriter out = response.getWriter()) {
+            EventOrderDetailDAO dao = new EventOrderDetailDAO();
+            List<PurchasedOrderDetailDTO> listProduct = dao.getOrderInfoByOrderId(orderId);
+            if (listProduct != null) {
+                for (PurchasedOrderDetailDTO product : listProduct) {
+                    String productRow = "<tr>"
+                            + "<td style='text-align: center;'><img src=\"" + product.getProductImg() + "\" alt=\"" + product.getProductName() + "\" style=\"width: 75px; height: 75px; border-radius: 50%;\"></td>"
+                            + "<td>" + product.getProductName() + "</td>"
+                            + "<td style=\"text-align: center\">" + String.format("%,.0fđ", product.getUnitPrice()) + "</td>"
+                            + "<td style=\"text-align: center\">" + product.getQuantity() + "</td>"
+                            + "<td style=\"text-align: center\">" + String.format("%,.0fđ", product.getTotalAmount()) + "</td>"
+                            + "</tr>";
+                    out.println(productRow);
+                }
+            }
+            out.flush();
         } catch (SQLException ex) {
-            log("StartUpServlet _ SQL " + ex.getMessage());
+            log("PurchasedOrderDetailServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
-            log("StartUpServlet _ Naming " + ex.getMessage());
+            log("PurchasedOrderDetailServlet _Naming_ " + ex.getMessage());
         } finally {
-            response.sendRedirect(url);
+
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -106,5 +106,5 @@ public class StartUpServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-}
 
+}

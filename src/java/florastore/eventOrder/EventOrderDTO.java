@@ -16,10 +16,13 @@ public class EventOrderDTO implements Serializable {
 
     private String username;
     private int eventId;
+    private int eventOrderId;
+    private String eventName;
     private String fullname;
     private String phone;
     private String street;
     private String city;
+    private Timestamp orderDate;
     private Timestamp deliveryDate;
     private String deliveryOptions;
     private String paymentOptions;
@@ -45,6 +48,25 @@ public class EventOrderDTO implements Serializable {
         this.phone = phone;
         this.street = street;
         this.city = city;
+        this.deliveryDate = deliveryDate;
+        this.deliveryOptions = deliveryOptions;
+        this.paymentOptions = paymentOptions;
+        this.status = status;
+        this.ammount = ammount;
+        this.paid = paid;
+        this.note = note;
+    }
+
+    public EventOrderDTO(String username, int eventId, String eventName, int eventOrderId, String fullname, String phone, String street, String city, Timestamp orderDate, Timestamp deliveryDate, String deliveryOptions, String paymentOptions, String status, double ammount, boolean paid, String note) {
+        this.username = username;
+        this.eventId = eventId;
+        this.eventName = eventName;
+        this.eventOrderId = eventOrderId;
+        this.fullname = fullname;
+        this.phone = phone;
+        this.street = street;
+        this.city = city;
+        this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
         this.deliveryOptions = deliveryOptions;
         this.paymentOptions = paymentOptions;
@@ -234,6 +256,48 @@ public class EventOrderDTO implements Serializable {
      */
     public void setNote(String note) {
         this.note = note;
+    }
+
+    /**
+     * @return the eventOrderId
+     */
+    public int getEventOrderId() {
+        return eventOrderId;
+    }
+
+    /**
+     * @param eventOrderId the eventOrderId to set
+     */
+    public void setEventOrderId(int eventOrderId) {
+        this.eventOrderId = eventOrderId;
+    }
+
+    /**
+     * @return the orderDate
+     */
+    public Timestamp getOrderDate() {
+        return orderDate;
+    }
+
+    /**
+     * @param orderDate the orderDate to set
+     */
+    public void setOrderDate(Timestamp orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    /**
+     * @return the eventName
+     */
+    public String getEventName() {
+        return eventName;
+    }
+
+    /**
+     * @param eventName the eventName to set
+     */
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 
 }
