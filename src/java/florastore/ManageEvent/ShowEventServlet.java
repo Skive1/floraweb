@@ -7,9 +7,12 @@ package florastore.ManageEvent;
 
 import florastore.event.EventDAO;
 import florastore.event.EventDTO;
+import florastore.eventProduct.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
@@ -31,21 +34,43 @@ public class ShowEventServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ManageEvent.ERROR_PAGE);
 
+        List<EventProductDTO> productList = new ArrayList<>();
+        DecimalFormat df = new DecimalFormat("#,###.##");
+        List<TotalPriceDTO> totalPrint = new ArrayList<>();
         try {
             //Call DAO/Model
             EventDAO dao = new EventDAO();
             List<EventDTO> events = dao.getAllEventExcept();
             //Process result
-            if(events != null){
+            if (events != null) {
                 request.setAttribute("EVENT_LIST", events);
+                for (int i = 0; i < events.size(); i++) {
+                    List<EventProductDTO> flowerList = dao.getEventFlower2(events.get(i).getEventId());
+                    if (flowerList != null && !flowerList.isEmpty()) {
+                        productList.addAll(flowerList);
+                        double total = 0;
+                        String totalOut;
+                        for (EventProductDTO flowerPrice : flowerList) {
+                            total += flowerPrice.getEventProductPrice() * flowerPrice.getEventProductQuantity();
+                        }
+                        totalOut = df.format(total);
+                        TotalPriceDTO result = new TotalPriceDTO(events.get(i).getEventId(), totalOut);
+                        totalPrint.add(result);
+                    }
+                }
+                for (TotalPriceDTO eventDTO : totalPrint) {
+                    System.out.println(eventDTO.getEventId());
+                }
+                request.setAttribute("FLOWER_LIST", productList);
+                request.setAttribute("TOTAL", totalPrint);
             }
             url = (String) siteMap.get(MyAppConstants.ManageEvent.MANAGE_EVENT_PAGE);
-            
+
         } catch (SQLException ex) {
             log("EventServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
