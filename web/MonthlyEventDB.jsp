@@ -22,8 +22,12 @@
         <link rel="stylesheet" href="css/css/admincss.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <title>Monthly Product DashBoard</title>
+
+        <title>Monthly Event DashBoard</title>
     </head>
+    <style>
+
+    </style>
     <body>
         <section class="admin">
             <div class="row-grid">
@@ -85,8 +89,8 @@
                         </c:if>                      -->
                         <h1 style="text-align: center;">Dashboard</h1>                    
                         <h3 class="mb-0 text-center">
-                            <strong>Revenue by month</strong>
-                            <form id="f1" method="get" action="monthlyRevenue">
+                            <strong>Revenue by month</strong>                     
+                            <form id="f1" method="get" action="monthlyEventRevenue">
                                 <div style="padding-left: 20px">
                                     <select name="year" class="form-control" id="dropdownYear" style="width: 120px;" onchange="getYear(this)">
                                         <c:set var="currentYear" value="2024"/>
@@ -109,16 +113,29 @@
                         <div class="admin-content-main-chart">
                             <div class="admin-content-main-chart-line">            
                                 <canvas id="myChart"></canvas>
-                            </div>
-
+                            </div>                    
                             <div class="admin-content-main-chart-bar-chart">
                                 <canvas id="myBarChart"></canvas>
                             </div>
-                        </div>
-                    </div>                             
-                </div>
-            </div>
-
+                        </div> 
+<!--                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Tổng số lượng bán</th>
+                                                    <th>Giá</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="${allMonth}" var="product">
+                                                    <tr>
+                                                        <td>${product.month}</td>
+                                                        <td>${product.sold}</td>
+                                                        <td>${product.total}</td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>-->
         </div>
     </div>
 </div> 
@@ -145,7 +162,7 @@
 </script>
 
 <script>
-    var xValues = ["${requestScope.pro1.productName}", "${requestScope.pro2.productName}", "${requestScope.pro3.productName}", "${requestScope.pro4.productName}", "${requestScope.pro5.productName}"];
+    var xValues = ["${requestScope.pro1.name}", "${requestScope.pro2.name}", "${requestScope.pro3.name}", "${requestScope.pro4.name}", "${requestScope.pro5.name}"];
 //    var xValues = [1, 2, 3, 4, 5];
     var yValues = [${requestScope.pro1.total}, ${requestScope.pro2.total}, ${requestScope.pro3.total}, ${requestScope.pro4.total}, ${requestScope.pro5.total}];
     var barColors = ["red", "green", "blue", "orange", "brown"];

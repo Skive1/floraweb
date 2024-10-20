@@ -123,6 +123,7 @@ public class MyAppConstants {
         public static final String ERROR_PAGE = "error404";
         public static final String MONTHLY_PAGE = "monthlyBoard";
         public static final String WEAKLY_PAGE = "weeklyBoard";
+         public static final String MONTHLY_EVENT_PAGE = "monthlyEvent";
     }
 
     public class CartAddItemFeatures {
