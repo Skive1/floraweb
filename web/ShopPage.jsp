@@ -377,7 +377,6 @@
                                             </div>
                                         </div>
                                     </c:forEach>
-                                    <%--img/Ame.jpg--%>
                                     <div class="col-12" >
                                         <div class="pagination d-flex justify-content-center mt-5">
                                             <c:if test="${sessionScope.currentPage == 1}"> 

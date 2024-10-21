@@ -118,15 +118,15 @@ public class ShowOrderedByServlet extends HttpServlet {
 
 //            request.removeAttribute("currentColor");
 //            request.setAttribute("currentColor", getColor);
-            pageSize = service.getPage(divideResult.size());                    //làm thanh << 1 2 3 4 >>
+            pageSize = service.getPage(divideResult.size(), 9);                    //làm thanh << 1 2 3 4 >>
             if (pageSize == 0) {
                 pageSize = 1;
             }
             session.removeAttribute("pageSize");
             session.setAttribute("pageSize", pageSize);
 
-            page = service.getPage(page, pageIsActive, goBack, goForward);
-            range = service.getPageRange(page);
+            page = service.getPage(pageIsActive, goBack, goForward);
+            range = service.getPageRange(page, 9);
 
             List<ProductDTO> productList = service.getNine(divideResult, range);
             dao.searchTotalProduct("", true);                                   //giữ cho categories luôn cập nhật sản phẩm mới

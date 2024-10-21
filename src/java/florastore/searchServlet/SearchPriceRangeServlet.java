@@ -110,7 +110,7 @@ public class SearchPriceRangeServlet extends HttpServlet {
                 session.removeAttribute("productOrdered");
                 session.setAttribute("productOrdered", divideResult);               //dùng để in theo giá giảm/tăng
 
-                pageSize = service.getPage(divideResult.size());
+                pageSize = service.getPage(divideResult.size(), 9);
                 if (pageSize == 0) {
                     pageSize = 1;
                 }
@@ -134,8 +134,8 @@ public class SearchPriceRangeServlet extends HttpServlet {
                 session.removeAttribute("totalProductPrice");
                 session.setAttribute("totalProductPrice", divideResult);
 
-                page = service.getPage(page, pageIsActive, goBack, goForward);
-                range = service.getPageRange(page);
+                page = service.getPage(pageIsActive, goBack, goForward);
+                range = service.getPageRange(page, 9);
 
                 List<ProductDTO> productList = service.getNine(divideResult, range);
                 dao.searchTotalProduct("", true);                                   //giữ cho categories luôn cập nhật sản phẩm mới

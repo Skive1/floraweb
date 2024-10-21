@@ -5,6 +5,8 @@
  */
 package florastore.searchProduct;
 
+import florastore.DeliveryOrder.DeliverDTO;
+import florastore.order.OrderDTO;
 import florastore.searchProduct.ProductDTO;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -149,7 +151,20 @@ public class ServiceLayer {
         return result;
     }
 
-    public int getPage(int page, String pageIsActive, String goBack, String goForward) {
+    public List<DeliverDTO> getSeven(List<DeliverDTO> list, int[] range) {        //get X product in page N
+        List<DeliverDTO> result = new ArrayList<>();
+        int addCounter = 1;
+        for (DeliverDTO inPage : list) {
+            if (range[0] <= addCounter && addCounter <= range[1]) {
+                result.add(inPage);
+            }
+            addCounter++;
+        }
+        return result;
+    }
+    
+    public int getPage(String pageIsActive, String goBack, String goForward) {
+        int page = 0;
         if (pageIsActive == null) {
             page = 1;                                                       //lần đầu in ra sản phẩm pageNumber mặc định luôn là 1
         } else {                                                            //nếu chuyển qua trang 2, 3, ... thì pageNumber đã ko còn là null
@@ -166,18 +181,16 @@ public class ServiceLayer {
         return page;
     }
 
-    public int getPage(double list) {                                           //thanh chuyển trang << 1 2 3 4 >>
-        double pageSize = Math.ceil(list / 9);
+    public int getPage(double list, int count) {                                           //thanh chuyển trang << 1 2 3 4 >>
+        double pageSize = Math.ceil(list / count);
         return (int) pageSize;
     }
 
-    public int[] getPageRange(int page) {                                       //lấy phạm vi sản phẩm ở trang 1, 2, ...
-        // Số sản phẩm trên mỗi trang
-        int itemsPerPage = 9;
+    public int[] getPageRange(int page, int count) {                                       //lấy phạm vi sản phẩm ở trang 1, 2, ...
 
         // Tìm 2 đầu vị trí xuất sản phẩm
-        int start = (page - 1) * itemsPerPage + 1;
-        int end = page * itemsPerPage;
+        int start = (page - 1) * count + 1;
+        int end = page * count;
 
         return new int[]{start, end};
     }
@@ -187,7 +200,7 @@ public class ServiceLayer {
             pageIsActive = goBack;
         } else if (pageIsActive == null && goForward != null) {
             pageIsActive = goForward;
-        }
+        } 
         return pageIsActive;
     }
 }

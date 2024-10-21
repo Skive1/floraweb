@@ -124,9 +124,15 @@
                                                             -
                                                         </td>
                                                     </c:if>
-                                                    <td>                                                                     
-                                                        <a class="btn btn-primary" style="border: 0"
-                                                           href="deliveryInformation?getEventOrderID=${eventOrder.eventOrderId}">Xem thêm</a>
+                                                    <td>    
+                                                        <form id="more" action="deliveryInformation" method="POST">
+                                                            <input type="hidden" id="getEventOrderID" name="getEventOrderID"/>
+                                                            <a href="#" class="btn btn-primary" style="border: 0"
+                                                               onclick="document.getElementById('getEventOrderID').value = ${eventOrder.eventOrderId};
+                                                                       document.getElementById('more').submit();">
+                                                                Xem thêm
+                                                            </a>
+                                                        </form>
                                                     </td>
                                                     <td>
                                                         <fmt:formatDate value="${eventOrder.deliveryDate}" pattern="dd-MM-yyy" />
@@ -175,6 +181,66 @@
                                             </c:forEach>
                                         </tbody>
                                     </table>
+                                    <div class="col-12" >
+                                        <div class="pagination d-flex justify-content-center mt-5">
+                                            <c:if test="${sessionScope.currentPage == 1}"> 
+                                                <form>
+                                                    <a href="#" class="btn btn-secondary" style="margin: 1; 
+                                                       background-color: gray; color: white; pointer-events: none; opacity: 0.6;
+                                                       border-color: black; font-weight: bold">
+                                                        &laquo;
+                                                    </a>
+                                                </form>
+                                            </c:if>
+                                            <c:if test="${sessionScope.currentPage != 1}"> 
+                                                <form id="backForm" action="delivererOrders" method="POST">
+                                                    <input type="hidden" id="pageBack" name="pageBack"/>
+                                                    <a href="#" class="btn btn-secondary" style="margin: 1; background-color: white; border-color: black; color: black; font-weight: bold"
+                                                       onclick="document.getElementById('pageBack').value = '${sessionScope.currentPage}';
+                                                               document.getElementById('backForm').submit();">
+                                                        &laquo;
+                                                    </a>
+                                                </form>
+                                            </c:if>
+                                            <form id="paginationForm" action="delivererOrders" method="POST">
+                                                <input type="hidden" id="pageNo" name="pageNo">
+                                                <c:forEach var="i" begin="1" end="${sessionScope.pageSize}">
+                                                    <c:if test="${sessionScope.currentPage == i}">
+                                                        <a href="#" class="active btn btn-secondary" 
+                                                           onclick="document.getElementById('pageNo').value = '${i}';
+                                                                   document.getElementById('paginationForm').submit();
+                                                                   return false;" style="margin: 0; background-color: #000066; border-color: black; color: white;
+                                                           font-weight: bold">${i}</a>
+                                                    </c:if>
+                                                    <c:if test="${sessionScope.currentPage != i}">
+                                                        <a href="#" class="btn btn-secondary" 
+                                                           onclick="document.getElementById('pageNo').value = '${i}';
+                                                                   document.getElementById('paginationForm').submit();
+                                                                   return false;" style="margin: 0; background-color: white; border-color: black; color: black; 
+                                                           font-weight: bold">${i}</a>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </form>
+                                            <c:if test="${sessionScope.currentPage != sessionScope.pageSize}"> 
+                                                <form id="forwardForm" action="delivererOrders" method="POST">
+                                                    <input type="hidden" id="pageForward" name="pageForward"/>
+                                                    <a href="#" class="btn btn-secondary" style="margin: 1; background-color: white; border-color: black; color: black; font-weight: bold"
+                                                       onclick="document.getElementById('pageForward').value = '${sessionScope.currentPage}';
+                                                               document.getElementById('forwardForm').submit();">
+                                                        &raquo;
+                                                    </a>
+                                                </form>
+                                            </c:if>
+                                            <c:if test="${sessionScope.currentPage == sessionScope.pageSize}"> 
+                                                <form>
+                                                    <a href="#" class="btn btn-secondary" style="margin: 1; border-color: black; font-weight: bold;
+                                                       background-color: gray; color: white; pointer-events: none; opacity: 0.6;">
+                                                        &raquo;
+                                                    </a>
+                                                </form>
+                                            </c:if>  
+                                        </div>
+                                    </div>
                                 </c:if>
                                 <c:if test="${empty event}">
                                     <a style="color: red">

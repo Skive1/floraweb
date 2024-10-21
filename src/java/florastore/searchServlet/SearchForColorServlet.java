@@ -107,7 +107,7 @@ public class SearchForColorServlet extends HttpServlet {
 
             session.setAttribute("currentColor", getColor);                     //dùng cho ordered by và show giá trị color
 
-            pageSize = service.getPage(divideResult.size());                    //làm thanh << 1 2 3 4 >>
+            pageSize = service.getPage(divideResult.size(), 9);                    //làm thanh << 1 2 3 4 >>
             if (pageSize == 0) {
                 pageSize = 1;
             }
@@ -128,8 +128,8 @@ public class SearchForColorServlet extends HttpServlet {
             session.setAttribute("dryFlower", categories[3]);
             session.setAttribute("otherType", categories[4]);
 
-            page = service.getPage(page, pageIsActive, goBack, goForward);
-            range = service.getPageRange(page);
+            page = service.getPage(pageIsActive, goBack, goForward);
+            range = service.getPageRange(page, 9);
 
             List<ProductDTO> productList = service.getNine(divideResult, range);
             dao.searchTotalProduct("", true);                                   //giữ cho categories luôn cập nhật sản phẩm mới

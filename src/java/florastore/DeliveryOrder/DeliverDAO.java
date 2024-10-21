@@ -19,7 +19,7 @@ import javax.naming.NamingException;
 
 public class DeliverDAO {
 
-    public List<DeliverDTO> getTop10DeliveryOrder(int counter)
+    public List<DeliverDTO> getTop7DeliveryOrder(int counter)
             throws SQLException, NamingException {                              //lấy đơn hàng để nhận
         Connection con = null;
         PreparedStatement stm = null;
@@ -30,7 +30,7 @@ public class DeliverDAO {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String
-                String sql = "Select * From EventOrder Order By EventOrderId Offset ? Row Fetch Next 3 Rows Only";
+                String sql = "Select * From EventOrder Order By EventOrderId Offset ? Row Fetch Next 2 Rows Only";
                 //3. create statement
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, counter);
@@ -84,7 +84,7 @@ public class DeliverDAO {
             if (con != null) {
                 //2. Create SQL String
                 String sql = "Select EventOrderId, Fullname, Phone, Street, City, DeliveryDate, DeliveryStaffId, Status, Amount, isPaid, Note "
-                        + "From EventOrder ";
+                        + "From EventOrder Order By EventOrderId";
                 //3. create statement
                 stm = con.prepareStatement(sql);
                 //4. Execute Query

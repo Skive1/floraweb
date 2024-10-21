@@ -1,5 +1,6 @@
 package florastore.DeliveryOrder;
 
+import florastore.searchProduct.ServiceLayer;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -30,12 +31,36 @@ public class ViewOrdersServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
-
+        String pageIsActive = request.getParameter("pageNo");
+        String goBack = request.getParameter("pageBack");
+        String goForward = request.getParameter("pageForward");
+        
         HttpSession session = request.getSession();
         String getFullName = (String) session.getAttribute("USERNAME");
-        int staffID = 0;
+        int[] range = null;
+        int staffID = 0, page = 0, pageSize = 0;
         double staffBalance = 0;
         try {
+            if (pageIsActive != null) {
+                pageIsActive = pageIsActive.trim();
+            }
+            if (goBack != null) {
+                goBack = goBack.trim();
+            }
+            if (goForward != null) {
+                goForward = goForward.trim();
+            }
+            ServiceLayer service = new ServiceLayer();
+            pageIsActive = service.checkPagination(pageIsActive, goBack, goForward); //kiểm tra user có nhấn thanh chuyển trang ko
+            page = service.getPage(pageIsActive, goBack, goForward);            //trả về 1 ở lần đầu chạy, trả về n khi chạy lần 2
+            range = service.getPageRange(page, 2);                                 //lấy phạm vi sản phẩm để show
+            session.removeAttribute("currentPage");
+            if (pageIsActive == null) {
+                session.setAttribute("currentPage", 1);                   //mặc định button 1
+            } else {
+                session.setAttribute("currentPage", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
+            }
+            
             DeliverDAO dao = new DeliverDAO();
             if (session.getAttribute("Staff_ID") == null && session.getAttribute("Staff_Balance") == null) {                     
                 staffID = dao.getDeliveryStaffId(getFullName);                  //staffID không có thì tạo session cho nó, những lần sau chỉ gần getAttribute
@@ -49,9 +74,19 @@ public class ViewOrdersServlet extends HttpServlet {
             List<DeliverDTO> orderList = dao.getDeliveryOrder();                //lấy danh sách các đơn hàng để nhận giao
             List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName, staffID);       //lấy danh sách các đơn hàng để đi giao
             if (orderList != null) {
+                List<DeliverDTO> deliveryList = service.getSeven(orderList, range);               //đã lấy được 9 sản phẩm để show trang chính
                 request.setAttribute("Total_Order", orderToDelivery.size());
-                request.setAttribute("DELIVERY_LIST", orderList);
+                request.setAttribute("DELIVERY_LIST", deliveryList);
             }
+            
+            pageSize = service.getPage(orderList.size(), 2);                                   //thanh chuyển trang << 1 2 3 4 >>
+            
+            if (pageSize == 0) {
+                pageSize = 1;
+            }
+            session.removeAttribute("pageSize");
+            session.setAttribute("pageSize", pageSize);                 //gán size để làm button trang 1 → 9
+            
             session.removeAttribute("viewOrdersForDelivery");
             session.setAttribute("viewOrders", "active");
             url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
