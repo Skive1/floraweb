@@ -66,7 +66,7 @@ public class ProductDAO {
                     String imageURL = rs.getString("Img");
                     int categoryID = rs.getInt("CategoryCategoryId");
                     //set data to DTO properties
-                    ProductDTO dto = new ProductDTO(productId, storeId, productName, productType, productCondition, 
+                    ProductDTO dto = new ProductDTO(productId, storeId, productName, productType, productCondition,
                             productDetail, productPrice, productQuantity, imageURL, categoryID);
                     if (this.productSplit == null) {                                //add total
                         this.productSplit = new ArrayList<>();
@@ -89,5 +89,52 @@ public class ProductDAO {
                 con.close();
             }
         }
+    }
+
+    public List<ProductDTO> searchAllProduct() throws SQLException, NamingException {
+        PreparedStatement stm = null;
+        Connection con = null;
+        ResultSet rs = null;
+        List<ProductDTO> result = new ArrayList<>();
+        try {
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //String sql = "SELECT * FROM FlowerProducts WHERE ProductName LIKE ?";
+                String sql = null;
+                sql = "SELECT ProductId, FlowerStoreStoreId, ProductName, ProductType, ProductCondition, ProductDetail, "
+                        + "ProductPrice, ProductQuantity, Img, CategoryCategoryId "
+                        + "FROM FlowerProducts";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    //get data from result set
+                    int productId = rs.getInt("ProductId");
+                    int storeId = rs.getInt("FlowerStoreStoreId");
+                    String productName = rs.getString("ProductName");
+                    String productType = rs.getString("ProductType");
+                    String productCondition = rs.getString("ProductCondition");
+                    String productDetail = rs.getString("ProductDetail");
+                    int productPrice = rs.getInt("ProductPrice");
+                    int productQuantity = rs.getInt("ProductQuantity");
+                    String imageURL = rs.getString("Img");
+                    int categoryID = rs.getInt("CategoryCategoryId");
+                    //set data to DTO properties
+                    ProductDTO dto = new ProductDTO(productId, storeId, productName, productType, productCondition,
+                            productDetail, productPrice, productQuantity, imageURL, categoryID);
+                    result.add(dto);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
     }
 }

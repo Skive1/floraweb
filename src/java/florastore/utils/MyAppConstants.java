@@ -130,6 +130,7 @@ public class MyAppConstants {
     public class ManageEvent {
 
         public static final String ERROR_PAGE = "error404";
+        public static final String VIEW_EVENT_DETAIL = "viewEventDetail";
         public static final String VIEW_EVENT_PAGE = "viewEventPage";
         public static final String VIEW_EVENT = "viewEvent";
         public static final String DETAIL_PAGE = "eventDetailPage";

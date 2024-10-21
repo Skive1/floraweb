@@ -32,12 +32,22 @@ public class MarkAsDoneServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         
-        String eventOrderID = request.getParameter("getEventOrderID");
+        String eventOrderID = request.getParameter("getEventOrderID").trim();
+        String getEventOrderAmount = request.getParameter("getEventOrderAmount");
         int intEventOrderID = Integer.parseInt(eventOrderID);
+        int staffID = (int) session.getAttribute("Staff_ID");
+        
+        double staffBalance = (double) session.getAttribute("Staff_Balance");
+        double eventOrderAmount = Double.parseDouble(getEventOrderAmount);
+        double balance = 0;
         try {
             DeliverDAO dao = new DeliverDAO();
             boolean result = dao.markAsDone(intEventOrderID);
             if (result) {
+                balance = staffBalance + eventOrderAmount;
+                dao.setDeliveryStaffBalance(staffID, balance);
+                session.removeAttribute("Staff_Balance");
+                session.setAttribute("Staff_Balance", balance);
                 session.removeAttribute("Total_Order");
                 url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING);
             }

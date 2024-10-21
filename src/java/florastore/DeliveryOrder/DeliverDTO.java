@@ -9,6 +9,8 @@ public class DeliverDTO {
     private String phone;
     private String street;
     private String city;
+    private Timestamp orderDate;
+    private String paymentOptions;
     private Timestamp deliveryDate;
     private String status;
     private int deliveryStaffId;
@@ -18,13 +20,17 @@ public class DeliverDTO {
     private double amount;
     private int quantity;
     private String productName;
+    private String productType;
+    private String productCondition;
 
-    public DeliverDTO(int eventOrderId, String fullname, String phone, String street, String city, Timestamp deliveryDate, String status, int deliveryStaffId, boolean isPaid, String note, double unitPrice, double amount, int quantity, String productName) {
+    public DeliverDTO(int eventOrderId, String fullname, String phone, String street, String city, Timestamp orderDate, String paymentOptions, Timestamp deliveryDate, String status, int deliveryStaffId, boolean isPaid, String note, double unitPrice, double amount, int quantity, String productName, String productType, String productCondition) {
         this.eventOrderId = eventOrderId;
         this.fullname = fullname;
         this.phone = phone;
         this.street = street;
         this.city = city;
+        this.orderDate = orderDate;
+        this.paymentOptions = paymentOptions;
         this.deliveryDate = deliveryDate;
         this.status = status;
         this.deliveryStaffId = deliveryStaffId;
@@ -34,7 +40,11 @@ public class DeliverDTO {
         this.amount = amount;
         this.quantity = quantity;
         this.productName = productName;
+        this.productType = productType;
+        this.productCondition = productCondition;
     }
+
+
     
     public DeliverDTO(int eventOrderId, String fullname, String phone, String street, String city, Timestamp deliveryDate, String status, int deliveryStaffId, double amount, boolean isPaid, String note) {
         this.eventOrderId = eventOrderId;
@@ -84,6 +94,38 @@ public class DeliverDTO {
     
     public int getDeliveryStaffId() {
         return deliveryStaffId;
+    }
+
+    public Timestamp getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Timestamp orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getPaymentOptions() {
+        return paymentOptions;
+    }
+
+    public void setPaymentOptions(String paymentOptions) {
+        this.paymentOptions = paymentOptions;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
+    public String getProductCondition() {
+        return productCondition;
+    }
+
+    public void setProductCondition(String productCondition) {
+        this.productCondition = productCondition;
     }
 
     public void setDeliveryStaffId(int deliveryStaffId) {
@@ -154,7 +196,7 @@ public class DeliverDTO {
         this.amount = amount;
     }
 
-    public boolean isIsPaid() {
+    public boolean getIsPaid() {
         return isPaid;
     }
 

@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="css/css/jquery-ui.css">
         <link rel="stylesheet" href="css/css/style.css" />
         <link rel="stylesheet" href="css/css/admincss.css" />
+        <link rel="icon" href="img/flora-favicon.png"/>
         <title>Manage Event</title>
     </head>
     <body>
@@ -76,7 +77,7 @@
                                                     <td>${eventList.eventCity}</td>
                                                     <td>
                                                         <fmt:formatDate value="${eventList.startDate}" pattern="dd-MM-yyy HH:mm:ss" />
-                                                        -
+                                                        đến
                                                         <fmt:formatDate value="${eventList.endDate}" pattern="dd-MM-yyy HH:mm:ss" />
                                                     </td> 
                                                     <td>
