@@ -437,4 +437,45 @@ public class EventOrderDAO implements Serializable {
         }
         return orders;
     }
+
+    public int countNumberOrder(String username)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int result = 0;
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "Select COUNT(EventOrderId) as NumberOfOrder "
+                        + "From EventOrder "
+                        + "Where AccountUsername = ? ";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                if (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    int number = rs.getInt("NumberOfOrder");
+                    result = number;
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
 }

@@ -36,7 +36,7 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-         <link rel="stylesheet" href="alertPackage/alertCss.css">
+        <link rel="stylesheet" href="alertPackage/alertCss.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
         <style>
@@ -45,6 +45,24 @@
                 background-color: white !important;  /* Nền trắng */
                 pointer-events: none;                /* Ngăn thay đổi */
                 cursor: none;
+            }
+            .non-order{
+                background-image: url(https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/cart/9bdd8040b334d31946f4.png);
+                background-position: 50%;
+                background-repeat: no-repeat;
+                background-size: contain;
+                height: 100px;
+                width: 100px
+
+            }
+            .background-img{
+                display: flex;
+                height: 400px;
+                text-align: center;
+                flex-direction: column;
+                align-content: center;
+                justify-content: center;
+                align-items: center;
             }
         </style>
         <script>
@@ -152,12 +170,8 @@
                                     <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
-                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                        <a href="viewProfileAction" class="dropdown-item">My Profile</a>
-                                        <a href="purchasedOrder" class="dropdown-item">Purchased Order</a>
-                                        <a href="logoutAction" class="dropdown-item">Logout</a>
-                                    </div>
-                                </div>                         
+                                    <jsp:include page="navUser.jsp"></jsp:include>
+                                    </div>                         
                             </c:if>
                         </div>
                     </div>
@@ -279,8 +293,9 @@
                         </c:forEach>
                     </c:if>
                     <c:if test="${empty ecart || empty ecart.items}">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <h3>Your event cart is empty</h3>
+                        <div class="background-img">
+                            <div class="non-order"></div>
+                            <h5 style="text-align: center">Giỏ hàng sự kiện của bạn đang trống</h5>
                         </div>
 
                     </c:if>

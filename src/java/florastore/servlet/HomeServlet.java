@@ -5,16 +5,13 @@
  */
 package florastore.servlet;
 
-import florastore.cart.CartBean;
-import florastore.cart.CartItem;
+import florastore.eventOrder.EventOrderDAO;
 import florastore.flowerProducts.FlowerProductsDAO;
 import florastore.flowerProducts.FlowerProductsDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -49,7 +46,6 @@ public class HomeServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.HomeFeatures.ERROR_PAGE);
-
         try {
             //1. Call DAO/Models
             FlowerProductsDAO dao = new FlowerProductsDAO();
@@ -61,7 +57,13 @@ public class HomeServlet extends HttpServlet {
             List<FlowerProductsDTO> bestSeller = dao.getBestSellers();
             List<FlowerProductsDTO> newArrival = dao.getNewArrivals();
             FlowerProductsDTO cheapestFlower = dao.getCheapestFlower();
-
+            EventOrderDAO eDao = new EventOrderDAO();
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                String username = (String) session.getAttribute("USERNAME");
+                int numberofOrder = eDao.countNumberOrder(username);
+                session.setAttribute("NUMBER_ORDER", numberofOrder);
+            }
             if (bestSeller != null && newArrival != null) {//check flower list is available
                 //3. To Home Page
                 url = (String) siteMap.get(MyAppConstants.HomeFeatures.HOME_PAGE);

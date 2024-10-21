@@ -176,11 +176,7 @@
                                     <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
-                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                        <a href="viewProfileAction" class="dropdown-item">My Profile</a>
-                                        <a href="purchasedOrder" class="dropdown-item">Purchased Order</a>
-                                        <a href="logoutAction" class="dropdown-item">Logout</a>
-                                    </div>
+                                    <jsp:include page="navUser.jsp"></jsp:include>
                                 </div>                         
                             </c:if>
                         </div>
@@ -283,7 +279,12 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <p class="mb-4 mt-4 total-price" style="text-align: center">${pending.deliveryOptions}</p>
+                                                <c:if test="${pending.deliveryOptions == 'Delivery'}">
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Giao hàng Flora</p>
+                                                </c:if>
+                                                <c:if test="${pending.deliveryOptions == 'Pick Up'}">
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Lấy tại sự kiện</p>
+                                                </c:if>
                                             </td>
                                             <td>
                                                 <c:if test="${pending.paid == true}">
@@ -345,7 +346,12 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <p class="mb-4 mt-4 total-price" style="text-align: center">${confirm.deliveryOptions}</p>
+                                                <c:if test="${confirm.deliveryOptions == 'Delivery'}">
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Giao hàng Flora</p>
+                                                </c:if>
+                                                <c:if test="${confirm.deliveryOptions == 'Pick Up'}">
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Lấy tại sự kiện</p>
+                                                </c:if>
                                             </td>
                                             <td>
                                                 <c:if test="${confirm.paid == true}">
@@ -407,7 +413,12 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <p class="mb-4 mt-4 total-price" style="text-align: center">${shipping.deliveryOptions}</p>
+                                                <c:if test="${shipping.deliveryOptions == 'Delivery'}">
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Giao hàng Flora</p>
+                                                </c:if>
+                                                <c:if test="${shipping.deliveryOptions == 'Pick Up'}">
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Lấy tại sự kiện</p>
+                                                </c:if>
                                             </td>
                                             <td>
                                                 <c:if test="${shipping.paid == true}">
@@ -476,7 +487,12 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <p class="mb-4 mt-4 total-price" style="text-align: center">${receive.deliveryOptions}</p>
+                                                <c:if test="${receive.deliveryOptions == 'Delivery'}">
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Giao hàng Flora</p>
+                                                </c:if>
+                                                <c:if test="${receive.deliveryOptions == 'Pick Up'}">
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Lấy tại sự kiện</p>
+                                                </c:if>
                                             </td>
                                             <td style="text-align: center">
                                                 <c:if test="${receive.paid == true}">
@@ -550,7 +566,12 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <p class="mb-4 mt-4 total-price" style="text-align: center">${cancel.deliveryOptions}</p>
+                                                <c:if test="${cancel.deliveryOptions == 'Delivery'}">
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Giao hàng Flora</p>
+                                                </c:if>
+                                                <c:if test="${cancel.deliveryOptions == 'Pick Up'}">
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Lấy tại sự kiện</p>
+                                                </c:if>
                                             </td>
                                             <td>
                                                 <c:if test="${cancel.paid == true}">
@@ -676,6 +697,7 @@
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>
@@ -735,18 +757,34 @@
                                                                     data: JSON.stringify({orderId: orderId, feedback: feedbackText}),
                                                                     success: function (response) {
                                                                         if (response.success) {
-                                                                            alert('Gửi feedback thành công!');
+                                                                            // Hiển thị thông báo SweetAlert sau khi gửi feedback thành công
+                                                                            Swal.fire({
+                                                                                icon: 'success',
+                                                                                title: 'Đã gửi!',
+                                                                                text: 'Feedback của bạn đã được gửi thành công!',
+                                                                                showConfirmButton: false,
+                                                                                timer: 1500
+                                                                            });
                                                                             var button = document.getElementById('myButton-' + orderId);
                                                                             button.innerHTML = 'Đã đánh giá';
                                                                             button.onclick = null;  // Không cần onclick sau khi đã thay đổi
                                                                             button.disabled = true; // Vô hiệu hóa nút
+                                                                            $('#feedbackText').val('');
                                                                             $('#feedbackModal').modal('hide');
                                                                         } else {
-                                                                            alert('Có lỗi xảy ra, vui lòng thử lại!');
+                                                                            Swal.fire({
+                                                                                icon: 'error',
+                                                                                title: 'Lỗi',
+                                                                                text: 'Có lỗi xảy ra, vui lòng thử lại!'
+                                                                            });
                                                                         }
                                                                     },
                                                                     error: function () {
-                                                                        alert('Không thể gửi feedback.');
+                                                                        Swal.fire({
+                                                                            icon: 'error',
+                                                                            title: 'Lỗi',
+                                                                            text: 'Không thể gửi feedback.'
+                                                                        });
                                                                     }
                                                                 });
                                                             });
@@ -776,9 +814,12 @@
                                 // Cập nhật giao diện sau khi nhận hàng thành công
                                 var button = document.getElementById('myButton-' + orderId);
                                 button.innerHTML = 'Đánh giá';
-                                button.onclick = null;  // Không cần onclick sau khi đã thay đổi
+                                button.onclick = function (e) {
+                                    openFeedbackModal(orderId, e); // Gán sự kiện mới để mở modal feedback
+                                };
                             }
-                        })
+                        }
+                        )
                         .catch((error) => {
                             console.error('Error:', error);
                         });

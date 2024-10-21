@@ -126,11 +126,7 @@
                                     <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
-                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                        <a href="viewProfileAction" class="dropdown-item">My Profile</a>
-                                        <a href="purchasedOrder" class="dropdown-item">Purchased Order</a>
-                                        <a href="logoutAction" class="dropdown-item">Logout</a>
-                                    </div>
+                                    <jsp:include page="navUser.jsp"></jsp:include>
                                 </div>                         
                             </c:if>
                         </div>

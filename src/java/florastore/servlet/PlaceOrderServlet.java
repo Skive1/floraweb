@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -78,6 +79,7 @@ public class PlaceOrderServlet extends HttpServlet {
         AccountDTO validUser = (AccountDTO) session.getAttribute("USER");
         String emailTo = validUser.getEmail();
         EventOrderDTO temporaryInfo = (EventOrderDTO) session.getAttribute("TEMPORARY_INFO");
+        List<Integer> EOIdList = new ArrayList<>();
         int eventId = 0;
         String fullname = request.getParameter("fullname");
         String phone = request.getParameter("phone");
@@ -113,6 +115,7 @@ public class PlaceOrderServlet extends HttpServlet {
         EventOrderDTO newTemporaryInfo = new EventOrderDTO(fullname, phone, address, city, shipping, payment, note);
         session.setAttribute("TEMPORARY_INFO", newTemporaryInfo);
         String status = null;
+        int numberOfUserOrder = 0;
         boolean paymentStatus = false;
         Timestamp deliveryDate = null;
         if ("00".equals(responseCode)) {//Check responseCode after VNPay return
@@ -194,6 +197,7 @@ public class PlaceOrderServlet extends HttpServlet {
                                 EventOrderDAO EOrderDao = new EventOrderDAO();
                                 //Saving order by each event
                                 boolean resultOrder = EOrderDao.saveOrder(orderInfo);
+                                numberOfUserOrder= EOrderDao.countNumberOrder(username);
                                 int eventOrderId = 0;
                                 if (resultOrder) {//Get eventOrderId after insert order to database
                                     eventOrderId = EOrderDao.getEventOrderId(orderInfo);
@@ -213,6 +217,7 @@ public class PlaceOrderServlet extends HttpServlet {
                                     //Call DAO/Model to save INFO to EventOrder Table
                                     EventOrderDetailDAO EOrderDetailDao = new EventOrderDetailDAO();
                                     EOrderDetailDao.saveOrderDetail(orderDetail);
+                                    EOIdList.add(eventOrderId);
                                 }//saving item to order detail by each event
                             }//saving order info to order by each event
                             session.setAttribute("CUST_NAME", fullname);
@@ -222,7 +227,9 @@ public class PlaceOrderServlet extends HttpServlet {
                             session.setAttribute("SHIPPING", shipping);
                             session.setAttribute("CUST_PAYMENT", payment);
                             session.setAttribute("ORDER_ITEMS", cart);
+                            session.setAttribute("EVENT_ORDER_ID_LIST", EOIdList);
                             session.setAttribute("PAYMENT_STATUS", paymentStatus);
+                            session.setAttribute("NUMBER_ORDER", numberOfUserOrder);
                             url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.BILL_PAGE);
                             // Build dynamic HTML content for the email
                             htmlContent.append("<p>We hope you enjoy your purchase. If you have any questions, feel free to contact us!</p>");

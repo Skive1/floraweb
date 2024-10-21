@@ -87,23 +87,25 @@
                                 </div>
                                 <div class="col-md-6 background-muted">
                                     <div class="p-3 border-bottom">
-<!--                                        <div class="d-flex justify-content-between align-items-center"> <span><i class="fa fa-clock-o text-muted"></i></span> <span><i class="fa fa-refresh text-muted"></i> 2 Max Revisions</span> </div>-->
+                                        <!--                                        <div class="d-flex justify-content-between align-items-center"> <span><i class="fa fa-clock-o text-muted"></i></span> <span><i class="fa fa-refresh text-muted"></i> 2 Max Revisions</span> </div>-->
                                         <div class="mt-3">
                                             <h6 class="mb-0">Bạn có thể coi chi tiết đơn hàng tại đây: </h6> <span class="d-block mb-0"><a href="purchasedOrder">Thông tin đơn hàng</a></span> 
-                                            <small>Mã đơn hàng: #ORD-</small>
-<!--                                            <div class="d-flex flex-column mt-3"> 
-                                                <small><i class="fa fa-check text-muted"></i> Voucher</small> 
-                                                <small><i class="fa fa-check text-muted"></i> Freeship</small> 
-                                            </div>-->
-                                        </div>
+                                        <c:set var="existedOrder" value="0"/>
+                                        <c:forEach var="orderEvent" items="${sessionScope.EVENT_ORDER_ID_LIST}">   
+                                            <c:if test="${existedOrder != orderEvent}">
+                                                <p style="margin-bottom: 0px">Mã đơn hàng: #ORD-${orderEvent}</p>
+                                            </c:if>
+                                            <c:set var="existedOrder" value="${orderEvent}"/>
+                                        </c:forEach>
                                     </div>
-                                    <div class="admin-sidebar">                               
-                                        <div class="admin-sidebar-content">
-                                            <ul>
-                                                <li>
-                                                    <a href="#" data-toggle="collapse" class="admin-sidebar-content-detail">Thông tin chi tiết</a>
-                                                    <ul class="sub-menu">
-                                                        <div class="admin-content-main-content-product-list">
+                                </div>
+                                <div class="admin-sidebar">                               
+                                    <div class="admin-sidebar-content">
+                                        <ul>
+                                            <li>
+                                                <a href="#" data-toggle="collapse" class="admin-sidebar-content-detail">Thông tin chi tiết</a>
+                                                <ul class="sub-menu">
+                                                    <div class="admin-content-main-content-product-list">
                                                         <c:set var="bill" value="${sessionScope.ORDER_ITEMS}"/>
                                                         <c:forEach var="entry" items="${bill.items}">
                                                             <c:set var="eventName" value="${entry.key}"/>
