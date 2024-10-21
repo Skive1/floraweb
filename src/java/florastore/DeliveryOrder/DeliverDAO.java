@@ -19,7 +19,7 @@ import javax.naming.NamingException;
 
 public class DeliverDAO {
 
-    public List<DeliverDTO> getTop3DeliveryOrder(int counter)
+    public List<DeliverDTO> getTop10DeliveryOrder(int counter)
             throws SQLException, NamingException {                              //lấy đơn hàng để nhận
         Connection con = null;
         PreparedStatement stm = null;
