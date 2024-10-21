@@ -91,28 +91,25 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
-                            <a href="searchAction" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link">Event</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Shop</a>
+                            <a href="event" class="nav-item nav-link active ">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
-                                    <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
-                                    <a href="viewEvent" class="nav-item nav-link">Manage System</a>
+                                    <a href="manageAccount" class="nav-item nav-link">Manage Account</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="#" class="nav-item nav-link">Delivery Order</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
-                                    <a href="showStoreName" class="nav-item nav-link">Manage Shop</a>
+                                    <a href="ProductManagementAction" class="nav-item nav-link">Manage Shop</a>
                                 </c:if>
                             </c:if>
-
                         </div>
                         <div class="d-flex align-items-center justify-content-center m-3 me-0">
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
@@ -129,26 +126,17 @@
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
                                         <i class="fa fa-shopping-bag fa-2x"></i>
-                                        <c:if test="${sessionScope.PENDING_EITEMS != 0 || sessionScope.PENDING_ITEMS != 0}">
-                                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 4px; left: 39px; height: 10px; min-width: 10px;"></span>
-                                        </c:if>
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                         <a href="cartPage" class="dropdown-item">Cart</a>
-                                        <c:if test="${sessionScope.PENDING_ITEMS != 0}">
-                                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 15px; left: 122px; height: 18px; min-width: 18px;">${sessionScope.PENDING_ITEMS}</span>
-                                        </c:if>
                                         <a href="eventCart" class="dropdown-item">Event Cart</a>
-                                        <c:if test="${sessionScope.PENDING_EITEMS != 0}">
-                                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 47px; left: 122px; height: 18px; min-width: 18px;">${sessionScope.PENDING_EITEMS}</span>
-                                        </c:if>
                                     </div>
                                 </div>
 
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a href="" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -164,7 +152,6 @@
             </div>
         </div>
         <!-- Navbar End -->
-
 
 
         <!-- Modal Search Start -->
@@ -539,7 +526,7 @@
                                                         </div>
                                                     </th>
                                                     <td class="py-5">${item.epName}</td>
-                                                    <td class="py-5"><fmt:formatNumber value="${item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
+                                                    <td class="py-5" https://halibut-alive-positively.ngrok-free.app/FloraRewind/><fmt:formatNumber value="${item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
                                                     <td class="py-5" style="text-align: center">${item.quantity}</td>
                                                     <td class="py-5" style="text-align: center"><fmt:formatNumber value="${item.quantity * item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
                                                 </tr>      
@@ -554,7 +541,7 @@
                                                 <td class="py-5"></td>
                                                 <td class="py-5">
                                                     <div class="py-2 border-bottom border-top">
-                                                        <p class="mb-0 text-dark" style="text-align: center"><fmt:formatNumber value="${totalEvent}" type="number" groupingUsed="true"/>đ</p>
+                                                        <p class="mb-0 text-dark"><fmt:formatNumber value="${totalEvent}" type="number" groupingUsed="true"/>đ</p>
                                                     </div>
                                                 </td>
                                             </tr>

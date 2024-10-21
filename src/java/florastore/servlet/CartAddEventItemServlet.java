@@ -96,6 +96,7 @@ public class CartAddEventItemServlet extends HttpServlet {
                 ECartSession.setAttribute("ETOTAL", total);
                 ECartSession.setAttribute("ECART", cart);
             }
+
         } catch (SQLException ex) {
             log("CartAddEventItemServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {

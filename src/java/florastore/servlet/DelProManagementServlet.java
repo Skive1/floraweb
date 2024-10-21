@@ -59,9 +59,11 @@ public class DelProManagementServlet extends HttpServlet {
                 url = "ProductManagementServlet?storeInfo=" + storeId + "&index=" + currentPage;
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            String msg = ex.getMessage();
+            log("DelProManagementServlet _ SQL: " + msg);
         } catch (NamingException ex) {
-            ex.printStackTrace();
+            String msg = ex.getMessage();
+            log("DelProManagementServlet _ SQL: " + msg);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

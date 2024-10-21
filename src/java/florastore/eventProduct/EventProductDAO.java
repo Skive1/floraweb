@@ -125,7 +125,7 @@ public class EventProductDAO implements Serializable {
         return dto;
     }
 
-    public int getProductQuantityById(int productId)
+    public int getProductQuantityByName(String productName)
             throws SQLException, NamingException {
 
         int quantity = 0;
@@ -140,10 +140,10 @@ public class EventProductDAO implements Serializable {
                 //2. Create SQL String
                 String sql = "SELECT EPQuantity "
                         + "FROM EventProduct "
-                        + "Where EPId = ?";
+                        + "Where EPName = ?";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
-                stm.setInt(1, productId);
+                stm.setString(1, productName);
 
                 //4. Execute Query
                 rs = stm.executeQuery();

@@ -61,6 +61,18 @@ public class EventDetailServlet extends HttpServlet {
                     request.setAttribute("INSUFFICIENT", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
                     session.removeAttribute("INSUFFICIENT");
                 }
+                //Check user cart             
+                EventCartBean cart = (EventCartBean) session.getAttribute("ECART");
+                if (cart != null) {
+                    //Check items
+                    Map<String, List<EventCartItem>> items = cart.getItems();
+                    if (items != null) {
+                        int pendingItems = cart.getUniqueItemCount();
+                        session.setAttribute("PENDING_ITEMS", pendingItems);
+                    }
+                }
+                int pendingItems = 0;
+                session.setAttribute("PENDING_ITEMS", pendingItems);
             }
 
             EventDAO eDao = new EventDAO();
@@ -81,7 +93,7 @@ public class EventDetailServlet extends HttpServlet {
 
                 // Get the products for the current page
                 List<EventProductDTO> productsForPage = flowerList.subList(start, end);
-
+                
                 request.setAttribute("PRODUCTS", productsForPage);
                 request.setAttribute("currentPage", currentPage);
                 request.setAttribute("totalPages", totalPages);

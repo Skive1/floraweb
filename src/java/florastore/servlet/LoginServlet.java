@@ -12,6 +12,7 @@ import florastore.account.AccountDTO;
 import florastore.googleAccount.GoogleAccount;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
@@ -82,7 +83,7 @@ public class LoginServlet extends HttpServlet {
                     AccountDTO authUser = dao.getAccountByGoogleAccount(email);
                     if (authUser == null) {
                         log("User not found. Creating new user.");
-                        authUser = new AccountDTO(newUsername, "GOOGLE_AUTH", newUsername, "Customer", email, "Hidden", "", "", "", saleId);
+                        authUser = new AccountDTO(newUsername, "GOOGLE_AUTH", newUsername, "Customer", email, "Hidden", "", "", "",saleId);
                         dao.createAccount(authUser); // Add user to the database
                     } else {
                         log("User found: " + authUser.getUsername());
@@ -93,8 +94,6 @@ public class LoginServlet extends HttpServlet {
                     HttpSession session = request.getSession(true);
                     session.setAttribute("USER", authUser);
                     session.setAttribute("USERNAME", authUser.getUsername());
-                    session.setAttribute("PENDING_EITEMS", 0);
-                    session.setAttribute("PENDING_ITEMS", 0);
 
                 } else {
                     log("OAuth Error: " + authError);
@@ -105,7 +104,7 @@ public class LoginServlet extends HttpServlet {
                 AccountDAO dao = new AccountDAO();
                 AccountDTO validUser = null;
                 if (username.equals(username.trim()) && password.equals(password.trim())) {
-                    validUser = dao.getAccountByLogin(username, password);
+                    validUser= dao.getAccountByLogin(username, password);
                     //3. process result
                     if (validUser != null) {//user login successful
                         url = (String) siteMap.get(MyAppConstants.LoginFeatures.HOME_PAGE);
@@ -114,8 +113,6 @@ public class LoginServlet extends HttpServlet {
                         session.setAttribute("USER", validUser);
                         session.setAttribute("USERNAME", username);
                         session.setAttribute("PASSWORD", password);
-                        session.setAttribute("PENDING_EITEMS", 0);
-                        session.setAttribute("PENDING_ITEMS", 0);
                     }//end if validAccount is not null
                 }
                 if (validUser == null) {//user login failed

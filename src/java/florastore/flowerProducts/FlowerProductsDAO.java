@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package florastore.flowerProducts;
-
 import florastore.utils.DBHelper;
 import java.io.Serializable;
 import java.sql.Connection;
@@ -508,15 +507,15 @@ public class FlowerProductsDAO implements Serializable {
         }
         return products;
     }
-
-    public int getProductQuantityById(int productId)
+    
+    public int getProductQuantityByName(String productName)
             throws SQLException, NamingException {
-
+        
         int quantity = 0;
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-
+        
         try {
             //1. connect DB
             con = DBHelper.getConnection();
@@ -524,20 +523,20 @@ public class FlowerProductsDAO implements Serializable {
                 //2. Create SQL String
                 String sql = "SELECT ProductQuantity "
                         + "FROM FlowerProducts "
-                        + "Where ProductId = ?";
+                        + "Where ProductName = ?";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
-                stm.setInt(1, productId);
-
+                stm.setString(1, productName);
+                
                 //4. Execute Query
                 rs = stm.executeQuery();
                 //5. process result
                 while (rs.next()) {
                     //. map
                     //get data from Result Set
-
-                    quantity = rs.getInt("ProductQuantity");
-
+                    
+                    quantity  = rs.getInt("ProductQuantity");
+                    
                 }//process each record in resultset  
             }//connection has been available 
         } finally {
@@ -552,46 +551,5 @@ public class FlowerProductsDAO implements Serializable {
             }
         }
         return quantity;
-    }
-
-    public boolean updateQuantityShopFlower(int id, int newStockQuantity)
-            throws SQLException, NamingException {
-        Connection con = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        boolean result = false;
-        try {
-            //1. connect DB
-            con = DBHelper.getConnection();
-            if (con != null) {
-                //2. Create SQL String
-                String sql = "UPDATE FlowerProducts "
-                        + "SET ProductQuantity = ? "
-                        + "Where ProductId = ?";
-                //3. Create Statement Object
-                stm = con.prepareStatement(sql);
-                stm.setInt(1, newStockQuantity);
-                stm.setInt(2, id);
-
-                //4. Execute Query
-                int affectedRows = stm.executeUpdate();
-                //5. process result
-                if (affectedRows > 0) {
-                    result = true;
-                }
-            }//process each record in resultset  
-        }//connection has been available 
-        finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
-        return result;
     }
 }

@@ -1,1 +1,0 @@
-ManageEvent.ShowEventServlet
