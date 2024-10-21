@@ -3,33 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.servlet;
+package florastore.ajax.event.servlet;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import florastore.eventFeedback.EventFeedbackDAO;
-import florastore.eventFeedback.EventFeedbackDTO;
-import florastore.eventOrder.EventOrderDAO;
-import florastore.eventOrder.EventOrderDTO;
-import florastore.utils.MyAppConstants;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "ViewPurchasedOrderServlet", urlPatterns = {"/ViewPurchasedOrderServlet"})
-public class ViewPurchasedOrderServlet extends HttpServlet {
+@WebServlet(name = "submitFeedbackServlet", urlPatterns = {"/submitFeedbackServlet"})
+public class submitFeedbackServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,45 +37,40 @@ public class ViewPurchasedOrderServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        // Thiết lập mã hóa cho request
         request.setCharacterEncoding("UTF-8");
+
+        // Thiết lập mã hóa cho response
+        response.setContentType("application/json;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        
-        ServletContext context = request.getServletContext();
-        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.PurchasedOrderFeatures.PURCHASED_ORDER);
-        //1. Get username
-        String username = null;
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            username = (String) session.getAttribute("USERNAME");
+        // Đọc dữ liệu JSON từ request
+        StringBuilder jsonBuilder = new StringBuilder();
+        String line;
+        try (BufferedReader reader = request.getReader()) {
+            while ((line = reader.readLine()) != null) {
+                jsonBuilder.append(line);
+            }
         }
+        // Sử dụng Gson để phân tích JSON
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(jsonBuilder.toString(), JsonObject.class);
+        int orderId = jsonObject.get("orderId").getAsInt();
+        String feedback = jsonObject.get("feedback").getAsString();
+
         try {
-            //2. Call DAO/Models
-            EventOrderDAO dao = new EventOrderDAO();
-            EventFeedbackDAO feedback = new EventFeedbackDAO();
-            List<EventOrderDTO> listPending = dao.getPendingOrder(username);
-            List<EventOrderDTO> listConfirmed = dao.getConfirmedOrder(username);
-            List<EventOrderDTO> listShipping = dao.getShippingOrder(username);
-            List<EventOrderDTO> listReceived = dao.getReceivedOrder(username);
-            List<EventOrderDTO> listCancelled = dao.getCancelledOrder(username);
-            List<EventFeedbackDTO> listFeedback = feedback.checkList(username);
-            //3. set list purchased order with each status
-            request.setAttribute("LIST_CHECK_FEEDBACK", listFeedback);
-            request.setAttribute("LIST_PENDING", listPending);
-            request.setAttribute("LIST_CONFIRM", listConfirmed);
-            request.setAttribute("LIST_SHIPPING", listShipping);
-            request.setAttribute("LIST_RECEIVE", listReceived);
-            request.setAttribute("LIST_CANCEL", listCancelled);
-            
+            EventFeedbackDAO dao = new EventFeedbackDAO();
+            boolean result = dao.insertFeedback(orderId, feedback);
+            if (result) {
+                // Phản hồi cho client
+                response.getWriter().write("{\"success\": true}");
+            }
         } catch (SQLException ex) {
-            log("ViewPurchasedOrderServlet _SQL_ " + ex.getMessage());
+            log("FeedbackCreateServlet _SQL _ " + ex.getMessage());
         } catch (NamingException ex) {
-            log("ViewPurchasedOrderServlet _Naming_ " + ex.getMessage());
+            log("FeedbackCreateServlet _Naming _ " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+
         }
     }
 

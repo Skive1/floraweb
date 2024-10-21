@@ -330,10 +330,10 @@ public class EventOrderDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String
-                String sql = "Select eo.EventId, EventOrderId, Fullname, Phone, Street, City, OrderDate, DeliveryDate, DeliveryOption, PaymentOptions, Status, Amount, isPaid, Note, e.EventName "
+                String sql = "Select eo.EventId, eo.EventOrderId, Fullname, Phone, Street, City, OrderDate, DeliveryDate, DeliveryOption, PaymentOptions, eo.[Status], Amount, isPaid, Note, e.EventName "
                         + "From EventOrder eo "
                         + "JOIN [Event] e on e.EventId = eo.EventId "
-                        + "Where Status = N'Đã giao' AND eo.AccountUsername = ? "
+                        + "Where eo.[Status] = N'Đã giao' AND eo.AccountUsername = ? "
                         + "Order by DeliveryDate desc";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);

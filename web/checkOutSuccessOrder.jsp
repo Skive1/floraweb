@@ -87,14 +87,14 @@
                                 </div>
                                 <div class="col-md-6 background-muted">
                                     <div class="p-3 border-bottom">
-                                        <div class="d-flex justify-content-between align-items-center"> <span><i class="fa fa-clock-o text-muted"></i></span> <span><i class="fa fa-refresh text-muted"></i> 2 Max Revisions</span> </div>
+<!--                                        <div class="d-flex justify-content-between align-items-center"> <span><i class="fa fa-clock-o text-muted"></i></span> <span><i class="fa fa-refresh text-muted"></i> 2 Max Revisions</span> </div>-->
                                         <div class="mt-3">
-                                            <h6 class="mb-0">Bạn đã đồng ý tuân theo: </h6> <span class="d-block mb-0"><a href="">Điều khoản Flora Rewind</a></span> 
-                                            <small>Đã áp dụng mã miễn phí</small>
-                                            <div class="d-flex flex-column mt-3"> 
+                                            <h6 class="mb-0">Bạn có thể coi chi tiết đơn hàng tại đây: </h6> <span class="d-block mb-0"><a href="purchasedOrder">Thông tin đơn hàng</a></span> 
+                                            <small>Mã đơn hàng: #ORD-</small>
+<!--                                            <div class="d-flex flex-column mt-3"> 
                                                 <small><i class="fa fa-check text-muted"></i> Voucher</small> 
                                                 <small><i class="fa fa-check text-muted"></i> Freeship</small> 
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </div>
                                     <div class="admin-sidebar">                               

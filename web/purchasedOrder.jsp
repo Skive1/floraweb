@@ -63,6 +63,24 @@
             .order-row{
                 cursor: pointer;
             }
+            .non-order{
+                background-image: url(http://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/orderlist/5fafbb923393b712b964.png);
+                background-position: 50%;
+                background-repeat: no-repeat;
+                background-size: contain;
+                height: 100px;
+                width: 100px
+
+            }
+            .background-img{
+                display: flex;
+                height: 400px;
+                text-align: center;
+                flex-direction: column;
+                align-content: center;
+                justify-content: center;
+                align-items: center;
+            }
         </style>
     </head>
 
@@ -160,7 +178,7 @@
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                         <a href="viewProfileAction" class="dropdown-item">My Profile</a>
-                                        <a href="#" class="dropdown-item">Purchase Order</a>
+                                        <a href="purchasedOrder" class="dropdown-item">Purchased Order</a>
                                         <a href="logoutAction" class="dropdown-item">Logout</a>
                                     </div>
                                 </div>                         
@@ -284,7 +302,10 @@
                             </table>
                         </c:if>
                         <c:if test="${empty requestScope.LIST_PENDING}">
-                            <h3 style="text-align: center">Bạn chưa có đơn hàng nào cả</h3>
+                            <div class="background-img">
+                                <div class="non-order"></div>
+                                <h3 style="text-align: center">Chưa có đơn hàng</h3>
+                            </div>
                         </c:if>
                     </div>
                     <div class="tab-pane" id="nav-verify" role="tabpanel" aria-labelledby="nav-verify-tab">
@@ -343,7 +364,10 @@
                             </table>
                         </c:if>
                         <c:if test="${empty requestScope.LIST_CONFIRM}">
-                            <h3 style="text-align: center">Bạn chưa có đơn hàng nào cả</h3>
+                            <div class="background-img">
+                                <div class="non-order"></div>
+                                <h3 style="text-align: center">Chưa có đơn hàng</h3>
+                            </div>
                         </c:if>
                     </div>
                     <div class="tab-pane" id="nav-ship" role="tabpanel" aria-labelledby="nav-ship-tab">
@@ -402,7 +426,10 @@
                             </table>
                         </c:if>
                         <c:if test="${empty requestScope.LIST_SHIPPING}">
-                            <h3 style="text-align: center">Bạn chưa có đơn hàng nào cả</h3>
+                            <div class="background-img">
+                                <div class="non-order"></div>
+                                <h3 style="text-align: center">Chưa có đơn hàng</h3>
+                            </div>
                         </c:if>
                     </div>
                     <div class="tab-pane" id="nav-done" role="tabpanel" aria-labelledby="nav-done-tab">
@@ -411,6 +438,7 @@
                                 <thead>
                                 <th style="text-align: center">Đơn hàng</th>
                                 <th style="text-align: center">Ngày</th>
+                                <th style="text-align: center">Ngày nhận hàng</th>
                                 <th style="text-align: center">Hình thức thanh toán</th>
                                 <th style="text-align: center">Hình thức vận chuyển</th>
                                 <th style="text-align: center">Thanh toán</th>
@@ -429,9 +457,15 @@
                                                 <div class="d-flex align-items-center justify-content-center mt-4">
                                                     <p class="">#ORD-${receive.eventOrderId}</p>
                                                 </div>
+                                                <div class="d-flex align-items-center justify-content-center mt-4">
+
+                                                </div>
                                             </th>
                                             <td>
                                                 <p class="mb-4 mt-4" style="text-align: center"><fmt:formatDate value="${receive.orderDate}" pattern="dd/MM/yyyy"/></p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-4 mt-4" style="text-align: center"><fmt:formatDate value="${receive.deliveryDate}" pattern="dd/MM/yyyy"/></p>
                                             </td>
                                             <td>      
                                                 <c:if test="${receive.paymentOptions == 'ONLINE'}">
@@ -444,12 +478,30 @@
                                             <td>
                                                 <p class="mb-4 mt-4 total-price" style="text-align: center">${receive.deliveryOptions}</p>
                                             </td>
-                                            <td>
+                                            <td style="text-align: center">
                                                 <c:if test="${receive.paid == true}">
                                                     <p class="mb-4 mt-4 total-price" style="text-align: center">Đã thanh toán</p>
                                                 </c:if>
                                                 <c:if test="${receive.paid == false}">
                                                     <p class="mb-4 mt-4 total-price" style="text-align: center">Chưa thanh toán</p>
+                                                </c:if>
+                                                <c:set var="result" value="NHANHANG"/> <!-- Khởi tạo với giá trị mặc định -->
+                                                <c:forEach var="feedbacks" items="${requestScope.LIST_CHECK_FEEDBACK}">
+                                                    <c:if test="${feedbacks.eventOrderId == receive.eventOrderId && feedbacks.feedback == ''}">
+                                                        <c:set var="result" value="DANHGIA"/>
+                                                    </c:if>
+                                                    <c:if test="${feedbacks.eventOrderId == receive.eventOrderId && feedbacks.feedback != ''}">
+                                                        <c:set var="result" value="DADANHGIA"/>
+                                                    </c:if>
+                                                </c:forEach>
+                                                <c:if test="${result == 'NHANHANG'}">
+                                                    <button id="myButton-${receive.eventOrderId}" onclick="handleButtonClick(${receive.eventOrderId}, event)" class="btn border-secondary rounded-pill px-4 py-3 text-third" style="text-align: center" type="button">Nhận hàng</button>
+                                                </c:if>
+                                                <c:if test="${result == 'DANHGIA'}">
+                                                    <button id="myButton-${receive.eventOrderId}" class="btn border-secondary rounded-pill px-4 py-3 text-third" style="text-align: center" type="button"  onclick="openFeedbackModal(${receive.eventOrderId}, event)">Đánh giá</button>
+                                                </c:if>
+                                                <c:if test="${result == 'DADANHGIA'}">
+                                                    <button class="btn border-secondary rounded-pill px-4 py-3 text-third" style="text-align: center" type="button" disabled="">Đã đánh giá</button>
                                                 </c:if>
                                             </td>
                                             <td>
@@ -461,7 +513,10 @@
                             </table>
                         </c:if>
                         <c:if test="${empty requestScope.LIST_RECEIVE}">
-                            <h3 style="text-align: center">Bạn chưa có đơn hàng nào cả</h3>
+                            <div class="background-img">
+                                <div class="non-order"></div>
+                                <h3 style="text-align: center">Chưa có đơn hàng</h3>
+                            </div>
                         </c:if>
                     </div>
                     <div class="tab-pane" id="nav-cancelled" role="tabpanel" aria-labelledby="nav-cancelled-tab">
@@ -514,7 +569,10 @@
                             </table>
                         </c:if>
                         <c:if test="${empty requestScope.LIST_CANCEL}">
-                            <h3 style="text-align: center">Bạn chưa có đơn hàng nào cả</h3>
+                            <div class="background-img">
+                                <div class="non-order"></div>
+                                <h3 style="text-align: center">Chưa có đơn hàng</h3>
+                            </div>
                         </c:if>
                     </div>
                 </div>
@@ -568,6 +626,33 @@
                 </div>
             </div>
         </div>
+        <!-- Modal Feedback -->
+        <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="feedbackModalLabel">Gửi Feedback</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="feedbackForm">
+                            <div class="form-group">
+                                <label for="feedbackText">Nội dung Feedback</label>
+                                <textarea class="form-control" id="feedbackText" rows="3" required></textarea>
+                            </div>
+                            <input type="hidden" id="feedbackOrderId" />
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-primary" id="submitFeedback">Gửi Feedback</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Footer Start -->
         <jsp:include page="footer.jsp"></jsp:include>
         <!-- Footer End -->
@@ -598,51 +683,113 @@
         <script src="lib/lightbox/js/lightbox.min.js"></script>
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
         <script>
-            $(document).ready(function () {
-                $("tr.order-row").click(function () {
-                    var orderId = $(this).data('order-id');
-                    var fulname = $(this).data('order-cust');
-                    var phone = $(this).data('cust-phone');
-                    var street = $(this).data('cust-street');
-                    var city = $(this).data('cust-city');
-                    var note = $(this).data('cust-note');
-                    var eventName = $(this).data('order-event');
+                                                        $(document).ready(function () {
+                                                            $("tr.order-row").click(function () {
+                                                                var orderId = $(this).data('order-id');
+                                                                var fulname = $(this).data('order-cust');
+                                                                var phone = $(this).data('cust-phone');
+                                                                var street = $(this).data('cust-street');
+                                                                var city = $(this).data('cust-city');
+                                                                var note = $(this).data('cust-note');
+                                                                var eventName = $(this).data('order-event');
 
-                    // Hiển thị thông tin chung của đơn hàng trong modal
-                    $("#modalOrderId").text(orderId);
-                    $("#modalFullname").text(fulname);
-                    $("#modalPhone").text(phone);
-                    $("#modalStreet").text(street);
-                    $("#modalCity").text(city);
-                    $("#modalNote").text(note);
-                    $("#modalEventName").text(eventName);
+                                                                // Hiển thị thông tin chung của đơn hàng trong modal
+                                                                $("#modalOrderId").text(orderId);
+                                                                $("#modalFullname").text(fulname);
+                                                                $("#modalPhone").text(phone);
+                                                                $("#modalStreet").text(street);
+                                                                $("#modalCity").text(city);
+                                                                $("#modalNote").text(note);
+                                                                $("#modalEventName").text(eventName);
 
-                    // Gọi AJAX để lấy danh sách sản phẩm của đơn hàng
-                    $.ajax({
-                        url: 'viewPurchasedOrderDetail', // Đường dẫn đến servlet
-                        type: 'GET',
-                        data: {orderId: orderId},
-                        success: function (response) {
-                            // Xóa dữ liệu cũ trước khi thêm mới
-                            $("#modalProductList").empty();
+                                                                // Gọi AJAX để lấy danh sách sản phẩm của đơn hàng
+                                                                $.ajax({
+                                                                    url: 'viewPurchasedOrderDetail', // Đường dẫn đến servlet
+                                                                    type: 'GET',
+                                                                    data: {orderId: orderId},
+                                                                    success: function (response) {
+                                                                        // Xóa dữ liệu cũ trước khi thêm mới
+                                                                        $("#modalProductList").empty();
 
-                            // Thêm HTML trả về từ servlet vào bảng
-                            $("#modalProductList").append(response);
+                                                                        // Thêm HTML trả về từ servlet vào bảng
+                                                                        $("#modalProductList").append(response);
 
-                            // Hiển thị modal
-                            $('#orderDetailModal').modal('show');
-                        },
-                        error: function () {
-                            alert("Không thể lấy dữ liệu sản phẩm.");
-                        }
-                    });
-                });
-            });
-            $('.close, .btn-secondary').click(function () {
-                $('#orderDetailModal').modal('hide');
-            });
+                                                                        // Hiển thị modal
+                                                                        $('#orderDetailModal').modal('show');
+                                                                    },
+                                                                    error: function () {
+                                                                        alert("Không thể lấy dữ liệu sản phẩm.");
+                                                                    }
+                                                                });
+                                                            });
+                                                        });
+                                                        $(document).ready(function () {
+                                                            $('#submitFeedback').click(function () {
+                                                                var feedbackText = $('#feedbackText').val();
+                                                                var orderId = $('#feedbackOrderId').val();
+
+                                                                $.ajax({
+                                                                    url: 'submitFeedback', // Đường dẫn đến servlet xử lý feedback
+                                                                    type: 'POST',
+                                                                    contentType: 'application/json',
+                                                                    data: JSON.stringify({orderId: orderId, feedback: feedbackText}),
+                                                                    success: function (response) {
+                                                                        if (response.success) {
+                                                                            alert('Gửi feedback thành công!');
+                                                                            var button = document.getElementById('myButton-' + orderId);
+                                                                            button.innerHTML = 'Đã đánh giá';
+                                                                            button.onclick = null;  // Không cần onclick sau khi đã thay đổi
+                                                                            button.disabled = true; // Vô hiệu hóa nút
+                                                                            $('#feedbackModal').modal('hide');
+                                                                        } else {
+                                                                            alert('Có lỗi xảy ra, vui lòng thử lại!');
+                                                                        }
+                                                                    },
+                                                                    error: function () {
+                                                                        alert('Không thể gửi feedback.');
+                                                                    }
+                                                                });
+                                                            });
+                                                        });
+                                                        $('.close, .btn-secondary').click(function () {
+                                                            $('#orderDetailModal').modal('hide');
+                                                        });
+                                                        $('.close, .btn-secondary').click(function () {
+                                                            $('#feedbackModal').modal('hide');
+                                                        });
         </script>
-
+        <script>
+            function handleButtonClick(orderId, event) {
+                // Gửi yêu cầu đến servlet để cập nhật trạng thái đã nhận hàng
+                event.stopPropagation(); // Ngăn sự kiện click của <a>
+                event.preventDefault();  // Ngăn chặn hành vi mặc định của thẻ <a>
+                fetch('feedbackCreate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({orderId: orderId})
+                })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Cập nhật giao diện sau khi nhận hàng thành công
+                                var button = document.getElementById('myButton-' + orderId);
+                                button.innerHTML = 'Đánh giá';
+                                button.onclick = null;  // Không cần onclick sau khi đã thay đổi
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+            }
+            function openFeedbackModal(orderId, event) {
+                event.stopPropagation(); // Ngăn sự kiện click của <a>
+                event.preventDefault();  // Ngăn chặn hành vi mặc định của thẻ <a>
+                $('#feedbackOrderId').val(orderId); // Gán orderId vào input ẩn
+                $('#feedbackModal').modal('show'); // Hiện modal
+            }
+        </script>
         <!-- Template Javascript -->
         <script src="alertPackage/alertJs.js"></script>
         <script src="js/main.js"></script>

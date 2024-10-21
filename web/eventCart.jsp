@@ -154,7 +154,7 @@
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                         <a href="viewProfileAction" class="dropdown-item">My Profile</a>
-                                        <a href="#" class="dropdown-item">Purchase Order</a>
+                                        <a href="purchasedOrder" class="dropdown-item">Purchased Order</a>
                                         <a href="logoutAction" class="dropdown-item">Logout</a>
                                     </div>
                                 </div>                         
