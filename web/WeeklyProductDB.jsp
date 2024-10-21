@@ -124,7 +124,7 @@
             </div>-->
                         <div class="form-container">
                             <div class="form-left">
-                                <form id="f1" method="get" action="weeklyRevenue">
+                                <form id="f1" method="get" action="weeklyProduct">
                                     <div style="padding-left: 20px">
                                         <select name="year" class="form-control" id="dropdownYear" style="width: 120px;">
                                             <c:set var="currentYear" value="2024"/>

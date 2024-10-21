@@ -44,7 +44,7 @@
                                     <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event theo tháng</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event theo tuần</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Sản phẩm theo tháng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="">Sản phẩm theo tuần</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weekyProductBoard">Sản phẩm theo tuần</a></li>
                                 </ul>
                             </li>
                             <li>
