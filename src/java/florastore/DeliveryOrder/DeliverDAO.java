@@ -193,7 +193,6 @@ public class DeliverDAO {
                         + "JOIN EventOrderDetail eod ON eo.EventOrderId = eod.EventOrderId "
                         + "JOIN EventProduct ep ON eod.EventProductID = ep.EPId "
                         + "WHERE eo.EventOrderId = ?";
-
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, eventOrderID);
                 rs = stm.executeQuery();

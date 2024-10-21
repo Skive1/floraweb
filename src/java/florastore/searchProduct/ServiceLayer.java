@@ -6,7 +6,6 @@
 package florastore.searchProduct;
 
 import florastore.DeliveryOrder.DeliverDTO;
-import florastore.order.OrderDTO;
 import florastore.searchProduct.ProductDTO;
 import java.util.ArrayList;
 import java.util.Collections;
