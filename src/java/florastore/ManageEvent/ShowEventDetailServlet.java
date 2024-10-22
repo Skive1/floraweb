@@ -6,12 +6,14 @@
 package florastore.ManageEvent;
 
 import florastore.event.EventDAO;
+import florastore.event.EventDTO;
 import florastore.eventProduct.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
@@ -22,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,30 +37,35 @@ public class ShowEventDetailServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        //1. Get event id
-        int eventId = Integer.parseInt(request.getParameter("getEventID").trim());
-        String eventName = request.getParameter("getEventName");
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ManageEvent.ERROR_PAGE);
         
         DecimalFormat df = new DecimalFormat("#,###.##");
-        double total = 0;
-        String totalOut;
+        List<EventDTO> events = (List<EventDTO>) request.getAttribute("EVENT_LIST");
+        List<EventProductDTO> productList = new ArrayList<>();
+        List<TotalPriceDTO> totalPrint = new ArrayList<>();
         try {
             EventDAO dao = new EventDAO();
-            List<EventProductDTO> flowerList = dao.getEventFlower(eventId);
-            if (flowerList != null) {
-                for (EventProductDTO flowerPrice : flowerList) {
-                    total += flowerPrice.getEventProductPrice() * flowerPrice.getEventProductQuantity();
+            if (events != null) {
+                request.setAttribute("EVENT_LIST", events);
+                for (int i = 0; i < events.size(); i++) {
+                    List<EventProductDTO> flowerList = dao.getEventFlower2(events.get(i).getEventId());
+                    if (flowerList != null && !flowerList.isEmpty()) {
+                        productList.addAll(flowerList);
+                        double total = 0;
+                        String totalOut;
+                        for (EventProductDTO flowerPrice : flowerList) {
+                            total += flowerPrice.getEventProductPrice() * flowerPrice.getEventProductQuantity();
+                        }
+                        totalOut = df.format(total);
+                        TotalPriceDTO result = new TotalPriceDTO(events.get(i).getEventId(), totalOut);
+                        totalPrint.add(result);
+                    }
                 }
-                
-                totalOut = df.format(total);
-                url = (String) siteMap.get(MyAppConstants.ManageEvent.VIEW_EVENT_PAGE);
-                request.setAttribute("FLOWER_LIST", flowerList);
-                request.setAttribute("EVENT_ID", eventId);
-                request.setAttribute("EVENT_NAME", eventName);
-                request.setAttribute("TOTAL", totalOut);
+                request.setAttribute("FLOWER_LIST", productList);
+                request.setAttribute("TOTAL", totalPrint);
+                url = (String) siteMap.get(MyAppConstants.ManageEvent.MANAGE_EVENT_PAGE);
             }
         } catch (SQLException ex) {
             log("EventDetailServlet _SQL_ " + ex.getMessage());

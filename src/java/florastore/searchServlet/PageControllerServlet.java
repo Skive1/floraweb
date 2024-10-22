@@ -48,7 +48,6 @@ public class PageControllerServlet extends HttpServlet {
                 url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_COLOR);
             } else if (session.getAttribute("showOrderBy") != null) {
                 url = (String) siteMap.get(MyAppConstants.SearchFeature.ORDER_BY);
-                System.out.println("My app constant and pageChanger");
             }
 
             //find error here

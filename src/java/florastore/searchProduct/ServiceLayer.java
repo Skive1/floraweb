@@ -5,6 +5,8 @@
  */
 package florastore.searchProduct;
 
+import florastore.DeliveryOrder.DeliverDTO;
+import florastore.event.EventDTO;
 import florastore.searchProduct.ProductDTO;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,43 +17,34 @@ public class ServiceLayer {
 
     public void sortInOrder(List<ProductDTO> listSort, boolean ascending) {
         if (ascending) {
-        Collections.sort(listSort, Comparator.comparingInt((value) -> value.getProductPrice()));
+            Collections.sort(listSort, Comparator.comparingInt((value) -> value.getProductPrice()));
         } else {
             Collections.sort(listSort, Comparator.comparingInt(ProductDTO::getProductPrice).reversed());
         }
     }
 
-    public String[] chooseColor() {
-        return new String[]{"All type", "Multi color", "Red", "Blue", "White", "Orange", "Magenta",
-            "Yellow", "Pink", "Purple", "Brown", "Green", "Black", "Other"};
-    }
+    public List<String> chooseColor(List<ProductDTO> list) {
+        String[] defaultColor = {"multi-colored", "red", "blue", "white", "orange", "magenta",
+            "yellow", "pink", "purple", "brown", "green", "black"};
 
-    public List<ProductDTO> getSingleColor(List<ProductDTO> list, String color) {
-        List<ProductDTO> result = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getProductDetail().toLowerCase().contains(color.toLowerCase())) {
-                result.add(list.get(i));
-            }
-        }
-        if ("red".equals(color.toLowerCase())) {
-            for (int i = 0; i < result.size(); i++) {
-                if (result.get(i).getProductDetail().toLowerCase().contains("multi")
-                        && result.get(i).getProductDetail().toLowerCase().contains("color")) {
-                    result.remove(i);
-                    i--;
+        List<String> result = new ArrayList<>();
+        List<ProductDTO> copy = new ArrayList<>(list);
+
+        result.add("All type");
+        for (int i = 0; i < defaultColor.length; i++) {
+            boolean flag = false;
+            for (int j = 0; j < copy.size(); j++) {
+                if (copy.get(j).getProductDetail().toLowerCase().contains(defaultColor[i])) {
+                    flag = true;
+                    copy.remove(j);
                 }
             }
-        }
-        return result;
-    }
-
-    public List<ProductDTO> getMultyColor(List<ProductDTO> list) {
-        List<ProductDTO> result = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getProductDetail().toLowerCase().contains("multi")
-                    && list.get(i).getProductDetail().toLowerCase().contains("color")) {
-                result.add(list.get(i));
+            if (flag) {
+                result.add(defaultColor[i]);
             }
+        }
+        if (copy.size() != 0) {
+            result.add("Other");
         }
         return result;
     }
@@ -84,6 +77,36 @@ public class ServiceLayer {
         return result;
     }
 
+    public List<ProductDTO> getSingleColor(List<ProductDTO> list, String color) {
+        List<ProductDTO> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getProductDetail().toLowerCase().contains(color.toLowerCase())) {
+                result.add(list.get(i));
+            }
+        }
+        if ("red".equals(color.toLowerCase())) {
+            for (int i = 0; i < result.size(); i++) {
+                if (result.get(i).getProductDetail().toLowerCase().contains("multi")
+                        && result.get(i).getProductDetail().toLowerCase().contains("color")) {
+                    result.remove(i);
+                    i--;
+                }
+            }
+        }
+        return result;
+    }
+
+    public List<ProductDTO> getMultyColor(List<ProductDTO> list) {
+        List<ProductDTO> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getProductDetail().toLowerCase().contains("multi")
+                    && list.get(i).getProductDetail().toLowerCase().contains("color")) {
+                result.add(list.get(i));
+            }
+        }
+        return result;
+    }
+
     public List<ProductDTO> getNewProduct(List<ProductDTO> list) {              //get 3 latest product
         List<ProductDTO> getNew = new ArrayList<>();
         for (int i = list.size(); i >= list.size() - 4; i--) {
@@ -91,7 +114,7 @@ public class ServiceLayer {
         }
         return getNew;
     }
-    
+
     public int[] getCategories(List<ProductDTO> list) {
         int total = 0;
         int fresh = 0;
@@ -100,22 +123,22 @@ public class ServiceLayer {
         int other = 0;
 
         for (ProductDTO categories : list) {
-            
-                if ("Hoa ly".equals(categories.getProductType())) {
-                    fresh++;
-                } else if ("Hoa hồng".equals(categories.getProductType())) {
-                    pot++;
-                } else if ("Hoa hướng dương".equals(categories.getProductType())) {
-                    dry++;
-                } else {
-                    other++;
-                }
+
+            if ("Hoa ly".equals(categories.getProductType())) {
+                fresh++;
+            } else if ("Hoa hồng".equals(categories.getProductType())) {
+                pot++;
+            } else if ("Hoa hướng dương".equals(categories.getProductType())) {
+                dry++;
+            } else {
+                other++;
+            }
             total++;
         }
 
         return new int[]{total, fresh, pot, dry, other};
     }
-    
+
     public List<ProductDTO> getNine(List<ProductDTO> list, int[] range) {        //get X product in page N
         List<ProductDTO> result = new ArrayList<>();
         int addCounter = 1;
@@ -128,16 +151,39 @@ public class ServiceLayer {
         return result;
     }
 
-    public int getPage(int page, String pageIsActive, String goBack, String goForward) {
+    public List<DeliverDTO> getSeven(List<DeliverDTO> list, int[] range) {        //get X product in page N
+        List<DeliverDTO> result = new ArrayList<>();
+        int addCounter = 1;
+        for (DeliverDTO inPage : list) {
+            if (range[0] <= addCounter && addCounter <= range[1]) {
+                result.add(inPage);
+            }
+            addCounter++;
+        }
+        return result;
+    }
+
+    public List<EventDTO> getSevenEvent(List<EventDTO> list, int[] range) {        //get X product in page N
+        List<EventDTO> result = new ArrayList<>();
+        int addCounter = 1;
+        for (EventDTO inPage : list) {
+            if (range[0] <= addCounter && addCounter <= range[1]) {
+                result.add(inPage);
+            }
+            addCounter++;
+        }
+        return result;
+    }
+    
+    public int getPage(String pageIsActive, String goBack, String goForward) {
+        int page = 0;
         if (pageIsActive == null) {
             page = 1;                                                       //lần đầu in ra sản phẩm pageNumber mặc định luôn là 1
         } else {                                                            //nếu chuyển qua trang 2, 3, ... thì pageNumber đã ko còn là null
             if (goBack != null) {
-                page = Integer.parseInt(pageIsActive);
-                page--;
+                page = Integer.parseInt(goBack);
             } else if (goForward != null) {
-                page = Integer.parseInt(pageIsActive);
-                page++;
+                page = Integer.parseInt(goForward);
             } else {
                 page = Integer.parseInt(pageIsActive);
             }
@@ -145,18 +191,16 @@ public class ServiceLayer {
         return page;
     }
 
-    public int getPage(double list) {                                           //thanh chuyển trang << 1 2 3 4 >>
-        double pageSize = Math.ceil(list / 9);
+    public int getPage(double list, int count) {                                           //thanh chuyển trang << 1 2 3 4 >>
+        double pageSize = Math.ceil(list / count);
         return (int) pageSize;
     }
 
-    public int[] getPageRange(int page) {                                       //lấy phạm vi sản phẩm ở trang 1, 2, ...
-        // Số sản phẩm trên mỗi trang
-        int itemsPerPage = 9;
-
+    public int[] getPageRange(int page, int count) {                                       //lấy phạm vi sản phẩm ở trang 1, 2, ...
+        //count: số sản phẩm cần show
         // Tìm 2 đầu vị trí xuất sản phẩm
-        int start = (page - 1) * itemsPerPage + 1;
-        int end = page * itemsPerPage;
+        int start = (page - 1) * count + 1;
+        int end = page * count;
 
         return new int[]{start, end};
     }
