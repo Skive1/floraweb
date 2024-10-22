@@ -199,7 +199,7 @@
                                                 <form id="backForm" action="delivererOrders" method="POST">
                                                     <input type="hidden" id="pageBack" name="pageBack"/>
                                                     <a href="#" class="btn btn-secondary" style="margin: 1; background-color: white; border-color: black; color: black; font-weight: bold"
-                                                       onclick="document.getElementById('pageBack').value = '${sessionScope.currentPage}';
+                                                       onclick="document.getElementById('pageBack').value = '${(sessionScope.currentPage - 1)}';
                                                                document.getElementById('backForm').submit();">
                                                         &laquo;
                                                     </a>
@@ -347,7 +347,7 @@
                                                 <form id="forwardForm" action="delivererOrders" method="POST">
                                                     <input type="hidden" id="pageForward" name="pageForward"/>
                                                     <a href="#" class="btn btn-secondary" style="margin: 1; background-color: white; border-color: black; color: black; font-weight: bold"
-                                                       onclick="document.getElementById('pageForward').value = '${sessionScope.currentPage}';
+                                                       onclick="document.getElementById('pageForward').value = '${(sessionScope.currentPage + 1)}';
                                                                document.getElementById('forwardForm').submit();">
                                                         &raquo;
                                                     </a>

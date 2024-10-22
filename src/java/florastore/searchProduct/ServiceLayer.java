@@ -161,18 +161,16 @@ public class ServiceLayer {
         }
         return result;
     }
-    
+
     public int getPage(String pageIsActive, String goBack, String goForward) {
         int page = 0;
         if (pageIsActive == null) {
             page = 1;                                                       //lần đầu in ra sản phẩm pageNumber mặc định luôn là 1
         } else {                                                            //nếu chuyển qua trang 2, 3, ... thì pageNumber đã ko còn là null
             if (goBack != null) {
-                page = Integer.parseInt(pageIsActive);
-                page--;
+                page = Integer.parseInt(goBack);
             } else if (goForward != null) {
-                page = Integer.parseInt(pageIsActive);
-                page++;
+                page = Integer.parseInt(goForward);
             } else {
                 page = Integer.parseInt(pageIsActive);
             }
@@ -186,7 +184,7 @@ public class ServiceLayer {
     }
 
     public int[] getPageRange(int page, int count) {                                       //lấy phạm vi sản phẩm ở trang 1, 2, ...
-
+        //count: số sản phẩm cần show
         // Tìm 2 đầu vị trí xuất sản phẩm
         int start = (page - 1) * count + 1;
         int end = page * count;
@@ -199,7 +197,7 @@ public class ServiceLayer {
             pageIsActive = goBack;
         } else if (pageIsActive == null && goForward != null) {
             pageIsActive = goForward;
-        } 
+        }
         return pageIsActive;
     }
 }
