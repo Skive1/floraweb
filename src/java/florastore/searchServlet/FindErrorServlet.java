@@ -5,13 +5,10 @@
  */
 package florastore.searchServlet;
 
-import florastore.searchProduct.ProductDAO;
-import florastore.searchProduct.ProductDTO;
 import florastore.searchProduct.SearchCreateError;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
+import java.math.BigInteger;
 import java.util.Properties;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -41,8 +38,6 @@ public class FindErrorServlet extends HttpServlet {
 
         String paramPriceFrom = request.getParameter("txtPriceFrom");
         String paramPriceTo = request.getParameter("txtPriceTo");
-        String txtColor = request.getParameter("txtColor");
-
         int priceFrom = 0;
         int priceTo = 0;
 
@@ -52,10 +47,14 @@ public class FindErrorServlet extends HttpServlet {
             if (paramPriceFrom.trim().isEmpty() && !paramPriceTo.trim().isEmpty()
                     || !paramPriceFrom.trim().isEmpty() && paramPriceTo.trim().isEmpty()) {         //empty 1 bên
                 foundError = true;
-                errors.setPriceEmpty("You have to enter the valid number into both of this!");
-            } else if (!paramPriceFrom.trim().matches("[0-9]+") || !paramPriceTo.trim().matches("[0-9]+")) {        //not number
+                errors.setPriceEmpty("Bạn phải nhập số vào cả hai ô này!");
+            } else if (!paramPriceFrom.trim().matches("\\d+") || !paramPriceTo.trim().matches("\\d+")) {        //not number
                 foundError = true;
-                errors.setPriceInvalid("Only number are accepted!");
+                errors.setPriceInvalid("Bạn chỉ có thể nhập số từ 0 đến 9 vào hai ô này!");
+            } else if (new BigInteger(paramPriceFrom).compareTo(new BigInteger("100000000")) > 0
+                    || new BigInteger(paramPriceTo).compareTo(new BigInteger("100000000")) > 0) {
+                foundError = true;
+                errors.setPriceInvalid("Giá tiền quá lớn, hãy thử với giá tiền nhỏ hơn.");
             }
             if (!foundError) {                                                  //not empty and only number input
                 priceFrom = Integer.parseInt(paramPriceFrom);
@@ -73,7 +72,7 @@ public class FindErrorServlet extends HttpServlet {
             } else if (!foundError) {                                               //price range valid
                 url = (String) siteMap.get(MyAppConstants.SearchFeature.SEARCH_PRICE_RANGE);    //sau khi search price xong sẽ chuyển sang search color
             }                                                                                   //nếu user chỉ search price thì dù có qua search color cũng 
-                                                                                                //không bị sai data vì txtColor là tìm toàn bộ
+            //không bị sai data vì txtColor là tìm toàn bộ
             session.removeAttribute("PriceFrom");
             session.removeAttribute("PriceTo");
             session.setAttribute("PriceFrom", paramPriceFrom);
