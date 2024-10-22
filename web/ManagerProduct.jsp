@@ -99,7 +99,7 @@
                                 </c:choose>
 
 
-                            <c:forEach begin="1" end="${endP}" var="i">
+                            <c:forEach begin="1" end="${endP - 1}" var="i">
                                 <li class="page-item" ><a style="background-color: #ffcc33; color: whitesmoke" href="ProductManagementServlet?storeInfo=${requestScope.storeId}&index=${i}" class="active rounded" >${i}</a></li>  
                                 </c:forEach>
                             <li class="page-item ">
@@ -110,7 +110,7 @@
                             </c:if>
                             <c:if test="${currentP != endP}">
                                 <li class="page-item">
-                                    <a href="ProductManagementServlet?storeInfo=${requestScope.storeId}&index=${endP}">Last</a>
+                                    <a href="ProductManagementServlet?storeInfo=${requestScope.storeId}&index=${endP - 1}">Last</a>
                                 </li>
                             </c:if>                   
                             </li>
