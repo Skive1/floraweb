@@ -82,12 +82,12 @@
                                 <table>
                                     <thead>
                                     <th>No</th>
-                                    <th>Owner</th>
-                                    <th>Event Name</th>
-                                    <th>Location</th>
-                                    <th>Time</th>        
-                                    <th>View event</th>
-                                    <th>Close event</th>
+                                    <th>Chủ sở hữu</th>
+                                    <th>Tên sự kiện</th>
+                                    <th>Địa điểm</th>
+                                    <th>Thời gian</th>        
+                                    <th>Thông tin</th>
+                                    <th>Đóng sự kiện</th>
                                     </thead>
                                     <tbody style="height: 100px;">
                                         <c:set var="event" value="${requestScope.EVENT_LIST}"/>
@@ -107,8 +107,8 @@
                                                         <!--<a class="delete-class" href="viewEventDetail?getEventID=${eventList.eventId}
                                                         &getEventName=${eventList.eventName}" style="background-color: green">View</a>-->
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" 
-                                                                data-target="#exampleModal${counter.count}" style="background-color: green">
-                                                            Nhận đơn
+                                                                data-target="#exampleModal${counter.count}">
+                                                            Xem
                                                         </button>
                                                         <div class="modal fade" id="exampleModal${counter.count}" tabindex="-1" role="dialog" 
                                                              aria-labelledby="exampleModalLabel${counter.count}" aria-hidden="true" >
@@ -164,8 +164,43 @@
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td>                                                                     
-                                                        <a class="delete-class" href="closeEvent?getEventID=${eventList.eventId}">Close</a>
+                                                    <td>  
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" 
+                                                                data-target="#exampleModal2${counter.count}" style="background-color: red">
+                                                            Đóng
+                                                        </button>
+                                                        <div class="modal fade" id="exampleModal2${counter.count}" tabindex="-1" role="dialog" 
+                                                             aria-labelledby="exampleModalLabel2${counter.count}" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel2${counter.count}">Xác nhận nhận đơn hàng</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Bạn có chắc chắn muốn nhận đơn?
+                                                                        <br/>
+                                                                        <a style="color: red; font-weight: bold">
+                                                                            Bạn không thể hủy sau khi nhận
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <form id="getOrder${counter.count}" action="closeEvent" method="POST">
+                                                                            <input type="hidden" id="getEventID" name="getEventID" value="${eventList.eventId}"/>
+                                                                            <a href="#" class="btn btn-secondary" style="background-color: green;"
+                                                                               onclick="
+                                                                                       document.getElementById('getEventID');
+                                                                                       document.getElementById('getOrder${counter.count}').submit();">
+                                                                                Có
+                                                                            </a>
+                                                                        </form>
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>          
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
