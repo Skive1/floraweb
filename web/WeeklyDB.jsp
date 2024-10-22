@@ -48,6 +48,9 @@
                     </div>
                     <div class="admin-sidebar-content">
                         <ul>
+                            <div class="logout-admin"><a href="logoutAction" class="logout-btn">Logout</a></div>
+                            <p class="admin-p">Admin</p>
+                            <div class="admin-under-p">Flora Store Admin</div>
                             <li>
                                 <a href="">
                                     <i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i>
@@ -97,31 +100,7 @@
                         </div>
                     </div> 
                     <div class="admin-content-main">
-                        <h1 style="text-align: center;">Revenue by Week</h1>
-                        <!--                        <form id="f1" method="get" action="weeklyRevenue">
-                                                    <div style="padding-left: 20px">
-                                                        <select name="year" class="form-control" id="dropdownYear" style="width: 120px;">
-                        <c:set var="currentYear" value="2024"/>
-                        <c:set var="endYear" value="2018"/>
-                        <c:forEach var="year" begin="0" end="${currentYear - endYear}">
-                            <option ${requestScope.year == (currentYear - year) ? "selected" : ""} value="${currentYear - year}">${currentYear - year}
-                            </option>
-                        </c:forEach>
-                    </select>
-                    <input style="width: 200px;" value="" type="week" class="form-control" id="weekInput" onclick="setDefaultWeek()">
-                    <input value="" type="hidden" class="form-control" name="from" id="from">
-                    <input value="" type="hidden" class="form-control" name="to" id="to">
-                    <input value="" type="hidden" class="form-control" name="month" id="month">
-                    <button style="width: 100px; padding: 0" class="form-control" type="button" onclick="submitForm()">Submit</button>
-                </div>
-            </form>
-
-            <div class="admin-content-main-chart">
-                Chart
-                <div class="card-body">
-                    <canvas class="my-4 w-100" id="pieChart" height="380"></canvas>
-                </div>                                                    
-            </div>-->
+                        <h1 style="text-align: center;">Revenue flower(s) by week</h1>
                         <div class="form-container">
                             <div class="form-left">
                                 <form id="f1" method="get" action="weeklyRevenue">

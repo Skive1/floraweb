@@ -26,7 +26,13 @@
         <title>Monthly Event DashBoard</title>
     </head>
     <style>
-
+        #myChart, #myBarChart {
+            border: 1px solid black
+        }
+        .form-control {
+            background-color: whitesmoke;
+            margin: 10px                
+        }
     </style>
     <body>
         <section class="admin">
@@ -37,6 +43,9 @@
                     </div>
                     <div class="admin-sidebar-content">
                         <ul>
+                            <div class="logout-admin"><a href="logoutAction" class="logout-btn">Logout</a></div>
+                            <p class="admin-p">Admin</p>
+                            <div class="admin-under-p">Flora Store Admin</div>
                             <li>
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
 
@@ -86,10 +95,12 @@
                     <div class="admin-content-main">
                         <!--                        <c:if test="${empty requestScope.MonthList}">
                                                     <p>Không có sản phẩm được bán trong tháng/năm này</p>
-                        </c:if>                      -->
+                        </c:if>                       
+                        -->
+
                         <h1 style="text-align: center;">Dashboard</h1>                    
                         <h3 class="mb-0 text-center">
-                            <strong>Revenue by month</strong>                     
+                            <strong>Revenue event flower(s) by month</strong>                     
                             <form id="f1" method="get" action="monthlyEventRevenue">
                                 <div style="padding-left: 20px">
                                     <select name="year" class="form-control" id="dropdownYear" style="width: 120px;" onchange="getYear(this)">
@@ -99,12 +110,18 @@
                                             <option  value="${currentYear - year}">${currentYear - year}</option>
                                         </c:forEach>
                                     </select>
-
                                     <select name="month" class="form-control" id="dropdownMonth" style="width: 120px;">
-                                        <option value="" selected="" disabled="">-- Select Month --</option>
+                                        <c:choose>
+                                            <c:when test="${not empty requestScope.curMonth}">
+                                                <option selected="" disabled="">${requestScope.curMonth}</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option selected="" disabled="">Select Month</option>
+                                            </c:otherwise>
+                                        </c:choose>                                 
                                         <c:forEach var="month" begin="1" end="12">
-                                            <option  value="${month}">${month}</option>
-                                        </c:forEach>
+                                            <option  value="${month}">${month}</option>                                           
+                                        </c:forEach>                                        
                                     </select>                               
                                     <button style="width: 100px; padding: 0" class="form-control" type="submit">Submit</button>
                                 </div>
@@ -118,77 +135,77 @@
                                 <canvas id="myBarChart"></canvas>
                             </div>
                         </div> 
-<!--                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Tổng số lượng bán</th>
-                                                    <th>Giá</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${allMonth}" var="product">
-                                                    <tr>
-                                                        <td>${product.month}</td>
-                                                        <td>${product.sold}</td>
-                                                        <td>${product.total}</td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>-->
-        </div>
-    </div>
-</div> 
+                        <!--                                        <table>
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>ID</th>
+                                                                            <th>Tổng số lượng bán</th>
+                                                                            <th>Giá</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                        <c:forEach items="${allMonth}" var="product">
+                            <tr>
+                                <td>${product.month}</td>
+                                <td>${product.sold}</td>
+                                <td>${product.total}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>-->
+                    </div>
+                </div>
+            </div> 
 
-</section>
-<script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            datasets: [{
-                    label: 'Biểu đồ doanh thu tổng của cả năm',
-                    data: [${requestScope.month1.total}, ${requestScope.month2.total}, ${requestScope.month3.total}, ${requestScope.month4.total}, ${requestScope.month5.total}
-                        , ${requestScope.month6.total}, ${requestScope.month7.total}, ${requestScope.month8.total}, ${requestScope.month9.total}, ${requestScope.month10.total}
-                        , ${requestScope.month11.total}, ${requestScope.month12.total}],
-                    fill: false,
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1
-                }]
-        },
-        options: {}
-    });
-</script>
+        </section>
+        <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                            label: 'Biểu đồ doanh thu tổng của cả năm',
+                            data: [${requestScope.month1.total}, ${requestScope.month2.total}, ${requestScope.month3.total}, ${requestScope.month4.total}, ${requestScope.month5.total}
+                                , ${requestScope.month6.total}, ${requestScope.month7.total}, ${requestScope.month8.total}, ${requestScope.month9.total}, ${requestScope.month10.total}
+                                , ${requestScope.month11.total}, ${requestScope.month12.total}],
+                            fill: false,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                        }]
+                },
+                options: {}
+            });
+        </script>
 
-<script>
-    var xValues = ["${requestScope.pro1.name}", "${requestScope.pro2.name}", "${requestScope.pro3.name}", "${requestScope.pro4.name}", "${requestScope.pro5.name}"];
+        <script>
+            var xValues = ["${requestScope.pro1.name}", "${requestScope.pro2.name}", "${requestScope.pro3.name}", "${requestScope.pro4.name}", "${requestScope.pro5.name}"];
 //    var xValues = [1, 2, 3, 4, 5];
-    var yValues = [${requestScope.pro1.total}, ${requestScope.pro2.total}, ${requestScope.pro3.total}, ${requestScope.pro4.total}, ${requestScope.pro5.total}];
-    var barColors = ["red", "green", "blue", "orange", "brown"];
+            var yValues = [${requestScope.pro1.total}, ${requestScope.pro2.total}, ${requestScope.pro3.total}, ${requestScope.pro4.total}, ${requestScope.pro5.total}];
+            var barColors = ["red", "green", "blue", "orange", "brown"];
 
-    new Chart("myBarChart", {
-        type: "bar",
-        data: {
-            labels: xValues,
-            datasets: [{
-                    label: 'Biểu đồ Top 5 sản phẩm bán chạy theo tháng',
-                    backgroundColor: barColors,
-                    data: yValues,
-                    borderColor: 'rgb(75, 192, 192)'
-                }]
-        },
-        options: {
-            legend: {display: false},
-            title: {
-                display: true,
-                text: "TOP 5 Best Selling Product"
-            }
-        }
-    });
+            new Chart("myBarChart", {
+                type: "bar",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                            label: 'Biểu đồ Top 5 sản phẩm sự kiện bán chạy theo tháng',
+                            backgroundColor: barColors,
+                            data: yValues,
+                            borderColor: 'rgb(75, 192, 192)'
+                        }]
+                },
+                options: {
+                    legend: {display: false},
+                    title: {
+                        display: true,
+                        text: "TOP 5 Best Selling Product"
+                    }
+                }
+            });
 
 
-</script>
-<script src="js/javascript.js"></script>
-</body>
+        </script>
+        <script src="js/javascript.js"></script>
+    </body>
 </html>

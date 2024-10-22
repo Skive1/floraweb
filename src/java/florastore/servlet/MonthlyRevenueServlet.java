@@ -102,6 +102,7 @@ public class MonthlyRevenueServlet extends HttpServlet {
             request.setAttribute("month12", listYear.get(11));
             request.setAttribute("allMonth", listYear);
             request.setAttribute("fullName", name);
+            request.setAttribute("curMonth",month);
         } catch (SQLException ex) {
             String msg = ex.getMessage();
             log("MonthlyRevenueServlet _ SQL: " + msg);

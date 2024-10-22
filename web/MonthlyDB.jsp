@@ -24,6 +24,15 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <title>Monthly Product DashBoard</title>
     </head>
+    <style>
+        #myChart, #myBarChart {
+            border: 1px solid black
+        }
+        .form-control {
+            background-color: whitesmoke;
+            margin: 10px                
+        }
+    </style>
     <body>
         <section class="admin">
             <div class="row-grid">
@@ -33,9 +42,11 @@
                     </div>
                     <div class="admin-sidebar-content">
                         <ul>
+                            <div class="logout-admin"><a href="logoutAction" class="logout-btn">Logout</a></div>
+                            <p class="admin-p">Admin</p>
+                            <div class="admin-under-p">Flora Store Admin</div>
                             <li>
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
-
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event theo tháng</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event theo tuần</a></li>
@@ -85,7 +96,7 @@
                         </c:if>                      -->
                         <h1 style="text-align: center;">Dashboard</h1>                    
                         <h3 class="mb-0 text-center">
-                            <strong>Revenue by month</strong>
+                            <strong>Revenue flower(s) by month</strong>
                             <form id="f1" method="get" action="monthlyRevenue">
                                 <div style="padding-left: 20px">
                                     <select name="year" class="form-control" id="dropdownYear" style="width: 120px;" onchange="getYear(this)">
@@ -97,7 +108,14 @@
                                     </select>
 
                                     <select name="month" class="form-control" id="dropdownMonth" style="width: 120px;">
-                                        <option value="" selected="" disabled="">-- Select Month --</option>
+                                        <c:choose>
+                                            <c:when test="${not empty requestScope.curMonth}">
+                                                <option selected="" disabled="">${requestScope.curMonth}</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option selected="" disabled="">Select Month</option>
+                                            </c:otherwise>
+                                        </c:choose>
                                         <c:forEach var="month" begin="1" end="12">
                                             <option  value="${month}">${month}</option>
                                         </c:forEach>
@@ -110,8 +128,7 @@
                             <div class="admin-content-main-chart-line">            
                                 <canvas id="myChart"></canvas>
                             </div>
-
-                            <div class="admin-content-main-chart-bar-chart">
+                            <div class="admin-content-main-chart-bar-chart ">
                                 <canvas id="myBarChart"></canvas>
                             </div>
                         </div>
