@@ -73,7 +73,7 @@ public class OrderInformationServlet extends HttpServlet {
                         totalPrint.add(result);
                     }
                 }
-                request.setAttribute("FLOWER_LIST", productList);
+                request.setAttribute("DELIVERY_INFO_LIST", productList);
                 request.setAttribute("TOTAL", totalPrint);
                 url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
             }

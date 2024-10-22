@@ -113,7 +113,6 @@
                                             <c:forEach var="eventOrder" items="${requestScope.DELIVERING_DETAIL}" varStatus="counter">
                                                 <tr>
                                                     <td>${counter.count}</td>
-
                                                     <td>
                                                         <fmt:formatDate value="${eventOrder.orderDate}" pattern="dd-MM-yyy" />
                                                     </td>
