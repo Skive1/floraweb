@@ -188,20 +188,21 @@
                                                             <table>
                                                                 <thead>
                                                                 <th style="background-color: #007bff; color: black">No</th>
-                                                                <th style="background-color: #007bff; color: black">Name</th>
-                                                                <th style="background-color: #007bff; color: black">Type</th>
-                                                                <th style="background-color: #007bff; color: black">Condition</th>
-                                                                <th style="background-color: #007bff; color: black">Detail</th>
-                                                                <th style="background-color: #007bff; color: black">Quantity</th>        
-                                                                <th style="background-color: #007bff; color: black">Price per product</th>
+                                                                <th style="background-color: #007bff; color: black">Tên sản phẩm</th>
+                                                                <th style="background-color: #007bff; color: black">Phân loại</th>
+                                                                <th style="background-color: #007bff; color: black">Tình trạng</th>
+                                                                <th style="background-color: #007bff; color: black">Thông tin thêm</th>
+                                                                <th style="background-color: #007bff; color: black">Số lượng</th>        
+                                                                <th style="background-color: #007bff; color: black">Đơn giá</th>
                                                                 </thead>
                                                                 <tbody style="height: 100px;">
                                                                     <c:set var="flowerList2" value="${requestScope.FLOWER_LIST}"/>
                                                                     <c:if test="${not empty flowerList2}">
+                                                                        <c:set var="customCounter" value="1" scope="page"/>
                                                                         <c:forEach var="eventList2" items="${requestScope.FLOWER_LIST}" varStatus="counter2">
                                                                             <c:if test="${eventList.eventId == eventList2.eventEventId}">
                                                                                 <tr>
-                                                                                    <td>${counter2.count}</td>
+                                                                                    <td style="font-weight: bold">${customCounter}</td>
                                                                                     <td>${eventList2.eventProductName}</td>
                                                                                     <td>${eventList2.eventProductType}</td>
                                                                                     <td>${eventList2.eventProductCondition}</td>
@@ -210,18 +211,22 @@
                                                                                         <fmt:formatNumber value="${eventList2.eventProductQuantity}" pattern="#,###"/>
                                                                                     </td>  
                                                                                     <td>
-                                                                                        <fmt:formatNumber value="${eventList2.eventProductPrice.intValue()}"
-                                                                                                          pattern="#,###"/>
+                                                                                        <fmt:formatNumber value="${eventList2.eventProductPrice.intValue()}" pattern="#,###"/>
                                                                                     </td>  
                                                                                 </tr>
+                                                                                <c:set var="customCounter" value="${customCounter + 1}" />
+                                                                            </c:if>
+                                                                            <c:if test="${eventList.eventId != eventList2.eventEventId}">
+                                                                                <c:set var="customCounter" value="1" />
                                                                             </c:if>
                                                                         </c:forEach>
+
                                                                     </c:if> 
                                                                     <c:forEach var="total" items="${requestScope.TOTAL}" varStatus="counter3">
                                                                         <c:if test="${eventList.eventId == total.eventId}">
                                                                             <tr>
                                                                                 <td colspan="5"></td>
-                                                                                <td style="font-weight: 700;">Total:</td>
+                                                                                <td style="font-weight: 700;">Tổng giá:</td>
                                                                                 <td style="font-weight: 700;" >${total.total}</td> 
                                                                             </tr>
                                                                         </c:if>
