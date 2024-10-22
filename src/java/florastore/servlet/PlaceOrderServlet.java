@@ -85,7 +85,6 @@ public class PlaceOrderServlet extends HttpServlet {
         String city = request.getParameter("city");
         String shipping = request.getParameter("shipping");
         String payment = request.getParameter("payment");
-        String note = request.getParameter("note");
         if (temporaryInfo != null) {
             if (fullname == null) {
                 fullname = temporaryInfo.getFullname();
@@ -105,12 +104,9 @@ public class PlaceOrderServlet extends HttpServlet {
             if (payment == null) {
                 payment = temporaryInfo.getPaymentOptions();
             }
-            if (note == null) {
-                note = temporaryInfo.getNote();
-            }
         }
         String responseCode = request.getParameter("responseCode");
-        EventOrderDTO newTemporaryInfo = new EventOrderDTO(fullname, phone, address, city, shipping, payment, note);
+        EventOrderDTO newTemporaryInfo = new EventOrderDTO(fullname, phone, address, city, shipping, payment);
         session.setAttribute("TEMPORARY_INFO", newTemporaryInfo);
         String status = null;
         boolean paymentStatus = false;
@@ -129,6 +125,8 @@ public class PlaceOrderServlet extends HttpServlet {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(emailFrom, AppCode);// Put your email
+                // id and
+                // password here
             }
         });
         try {
@@ -154,7 +152,7 @@ public class PlaceOrderServlet extends HttpServlet {
                         if ("COD".equals(payment) || "00".equals(responseCode)) {//COD PAYMENT PROCESS AND PAID ORDER PROCESS
                             // Build dynamic HTML content for the email
                             StringBuilder htmlContent = new StringBuilder();
-                            htmlContent.append("<h2>Thank you for your order (BUYING FROM EVENT)!</h2>");
+                            htmlContent.append("<h2>Thank you for your order!</h2>");
                             htmlContent.append("<p>Here is your order summary:</p>");
                             // Build dynamic HTML content for the email
                             for (Map.Entry<String, List<EventCartItem>> entry : items.entrySet()) {//saving order info to order by each event
@@ -189,7 +187,7 @@ public class PlaceOrderServlet extends HttpServlet {
                                 if ("Paid".equals(status)) {//Update paymentStatus
                                     paymentStatus = true;
                                 }//Update paymentStatus
-                                EventOrderDTO orderInfo = new EventOrderDTO(username, eventId, fullname, phone, address, city, deliveryDate, shipping, payment, "Chờ giao", total, paymentStatus, note);
+                                EventOrderDTO orderInfo = new EventOrderDTO(username, eventId, fullname, phone, address, city, deliveryDate, shipping, payment, "To Do", total, paymentStatus);
                                 //Call DAO/Model   
                                 EventOrderDAO EOrderDao = new EventOrderDAO();
                                 //Saving order by each event

@@ -26,19 +26,17 @@ public class EventOrderDTO implements Serializable {
     private String status;
     private double ammount;
     private boolean paid;
-    private String note;
 
-    public EventOrderDTO(String fullname, String phone, String street, String city, String deliveryOptions, String paymentOptions, String note) {
+    public EventOrderDTO(String fullname, String phone, String street, String city, String deliveryOptions, String paymentOptions) {
         this.fullname = fullname;
         this.phone = phone;
         this.street = street;
         this.city = city;
         this.deliveryOptions = deliveryOptions;
         this.paymentOptions = paymentOptions;
-        this.note = note;
     }
 
-    public EventOrderDTO(String username, int eventId, String fullname, String phone, String street, String city, Timestamp deliveryDate, String deliveryOptions, String paymentOptions, String status, double ammount, boolean paid, String note) {
+    public EventOrderDTO(String username, int eventId, String fullname, String phone, String street, String city, Timestamp deliveryDate, String deliveryOptions, String paymentOptions, String status, double ammount, boolean paid) {
         this.username = username;
         this.eventId = eventId;
         this.fullname = fullname;
@@ -51,7 +49,6 @@ public class EventOrderDTO implements Serializable {
         this.status = status;
         this.ammount = ammount;
         this.paid = paid;
-        this.note = note;
     }
 
     /**
@@ -220,20 +217,6 @@ public class EventOrderDTO implements Serializable {
      */
     public void setPaid(boolean paid) {
         this.paid = paid;
-    }
-
-    /**
-     * @return the note
-     */
-    public String getNote() {
-        return note;
-    }
-
-    /**
-     * @param note the note to set
-     */
-    public void setNote(String note) {
-        this.note = note;
     }
 
 }

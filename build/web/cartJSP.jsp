@@ -12,7 +12,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Giỏ hàng | Buy and sell on the website</title>
+        <title>Fruitables - Vegetable Website Template</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -81,7 +81,7 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link">Home</a>
-                            <a href="SearchServlet" class="nav-item nav-link">Shop</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
@@ -89,7 +89,6 @@
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="manageAccount" class="nav-item nav-link">Manage Account</a>
-                                    <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
@@ -97,7 +96,7 @@
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
-                                    <a href="showStoreName" class="nav-item nav-link">Manage Shop</a>
+                                    <a href="ProductManagementAction" class="nav-item nav-link">Manage Shop</a>
                                 </c:if>
                             </c:if>
                         </div>
@@ -166,11 +165,10 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Giỏ hàng</h1>
+            <h1 class="text-center text-white display-6">Cart</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
-                <li class="breadcrumb-item"><a href="shoppingAction">Shop</a></li>
-                <li class="breadcrumb-item active text-white">Giỏ hàng</li>
+                <li class="breadcrumb-item active text-white">Cart</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -215,11 +213,12 @@
                                             <td>
                                                 <div class="input-group quantity mt-4" style="width: 100px;">
                                                     <form action="cartView" method="POST">
-                                                        <input type="hidden" name="productId" value="${item.productId}"/>
+                                                        <input type="hidden" name="action" id="action">
+                                                        <input type="hidden" name="productName" value="${item.name}"/>
                                                         <input type="hidden" name="storeName" value="${storeId}"/>
                                                         <div class="input-group">   
                                                             <div class="input-group-btn">
-                                                                <button type="submit" name="action" value="minus" id="btn-minus" class="btn btn-sm btn-minus rounded-circle bg-light border"
+                                                                <button type="submit" id="btn-minus" class="btn btn-sm btn-minus rounded-circle bg-light border"
                                                                         <c:if test="${item.quantity <= 1}">disabled</c:if>>
                                                                             <i class="fa fa-minus"></i>
                                                                         </button>
@@ -268,29 +267,26 @@
                     <div class="row g-4 justify-content-end">
                         <div class="col-8"></div>
                         <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                            <form action="shopCheckout" method="POST">
-                                <div class="bg-light rounded">
-                                    <div class="p-4">
-                                        <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
-                                        <div class="d-flex justify-content-between mb-4">
-                                            <h5 class="mb-0 me-4">Tổng tiền hàng:</h5>
-                                            <p class="mb-0"><c:if test="${not empty cart || not empty cart.items}"><fmt:formatNumber value="${sessionScope.TOTAL}" type="number" groupingUsed="true"/>đ</c:if></p>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <h5 class="mb-0 me-4">Discount:</h5>
-                                            <div class="">
-                                                <p class="mb-0"></p>
-                                            </div>
-                                        </div>
+                            <div class="bg-light rounded">
+                                <div class="p-4">
+                                    <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
+                                    <div class="d-flex justify-content-between mb-4">
+                                        <h5 class="mb-0 me-4">Subtotal:</h5>
+                                        <p class="mb-0"><fmt:formatNumber value="${sessionScope.TOTAL}" type="number" groupingUsed="true"/>đ</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="mb-0 me-4">Discount:</h5>
+                                    <div class="">
+                                        <p class="mb-0"></p>
                                     </div>
-                                    <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                                        <h5 class="mb-0 ps-4 me-4">Tổng thanh toán:</h5>
-                                        <p class="mb-0 pe-4"><c:if test="${not empty cart || not empty cart.items}"><fmt:formatNumber value="${sessionScope.TOTAL}" type="number" groupingUsed="true"/>đ</c:if></p>
-                                    <input type="hidden" name="totalShop" value="${sessionScope.TOTAL}"/>
                                 </div>
-                                <button class="btn border-secondary rounded-pill px-4 py-3 text-third text-uppercase mb-4 ms-4" type="submit" <c:if test="${empty cart || empty cart.items}">disabled="disabled"</c:if>>Mua Hàng</button>
-                                </div>
-                            </form>
+                            </div>
+                            <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                                <h5 class="mb-0 ps-4 me-4">Total</h5>
+                                <p class="mb-0 pe-4"></p>
+                            </div>
+                            <button class="btn border-secondary rounded-pill px-4 py-3 text-third text-uppercase mb-4 ms-4" type="submit" <c:if test="${empty cart || empty cart.items}">disabled="disabled"</c:if>>Proceed Checkout</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -308,6 +304,12 @@
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                         <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+                    </div>
+                    <div class="col-md-6 my-auto text-center text-md-end text-white">
+                        <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
+                        <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
+                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
+                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a class="border-bottom" href="https://themewagon.com">ThemeWagon</a>
                     </div>
                 </div>
             </div>
@@ -330,6 +332,16 @@
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
+        <script>
+            document.getElementById("minusButton").addEventListener("click", function () {
+                document.getElementById("action").value = "minus";
+                document.querySelector("form").submit();
+            });
+            document.getElementById("plusButton").addEventListener("click", function () {
+                document.getElementById("action").value = "plus";
+                document.querySelector("form").submit();
+            });
+        </script>
     </body>
 
 </html>

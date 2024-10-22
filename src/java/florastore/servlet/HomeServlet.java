@@ -51,6 +51,22 @@ public class HomeServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.HomeFeatures.ERROR_PAGE);
 
         try {
+            //Check cart place
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                //Check user cart
+                CartBean cart = (CartBean) session.getAttribute("CART");
+                if (cart != null) {
+                    //Check items
+                    Map<String, List<CartItem>> items = cart.getItems();
+                    if (items != null) {
+                        int pendingItems = cart.getUniqueItemCount();
+                        session.setAttribute("PENDING_ITEMS", pendingItems);
+                    }
+                }
+                int pendingItems = 0;
+                session.setAttribute("PENDING_ITEMS", pendingItems);
+            }
             //1. Call DAO/Models
             FlowerProductsDAO dao = new FlowerProductsDAO();
             //1.1 Get best seller products
