@@ -24,6 +24,7 @@
 
         <!-- Icon Font Stylesheet -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <script src="https://kit.fontawesome.com/4cb3201524.js" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
         <!-- Libraries Stylesheet -->
@@ -37,6 +38,7 @@
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
         <link rel="stylesheet" href="alertPackage/alertCss.css">
+        <link rel="stylesheet" href="css/snackbar.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
 
@@ -62,12 +64,12 @@
 
     <body>
 
-       <!-- Spinner Start -->
+        <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-third" role="status"></div>
         </div>
         <!-- Spinner End -->
-
+        <div id="snackbar"></div>
 
         <!-- Navbar start -->
         <div class="container-fluid fixed-top">
@@ -92,10 +94,10 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="home" class="nav-item nav-link ">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
                             <a href="searchAction" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link">Event</a>
+                            <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
@@ -116,12 +118,12 @@
 
                         </div>
                         <div class="d-flex align-items-center justify-content-center m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
-                                <i class="fas fa-search text-third"></i>
+                            <button class="btn-search btn bg-white" data-bs-toggle="modal" data-bs-target="#searchModal" style="padding-top: 10px">
+                                <i class="fa-solid fa-2x fa-bell"  style="color: #81c408"></i>
                             </button>
 
                             <c:if test="${empty sessionScope.USER}">
-                                <a href="loginPage" class="position-relative me-4">
+                                <a href="loginPage" class="position-relative" style="margin-right: 20px; margin-left: 12px;">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                 </a>
                                 <a href="loginPage" class="my-auto">
@@ -147,321 +149,318 @@
                                         </c:if>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-                                    <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
-                                </a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="viewProfileAction" class="dropdown-item">My Profile</a>
-                                    <a href="#" class="dropdown-item">Purchase Order</a>
-                                    <a href="logoutAction" class="dropdown-item">Logout</a>
-                                </div>
-                            </div>                         
-                        </c:if>
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
+                                    </a>
+                                    <jsp:include page="navUser.jsp"></jsp:include>
+                                    </div>                         
+                            </c:if>
+                        </div>
                     </div>
+                </nav>
             </div>
-        </nav>
-    </div>
+        </div>
 
-    <!-- Navbar End -->
+        <!-- Navbar End -->
 
 
-    <!-- Modal Search Start -->
-    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content rounded-0">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex align-items-center">
-                    <div class="input-group w-75 mx-auto d-flex">
-                        <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+        <!-- Modal Search Start -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex align-items-center">
+                        <div class="input-group w-75 mx-auto d-flex">
+                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Modal Search End -->
+        <!-- Modal Search End -->
 
 
 
-    <!-- Single Page Header start -->
-    <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Event Product Detail</h1>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="home">Home</a></li>
-            <li class="breadcrumb-item"><a href="event">Event</a></li>
-            <li class="breadcrumb-item"><a href="eventDetail?eventId=${requestScope.EVENT_ID}">Event Detail</a></li>
-            <li class="breadcrumb-item active text-white">Event Product Detail</li>
-        </ol>
-    </div>
-    <!-- Single Page Header End -->
+        <!-- Single Page Header start -->
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Event Product Detail</h1>
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="home">Home</a></li>
+                <li class="breadcrumb-item"><a href="event">Event</a></li>
+                <li class="breadcrumb-item"><a href="eventDetail?eventId=${requestScope.EVENT_ID}">Event Detail</a></li>
+                <li class="breadcrumb-item active text-white">Event Product Detail</li>
+            </ol>
+        </div>
+        <!-- Single Page Header End -->
 
 
-    <!-- Single Product Start -->
-    <div class="container-fluid py-5 mt-5">
-        <div class="container py-5">
-            <div class="row g-4 mb-5">
-                <div class="col-lg-8 col-xl-9">
-                    <div class="row g-4">
-                        <c:set var="detail" value="${requestScope.EPRODUCT_DETAIL}"/>
-                        <div class="col-lg-6">
-                            <div class="border rounded">
-                                <img src="${detail.eventProductImg}" class="img-fluid rounded" alt="Image">
+        <!-- Single Product Start -->
+        <div class="container-fluid py-5 mt-5">
+            <div class="container py-5">
+                <div class="row g-4 mb-5">
+                    <div class="col-lg-8 col-xl-9">
+                        <div class="row g-4">
+                            <c:set var="detail" value="${requestScope.EPRODUCT_DETAIL}"/>
+                            <div class="col-lg-6">
+                                <div class="border rounded">
+                                    <img src="${detail.eventProductImg}" class="img-fluid rounded" alt="Image">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <form action="cartAddEventItem">
-                                <input type="hidden" name="page" value="EProduct_detail">
-                                <h4 class="fw-bold mb-3">${detail.eventProductName}</h4>
-                                <p class="mb-3">Flower Type: ${detail.eventProductType}</p>
-                                <p class="mb-3">Flower Condition: ${detail.eventProductCondition}</p>
-                                <h5 class="fw-bold mb-3"><fmt:formatNumber value="${detail.eventProductPrice}" type="number" groupingUsed="true"/>đ</h5>
-                                <div class="d-flex mb-4">
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <p class="mb-4">${detail.eventProductDetail}</p>
-                                <c:if test="${detail.eventProductQuantity == 0}">
-                                    <p class="mb-4">Số lượng: Hết hàng</p>
-                                </c:if>
-                                <c:if test="${detail.eventProductQuantity > 0}">
-                                    <p class="mb-4">Số lượng: ${detail.eventProductQuantity}</p>
-                                </c:if>
-                                <div class="input-group quantity mb-5" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button type="button" id="btnMinus" class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
+                            <div class="col-lg-6">
+                                <form action="cartAddEventItem">
+                                    <input type="hidden" name="page" value="EProduct_detail">
+                                    <h4 class="fw-bold mb-3">${detail.eventProductName}</h4>
+                                    <p class="mb-3">Flower Type: ${detail.eventProductType}</p>
+                                    <p class="mb-3">Flower Condition: ${detail.eventProductCondition}</p>
+                                    <h5 class="fw-bold mb-3"><fmt:formatNumber value="${detail.eventProductPrice}" type="number" groupingUsed="true"/>đ</h5>
+                                    <div class="d-flex mb-4">
+                                        <i class="fa fa-star text-secondary"></i>
+                                        <i class="fa fa-star text-secondary"></i>
+                                        <i class="fa fa-star text-secondary"></i>
+                                        <i class="fa fa-star text-secondary"></i>
+                                        <i class="fa fa-star"></i>
                                     </div>
-                                    <input type="text" name="itemQuantity" id="itemQuantity" class="form-control form-control-sm text-center border-0" value="1" readonly/>
-                                    <div class="input-group-btn">
-                                        <button type="button" id="btnPlus" class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <input type="hidden" name="eventId" value="${EVENT_ID}">
-                                <input type="hidden" name="productId" value="${detail.eventProductId}">
-                                <input type="hidden" name="imageURL" value="${detail.eventProductImg}">
-                                <input type="hidden" name="productName" value="${detail.eventProductName}">
-                                <input type="hidden" name="productPrice" value="${detail.eventProductPrice}">
-                                <input type="hidden" name="productQuantity" value="${detail.eventProductQuantity}">
-
-                                <c:if test="${not empty sessionScope.USER}">
+                                    <p class="mb-4">${detail.eventProductDetail}</p>
                                     <c:if test="${detail.eventProductQuantity == 0}">
-                                        <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third" disabled="">
-                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
-                                        </button>
+                                        <p class="mb-4">Số lượng: Hết hàng</p>
                                     </c:if>
                                     <c:if test="${detail.eventProductQuantity > 0}">
-                                        <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
-                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                        </button>
+                                        <p class="mb-4">Số lượng: ${detail.eventProductQuantity}</p>
                                     </c:if>
-                                </c:if>
-                                <c:if test="${empty sessionScope.USER}">
-                                    <c:if test="${detail.eventProductQuantity == 0}">
-                                        <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third disabled-link">
-                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
-                                        </a>
-                                    </c:if>
-                                    <c:if test="${detail.eventProductQuantity > 0}">
-                                        <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
-                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                        </a>
-                                    </c:if>
-                                </c:if>
-                            </form>
-                        </div>
-                        <div class="col-lg-12">
-                            <nav>
-                                <div class="nav nav-tabs mb-3">
-                                    <button class="nav-link border-white border-bottom-0 active" type="button" role="tab"
-                                            id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
-                                            aria-controls="nav-mission" aria-selected="false">Reviews</button>
-                                </div>
-                            </nav>
-                            <div class="tab-content mb-5">
-                                <div id="commentSection">
-                                </div>
-                                <!-- Nút tải thêm bình luận (Load More) -->
-                                <button id="loadMoreBtn" class="btn btn-secondary">Tải thêm bình luận</button>
-                                <input type="hidden" id="currentPage" value="1">
-                                <input type="hidden" id="productId" value="${detail.eventProductId}">
-                                <input type="hidden" id="eventId" value="${EVENT_ID}">
-                            </div>
-                        </div>
-                        <form action="reviewAction" id="commentForm" method="POST">
-                            <h4 class="mb-5 fw-bold">Leave a Reply</h4>
-                            <div class="row g-4">
-                                <div class="col-lg-12">
-                                    <div class="border-bottom rounded my-4">
-                                        <textarea name="comment" id="comment" class="form-control border-0" cols="30" rows="8" placeholder="Your Review *" spellcheck="false"<c:if test="${empty sessionScope.USER}">disabled=""</c:if> required=""></textarea>
+                                    <div class="input-group quantity mb-5" style="width: 100px;">
+                                        <div class="input-group-btn">
+                                            <button type="button" id="btnMinus" class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <input type="text" name="itemQuantity" id="itemQuantity" class="form-control form-control-sm text-center border-0" value="1" readonly/>
+                                        <div class="input-group-btn">
+                                            <button type="button" id="btnPlus" class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
                                         </div>
                                     </div>
+
+                                    <input type="hidden" name="eventId" value="${EVENT_ID}">
+                                    <input type="hidden" name="productId" value="${detail.eventProductId}">
+                                    <input type="hidden" name="imageURL" value="${detail.eventProductImg}">
+                                    <input type="hidden" name="productName" value="${detail.eventProductName}">
+                                    <input type="hidden" name="productPrice" value="${detail.eventProductPrice}">
+                                    <input type="hidden" name="productQuantity" value="${detail.eventProductQuantity}">
+
+                                    <c:if test="${not empty sessionScope.USER}">
+                                        <c:if test="${detail.eventProductQuantity == 0}">
+                                            <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third" disabled="">
+                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                            </button>
+                                        </c:if>
+                                        <c:if test="${detail.eventProductQuantity > 0}">
+                                            <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                            </button>
+                                        </c:if>
+                                    </c:if>
+                                    <c:if test="${empty sessionScope.USER}">
+                                        <c:if test="${detail.eventProductQuantity == 0}">
+                                            <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third disabled-link">
+                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${detail.eventProductQuantity > 0}">
+                                            <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                            </a>
+                                        </c:if>
+                                    </c:if>
+                                </form>
+                            </div>
+                            <div class="col-lg-12">
+                                <nav>
+                                    <div class="nav nav-tabs mb-3">
+                                        <button class="nav-link border-white border-bottom-0 active" type="button" role="tab"
+                                                id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
+                                                aria-controls="nav-mission" aria-selected="false">Reviews</button>
+                                    </div>
+                                </nav>
+                                <div class="tab-content mb-5">
+                                    <div id="commentSection">
+                                    </div>
+                                    <!-- Nút tải thêm bình luận (Load More) -->
+                                    <button id="loadMoreBtn" class="btn btn-secondary">Tải thêm bình luận</button>
+                                    <input type="hidden" id="currentPage" value="1">
+                                    <input type="hidden" id="productId" value="${detail.eventProductId}">
+                                    <input type="hidden" id="eventId" value="${EVENT_ID}">
+                                </div>
+                            </div>
+                            <form action="reviewAction" id="commentForm" method="POST">
+                                <h4 class="mb-5 fw-bold">Leave a Reply</h4>
+                                <div class="row g-4">
                                     <div class="col-lg-12">
-                                        <div class="d-flex justify-content-between py-3 mb-5">
-                                            <div class="d-flex align-items-center">
-                                                <p class="mb-0 me-3">Please rate:</p>
-                                                <div class="d-flex align-items-center" style="font-size: 12px;">
-                                                    <i class="fa fa-star text-muted"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
+                                        <div class="border-bottom rounded my-4">
+                                            <textarea name="comment" id="comment" class="form-control border-0" cols="30" rows="8" placeholder="Your Review *" spellcheck="false"<c:if test="${empty sessionScope.USER}">disabled=""</c:if> required=""></textarea>
                                             </div>
-                                            <input type="hidden" name="productId" id="productId" value="${detail.eventProductId}">
-                                        <input type="hidden" name="eventId" id="eventId" value="${EVENT_ID}">
-                                        <input type="submit" value="Post Comment" id="postCommentBtn" class="btn border border-secondary text-third rounded-pill px-4 py-3" <c:if test="${empty sessionScope.USER}">disabled=""</c:if>/>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="d-flex justify-content-between py-3 mb-5">
+                                                <div class="d-flex align-items-center">
+                                                    <p class="mb-0 me-3">Please rate:</p>
+                                                    <div class="d-flex align-items-center" style="font-size: 12px;">
+                                                        <i class="fa fa-star text-muted"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="productId" id="productId" value="${detail.eventProductId}">
+                                            <input type="hidden" name="eventId" id="eventId" value="${EVENT_ID}">
+                                            <input type="submit" value="Post Comment" id="postCommentBtn" class="btn border border-secondary text-third rounded-pill px-4 py-3" <c:if test="${empty sessionScope.USER}">disabled=""</c:if>/>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Single Product End -->
+            <!-- Single Product End -->
 
 
-        <!-- Footer Start -->
-    <jsp:include page="footer.jsp"></jsp:include>
-        <!-- Footer End -->
+            <!-- Footer Start -->
+        <jsp:include page="footer.jsp"></jsp:include>
+            <!-- Footer End -->
 
-        <!-- Copyright Start -->
-        <div class="container-fluid copyright bg-dark py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+            <!-- Copyright Start -->
+            <div class="container-fluid copyright bg-dark py-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Copyright End -->
-    <c:if test="${not empty requestScope.INSUFFICIENT}">
-        <div id="modal-alert" class="modal-alert">
-            <div class="modal-alert-fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="" role="document">
-                    <div class="modal-content-alert">
-                        <h5 class="modal-title-alert">${requestScope.INSUFFICIENT}</h5>
-                        <p>Vui lòng hãy chọn sản phẩm khác</p>
-                        <button class="btn-secondary-alert">Ok</button>
-                    </div>                     `
+            <!-- Copyright End -->
+        <c:if test="${not empty requestScope.INSUFFICIENT}">
+            <div id="modal-alert" class="modal-alert">
+                <div class="modal-alert-fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="" role="document">
+                        <div class="modal-content-alert">
+                            <h5 class="modal-title-alert">${requestScope.INSUFFICIENT}</h5>
+                            <p>Vui lòng hãy chọn sản phẩm khác</p>
+                            <button class="btn-secondary-alert">Ok</button>
+                        </div>                     `
+                    </div>
                 </div>
             </div>
-        </div>
-    </c:if>
+        </c:if>
 
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
 
 
-    <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/lightbox/js/lightbox.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var quantityInput = document.getElementById("itemQuantity");
-            var btnMinus = document.getElementById("btnMinus");
-            var btnPlus = document.getElementById("btnPlus");
+        <!-- Template Javascript -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var quantityInput = document.getElementById("itemQuantity");
+                var btnMinus = document.getElementById("btnMinus");
+                var btnPlus = document.getElementById("btnPlus");
 
-            btnMinus.addEventListener("click", function () {
-                var currentValue = parseInt(quantityInput.value, 10);
-                if (currentValue <= 1) {
-                    quantityInput.value = 1; // Ensures it doesn't go below 1
-                }
-            });
+                btnMinus.addEventListener("click", function () {
+                    var currentValue = parseInt(quantityInput.value, 10);
+                    if (currentValue <= 1) {
+                        quantityInput.value = 1; // Ensures it doesn't go below 1
+                    }
+                });
 
-            btnPlus.addEventListener("click", function () {
-                var currentValue = parseInt(quantityInput.value, 10);
-                if (currentValue >= ${detail.eventProductQuantity}) {
-                    quantityInput.value = ${detail.eventProductQuantity}; // Ensures it doesn't go below 1
-                }
-            });
-        });
-
-        $(document).ready(function () {
-            $('#commentForm').on('submit', function (event) {
-                event.preventDefault(); // Ngăn chặn hành vi submit mặc định
-
-                var comment = $('#comment').val();
-                var productId = $('#productId').val();
-                var eventId = $('#eventId').val();
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'reviewAction',
-                    data: {
-                        comment: comment,
-                        productId: productId,
-                        eventId: eventId
-                    },
-                    success: function (response) {
-                        // Thêm bình luận mới vào khu vực hiển thị comment
-                        $('#commentSection').prepend(response);
-                        // Xóa nội dung trong textarea sau khi post
-                        $('#comment').val('');
-                    },
-                    error: function () {
-                        alert('Có lỗi xảy ra khi gửi bình luận.');
+                btnPlus.addEventListener("click", function () {
+                    var currentValue = parseInt(quantityInput.value, 10);
+                    if (currentValue >= ${detail.eventProductQuantity}) {
+                        quantityInput.value = ${detail.eventProductQuantity}; // Ensures it doesn't go below 1
                     }
                 });
             });
-        });
-        $(document).ready(function () {
-            // Khi trang load lần đầu, gọi AJAX để tải 5 bình luận đầu tiên
-            loadComments(1);
 
-            $('#loadMoreBtn').click(function () {
-                var currentPage = parseInt($('#currentPage').val());
-                loadComments(currentPage + 1);
-            });
+            $(document).ready(function () {
+                $('#commentForm').on('submit', function (event) {
+                    event.preventDefault(); // Ngăn chặn hành vi submit mặc định
 
-            function loadComments(page) {
-                var productId = $('#productId').val();
-                var eventId = $('#eventId').val();
+                    var comment = $('#comment').val();
+                    var productId = $('#productId').val();
+                    var eventId = $('#eventId').val();
 
-                $.ajax({
-                    type: 'GET',
-                    url: 'loadMoreCommentAction',
-                    data: {
-                        page: page,
-                        productId: productId,
-                        eventId: eventId
-                    },
-                    success: function (response) {
-                        $('#commentSection').append(response);
-                        $('#currentPage').val(page);
-                    },
-                    error: function () {
-                        alert('Có lỗi xảy ra khi tải bình luận.');
-                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: 'reviewAction',
+                        data: {
+                            comment: comment,
+                            productId: productId,
+                            eventId: eventId
+                        },
+                        success: function (response) {
+                            // Thêm bình luận mới vào khu vực hiển thị comment
+                            $('#commentSection').prepend(response);
+                            // Xóa nội dung trong textarea sau khi post
+                            $('#comment').val('');
+                        },
+                        error: function () {
+                            alert('Có lỗi xảy ra khi gửi bình luận.');
+                        }
+                    });
                 });
-            }
-        });
-    </script>
+            });
+            $(document).ready(function () {
+                // Khi trang load lần đầu, gọi AJAX để tải 5 bình luận đầu tiên
+                loadComments(1);
 
-    <script src="alertPackage/alertJs.js"></script>
-    <script src="js/main.js"></script>
-</body>
+                $('#loadMoreBtn').click(function () {
+                    var currentPage = parseInt($('#currentPage').val());
+                    loadComments(currentPage + 1);
+                });
+
+                function loadComments(page) {
+                    var productId = $('#productId').val();
+                    var eventId = $('#eventId').val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: 'loadMoreCommentAction',
+                        data: {
+                            page: page,
+                            productId: productId,
+                            eventId: eventId
+                        },
+                        success: function (response) {
+                            $('#commentSection').append(response);
+                            $('#currentPage').val(page);
+                        },
+                        error: function () {
+                            alert('Có lỗi xảy ra khi tải bình luận.');
+                        }
+                    });
+                }
+            });
+        </script>
+        <script src="js/notification.js"></script>
+        <script src="alertPackage/alertJs.js"></script>
+        <script src="js/main.js"></script>
+    </body>
 
 </html>

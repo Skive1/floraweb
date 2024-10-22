@@ -116,7 +116,6 @@ public class MyAppConstants {
     }
 
     public class EventFeatures {
-
         public static final String EVENT_PAGE = "eventPage";
         public static final String DETAIL_PAGE = "eventDetailPage";
     }
@@ -173,6 +172,7 @@ public class MyAppConstants {
         public static final String EVENT_VIEW = "eventDetail";
         public static final String VIEW_ECART_PAGE = "eventCart";
         public static final String ERROR_PAGE = "flowerDetail";
+        public static final String CATE_VIEW = "category";
     }
 
     public class EventCartFeatures {
@@ -215,4 +215,8 @@ public class MyAppConstants {
         public static final String CHECKOUT_SUCCESS = "shopCheckouts";
         public static final String CHECKOUT_FAIL = "shopCheckout";
     }   
+    
+    public class PurchasedOrderFeatures {
+        public static final String PURCHASED_ORDER = "purchasedOrderPage";
+    }
 }

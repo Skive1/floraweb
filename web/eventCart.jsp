@@ -1,4 +1,4 @@
-searchAction<%-- 
+<%-- 
     Document   : eventCartJSP
     Created on : Sep 14, 2024, 1:29:47 PM
     Author     : ADMIN
@@ -24,6 +24,7 @@ searchAction<%--
 
         <!-- Icon Font Stylesheet -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <script src="https://kit.fontawesome.com/4cb3201524.js" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
         <!-- Libraries Stylesheet -->
@@ -36,7 +37,8 @@ searchAction<%--
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-         <link rel="stylesheet" href="alertPackage/alertCss.css">
+        <link rel="stylesheet" href="alertPackage/alertCss.css">
+        <link rel="stylesheet" href="css/snackbar.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
         <style>
@@ -45,6 +47,24 @@ searchAction<%--
                 background-color: white !important;  /* Nền trắng */
                 pointer-events: none;                /* Ngăn thay đổi */
                 cursor: none;
+            }
+            .non-order{
+                background-image: url(https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/cart/9bdd8040b334d31946f4.png);
+                background-position: 50%;
+                background-repeat: no-repeat;
+                background-size: contain;
+                height: 100px;
+                width: 100px
+
+            }
+            .background-img{
+                display: flex;
+                height: 400px;
+                text-align: center;
+                flex-direction: column;
+                align-content: center;
+                justify-content: center;
+                align-items: center;
             }
         </style>
         <script>
@@ -67,7 +87,7 @@ searchAction<%--
             <div class="spinner-grow text-third" role="status"></div>
         </div>
         <!-- Spinner End -->
-
+        <div id="snackbar"></div>
 
         <!-- Navbar start -->
         <div class="container-fluid fixed-top">
@@ -92,10 +112,10 @@ searchAction<%--
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="home" class="nav-item nav-link ">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
                             <a href="searchAction" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link">Event</a>
+                            <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
@@ -116,12 +136,12 @@ searchAction<%--
 
                         </div>
                         <div class="d-flex align-items-center justify-content-center m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
-                                <i class="fas fa-search text-third"></i>
+                            <button class="btn-search btn bg-white" data-bs-toggle="modal" data-bs-target="#searchModal" style="padding-top: 10px">
+                                <i class="fa-solid fa-2x fa-bell"  style="color: #81c408"></i>
                             </button>
 
                             <c:if test="${empty sessionScope.USER}">
-                                <a href="loginPage" class="position-relative me-4">
+                                <a href="loginPage" class="position-relative" style="margin-right: 20px; margin-left: 12px;">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                 </a>
                                 <a href="loginPage" class="my-auto">
@@ -152,18 +172,15 @@ searchAction<%--
                                     <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
-                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                        <a href="viewProfileAction" class="dropdown-item">My Profile</a>
-                                        <a href="#" class="dropdown-item">Purchase Order</a>
-                                        <a href="logoutAction" class="dropdown-item">Logout</a>
-                                    </div>
-                                </div>                         
+                                    <jsp:include page="navUser.jsp"></jsp:include>
+                                    </div>                         
                             </c:if>
                         </div>
                     </div>
                 </nav>
             </div>
         </div>
+
         <!-- Navbar End -->
 
 
@@ -279,8 +296,9 @@ searchAction<%--
                         </c:forEach>
                     </c:if>
                     <c:if test="${empty ecart || empty ecart.items}">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <h3>Your event cart is empty</h3>
+                        <div class="background-img">
+                            <div class="non-order"></div>
+                            <h5 style="text-align: center">Giỏ hàng sự kiện của bạn đang trống</h5>
                         </div>
 
                     </c:if>
@@ -359,12 +377,14 @@ searchAction<%--
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>
         <script src="lib/waypoints/waypoints.min.js"></script>
         <script src="lib/lightbox/js/lightbox.min.js"></script>
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
         <!-- Template Javascript -->
+        <script src="js/notification.js"></script>
         <script src="alertPackage/alertJs.js"></script>
         <script src="js/main.js"></script>
     </body>

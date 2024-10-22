@@ -41,9 +41,7 @@ public class StartUpServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        ServletContext context = request.getServletContext();
-        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.StartUpFeatures.DEFAULT_PAGE);
+        String url = MyAppConstants.StartUpFeatures.DEFAULT_PAGE;
 
         try {
             //1. Get session
@@ -58,7 +56,7 @@ public class StartUpServlet extends HttpServlet {
                 AccountDTO result = dao.getAccountByLogin(username, password);
                 //5. process result
                 if (result != null) {
-                    url = (String) siteMap.get(MyAppConstants.StartUpFeatures.HOME_PAGE);
+                    url = MyAppConstants.StartUpFeatures.HOME_PAGE;
                 }//authentication is ok
             }//more than one times         
         } catch (SQLException ex) {
@@ -66,8 +64,7 @@ public class StartUpServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("StartUpServlet _ Naming " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
         }
     }
 
