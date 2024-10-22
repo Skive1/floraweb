@@ -92,7 +92,7 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Shop</a>
+                            <a href="SearchServlet" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link active ">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
@@ -526,7 +526,7 @@
                                                         </div>
                                                     </th>
                                                     <td class="py-5">${item.epName}</td>
-                                                    <td class="py-5" https://halibut-alive-positively.ngrok-free.app/FloraRewind/><fmt:formatNumber value="${item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
+                                                    <td class="py-5"><fmt:formatNumber value="${item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
                                                     <td class="py-5" style="text-align: center">${item.quantity}</td>
                                                     <td class="py-5" style="text-align: center"><fmt:formatNumber value="${item.quantity * item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
                                                 </tr>      
@@ -541,7 +541,7 @@
                                                 <td class="py-5"></td>
                                                 <td class="py-5">
                                                     <div class="py-2 border-bottom border-top">
-                                                        <p class="mb-0 text-dark"><fmt:formatNumber value="${totalEvent}" type="number" groupingUsed="true"/>đ</p>
+                                                        <p class="mb-0 text-dark" style="text-align: center"><fmt:formatNumber value="${totalEvent}" type="number" groupingUsed="true"/>đ</p>
                                                     </div>
                                                 </td>
                                             </tr>

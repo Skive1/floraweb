@@ -5,7 +5,6 @@
  */
 package florastore.servlet;
 
-import florastore.account.AccountDTO;
 import florastore.revenue.revenueDAO;
 import florastore.revenue.revenueDTO;
 import florastore.revenue.yearlyRevenueDAO;
@@ -54,9 +53,7 @@ public class MonthlyRevenueServlet extends HttpServlet {
 
         String monthStr = request.getParameter("month");
         String yearStr = request.getParameter("year");
-        HttpSession session = request.getSession(false);
-        AccountDTO dto = (AccountDTO) session.getAttribute("USER");
-        String name = dto.getFullName();
+
         if (monthStr == null || monthStr.isEmpty()) {
             month = 10;
         } else {
@@ -73,7 +70,7 @@ public class MonthlyRevenueServlet extends HttpServlet {
             revenueDAO dao = new revenueDAO();
             //2. Call method
             dao.loadAmountByMonth(month, year);
-            //3. Get list
+//            //3. Get list
             ArrayList<revenueDTO> list = dao.getMonthList();
 
             yearlyRevenueDAO yearDao = new yearlyRevenueDAO();
@@ -101,14 +98,11 @@ public class MonthlyRevenueServlet extends HttpServlet {
             request.setAttribute("month11", listYear.get(10));
             request.setAttribute("month12", listYear.get(11));
             request.setAttribute("allMonth", listYear);
-            request.setAttribute("fullName", name);
-            request.setAttribute("curMonth",month);
+
         } catch (SQLException ex) {
-            String msg = ex.getMessage();
-            log("MonthlyRevenueServlet _ SQL: " + msg);
+            ex.printStackTrace();
         } catch (NamingException ex) {
-             String msg = ex.getMessage();
-            log("MonthlyRevenueServlet _ SQL: " + msg);
+            ex.printStackTrace();
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
