@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 public class EventProductAddNotification implements Serializable {
     private String eventProductAddSuccess;
+    private String discountError;
 
     public String getEventProductAddSuccess() {
         return eventProductAddSuccess;
@@ -20,6 +21,14 @@ public class EventProductAddNotification implements Serializable {
 
     public void setEventProductAddSuccess(String eventProductAddSuccess) {
         this.eventProductAddSuccess = eventProductAddSuccess;
+    }
+
+    public String getDiscountError() {
+        return discountError;
+    }
+
+    public void setDiscountError(String discountError) {
+        this.discountError = discountError;
     }
     
     

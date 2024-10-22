@@ -69,32 +69,33 @@ public class AddEventServlet extends HttpServlet {
         try {
 //            Part eventImg = request.getPart("eventImg");
             String eventImgUrl = request.getParameter("eventImgUrl");
-            if (eventImgUrl == null) {
-                System.out.println("eventImg is null");
-                // Set an error message and forward to the error page
-                error.setUploadImgError("Image upload failed. Please try again.");
-                bErr = true;
-            }
 
-//            String realPath = request.getServletContext().getRealPath("/uploads");
-//            Path uploadPath = Paths.get(realPath);
-//            String filename = eventImg.getSubmittedFileName();
-//            System.out.println("Uploading file: " + filename + " to path: " + uploadPath);
-//             Check if the directory exists, and if not, create it
-//            if (!Files.exists(uploadPath)) {
-//                Files.createDirectories(uploadPath);
-//                System.out.println("Created upload directory: " + uploadPath);
-//            }
+//                String realPath = request.getServletContext().getRealPath("/uploads");
+//                Path uploadPath = Paths.get(realPath);
+//                String filename = eventImg.getSubmittedFileName();
+//                System.out.println("Uploading file: " + filename + " to path: " + uploadPath);
+//                //Check if the directory exists, and if not, create it
+//                if (!Files.exists(uploadPath)) {
+//                    Files.createDirectories(uploadPath);
+//                    System.out.println("Created upload directory: " + uploadPath);
+//                }
 //
-//            eventImg.write(uploadPath + "/" + filename);
-
+//                eventImg.write(uploadPath + "/" + filename);
             // event description
             String eventDescriptionParam = request.getParameter("eventDescription");
             String[] eventDescription = eventDescriptionParam.split("\\s*,\\s*");
             String eventLocation = eventDescription[0].replaceAll("<.*?>", "");
-            String city = eventDescription[1].replaceAll("<.*?>", "");
+            String city = eventDescription[eventDescription.length - 1].replaceAll("<.*?>", "");
             String startDateStr = request.getParameter("startDate");
             String endDateStr = request.getParameter("endDate");
+
+            if (eventImgUrl == null) {
+                error.setUploadImgError("Image upload failed. Please try again.");
+                bErr = true;
+            } else if (city == null || eventLocation == null) {
+                error.setDescriptionError("Missing event description");
+                bErr = true;
+            }
 
             // Convert the strings to Timestamp
             Timestamp startDate = Timestamp.valueOf(startDateStr.replace("T", " ") + ":00");

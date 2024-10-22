@@ -90,7 +90,7 @@
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
                             <div class="admin-content-main-content-product-list">
-                                <table>
+                                <table id="orderTable">
                                     <thead>
                                         <tr>
                                             <th>STT</th>
@@ -110,10 +110,29 @@
                                                 <td>${delivered.fullname}</td>
                                                 <td>${delivered.phone}</td>
                                                 <td>${delivered.street}</td>
-                                                <td>${delivered.note}</td>
-                                                <td><a href="" class="show-class">Xem</a></td>
+                                                <td>
+                                                    <c:if test="${not empty order.note}">
+                                                        ${order.note}
+                                                    </c:if>
+                                                    <c:if test="${empty order.note}">
+                                                        -
+                                                    </c:if>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0);" class="show-class" onclick="toggleDetails(${counter.count});">Xem</a>
+                                                </td>
                                                 <td>${delivered.deliveryDate}</td>
                                                 <td>${delivered.status}</td>
+                                            </tr>
+                                            <tr id="details-${counter.count}" style="display:none;">
+                                                <td colspan="8">
+                                                    <div>
+                                                        <strong>Order Details:</strong>
+                                                        <c:forEach var="detail" items="${sessionScope.DETAILS[delivered.eventOrderId]}">
+                                                            <p>EPName: ${detail.eventProductName}, Quantity: ${detail.quantity}, UnitPrice: ${detail.unitPrice}, Discount: ${detail.discount}, Total: ${detail.total}</p>
+                                                        </c:forEach>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
@@ -128,6 +147,16 @@
 </section>
 
 <script src="js/javascript.js"></script>
+<script>
+                                                        function toggleDetails(index) {
+                                                            var detailsRow = document.getElementById("details-" + index);
+                                                            if (detailsRow.style.display === "none") {
+                                                                detailsRow.style.display = "table-row"; // Show the details row
+                                                            } else {
+                                                                detailsRow.style.display = "none"; // Hide the details row
+                                                            }
+                                                        }
+</script>
 </body>
 </html>
 

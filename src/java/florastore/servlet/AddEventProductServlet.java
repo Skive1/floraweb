@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,7 +44,7 @@ public class AddEventProductServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.AddEventProductFeatures.ERROR_PAGE);
+        String url = (String) siteMap.get(MyAppConstants.AddEventProductFeatures.ADD_EVENT_PRODUCT_PAGE);
 
         // Getting form parameters
         String productName = request.getParameter("name");
@@ -69,32 +70,40 @@ public class AddEventProductServlet extends HttpServlet {
         int quantity = Integer.parseInt(quantityStr);
         double price = Double.parseDouble(priceStr);
         double discount = Double.parseDouble(discountStr);
-        
+
         EventProductAddNotification success = new EventProductAddNotification();
+        EventProductAddNotification error = new EventProductAddNotification();
+        boolean bErr = false;
 
         try {
-            // Create a new EventProduct object and save to the database (pseudo code)
-            EventProductDTO newProduct = new EventProductDTO(0, productName, type, condition, detail, imgUrl, quantity, price - discount);
+            if (discount == price || discount > price) {
+                error.setDiscountError("Discount must be lower than price");
+                bErr = true;
+            }
 
-            // Assuming you have a DAO or service to add the product to the database
-            EventDAO dao = new EventDAO();
-            boolean isProductAdded = dao.addEventProduct(newProduct, categoryId, eventId);
-
-            if (isProductAdded) {
-                // Redirect to event detail page with success message
-                url = MyAppConstants.AddEventProductFeatures.ADD_EVENT_PRODUCT_PAGE;
-                success.setEventProductAddSuccess("Product added successfully!!!");
-                request.setAttribute("SUCCESS", success);
+            if (bErr) {
+                request.setAttribute("ERROR", error);
             } else {
-                // Redirect back to add product page with error message
-                url = MyAppConstants.AddEventProductFeatures.ERROR_PAGE;
+                // Create a new EventProduct object and save to the database (pseudo code)
+                EventProductDTO newProduct = new EventProductDTO(0, productName, type, condition, detail, imgUrl, quantity, price - discount);
+
+                // Assuming you have a DAO or service to add the product to the database
+                EventDAO dao = new EventDAO();
+                boolean isProductAdded = dao.addEventProduct(newProduct, categoryId, eventId);
+
+                if (isProductAdded) {
+                    success.setEventProductAddSuccess("Product added successfully!!!");
+                    request.setAttribute("SUCCESS", success);
+                    request.setAttribute("EVENT_ID", eventId);
+                }
             }
         } catch (SQLException ex) {
             log("AddEventProductServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
             log("AddEventProductServlet _Naming_ " + ex.getMessage());
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

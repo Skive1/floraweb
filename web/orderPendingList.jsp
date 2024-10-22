@@ -46,7 +46,7 @@
                                 <a href=""><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="">Account</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="">Event</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent?username=${sessionScope.USER.username}">Event</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -138,9 +138,28 @@
                                                 <td colspan="8">
                                                     <div>
                                                         <strong>Order Details:</strong>
-                                                        <c:forEach var="detail" items="${sessionScope.DETAILS[order.eventOrderId]}">
-                                                            <p>EPName: ${detail.eventProductName}, Quantity: ${detail.quantity}, UnitPrice: ${detail.unitPrice}, Discount: ${detail.discount}, Total: ${detail.total}</p>
-                                                        </c:forEach>
+                                                        <table border="1">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>EPName</th>
+                                                                    <th>Quantity</th>
+                                                                    <th>UnitPrice</th>
+                                                                    <th>Discount</th>
+                                                                    <th>Total</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <c:forEach var="detail" items="${sessionScope.DETAILS[order.eventOrderId]}">
+                                                                    <tr>
+                                                                        <td>${detail.eventProductName}</td>
+                                                                        <td>${detail.quantity}</td>
+                                                                        <td>${detail.unitPrice}</td>
+                                                                        <td>${detail.discount}</td>
+                                                                        <td>${detail.total}</td>
+                                                                    </tr>
+                                                                </c:forEach>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </td>
                                             </tr>

@@ -72,7 +72,6 @@ public class ViewOrderServlet extends HttpServlet {
             }
 
             session.setAttribute("DETAILS", allOrderDetails);
-            System.out.println("Order details: " + session.getAttribute("DETAILS"));
             session.setAttribute("orderList", orders);
         } catch (SQLException ex) {
             log("ViewOrderServlet_SQL_" + ex.getMessage());

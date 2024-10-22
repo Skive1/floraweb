@@ -69,17 +69,23 @@
                             <!--                            <form action="addEventAction" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">-->
                             <form action="addEventProductAction?eventId=${requestScope.EVENT_ID}" method="POST" accept-charset="UTF-8">
                                 <c:set var="success" value="${requestScope.SUCCESS}"/>
+                                <c:set var="error" value="${requestScope.ERROR}"/>
                                 <div class="admin-content-main-event-add">
                                     <div class="admin-content-main-content-left">
                                         <input type="hidden" name="accountUsername" value="${sessionScope.USER.username}" />
                                         <div class="admin-content-main-content-two-input">
-                                            <input name="name" type="text" placeholder="Tên sản phẩm">
-                                            <input name="quantity" type="text" placeholder="Số lượng">
+                                            <input name="name" maxlength="20" type="text" placeholder="Tên sản phẩm" required>
+                                            <input name="quantity" maxlength="3" type="text" placeholder="Số lượng">
                                         </div>
                                         <div class="admin-content-main-content-two-input">
                                             <input name="epPrice" type="text" placeholder="Giá bán">
                                             <input name="discount" type="text" placeholder="Giá giảm">
                                         </div>
+                                        <c:if test="${not empty error.discountError}">
+                                                <font color="red">
+                                                ${error.discountError}
+                                                </font>
+                                        </c:if>
                                         <div class="admin-content-main-content-two-input">
                                             <input name="detail" type="text" placeholder="Chi tiết">
                                             <input name="condition" type="text" placeholder="Tình trạng">
@@ -116,7 +122,7 @@
                                                                                         <img id="flower-image-preview" src="" alt="Preview" style="max-width: 70%; display: none;">
                                                                                     </div>
                                                                                 </div>-->
-                                        <a href="event">Go To Event Page</a>
+                                        <a href="eventDetail?eventId=${requestScope.EVENT_ID}">Go back</a>
                                     </div>
                                     <c:if test="${not empty success.eventProductAddSuccess}">
                                         <font color="green">
@@ -211,17 +217,17 @@
 //                                                    }
 //                                                }
 
-document.getElementById("flowerImgUrl").addEventListener("input", function () {
-    var url = document.getElementById("flowerImgUrl").value;
-    var img = document.getElementById("flower-image-preview");
-    if (url.match(/^(http|https):\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}(\/[a-zA-Z0-9.-]+)*\/?$/)) {
-        img.src = url;
-        img.style.display = "block";
-    } else {
-        img.src = "";
-        img.style.display = "none";
-    }
-});
+            document.getElementById("flowerImgUrl").addEventListener("input", function () {
+                var url = document.getElementById("flowerImgUrl").value;
+                var img = document.getElementById("flower-image-preview");
+                if (url.match(/^(http|https):\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}(\/[a-zA-Z0-9.-]+)*\/?$/)) {
+                    img.src = url;
+                    img.style.display = "block";
+                } else {
+                    img.src = "";
+                    img.style.display = "none";
+                }
+            });
         </script>
 
     </body>

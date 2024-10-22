@@ -7,11 +7,14 @@ package florastore.servlet;
 
 import florastore.event.EventDAO;
 import florastore.event.EventOrderDTO;
+import florastore.event.EventOrderDetailDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -43,22 +46,36 @@ public class ViewDeliveredListServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
+
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ViewEventOrderFeatures.DELIVERED_LIST_PAGE);
-        
+
         HttpSession session = request.getSession();
-        
+
         String username = request.getParameter("accountUsername");
-        
+
         try {
-             EventDAO dao = new EventDAO();
-             List<EventOrderDTO> delivered = dao.getDeliveredOrder(username);
-             session.setAttribute("DELIVERED", delivered);
-        } catch(SQLException ex) {
+            EventDAO dao = new EventDAO();
+            List<EventOrderDTO> delivered = dao.getDeliveredOrder(username);
+
+            //call method of order detail
+            // Map to store order details for each order
+            Map<Integer, List<EventOrderDetailDTO>> allOrderDetails = new HashMap<>();
+
+            for (EventOrderDTO order : delivered) {
+                // Call method to get the details for each order
+                List<EventOrderDetailDTO> details = dao.getOrderDetails(order.getEventOrderId());
+
+                // Store the details in the map with the eventOrderId as the key
+                allOrderDetails.put(order.getEventOrderId(), details);
+            }
+
+            session.setAttribute("DETAILS", allOrderDetails);
+            session.setAttribute("DELIVERED", delivered);
+        } catch (SQLException ex) {
             log("ViewDeliveredListServlet_SQL_" + ex.getMessage());
-        } catch(NamingException ex) {
+        } catch (NamingException ex) {
             log("ViewDeliveredListServlet_Naming_" + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

@@ -123,6 +123,10 @@
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                         <a href="viewProfileAction" class="dropdown-item">My Profile</a>
                                         <a href="#" class="dropdown-item">Purchase Order</a>
+                                        <c:if test="${sessionScope.USER.role == 'Seller'}">
+                                            <a href="addEventPage" class="dropdown-item">Add Event</a>
+                                            <a href="viewOrderAction?accountUsername=${sessionScope.USER.username}" class="dropdown-item">View Event Order</a>
+                                        </c:if>
                                         <a href="logoutAction" class="dropdown-item">Logout</a>
                                     </div>
                                 </div>                         

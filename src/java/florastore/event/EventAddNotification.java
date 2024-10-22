@@ -15,6 +15,8 @@ public class EventAddNotification implements Serializable{
     private String eventNameError;
     private String eventAddSuccess;
     private String uploadImgError;
+    private String descriptionError;
+    
 
     public String getEventNameError() {
         return eventNameError;
@@ -38,6 +40,14 @@ public class EventAddNotification implements Serializable{
 
     public void setUploadImgError(String uploadImgError) {
         this.uploadImgError = uploadImgError;
+    }
+
+    public String getDescriptionError() {
+        return descriptionError;
+    }
+
+    public void setDescriptionError(String descriptionError) {
+        this.descriptionError = descriptionError;
     }
     
     

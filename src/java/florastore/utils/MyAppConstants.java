@@ -114,8 +114,9 @@ public class MyAppConstants {
         public static final String DETAIL_PAGE = "EventFlowerDetail";
         public static final String ERROR_PAGE = "error404";
     }
-    
+
     public class CartFeatures {
+
         public static final String VIEW_CART_PAGE = "cartPage";
         public static final String REMOVE_ITEM_FROM_CART_ACTION = "cartDeleteItemAction";
         public static final String SHOP_VIEW = "shoppingAction";
@@ -123,25 +124,34 @@ public class MyAppConstants {
         public static final String ERROR_PAGE = "error404";
     }
 
-    public class CartAddItemFeatures{
+    public class CartAddItemFeatures {
+
         public static final String SHOP_VIEW = "shoppingAction";
         public static final String VIEW_CART_PAGE = "cartPage";
         public static final String ERROR_PAGE = "insufficient.html";
     }
-    
-    public class AddEventFeatures{
+
+    public class AddEventFeatures {
+
         public static final String ADD_EVENT_PAGE = "addEventPage";
         public static final String HOME_PAGE = "home";
     }
-    
-    public class AddEventProductFeatures{
+
+    public class AddEventProductFeatures {
+
         public static final String ADD_EVENT_PRODUCT_PAGE = "addEventProductPage";
         public static final String ERROR_PAGE = "error404";
     }
-    
-    public class ViewEventOrderFeatures{
+
+    public class ViewEventOrderFeatures {
+
         public static final String ORDER_LIST_PAGE = "orderList";
         public static final String DELIVERED_LIST_PAGE = "deliveredList";
         public static final String VIEW_ORDER_LIST = "viewOrderAction";
+    }
+
+    public class ViewEventFeatures {
+
+        public static final String EVENT_LIST = "sellerManageEventPage";
     }
 }

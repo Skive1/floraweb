@@ -46,13 +46,9 @@ public class ShopServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ShopFeatures.SHOP_PAGE);
-        
-        log("ShopServlet: Starting processRequest. Retrieving products...");
          
         try {
             FlowerProductsDAO dao = new FlowerProductsDAO();
-            
-            log("ShopServlet: Calling productDAO.getAllProducts()...");
             
             List<FlowerProductsDTO> products = dao.getAllProducts();
             

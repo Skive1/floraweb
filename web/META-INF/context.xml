@@ -3,6 +3,6 @@
     <Resource name="MyDB" type="javax.sql.DataSource" auth="Container" 
             driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
             url="jdbc:sqlserver://localhost:1433;databaseName=flora_store_2;instanceName=SQLEXPRESS01" 
-            username="sa" password="12345"/>
+            username="sa" password="123456"/>
 </Context>
 

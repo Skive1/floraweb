@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
@@ -348,11 +349,15 @@ public class EventDAO implements Serializable {
                     String note = rs.getString("Note");
                     String status = rs.getString("Status");
                     Timestamp orderDate = rs.getTimestamp("OrderDate");
+                    // Define the desired date format
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Change format as needed
+                    // Format the timestamp to show only the date
+                    Timestamp formattedDate = Timestamp.valueOf(dateFormat.format(orderDate));
                     if ("Chờ giao".equals(status)) {
                         EventOrderDTO dto
                                 = new EventOrderDTO(0, eventOrderId,
                                         fullName, phone, street, "",
-                                        orderDate, "", status,
+                                        formattedDate, "", status,
                                         0, 0, false, "", note);
                         orders.add(dto);
                     }
@@ -506,7 +511,7 @@ public class EventDAO implements Serializable {
                     double uPrice = rs.getDouble("UnitPrice");
                     double discount = rs.getDouble("Discount");
                     double total = rs.getDouble("Total");
-                    
+
                     EventOrderDetailDTO dto
                             = new EventOrderDetailDTO(quantity, uPrice, discount, total, eventOrderId, productName);
                     details.add(dto);
@@ -524,5 +529,56 @@ public class EventDAO implements Serializable {
             }
         }
         return details;
+    }
+
+    public List<EventDTO> getEventByAccount(String accountUsername)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<EventDTO> events = new ArrayList<>();
+
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "SELECT EventId, EventName, EventLocation, EventCity, StartDate, EndDate, EventImg, EventStatus "
+                        + "FROM Event "
+                        + "Where AccountUsername Like ?";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, accountUsername);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    int eventId = rs.getInt("EventId");
+                    String eventName = rs.getString("EventName");
+                    String eventLocation = rs.getString("EventLocation");
+                    String eventCity = rs.getString("EventCity");
+                    Timestamp startDate = rs.getTimestamp("StartDate");
+                    Timestamp endDate = rs.getTimestamp("EndDate");
+                    String eventImg = rs.getString("EventImg");
+                    boolean eventStatus = rs.getBoolean("EventStatus");
+                    EventDTO event
+                            = new EventDTO(accountUsername, eventId, eventName, eventLocation, eventCity, startDate, endDate, eventImg, eventStatus);
+                    events.add(event);
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return events;
     }
 }
