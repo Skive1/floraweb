@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-@WebServlet(name = "UpdateEventServlet", urlPatterns = {"/UpdateEventServlet"})
-public class UpdateEventServlet extends HttpServlet {
+@WebServlet(name = "UpdateEventProductServlet", urlPatterns = {"/UpdateEventProductServlet"})
+public class UpdateEventProductServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,25 +42,26 @@ public class UpdateEventServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.VIEW_EVENT_LIST);
+        String url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.VIEW_EVENT_PRODUCT);
 
-        String eventIdStr = request.getParameter("eventId");
+        String epIdStr = request.getParameter("eventProductId");
         String action = request.getParameter("action");
 
-        int eventId = Integer.parseInt(eventIdStr);
+        int epId = Integer.parseInt(epIdStr);
 
-        String username = request.getParameter("accountUsername");
+        String eventIdStr = request.getParameter("eventId");
+        int eId = Integer.parseInt(eventIdStr);
 
         try {
             EventDAO dao = new EventDAO();
             if (action != null) {
-                dao.cancelEvent(eventId);
+                dao.updateEPStatus(epId);
             }
-            url = url + "?accountUsername=" + URLEncoder.encode(username, "UTF-8");
+            url = url + "?eventId=" + eId;
         } catch (SQLException ex) {
-            log("UpdateEventServlet _SQL_" + ex.getMessage());
+            log("UpdateEventProductServlet _SQL_" + ex.getMessage());
         } catch (NamingException ex) {
-            log("UpdateEventServlet _Naming_" + ex.getMessage());
+            log("UpdateEventProductServlet _Naming_" + ex.getMessage());
         } finally {
             response.sendRedirect(url);
         }

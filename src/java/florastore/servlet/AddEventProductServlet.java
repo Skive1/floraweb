@@ -85,7 +85,7 @@ public class AddEventProductServlet extends HttpServlet {
                 request.setAttribute("ERROR", error);
             } else {
                 // Create a new EventProduct object and save to the database (pseudo code)
-                EventProductDTO newProduct = new EventProductDTO(0, productName, type, condition, detail, imgUrl, quantity, price - discount);
+                EventProductDTO newProduct = new EventProductDTO(0, eventId, productName, type, condition, detail, imgUrl, quantity, price - discount, 0);
 
                 // Assuming you have a DAO or service to add the product to the database
                 EventDAO dao = new EventDAO();

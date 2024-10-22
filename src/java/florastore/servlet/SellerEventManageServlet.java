@@ -41,11 +41,10 @@ public class SellerEventManageServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.SellerManageEventFeatures.EVENT_LIST);
+        String url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.EVENT_LIST);
         
         HttpSession session = request.getSession();
         

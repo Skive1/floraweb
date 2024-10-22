@@ -6,26 +6,29 @@
 package florastore.servlet;
 
 import florastore.event.EventDAO;
+import florastore.event.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "UpdateEventServlet", urlPatterns = {"/UpdateEventServlet"})
-public class UpdateEventServlet extends HttpServlet {
+@WebServlet(name = "SellerEventProductManageServlet", urlPatterns = {"/SellerEventProductManageServlet"})
+public class SellerEventProductManageServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,27 +45,24 @@ public class UpdateEventServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.VIEW_EVENT_LIST);
+        String url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.PRODUCT_LIST);
 
-        String eventIdStr = request.getParameter("eventId");
-        String action = request.getParameter("action");
+        HttpSession session = request.getSession();
 
-        int eventId = Integer.parseInt(eventIdStr);
-
-        String username = request.getParameter("accountUsername");
+        int id = Integer.parseInt(request.getParameter("eventId"));
 
         try {
             EventDAO dao = new EventDAO();
-            if (action != null) {
-                dao.cancelEvent(eventId);
-            }
-            url = url + "?accountUsername=" + URLEncoder.encode(username, "UTF-8");
+            List<EventProductDTO> products = dao.getAvailableEventFlower(id);
+
+            session.setAttribute("EVENT_PRODUCTS", products);
         } catch (SQLException ex) {
-            log("UpdateEventServlet _SQL_" + ex.getMessage());
+            log("SellerEventProductManageServlet _SQL_" + ex.getMessage());
         } catch (NamingException ex) {
-            log("UpdateEventServlet _Naming_" + ex.getMessage());
+            log("SellerEventProductManageServlet _Naming_" + ex.getMessage());
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

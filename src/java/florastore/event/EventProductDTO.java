@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class EventProductDTO implements Serializable {
 
     private int eventProductId;
+    private int eventId;
     private String eventProductName;
     private String eventProductType;
     private String eventProductCondition;
@@ -21,12 +22,14 @@ public class EventProductDTO implements Serializable {
     private String eventProductImg;
     private int eventProductQuantity;
     private double eventProductPrice;
+    private int isDel;
 
     public EventProductDTO() {
     }
 
-    public EventProductDTO(int eventProductId, String eventProductName, String eventProductType, String eventProductCondition, String eventProductDetail, String eventProductImg, int eventProductQuantity, double eventProductPrice) {
+    public EventProductDTO(int eventProductId, int eventId, String eventProductName, String eventProductType, String eventProductCondition, String eventProductDetail, String eventProductImg, int eventProductQuantity, double eventProductPrice, int isDel) {
         this.eventProductId = eventProductId;
+        this.eventId = eventId;
         this.eventProductName = eventProductName;
         this.eventProductType = eventProductType;
         this.eventProductCondition = eventProductCondition;
@@ -34,6 +37,7 @@ public class EventProductDTO implements Serializable {
         this.eventProductImg = eventProductImg;
         this.eventProductQuantity = eventProductQuantity;
         this.eventProductPrice = eventProductPrice;
+        this.isDel = isDel;
     }
 
 
@@ -148,4 +152,34 @@ public class EventProductDTO implements Serializable {
     public void setEventProductPrice(double eventProductPrice) {
         this.eventProductPrice = eventProductPrice;
     }
+
+    /**
+     * @return the isDel
+     */
+    public int getIsDel() {
+        return isDel;
+    }
+
+    /**
+     * @param isDel the isDel to set
+     */
+    public void setIsDel(int isDel) {
+        this.isDel = isDel;
+    }
+
+    /**
+     * @return the eventId
+     */
+    public int getEventId() {
+        return eventId;
+    }
+
+    /**
+     * @param eventId the eventId to set
+     */
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
+    }
+    
+    
 }

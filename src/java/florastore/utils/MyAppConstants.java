@@ -150,7 +150,10 @@ public class MyAppConstants {
         public static final String VIEW_ORDER_LIST = "viewOrderAction";
     }
 
-    public class SellerManageEventFeatures{
+    public class SellerManagementFeatures{
         public static final String EVENT_LIST = "sellerManageEventPage";
+        public static final String VIEW_EVENT_LIST = "viewSellerEvent";
+        public static final String PRODUCT_LIST = "sellerManageEventProductPage";
+        public static final String VIEW_EVENT_PRODUCT = "viewSellerEventProduct";
     }
 }

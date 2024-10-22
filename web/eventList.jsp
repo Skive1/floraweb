@@ -129,7 +129,7 @@
                                                     </c:if>
                                                 </td>
                                                 <td>
-                                                    <a href="" class="show-class">Xem</a>
+                                                    <a href="viewSellerEventProduct?eventId=${event.eventId}" class="show-class">Xem</a>
                                                 </td>
                                                 <td>
                                                     <form action="updateEvent?eventId=${event.eventId}&accountUsername=${sessionScope.USER.username}" method="post" style="display:inline;">                                                        
