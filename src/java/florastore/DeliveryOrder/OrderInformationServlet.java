@@ -5,11 +5,13 @@
  */
 package florastore.DeliveryOrder;
 
+import florastore.ManageEvent.TotalPriceDTO;
 import florastore.searchProduct.ServiceLayer;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
@@ -32,73 +34,50 @@ public class OrderInformationServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
-        String eventID = request.getParameter("getEventOrderID");
         int eventOrderID = 0;
-        String pageIsActive = request.getParameter("pageNo");
-        String goBack = request.getParameter("pageBack");
-        String goForward = request.getParameter("pageForward");
-
-        HttpSession session = request.getSession();
         DecimalFormat df = new DecimalFormat("#,###.##");
-        int[] range = null;
-        int page = 0, pageSize = 0;
-        double total = 0;
-        String totalOut;
+        List<DeliverDTO> deliveryList = (List<DeliverDTO>) request.getAttribute("DELIVERY_LIST");
+        List<DeliverDTO> productList = new ArrayList<>();
+        List<TotalPriceDTO> totalPrint = new ArrayList<>();
         try {
-            if (eventID != null) {                  //lần đầu xem info
-                eventOrderID = Integer.parseInt(eventID);
-                session.setAttribute("infoEventID", eventOrderID);
-            } else {                                //chuyển trang info sang 2, 3, ...
-                eventOrderID = (int) session.getAttribute("infoEventID");
-            }
-            if (pageIsActive != null) {
-                pageIsActive = pageIsActive.trim();
-            }
-            if (goBack != null) {
-                goBack = goBack.trim();
-            }
-            if (goForward != null) {
-                goForward = goForward.trim();
-            }
-            ServiceLayer service = new ServiceLayer();
-            pageIsActive = service.checkPagination(pageIsActive, goBack, goForward); //kiểm tra user có nhấn thanh chuyển trang ko
-            page = service.getPage(pageIsActive, goBack, goForward);            //trả về 1 ở lần đầu chạy, trả về n khi chạy lần 2
-            range = service.getPageRange(page, 7);                                 //lấy phạm vi sản phẩm để show
-            session.removeAttribute("currentPage");
-            if (pageIsActive == null) {
-                session.setAttribute("currentPage", 1);                   //mặc định button 1
-            } else {
-                session.setAttribute("currentPage", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
-            }
 
             DeliverDAO dao = new DeliverDAO();
-            List<DeliverDTO> orderList = dao.getOrderInfo(eventOrderID);
+//            List<DeliverDTO> orderList = dao.getOrderInfo(eventOrderID);
+//
+//            if (!orderList.isEmpty()) {
+//                for (DeliverDTO orderPrice : orderList) {
+//                    total += orderPrice.getUnitPrice() * orderPrice.getQuantity();
+//                }
+//                totalOut = df.format(total);
+//                if (orderList.get(0).getIsPaid()) {
+//                    request.setAttribute("Paid", "Đã thanh toán");
+//                }
+//                request.setAttribute("TOTAL", totalOut);
+//                request.setAttribute("DELIVERING_DETAIL", orderList);
+//                url = (String) siteMap.get(MyAppConstants.Delivery.DELIVERY_INFO_PAGE);
+//            }
 
-            if (!orderList.isEmpty()) {
-                List<DeliverDTO> deliveryList = service.getSeven(orderList, range);               //đã lấy được n sản phẩm để show trang chính
-                if (deliveryList.isEmpty()) {                                     //trường hợp delivery lấy order ở trang cuối mà trang đó chỉ có 1 order
-                    range = service.getPageRange(1, 7);                         //trả về trang 1
-                    session.setAttribute("currentPage", 7);
-                    deliveryList = service.getSeven(orderList, range);
+            if (deliveryList != null) {
+                request.setAttribute("DELIVERY_LIST", deliveryList);
+                for (int i = 0; i < deliveryList.size(); i++) {
+                    List<DeliverDTO> flowerList = dao.getOrderInfo(deliveryList.get(i).getEventOrderId());
+                    if (flowerList != null && !flowerList.isEmpty()) {
+                        productList.addAll(flowerList);
+                        double total = 0;
+                        String totalOut;
+                        for (DeliverDTO flowerPrice : flowerList) {
+                            total += flowerPrice.getUnitPrice()* flowerPrice.getQuantity();
+                        }
+                        totalOut = df.format(total);
+                        TotalPriceDTO result = new TotalPriceDTO(deliveryList.get(i).getEventOrderId(), totalOut);
+                        totalPrint.add(result);
+                    }
                 }
-                for (DeliverDTO orderPrice : orderList) {
-                    total += orderPrice.getUnitPrice() * orderPrice.getQuantity();
-                }
-                totalOut = df.format(total);
-                if (orderList.get(0).getIsPaid()) {
-                    request.setAttribute("Paid", "Đã thanh toán");
-                }
-                request.setAttribute("TOTAL", totalOut);
-                request.setAttribute("DELIVERING_DETAIL", deliveryList);
-                url = (String) siteMap.get(MyAppConstants.Delivery.DELIVERY_INFO_PAGE);
+                request.setAttribute("FLOWER_LIST", productList);
+                request.setAttribute("TOTAL", totalPrint);
+                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
             }
-            pageSize = service.getPage(orderList.size(), 7);                                   //thanh chuyển trang << 1 2 3 4 >>
 
-            if (pageSize == 0) {
-                pageSize = 1;
-            }
-            session.removeAttribute("pageSize");
-            session.setAttribute("pageSize", pageSize);                 //gán size để làm button trang 1 → n
         } catch (SQLException ex) {
             log("ViewOrderServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {

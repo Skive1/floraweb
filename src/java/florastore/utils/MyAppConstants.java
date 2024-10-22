@@ -144,7 +144,8 @@ public class MyAppConstants {
         public static final String SHIPPER_ORDER = "delivererOrders";
         public static final String SHIPPER_DELIVERING = "viewOrdersForDelivery";
         public static final String SHIPPER_DELIVERING_PAGE = "viewOrdersForDeliveryPage";
-        public static final String DELIVERY_INFO_PAGE = "deliveryInformationPage";
+        public static final String DELIVERY_INFO = "deliveryInformation";
+        public static final String DELIVERY_INFO_PAGE = "deliveryInformationPage"; //bỏ
     }
 
     public class DashBoardFeatures {

@@ -39,9 +39,6 @@ public class ShowEventServlet extends HttpServlet {
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ManageEvent.ERROR_PAGE);
 
-        List<EventProductDTO> productList = new ArrayList<>();
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        List<TotalPriceDTO> totalPrint = new ArrayList<>();
         try {
             //Call DAO/Model
             EventDAO dao = new EventDAO();
@@ -49,25 +46,8 @@ public class ShowEventServlet extends HttpServlet {
             //Process result
             if (events != null) {
                 request.setAttribute("EVENT_LIST", events);
-                for (int i = 0; i < events.size(); i++) {
-                    List<EventProductDTO> flowerList = dao.getEventFlower2(events.get(i).getEventId());
-                    if (flowerList != null && !flowerList.isEmpty()) {
-                        productList.addAll(flowerList);
-                        double total = 0;
-                        String totalOut;
-                        for (EventProductDTO flowerPrice : flowerList) {
-                            total += flowerPrice.getEventProductPrice() * flowerPrice.getEventProductQuantity();
-                        }
-                        totalOut = df.format(total);
-                        TotalPriceDTO result = new TotalPriceDTO(events.get(i).getEventId(), totalOut);
-                        totalPrint.add(result);
-                    }
-                }
-                request.setAttribute("FLOWER_LIST", productList);
-                request.setAttribute("TOTAL", totalPrint);
+                url = (String) siteMap.get(MyAppConstants.ManageEvent.VIEW_EVENT_DETAIL);
             }
-            url = (String) siteMap.get(MyAppConstants.ManageEvent.MANAGE_EVENT_PAGE);
-
         } catch (SQLException ex) {
             log("EventServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {

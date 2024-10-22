@@ -101,7 +101,7 @@ public class ViewOrdersServlet extends HttpServlet {
 
             session.removeAttribute("viewOrdersForDelivery");
             session.setAttribute("viewOrders", "active");
-            url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
+            url = (String) siteMap.get(MyAppConstants.Delivery.DELIVERY_INFO);
         } catch (SQLException ex) {
             log("ViewOrderServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
