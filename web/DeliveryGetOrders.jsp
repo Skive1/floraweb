@@ -102,7 +102,6 @@
                                         <th>Địa chỉ</th> 
                                         <th>Ghi chú</th>
                                         <th>Chi tiết</th>
-                                        <th>Ngày giao</th>
                                         <th>Trạng thái</th>
                                         <th>Tùy chỉnh</th>
                                         </thead>
@@ -132,9 +131,6 @@
                                                                 Xem thêm
                                                             </a>
                                                         </form>
-                                                    </td>
-                                                    <td>
-                                                        <fmt:formatDate value="${eventOrder.deliveryDate}" pattern="dd-MM-yyy" />
                                                     </td>
                                                     <c:if test="${eventOrder.status == 'Chờ giao' && eventOrder.deliveryStaffId == 0}">
                                                         <td style="color: orangered">
@@ -191,6 +187,7 @@
                                     </table>
                                     <div class="col-12" >
                                         <div class="pagination d-flex justify-content-center mt-5">
+                                            <%--phần code laquo (<<) --%>
                                             <c:if test="${sessionScope.currentPage == 1}"> 
                                                 <a href="#" class="btn btn-secondary" style="margin: 1; 
                                                    background-color: gray; color: white; pointer-events: none; opacity: 0.6;
@@ -208,8 +205,10 @@
                                                     </a>
                                                 </form>
                                             </c:if>
+                                            <%--phần code laquo (<<) --%>
                                             <form id="paginationForm" action="delivererOrders" method="POST">
                                                 <input type="hidden" id="pageNo" name="pageNo">
+                                                <%--Nếu chỉ có 5 trang thì show << 1 2 3 4 5 >>--%>
                                                 <c:if test="${sessionScope.pageSize <= 5}">
                                                     <c:forEach var="i" begin="1" end="${sessionScope.pageSize}">
                                                         <c:if test="${sessionScope.currentPage == i}">
@@ -228,8 +227,11 @@
                                                         </c:if>
                                                     </c:forEach>
                                                 </c:if>
+                                                <%--Nếu chỉ có 5 trang thì show << 1 2 3 4 5 >>--%>
+                                                <%--Nếu nhiều hơn 5 trang thì show << 1 2 3 4 5 ... >> << 1 2 ... 5 6 7 ... >> << 1 2 ... 7 8 9 >>--%>
                                                 <c:if test="${sessionScope.pageSize >= 5}">
-                                                    <c:if test="${sessionScope.currentPage == 1 || sessionScope.currentPage == 2}">
+                                                    <c:if test="${sessionScope.currentPage == 1 || sessionScope.currentPage == 2 ||
+                                                                  sessionScope.currentPage == 3}">
                                                         <c:forEach var="i" begin="1" end="5">
                                                             <c:if test="${sessionScope.currentPage == i}">
                                                                 <a href="#" class="active btn btn-secondary" 
@@ -252,6 +254,7 @@
                                                         </a>
                                                     </c:if>
                                                     <c:if test="${sessionScope.currentPage != 1 && sessionScope.currentPage != 2 &&
+                                                                  sessionScope.currentPage != 3 &&
                                                                   sessionScope.currentPage != (sessionScope.pageSize - 2) &&
                                                                   sessionScope.currentPage != (sessionScope.pageSize - 1) &&
                                                                   sessionScope.currentPage != sessionScope.pageSize}">
@@ -337,7 +340,9 @@
                                                         </c:forEach>
                                                     </c:if>
                                                 </c:if>
+                                                <%--Nếu nhiều hơn 5 trang thì show << 1 2 3 4 5 ... >> << 1 2 ... 5 6 7 ... >> << 1 2 ... 7 8 9 >>--%>
                                             </form>
+                                            <%--phần code raquo (>>) --%>
                                             <c:if test="${sessionScope.currentPage != sessionScope.pageSize}"> 
                                                 <form id="forwardForm" action="delivererOrders" method="POST">
                                                     <input type="hidden" id="pageForward" name="pageForward"/>
@@ -353,7 +358,8 @@
                                                    background-color: gray; color: white; pointer-events: none; opacity: 0.6;">
                                                     &raquo;
                                                 </a>
-                                            </c:if>  
+                                            </c:if> 
+                                            <%--phần code raquo (>>) --%>
                                         </div>
                                     </div>
                                 </c:if>
