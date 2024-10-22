@@ -75,13 +75,13 @@ public class ViewOrdersForDeliveryServlet extends HttpServlet {
             session.removeAttribute("Total_Order");
             if (!orderList.isEmpty()) {
                 List<DeliverDTO> deliveryList = service.getSeven(orderList, range);               //đã lấy được n sản phẩm để show trang chính
-                if (deliveryList.isEmpty()) {                                     //trường hợp delivery lấy order ở trang cuối mà trang đó chỉ có 1 order
+                if (!deliveryList.isEmpty()) {                                     //trường hợp delivery lấy order ở trang cuối mà trang đó chỉ có 1 order
                     range = service.getPageRange(1, 7);                         //trả về trang 1
                     session.setAttribute("currentPage", 1);
                     deliveryList = service.getSeven(orderList, range);
                 }
                 session.setAttribute("Total_Order", orderList.size());
-                request.setAttribute("DELIVERING_LIST", deliveryList);
+                request.setAttribute("DELIVERY_LIST", deliveryList);
             }
             pageSize = service.getPage(orderList.size(), 7);                                   //thanh chuyển trang << 1 2 3 4 >>
             
@@ -93,7 +93,7 @@ public class ViewOrdersForDeliveryServlet extends HttpServlet {
             
             session.removeAttribute("viewOrders");
             session.setAttribute("viewOrdersForDelivery", "active");
-            url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING_PAGE);
+            url = (String) siteMap.get(MyAppConstants.Delivery.DELIVERY_INFO);
         } catch (SQLException ex) {
             log("ViewOrderServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {

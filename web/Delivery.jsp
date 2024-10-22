@@ -76,7 +76,7 @@
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
                             <div class="admin-content-main-content-product-list">
-                                <c:set var="event" value="${requestScope.DELIVERING_LIST}"/>
+                                <c:set var="event" value="${requestScope.DELIVERY_LIST}"/>
                                 <c:if test="${not empty event}">
                                     <table >
                                         <thead>
@@ -86,12 +86,11 @@
                                         <th>Địa chỉ</th> 
                                         <th>Ghi chú</th>
                                         <th>Chi tiết</th>
-                                        <th>Ngày giao</th>
                                         <th>Trạng thái</th>
                                         <th>Tùy chỉnh</th>
                                         </thead>
                                         <tbody style="height: 100px;">
-                                            <c:forEach var="eventOrder" items="${requestScope.DELIVERING_LIST}" varStatus="counter">
+                                            <c:forEach var="eventOrder" items="${requestScope.DELIVERY_LIST}" varStatus="counter">
                                                 <tr>
                                                     <td>${counter.count}</td>
                                                     <td>${eventOrder.fullname}</td>
@@ -107,18 +106,9 @@
                                                             -
                                                         </td>
                                                     </c:if>
-                                                    <td>                                                                     
-                                                        <form id="more${counter.count}" action="deliveryInformation" method="POST">
-                                                            <input type="hidden" id="getEventOrderID" name="getEventOrderID" value="${eventOrder.eventOrderId}"/>
-                                                            <a href="#" class="btn btn-primary" style="border: 0"
-                                                               onclick="document.getElementById('getEventOrderID');
-                                                                       document.getElementById('more${counter.count}').submit();">
-                                                                Xem thêm
-                                                            </a>
-                                                        </form>
-                                                    </td>
                                                     <td>
-                                                        <fmt:formatDate value="${eventOrder.deliveryDate}" pattern="dd-MM-yyy" />
+                                                        <a href="javascript:void(0);" class="btn btn-primary" style="color: black"
+                                                           onclick="toggleDetails(${counter.count});">Xem</a>
                                                     </td>
                                                     <c:if test="${eventOrder.status == 'Chờ giao'}">
                                                         <td style="color: orangered">
@@ -172,6 +162,71 @@
                                                     <c:if test="${eventOrder.status == 'Đã giao'}">
                                                         <td></td>
                                                     </c:if> 
+                                                </tr>
+                                                <tr id="details-${counter.count}" style="display:none;">
+                                                    <td colspan="8">
+                                                        <div>
+                                                            <table>
+                                                                <thead>
+                                                                <th style="background-color: #007bff; color: black">No</th>
+                                                                <th style="background-color: #007bff; color: black">Tên mặt hàng</th>
+                                                                <th style="background-color: #007bff; color: black">Ngày đặt</th>
+                                                                <th style="background-color: #007bff; color: black">Phân loại</th>
+                                                                <th style="background-color: #007bff; color: black">Tình trạng</th>
+                                                                <th style="background-color: #007bff; color: black">Hình thức thanh toán</th>
+                                                                <th style="background-color: #007bff; color: black">Số lượng</th>        
+                                                                <th style="background-color: #007bff; color: black">Đơn giá</th>
+                                                                </thead>
+                                                                <tbody style="height: 100px;">
+                                                                    <c:set var="deliveryList" value="${requestScope.DELIVERY_INFO_LIST}"/>
+                                                                    <c:if test="${not empty deliveryList}">
+                                                                        <c:set var="customCounter" value="1" scope="page"/>
+                                                                        <c:forEach var="eventInfo" items="${requestScope.DELIVERY_INFO_LIST}" varStatus="counter2">
+                                                                            <c:if test="${eventOrder.eventOrderId == eventInfo.eventOrderId}">
+                                                                                <tr>
+                                                                                    <td style="font-weight: bold">${customCounter}</td>
+                                                                                    <td>${eventInfo.productName}</td>
+                                                                                    <td><fmt:formatDate value="${eventInfo.orderDate}" pattern="dd-MM-yyy" /></td>
+                                                                                    <td>${eventInfo.productType}</td>
+                                                                                    <td>${eventInfo.productCondition}</td>
+                                                                                    <td>${eventInfo.paymentOptions}</td>
+                                                                                    <td>${eventInfo.quantity}</td> 
+                                                                                    <td><fmt:formatNumber value="${eventInfo.unitPrice}" pattern="#,###"/></td>
+                                                                                </tr>
+                                                                                <c:set var="customCounter" value="${customCounter + 1}" />
+                                                                            </c:if>
+                                                                            <c:if test="${eventOrder.eventOrderId != eventInfo.eventOrderId}">
+                                                                                <c:set var="customCounter" value="1" />
+                                                                            </c:if>
+                                                                        </c:forEach>
+
+                                                                    </c:if> 
+                                                                    <c:forEach var="total" items="${requestScope.TOTAL}" varStatus="counter3">
+                                                                        <c:if test="${eventList.eventId == total.eventId}">
+                                                                            <tr>
+                                                                                <td colspan="5"></td>
+                                                                                <td style="font-weight: 700;">Tổng giá:</td>
+                                                                                <td style="font-weight: 700;" >${total.total}</td> 
+                                                                            </tr>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </tbody>
+                                                                <c:if test="${empty deliveryList}">
+                                                                    <a>Danh sách rỗng!</a>
+                                                                </c:if>
+                                                            </table>
+                                                            <script>
+                                                                function toggleDetails(index) {
+                                                                    var detailsRow = document.getElementById("details-" + index);
+                                                                    if (detailsRow.style.display === "none") {
+                                                                        detailsRow.style.display = "table-row"; // Show the details row
+                                                                    } else {
+                                                                        detailsRow.style.display = "none"; // Hide the details row
+                                                                    }
+                                                                }
+                                                            </script>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>

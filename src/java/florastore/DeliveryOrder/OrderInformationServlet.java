@@ -34,7 +34,9 @@ public class OrderInformationServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
-        int eventOrderID = 0;
+
+        HttpSession session = request.getSession();
+
         DecimalFormat df = new DecimalFormat("#,###.##");
         List<DeliverDTO> deliveryList = (List<DeliverDTO>) request.getAttribute("DELIVERY_LIST");
         List<DeliverDTO> productList = new ArrayList<>();
@@ -42,20 +44,6 @@ public class OrderInformationServlet extends HttpServlet {
         try {
 
             DeliverDAO dao = new DeliverDAO();
-//            List<DeliverDTO> orderList = dao.getOrderInfo(eventOrderID);
-//
-//            if (!orderList.isEmpty()) {
-//                for (DeliverDTO orderPrice : orderList) {
-//                    total += orderPrice.getUnitPrice() * orderPrice.getQuantity();
-//                }
-//                totalOut = df.format(total);
-//                if (orderList.get(0).getIsPaid()) {
-//                    request.setAttribute("Paid", "Đã thanh toán");
-//                }
-//                request.setAttribute("TOTAL", totalOut);
-//                request.setAttribute("DELIVERING_DETAIL", orderList);
-//                url = (String) siteMap.get(MyAppConstants.Delivery.DELIVERY_INFO_PAGE);
-//            }
 
             if (deliveryList != null) {
                 request.setAttribute("DELIVERY_LIST", deliveryList);
@@ -66,7 +54,7 @@ public class OrderInformationServlet extends HttpServlet {
                         double total = 0;
                         String totalOut;
                         for (DeliverDTO flowerPrice : flowerList) {
-                            total += flowerPrice.getUnitPrice()* flowerPrice.getQuantity();
+                            total += flowerPrice.getUnitPrice() * flowerPrice.getQuantity();
                         }
                         totalOut = df.format(total);
                         TotalPriceDTO result = new TotalPriceDTO(deliveryList.get(i).getEventOrderId(), totalOut);
@@ -75,7 +63,11 @@ public class OrderInformationServlet extends HttpServlet {
                 }
                 request.setAttribute("DELIVERY_INFO_LIST", productList);
                 request.setAttribute("TOTAL", totalPrint);
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
+                if (session.getAttribute("viewOrders") != null) {
+                    url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
+                } else if (session.getAttribute("viewOrdersForDelivery") != null) {
+                    url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING_PAGE);
+                }
             }
 
         } catch (SQLException ex) {
