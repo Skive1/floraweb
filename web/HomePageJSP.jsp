@@ -23,6 +23,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
 
         <!-- Icon Font Stylesheet -->
+        <script src="https://kit.fontawesome.com/4cb3201524.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -32,11 +33,18 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/snackbar.css">
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
+        <style>
+            .btn-search:hover {
+                background-color: #f0f0f0; /* Màu nền khi hover */
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng khi hover */
+            }
+        </style>
     </head>
 
     <body>
@@ -46,7 +54,7 @@
             <div class="spinner-grow text-third" role="status"></div>
         </div>
         <!-- Spinner End -->
-
+        <div id="snackbar"></div>
 
         <!-- Navbar start -->
         <div class="container-fluid fixed-top">
@@ -95,12 +103,12 @@
 
                         </div>
                         <div class="d-flex align-items-center justify-content-center m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
-                                <i class="fas fa-search text-third"></i>
+                            <button class="btn-search btn bg-white" data-bs-toggle="modal" data-bs-target="#searchModal" style="padding-top: 10px">
+                                <i class="fa-solid fa-2x fa-bell"  style="color: #81c408"></i>
                             </button>
 
                             <c:if test="${empty sessionScope.USER}">
-                                <a href="loginPage" class="position-relative me-4">
+                                <a href="loginPage" class="position-relative" style="margin-right: 20px; margin-left: 12px;">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                 </a>
                                 <a href="loginPage" class="my-auto">
@@ -132,7 +140,7 @@
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
-                                </div>                         
+                                    </div>                         
                             </c:if>
                         </div>
                     </div>
@@ -153,7 +161,7 @@
                     <div class="modal-body d-flex align-items-center">
                         <div class="input-group w-75 mx-auto d-flex">
                             <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                            <span id="search-icon-1" class="input-group-text p-3"><i style="width: 30px" class="fa fa-search"></i></span>
                         </div>
                     </div>
                 </div>
@@ -339,40 +347,40 @@
             <div class="container py-5">
                 <div class="row g-4 justify-content-center">
                     <div class="col-md-6 col-lg-4">
-                            <div class="service-item bg-secondary rounded border border-secondary">
-                                <img src="img/eventwaste.png" class="img-fluid rounded-top w-100" alt="">
-                                <div class="px-5 rounded-bottom">
-                                    <div class=" bg-primary text-center p-4 rounded">
-                                        <h5 class="text-white">Lãng phí</h5>
-                                    </div>
+                        <div class="service-item bg-secondary rounded border border-secondary">
+                            <img src="img/eventwaste.png" class="img-fluid rounded-top w-100" alt="">
+                            <div class="px-5 rounded-bottom">
+                                <div class=" bg-primary text-center p-4 rounded">
+                                    <h5 class="text-white">Lãng phí</h5>
                                 </div>
                             </div>
-    
+                        </div>
+
                     </div>
                     <div class="col-md-6 col-lg-4">
-            
-                            <div class="service-item bg-dark rounded border border-dark">
-                                <img src="img/surplusFlower.png" class="img-fluid rounded-top w-100" alt="">
-                                <div class="px-4 rounded-bottom">
-                                    <div class="service-content bg-light text-center p-4 rounded">
-                                        <h5 class="text-third">Giảm Lãng Phí</h5>
-                                        <h3 class="mb-0">Hoa thừa</h3>
-                                    </div>
+
+                        <div class="service-item bg-dark rounded border border-dark">
+                            <img src="img/surplusFlower.png" class="img-fluid rounded-top w-100" alt="">
+                            <div class="px-4 rounded-bottom">
+                                <div class="service-content bg-light text-center p-4 rounded">
+                                    <h5 class="text-third">Giảm Lãng Phí</h5>
+                                    <h3 class="mb-0">Hoa thừa</h3>
                                 </div>
                             </div>
-         
+                        </div>
+
                     </div>
                     <div class="col-md-6 col-lg-4">
-             
-                            <div class="service-item bg-secondary rounded border border-secondary">
-                                <img src="img/trader.png" class="img-fluid rounded-top w-100" alt="">
-                                <div class="px-5 rounded-bottom">
-                                    <div class=" bg-primary text-center p-4 rounded">
-                                        <h5 class="text-white">Buôn bán</h5>
-                                    </div>
+
+                        <div class="service-item bg-secondary rounded border border-secondary">
+                            <img src="img/trader.png" class="img-fluid rounded-top w-100" alt="">
+                            <div class="px-5 rounded-bottom">
+                                <div class=" bg-primary text-center p-4 rounded">
+                                    <h5 class="text-white">Buôn bán</h5>
                                 </div>
                             </div>
-            
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -644,6 +652,8 @@
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="js/notification.js"></script>
         <script src="lib/easing/easing.min.js"></script>
         <script src="lib/waypoints/waypoints.min.js"></script>
         <script src="lib/lightbox/js/lightbox.min.js"></script>
