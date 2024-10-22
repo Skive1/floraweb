@@ -56,7 +56,6 @@ public class SearchServlet extends HttpServlet {
         int[] categories = null;
 
         double list = 0;
-
         HttpSession session = request.getSession();
         String lastSearchValue = (String) session.getAttribute("lastSearch");
         String searchErrorExist = (String) session.getAttribute("errorExist");
@@ -68,8 +67,8 @@ public class SearchServlet extends HttpServlet {
         try {                                                                   //nhớ tối ưu hóa như cách create error và chech Note
             ProductDAO dao = new ProductDAO();
             ServiceLayer service = new ServiceLayer();
-            pageIsActive = service.checkPagination(pageIsActive, goBack, goForward);
-
+            pageIsActive = service.checkPagination(pageIsActive, goBack, goForward); //kiểm tra user có nhấn thanh chuyển trang ko
+            //3 hàm giúp định vị đúng trang cũ để trả về khi user nhập lỗi
             if (checkPageActive != null && searchErrorExist != null) {
                 pageIsActive = checkPageActive;
                 session.removeAttribute("pageIsActive");
@@ -96,9 +95,9 @@ public class SearchServlet extends HttpServlet {
 
             if (navbar != null || searchValue == null) {
                 session.removeAttribute("lastSearch");                          //xóa attribute để không bị nhảy sai
-                dao.searchTotalProduct(searchValue, true);               //get total product founded
+                dao.searchTotalProduct("", true);               //get total product founded
                 
-            } else if (searchValue != null) {             //user search → show 9 sản phẩm đầu tiên được tìm thấy
+            } else {             //user search → show 9 sản phẩm đầu tiên được tìm thấy
                 session.removeAttribute("lastSearch");                          //xóa attribute ghi lại cái mới (ghi nhiều lần mà ko xóa sẽ gây quá tải)
                 session.setAttribute("lastSearch", searchValue);                //ghi attribute lastSearch với chuỗi lấy được từ search bar
                 dao.searchTotalProduct(searchValue, false);
@@ -113,21 +112,20 @@ public class SearchServlet extends HttpServlet {
                 session.removeAttribute("currentColor");
             }
             
-            List<ProductDTO> totalProduct = dao.getTotalProduct();              //lấy tổng sản phẩm trong kho
+            List<ProductDTO> totalProduct = dao.getTotalProduct();              //lấy tổng sản phẩm tìm được trong kho
             list = totalProduct.size();
 
-            pageSize = service.getPage(list);                                   //thanh chuyển trang << 1 2 3 4 >>
+            pageSize = service.getPage(list, 9);                                   //thanh chuyển trang << 1 2 3 4 >>
             if (pageSize == 0) {
                 pageSize = 1;
             }
             session.removeAttribute("pageSize");
             session.setAttribute("pageSize", pageSize);                 //gán size để làm button trang 1 → 9
             //show 9 sản phẩm đầu tiên
-            page = service.getPage(page, pageIsActive, goBack, goForward);
-            range = service.getPageRange(page);                                 //lấy phạm vi sản phẩm để show
+            page = service.getPage(pageIsActive, goBack, goForward);
+            range = service.getPageRange(page, 9);                                 //lấy phạm vi sản phẩm để show
 
             List<ProductDTO> productList = service.getNine(totalProduct, range);               //đã lấy được 9 sản phẩm để show trang chính
-//            request.removeAttribute("requestResultList");
             request.setAttribute("requestResultList", productList);                   //9 sản phẩm đã vào attribute result chuẩn bị được show
             
             session.removeAttribute("totalProduct");
@@ -147,7 +145,7 @@ public class SearchServlet extends HttpServlet {
             session.removeAttribute("dryFlower");
             session.removeAttribute("otherType");
 
-            request.setAttribute("requestColor", service.chooseColor());
+            request.setAttribute("requestColor", service.chooseColor(totalProduct));
             
             session.setAttribute("allType", categories[0]);
             session.setAttribute("freshFlower", categories[1]);
@@ -163,7 +161,7 @@ public class SearchServlet extends HttpServlet {
             }
 
             //dao.searchTotalProduct("", true);                                   //giữ cho categories luôn cập nhật sản phẩm mới
-            List<ProductDTO> newIncome = service.getNewProduct(totalProduct);
+            List<ProductDTO> newIncome = service.getNewProduct(dao.searchAllProduct());
             request.removeAttribute("requestNewProduct");                              //giữ cho categories luôn cập nhật
             request.setAttribute("requestNewProduct", newIncome);
             

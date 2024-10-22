@@ -129,6 +129,7 @@ public class MyAppConstants {
     public class ManageEvent {
 
         public static final String ERROR_PAGE = "error404";
+        public static final String VIEW_EVENT_DETAIL = "viewEventDetail";
         public static final String VIEW_EVENT_PAGE = "viewEventPage";
         public static final String VIEW_EVENT = "viewEvent";
         public static final String DETAIL_PAGE = "eventDetailPage";
@@ -142,7 +143,8 @@ public class MyAppConstants {
         public static final String SHIPPER_ORDER = "delivererOrders";
         public static final String SHIPPER_DELIVERING = "viewOrdersForDelivery";
         public static final String SHIPPER_DELIVERING_PAGE = "viewOrdersForDeliveryPage";
-        public static final String DELIVERY_INFO_PAGE = "deliveryInformationPage";
+        public static final String DELIVERY_INFO = "deliveryInformation";
+        public static final String DELIVERY_INFO_PAGE = "deliveryInformationPage"; //bỏ
     }
 
     public class DashBoardFeatures {

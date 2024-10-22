@@ -30,6 +30,8 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <!-- FavIcon -->
+        <link rel="icon" href="img/flora-favicon.png"/>
     </head>
 
     <body>
@@ -46,8 +48,8 @@
             <div class="container topbar bg-primary d-none d-lg-block">
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
-                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="https://hcmuni.fpt.edu.vn/" class="text-white">FPT University, HCM</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
                         <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
@@ -58,38 +60,70 @@
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="HomePageJSP.jsp" class="navbar-brand"><h1 class="text-third display-6">Fruitables</h1></a>
+                    <a href="home" class="navbar-brand"><img class="display-6" src="img/floralogo.png" alt="Flora Logo" width="200"></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars text-third"></span>
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="HomePageJSP.jsp" class="nav-item nav-link">Home</a>
-                            <form id="searchForm" action="SearchServlet" method="POST">
-                                <input type="hidden" name="navbarShop">
-                                <a href="javascript:void(0);" class="nav-item nav-link active" onclick="document.getElementById('searchForm').submit();">Shop</a>
-                            </form>
-                            <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">Cart</a>
-                                    <a href="chackout.html" class="dropdown-item">Checkout</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
-                                </div>
-                            </div>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
+                            <a href="event" class="nav-item nav-link">Event</a>
+                            <a href="contactPage" class="nav-item nav-link">Contact</a>
+                            <!--        Session Management  -->
+                            <c:if test="${not empty sessionScope.USER}">
+                                <!--                Manager Session-->
+                                <c:if test="${sessionScope.USER.role == 'Admin'}">
+                                    <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
+                                    <a href="viewEvent" class="nav-item nav-link">Manage System</a>
+                                </c:if>
+                                <!--                Delivery Session-->
+                                <c:if test="${sessionScope.USER.role == 'Delivery'}">
+                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                </c:if>
+                                <!--                Seller Session-->
+                                <c:if test="${sessionScope.USER.role == 'Seller'}">
+                                    <a href="showStoreName" class="nav-item nav-link">Manage Shop</a>
+                                </c:if>
+                            </c:if>
+
                         </div>
-                        <div class="d-flex m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-third"></i></button>
-                            <a href="#" class="position-relative me-4 my-auto">
-                                <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
-                            </a>
-                            <a href="#" class="my-auto">
-                                <i class="fas fa-user fa-2x"></i>
-                            </a>
+                        <div class="d-flex align-items-center justify-content-center m-3 me-0">
+                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
+                                <i class="fas fa-search text-third"></i>
+                            </button>
+
+                            <c:if test="${empty sessionScope.USER}">
+                                <a href="loginPage" class="position-relative me-4">
+                                    <i class="fa fa-shopping-bag fa-2x"></i>
+                                </a>
+                                <a href="loginPage" class="my-auto">
+                                    <i class="fas fa-user fa-2x"></i>
+                                </a>
+                            </c:if>
+                            <c:if test="${not empty sessionScope.USER}">
+                                <div class="nav-item dropdown">
+                                    <a href="" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                        <i class="fa fa-shopping-bag fa-2x"></i>
+                                    </a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="cartPage" class="dropdown-item">Cart</a>
+                                        <a href="eventCart" class="dropdown-item">Event Cart</a>
+                                    </div>
+                                </div>
+
+                                <div class="nav-item dropdown">
+                                    <a href="" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
+                                    </a>
+                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="viewProfileAction" class="dropdown-item">My Profile</a>
+                                        <a href="#" class="dropdown-item">Purchase Order</a>
+                                        <a href="logoutAction" class="dropdown-item">Logout</a>
+                                    </div>
+                                </div>                         
+                            </c:if>
                         </div>
                     </div>
                 </nav>
@@ -97,30 +131,8 @@
         </div>
         <!-- Navbar End -->
 
-
-        <!-- Modal Search Start -->
-        <form action="SearchServlet" method="POST">
-            <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-fullscreen">
-                    <div class="modal-content rounded-0">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body d-flex align-items-center">
-                            <div class="input-group w-75 mx-auto d-flex"> 
-                                <input type="search" name="txtSearchValue" value="" 
-                                       class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                                <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                                    <%--thanh search này s? ko ?? value c? ?? t?o s? khác bi?t gi?a 2 thanh--%>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
         <!-- Modal Search End -->
-        
+
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">Shop</h1>
@@ -140,7 +152,7 @@
                     <div class="col-lg-12">
                         <div class="row g-4">
                             <div class="col-xl-3">
-                                <form action="SearchServlet" method="POST">
+                                <form action="searchAction" method="POST">
                                     <div class="input-group w-100 mx-auto d-flex">
                                         <input type="search" name="txtSearchValue" value="${sessionScope.lastSearch}" 
                                                class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
@@ -197,46 +209,54 @@
                                                             <span>(${sessionScope.allType})</span>
                                                         </div>
                                                     </li>
-                                                    <li>
-                                                        <div class="d-flex justify-content-between fruite-name">
-                                                            <input type="hidden" id="categories" name="categories"/>
-                                                            <a href="#" onclick="document.getElementById('categories').value = 'Hoa ly';
-                                                                    document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
-                                                                Hoa ly
-                                                            </a>
-                                                            <span>(${sessionScope.freshFlower})</span>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="d-flex justify-content-between fruite-name">
-                                                            <input type="hidden" id="categories" name="categories"/>
-                                                            <a href="#" onclick="document.getElementById('categories').value = 'Hoa hồng';
-                                                                    document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
-                                                                Hoa hồng
-                                                            </a>
-                                                            <span>(${sessionScope.pottedFlower})</span>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="d-flex justify-content-between fruite-name">
-                                                            <input type="hidden" id="categories" name="categories"/>
-                                                            <a href="#" onclick="document.getElementById('categories').value = 'Hoa hướng dương';
-                                                                    document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
-                                                                Hoa hướng dương
-                                                            </a>
-                                                            <span>(${sessionScope.dryFlower})</span>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="d-flex justify-content-between fruite-name">
-                                                            <input type="hidden" id="categories" name="categories"/>
-                                                            <a href="#" onclick="document.getElementById('categories').value = 'Other Flower';
-                                                                    document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
-                                                                Other type
-                                                            </a>
-                                                            <span>(${sessionScope.otherType})</span>
-                                                        </div>
-                                                    </li>
+                                                    <c:if test="${sessionScope.freshFlower != 0}">
+                                                        <li>
+                                                            <div class="d-flex justify-content-between fruite-name">
+                                                                <input type="hidden" id="categories" name="categories"/>
+                                                                <a href="#" onclick="document.getElementById('categories').value = 'Hoa ly';
+                                                                        document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
+                                                                    Hoa ly
+                                                                </a>
+                                                                <span>(${sessionScope.freshFlower})</span>
+                                                            </div>
+                                                        </li>
+                                                    </c:if>
+                                                    <c:if test="${sessionScope.pottedFlower != 0}">
+                                                        <li>
+                                                            <div class="d-flex justify-content-between fruite-name">
+                                                                <input type="hidden" id="categories" name="categories"/>
+                                                                <a href="#" onclick="document.getElementById('categories').value = 'Hoa hồng';
+                                                                        document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
+                                                                    Hoa hồng
+                                                                </a>
+                                                                <span>(${sessionScope.pottedFlower})</span>
+                                                            </div>
+                                                        </li>
+                                                    </c:if>
+                                                    <c:if test="${sessionScope.dryFlower != 0}">
+                                                        <li>
+                                                            <div class="d-flex justify-content-between fruite-name">
+                                                                <input type="hidden" id="categories" name="categories"/>
+                                                                <a href="#" onclick="document.getElementById('categories').value = 'Hoa hướng dương';
+                                                                        document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
+                                                                    Hoa hướng dương
+                                                                </a>
+                                                                <span>(${sessionScope.dryFlower})</span>
+                                                            </div>
+                                                        </li>
+                                                    </c:if>
+                                                    <c:if test="${sessionScope.otherType != 0}">
+                                                        <li>
+                                                            <div class="d-flex justify-content-between fruite-name">
+                                                                <input type="hidden" id="categories" name="categories"/>
+                                                                <a href="#" onclick="document.getElementById('categories').value = 'Other Flower';
+                                                                        document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
+                                                                    Other type
+                                                                </a>
+                                                                <span>(${sessionScope.otherType})</span>
+                                                            </div>
+                                                        </li>
+                                                    </c:if>
                                                 </form>
                                             </ul>
                                         </div>
@@ -250,9 +270,9 @@
                                                 <h4 class="mb-2">Price: (${sessionScope.PriceFromSave} - ${sessionScope.PriceToSave})</h4>
                                             </c:if>
                                             <div class="d-flex align-items-center justify-content-between mb-3">
-                                                <input type="search" name="txtPriceFrom" value="" 
+                                                <input type="number" name="txtPriceFrom" value="" 
                                                        class="form-control p-3" placeholder="From" style="width: 125px">
-                                                <input type="search" name="txtPriceTo" value="" 
+                                                <input type="number" name="txtPriceTo" value="" 
                                                        class="form-control p-3" placeholder="To" style="width: 125px">
                                             </div>
                                             <c:set var="errors" value="${requestScope.PRICE_ERROR}"/>
@@ -306,32 +326,22 @@
                                                 <div>
                                                     <h6 class="mb-2">${dto.getProductName()}</h6>
                                                     <div class="d-flex mb-2">
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                    </div>
-                                                    <div class="d-flex mb-2">
                                                         <h5 class="fw-bold me-2">
                                                             <fmt:formatNumber value="${dto.getProductPrice()}" pattern="#,###"/> vnd
                                                         </h5>
-                                                        <h5 class="text-danger text-decoration-line-through">
+<!--                                                        <h5 class="text-danger text-decoration-line-through">
                                                             <fmt:formatNumber value="${(dto.getProductPrice() + 1000000)}" pattern="#,###"/> vnd
-                                                        </h5>
+                                                        </h5>-->
                                                     </div>
                                                 </div>
                                             </div>
                                         </c:forEach>
-                                        <div class="d-flex justify-content-center my-4">
-                                            <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-third w-100">View More</a>
-                                        </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="position-relative">
-                                            <img src="img/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
+                                            <img src="img/classic-autumn.jpg" class="img-fluid w-100 rounded" alt="">
                                             <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
-                                                <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
+<!--                                                <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>-->
                                             </div>
                                         </div>
                                     </div>
@@ -367,7 +377,6 @@
                                             </div>
                                         </div>
                                     </c:forEach>
-                                    <%--img/Ame.jpg--%>
                                     <div class="col-12" >
                                         <div class="pagination d-flex justify-content-center mt-5">
                                             <c:if test="${sessionScope.currentPage == 1}"> 

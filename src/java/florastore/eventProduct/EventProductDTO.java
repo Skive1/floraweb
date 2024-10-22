@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author ADMIN
  */
 public class EventProductDTO implements Serializable {
-
+    private int eventEventId;
     private int eventProductId;
     private String eventProductName;
     private String eventProductType;
@@ -28,6 +28,18 @@ public class EventProductDTO implements Serializable {
 
     public EventProductDTO(String eventProductCondition) {
         this.eventProductCondition = eventProductCondition;
+    }
+
+    public EventProductDTO(int eventEventId, int eventProductId, String eventProductName, String eventProductType, String eventProductCondition, String eventProductDetail, String eventProductImg, int eventProductQuantity, double eventProductPrice) {
+        this.eventEventId = eventEventId;
+        this.eventProductId = eventProductId;
+        this.eventProductName = eventProductName;
+        this.eventProductType = eventProductType;
+        this.eventProductCondition = eventProductCondition;
+        this.eventProductDetail = eventProductDetail;
+        this.eventProductImg = eventProductImg;
+        this.eventProductQuantity = eventProductQuantity;
+        this.eventProductPrice = eventProductPrice;
     }
 
     public EventProductDTO(int eventProductId, String eventProductName, String eventProductType, String eventProductCondition, String eventProductDetail, String eventProductImg, int eventProductQuantity, double eventProductPrice) {
@@ -51,6 +63,14 @@ public class EventProductDTO implements Serializable {
         this.eventProductQuantity = eventProductQuantity;
         this.eventProductPrice = eventProductPrice;
         this.eventId = eventId;
+    }
+  
+    public int getEventEventId() {
+        return eventEventId;
+    }
+
+    public void setEventEventId(int eventEventId) {
+        this.eventEventId = eventEventId;
     }
 
     /**

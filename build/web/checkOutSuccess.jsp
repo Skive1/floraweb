@@ -48,7 +48,7 @@
                             <div class="p-3">
                                 <div class="progresses">
                                     <div class="steps"> <span><i class="fa fa-check"></i></span> </div> <span class="line"></span>
-                                    <div class="steps"> <span><i class="fa fa-check"></i></span> </div> <span class="line"></span>
+                                    <div class="steps"> <span class="font-weight-bold">2</span> </div> <span class="line"></span>
                                     <div class="steps"> <span class="font-weight-bold">3</span> </div>
                                 </div>
                             </div>
