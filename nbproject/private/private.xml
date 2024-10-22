@@ -2,12 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/E:/GitHUB/floraweb/web/ManageEvent.jsp</file>
-            <file>file:/E:/GitHUB/floraweb/web/DeliveryGetOrders.jsp</file>
-            <file>file:/E:/GitHUB/floraweb/web/LoginJSP.jsp</file>
-            <file>file:/E:/GitHUB/floraweb/src/java/florastore/DeliveryOrder/ViewOrdersServlet.java</file>
-            <file>file:/E:/GitHUB/floraweb/src/java/florastore/DeliveryOrder/OrderInformationServlet.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
