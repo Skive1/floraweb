@@ -296,7 +296,7 @@
                                                         <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                             <c:url var="urlRewriting" value="flowerDetail">
                                                                 <c:param name="productId" value="${flower.eventProductId}"/>
-                                                                <c:param name="eventId" value="${flower.eventId}"/>
+                                                                <c:param name="eventId" value="${flower.eventEventId}"/>
                                                             </c:url>
                                                             <a href="${urlRewriting}">
                                                                 <h4>${flower.eventProductName}</h4>
@@ -304,7 +304,7 @@
                                                             <p>${flower.eventProductDetail}</p>
                                                             <!-- Hidden inputs to pass product details to the servlet -->
                                                             <input type="hidden" name="productId" value="${flower.eventProductId}">
-                                                            <input type="hidden" name="eventId" value="${flower.eventId}">
+                                                            <input type="hidden" name="eventId" value="${flower.eventEventId}">
                                                             <input type="hidden" name="imageURL" value="${flower.eventProductImg}">
                                                             <input type="hidden" name="productName" value="${flower.eventProductName}">
                                                             <input type="hidden" name="productPrice" value="${flower.eventProductPrice}">
@@ -396,7 +396,7 @@
                                 <div class="p-4 rounded-bottom">
                                     <c:url var="urlRewriting" value="flowerDetail">
                                         <c:param name="productId" value="${flower.eventProductId}"/>
-                                        <c:param name="eventId" value="${flower.eventId}"/>
+                                        <c:param name="eventId" value="${flower.eventEventId}"/>
                                     </c:url>
                                     <a href="${urlRewriting}">
                                         <h4>${flower.eventProductName}</h4>
@@ -404,7 +404,7 @@
                                     <p>${flower.eventProductDetail}</p>
                                     <!-- Hidden inputs to pass product details to the servlet -->
                                     <input type="hidden" name="productId" value="${flower.eventProductId}">
-                                    <input type="hidden" name="eventId" value="${flower.eventId}">
+                                    <input type="hidden" name="eventId" value="${flower.eventEventId}">
                                     <input type="hidden" name="imageURL" value="${flower.eventProductImg}">
                                     <input type="hidden" name="productName" value="${flower.eventProductName}">
                                     <input type="hidden" name="productPrice" value="${flower.eventProductPrice}">
@@ -440,7 +440,7 @@
                             <p class="mb-4 text-dark display-6">Type: ${flower.eventProductType}</p>
                             <c:url var="urlRewriting" value="flowerDetail">
                                 <c:param name="productId" value="${flower.eventProductId}"/>
-                                <c:param name="eventId" value="${flower.eventId}"/>
+                                <c:param name="eventId" value="${flower.eventEventId}"/>
                             </c:url>
                             <a href="${urlRewriting}" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">View</a>
                         </div>
