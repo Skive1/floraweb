@@ -348,16 +348,12 @@ public class EventDAO implements Serializable {
                     String street = rs.getString("Street");
                     String note = rs.getString("Note");
                     String status = rs.getString("Status");
-                    Timestamp orderDate = rs.getTimestamp("OrderDate");
-                    // Define the desired date format
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Change format as needed
-                    // Format the timestamp to show only the date
-                    Timestamp formattedDate = Timestamp.valueOf(dateFormat.format(orderDate));
+                    Timestamp orderDate = rs.getTimestamp("OrderDate");                    
                     if ("Chờ giao".equals(status)) {
                         EventOrderDTO dto
                                 = new EventOrderDTO(0, eventOrderId,
                                         fullName, phone, street, "",
-                                        formattedDate, "", status,
+                                        orderDate, "", status,
                                         0, 0, false, "", note);
                         orders.add(dto);
                     }
@@ -559,6 +555,7 @@ public class EventDAO implements Serializable {
                     String eventName = rs.getString("EventName");
                     String eventLocation = rs.getString("EventLocation");
                     String eventCity = rs.getString("EventCity");
+                    
                     Timestamp startDate = rs.getTimestamp("StartDate");
                     Timestamp endDate = rs.getTimestamp("EndDate");
                     String eventImg = rs.getString("EventImg");
@@ -580,5 +577,32 @@ public class EventDAO implements Serializable {
             }
         }
         return events;
+    }
+    
+    public void cancelEvent(int eventId) throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        try {
+            // 1. Connect to DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                // 2. Write SQL string
+                String sql = "UPDATE Event SET EventStatus = ? WHERE EventId = ?";
+                // 3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setBoolean(1, false);
+                stm.setInt(2, eventId);
+                // 4. Execute the update
+                stm.executeUpdate(); // No need to check affected rows if we don't return a value
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 }

@@ -1,12 +1,13 @@
 <%-- 
-    Document   : orderList
-    Created on : Oct 17, 2024, 12:53:19 AM
+    Document   : sellerManageEvent
+    Created on : Oct 23, 2024, 2:38:11 AM
     Author     : Admin
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -25,6 +26,7 @@
         <link rel="stylesheet" href="ckeditor5-builder-43.2.0/style.css">
         <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css">
         <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <title>Admin</title>
     </head>
     <body>
@@ -85,7 +87,7 @@
                     </div> 
                     <div class="admin-content-main">
                         <div class="admin-content-main-title">
-                            <h1>Danh sách đơn hàng</h1>
+                            <h1>Danh sách sự kiện</h1>
                         </div>
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
@@ -94,104 +96,50 @@
                                     <thead>
                                         <tr>
                                             <th>STT</th>
-                                            <th>Tên người mua</th>
-                                            <th>Điện thoại</th>
-                                            <th>Địa chỉ</th>
-                                            <th>Ghi chú</th>
-                                            <th>Chi tiết</th>
-                                            <th>Ngày giao</th>
+                                            <th>Tên sự kiện</th>
+                                            <th>Địa điểm</th>
+                                            <th>Thành phố</th>
+                                            <th>Ngày bắt đầu</th>
+                                            <th>Ngày kết thúc</th>
                                             <th>Trạng thái</th>
+                                            <th>Xem sản phẩm</th>
                                             <th>Tùy chỉnh</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var="order" items="${sessionScope.orderList}" varStatus="counter">
+                                        <c:forEach var="event" items="${sessionScope.EVENTS}" varStatus="counter">
                                             <tr>
                                                 <td>${counter.count}</td>
-                                                <td>${order.fullname}</td>
-                                                <td>${order.phone}</td>
-                                                <td>${order.street}</td>
+                                                <td>${event.eventName}</td>
+                                                <td>${event.eventLocation}</td>
+                                                <td>${event.eventCity}</td>
+                                                <td><fmt:formatDate value="${event.startDate}" pattern="yyyy-MM-dd" /></td>
+                                                <td><fmt:formatDate value="${event.endDate}" pattern="yyyy-MM-dd" /></td>
+
                                                 <td>
-                                                    <c:if test="${not empty order.note}">
-                                                        ${order.note}
+                                                    <c:if test="${event.eventStatus == true}">
+                                                        <font color="green">
+                                                        Available
+                                                        </font>
                                                     </c:if>
-                                                    <c:if test="${empty order.note}">
-                                                        -
+                                                    <c:if test="${event.eventStatus == false}">
+                                                        <font color="red">
+                                                        Canceled
+                                                        </font>
                                                     </c:if>
                                                 </td>
                                                 <td>
-                                                    <a href="javascript:void(0);" class="show-class" onclick="toggleDetails(${counter.count});">Xem</a>
-                                                </td>
-                                                <td><fmt:formatDate value="${order.deliveryDate}" pattern="yyyy-MM-dd" /></td>
-                                                <td>
-                                                    <div class="${order.status == 'Chờ giao' ? 'delay-class' : 'confirm-class'}">
-                                                        ${order.status}
-                                                    </div>
+                                                    <a href="" class="show-class">Xem</a>
                                                 </td>
                                                 <td>
-                                                    <form action="updateOrder?eventOrderId=${order.eventOrderId}&accountUsername=${sessionScope.USER.username}" method="post" style="display:inline;">
-                                                        <button type="submit" name="action" value="confirm" class="confirm-class">Xác nhận</button>
+                                                    <form action="updateEvent?eventId=${event.eventId}&accountUsername=${sessionScope.USER.username}" method="post" style="display:inline;">                                                        
                                                         <button type="submit" name="action" value="cancel" class="delete-class">Hủy</button>
                                                     </form>
-                                                </td>
-                                            </tr>
-                                            <tr id="details-${counter.count}" style="display:none;">
-                                                <td colspan="8">
-                                                    <div>
-                                                        <strong>Order Details:</strong>
-                                                        <table border="1">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>EPName</th>
-                                                                    <th>Quantity</th>
-                                                                    <th>UnitPrice</th>
-                                                                    <th>Discount</th>
-                                                                    <th>Total</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <c:forEach var="detail" items="${sessionScope.DETAILS[order.eventOrderId]}">
-                                                                    <tr>
-                                                                        <td>${detail.eventProductName}</td>
-                                                                        <td>${detail.quantity}</td>
-                                                                        <td>${detail.unitPrice}</td>
-                                                                        <td>${detail.discount}</td>
-                                                                        <td>${detail.total}</td>
-                                                                    </tr>
-                                                                </c:forEach>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
                                                 </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                <div class="col-12">
-                                    <nav aria-label="Page navigation">
-                                        <ul class="pagination d-flex justify-content-center mt-5">
-                                            <c:if test="${currentPage > 1}">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="viewOrderAction?page=${currentPage - 1}" aria-label="Previous">
-                                                        <span aria-hidden="true">&laquo;</span>
-                                                    </a>
-                                                </li>
-                                            </c:if>
-                                            <c:forEach var="i" begin="1" end="${totalPages}">
-                                                <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                                    <a class="page-link" href="viewOrderAction?page=${i}">${i}</a>
-                                                </li>
-                                            </c:forEach>
-                                            <c:if test="${currentPage < totalPages}">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="viewOrderAction?page=${currentPage + 1}" aria-label="Next">
-                                                        <span aria-hidden="true">&raquo;</span>
-                                                    </a>
-                                                </li>
-                                            </c:if>
-                                        </ul>
-                                    </nav>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -202,17 +150,6 @@
 </section>
 
 <script src="js/javascript.js"></script>
-<script>
-                                                        function toggleDetails(index) {
-                                                            var detailsRow = document.getElementById("details-" + index);
-                                                            if (detailsRow.style.display === "none") {
-                                                                detailsRow.style.display = "table-row"; // Show the details row
-                                                            } else {
-                                                                detailsRow.style.display = "none"; // Hide the details row
-                                                            }
-                                                        }
-</script>
-
-
 </body>
 </html>
+

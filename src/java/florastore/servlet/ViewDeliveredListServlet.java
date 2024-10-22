@@ -59,6 +59,20 @@ public class ViewDeliveredListServlet extends HttpServlet {
             EventDAO dao = new EventDAO();
             List<EventOrderDTO> delivered = dao.getDeliveredOrder(username);
 
+            // Paging
+            int pageSize = 10; // Number of orders per page
+            String pageParam = request.getParameter("page"); // Get the current page number from the request
+            int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
+            int totalOrders = delivered.size();
+            int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
+
+            // Calculate the starting and ending indexes for the sublist of products to display
+            int start = (currentPage - 1) * pageSize;
+            int end = Math.min(start + pageSize, totalOrders);
+
+            // Get the products for the current page
+            List<EventOrderDTO> ordersForPage = delivered.subList(start, end);
+            
             //call method of order detail
             // Map to store order details for each order
             Map<Integer, List<EventOrderDetailDTO>> allOrderDetails = new HashMap<>();
@@ -72,7 +86,9 @@ public class ViewDeliveredListServlet extends HttpServlet {
             }
 
             session.setAttribute("DETAILS", allOrderDetails);
-            session.setAttribute("DELIVERED", delivered);
+            session.setAttribute("DELIVERED", ordersForPage);
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("totalPages", totalPages);
         } catch (SQLException ex) {
             log("ViewDeliveredListServlet_SQL_" + ex.getMessage());
         } catch (NamingException ex) {

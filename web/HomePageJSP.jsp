@@ -124,7 +124,7 @@
                                         <a href="#" class="dropdown-item">Purchase Order</a>
                                         <c:if test="${sessionScope.USER.role == 'Seller'}">
                                             <a href="addEventPage" class="dropdown-item">Add Event</a>
-                                            <a href="viewOrderAction?accountUsername=${sessionScope.USER.username}" class="dropdown-item">View Event Order</a>
+                                            <a href="viewSellerEvent?username=${sessionScope.USER.username}" class="dropdown-item">View Event</a>
                                         </c:if>
                                         <a href="logoutAction" class="dropdown-item">Logout</a>
                                     </div>

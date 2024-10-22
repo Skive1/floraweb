@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -47,7 +48,7 @@
                                 <a href=""><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="">Account</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="">Event</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent?username=${sessionScope.USER.username}">Event</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -121,8 +122,12 @@
                                                 <td>
                                                     <a href="javascript:void(0);" class="show-class" onclick="toggleDetails(${counter.count});">Xem</a>
                                                 </td>
-                                                <td>${delivered.deliveryDate}</td>
-                                                <td>${delivered.status}</td>
+                                                <td><fmt:formatDate value="${delivered.deliveryDate}" pattern="yyyy-MM-dd" /></td>
+                                                <td>
+                                                    <div class="confirm-class">
+                                                        ${delivered.status}
+                                                    </div>
+                                                </td>
                                             </tr>
                                             <tr id="details-${counter.count}" style="display:none;">
                                                 <td colspan="8">
@@ -137,17 +142,41 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
+                                <div class="col-12">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination d-flex justify-content-center mt-5">
+                                            <c:if test="${currentPage > 1}">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="viewDeliveredAction?page=${currentPage - 1}" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                    </a>
+                                                </li>
+                                            </c:if>
+                                            <c:forEach var="i" begin="1" end="${totalPages}">
+                                                <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                                    <a class="page-link" href="viewDeliveredAction?page=${i}">${i}</a>
+                                                </li>
+                                            </c:forEach>
+                                            <c:if test="${currentPage < totalPages}">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="viewDeliveredAction?page=${currentPage + 1}" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                    </a>
+                                                </li>
+                                            </c:if>
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div> 
-</section>
+        </div> 
+    </section>
 
-<script src="js/javascript.js"></script>
-<script>
+    <script src="js/javascript.js"></script>
+    <script>
                                                         function toggleDetails(index) {
                                                             var detailsRow = document.getElementById("details-" + index);
                                                             if (detailsRow.style.display === "none") {
@@ -156,7 +185,7 @@
                                                                 detailsRow.style.display = "none"; // Hide the details row
                                                             }
                                                         }
-</script>
+    </script>
 </body>
 </html>
 
