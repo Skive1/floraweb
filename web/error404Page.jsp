@@ -35,6 +35,7 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/snackbar.css">S
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
     </head>
@@ -46,7 +47,7 @@
             <div class="spinner-grow text-third" role="status"></div>
         </div>
         <!-- Spinner End -->
-
+        <div id="snackbar"></div>
 
         <!-- Navbar start -->
         <div class="container-fluid fixed-top">
@@ -132,7 +133,7 @@
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
-                                </div>                         
+                                    </div>                         
                             </c:if>
                         </div>
                     </div>
@@ -216,12 +217,14 @@
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>
         <script src="lib/waypoints/waypoints.min.js"></script>
         <script src="lib/lightbox/js/lightbox.min.js"></script>
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
         <!-- Template Javascript -->
+        <script src="js/notification.js"></script>
         <script src="js/main.js"></script>
     </body>
 </html>

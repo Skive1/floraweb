@@ -291,40 +291,33 @@
                                                     <input type="hidden" name="page" value="DETAIL_PAGE">
                                                     <div class="rounded position-relative fruite-item">
                                                         <div class="fruite-img">
-                                                            <img src="${flower.imageURL}" class="img-fluid w-100 rounded-top" alt="">
+                                                            <img src="${flower.eventProductImg}" class="img-fluid w-100 rounded-top" alt="">
                                                         </div>
-                                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${flower.productType}</div>
+                                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${flower.eventProductType}</div>
                                                         <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                            <c:url var="urlRewriting" value="productDetail">
-                                                                <c:param name="productId" value="${flower.productId}"/>
-                                                                <c:param name="productType" value="${flower.productType}"/>
+                                                            <c:url var="urlRewriting" value="flowerDetail">
+                                                                <c:param name="productId" value="${flower.eventProductId}"/>
+                                                                <c:param name="eventId" value="${flower.eventId}"/>
                                                             </c:url>
                                                             <a href="${urlRewriting}">
-                                                                <h4>${flower.productName}</h4>
+                                                                <h4>${flower.eventProductName}</h4>
                                                             </a>
-                                                            <p>${flower.productDetail}</p>
+                                                            <p>${flower.eventProductDetail}</p>
                                                             <!-- Hidden inputs to pass product details to the servlet -->
-                                                            <input type="hidden" name="productId" value="${flower.productId}">
-                                                            <input type="hidden" name="storeId" value="${flower.storeId}">
-                                                            <input type="hidden" name="imageURL" value="${flower.imageURL}">
-                                                            <input type="hidden" name="productName" value="${flower.productName}">
-                                                            <input type="hidden" name="productPrice" value="${flower.productPrice}">
-                                                            <input type="hidden" name="productQuantity" value="${flower.productQuantity}">
+                                                            <input type="hidden" name="productId" value="${flower.eventProductId}">
+                                                            <input type="hidden" name="eventId" value="${flower.eventId}">
+                                                            <input type="hidden" name="imageURL" value="${flower.eventProductImg}">
+                                                            <input type="hidden" name="productName" value="${flower.eventProductName}">
+                                                            <input type="hidden" name="productPrice" value="${flower.eventProductPrice}">
+                                                            <input type="hidden" name="productQuantity" value="${flower.eventProductQuantity}">
                                                             <input type="hidden" name="itemQuantity" value="1">
                                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                                 <p class="text-dark fs-5 fw-bold mb-0">
-                                                                    <fmt:formatNumber value="${flower.productPrice}" type="number" groupingUsed="true"/>đ
+                                                                    <fmt:formatNumber value="${flower.eventProductPrice}" type="number" groupingUsed="true"/>đ
                                                                 </p>
-                                                                <c:if test="${not empty sessionScope.USER}">
-                                                                    <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                                                    </button>
-                                                                </c:if>
-                                                                <c:if test="${empty sessionScope.USER}">
-                                                                    <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                                                    </a>
-                                                                </c:if>
+                                                                <a href="${urlRewriting}" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                    <i class="fa fa-shopping-bag me-2 text-third"></i> Xem chi tiết
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -398,40 +391,33 @@
                             <input type="hidden" name="page" value="DETAIL_PAGE">
                             <div class="border border-primary rounded position-relative vesitable-item">
                                 <div class="fruite-img">
-                                    <img src="${flower.imageURL}" class="img-fluid w-100 rounded-top" alt="">
+                                    <img src="${flower.eventProductImg}" class="img-fluid w-100 rounded-top" alt="">
                                 </div>
-                                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">${flower.productType}</div>
+                                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">${flower.eventProductType}</div>
                                 <div class="p-4 rounded-bottom">
-                                    <c:url var="urlRewriting" value="productDetail">
-                                        <c:param name="productId" value="${flower.productId}"/>
-                                        <c:param name="productType" value="${flower.productType}"/>
+                                    <c:url var="urlRewriting" value="flowerDetail">
+                                        <c:param name="productId" value="${flower.eventProductId}"/>
+                                        <c:param name="eventId" value="${flower.eventId}"/>
                                     </c:url>
                                     <a href="${urlRewriting}">
-                                        <h4>${flower.productName}</h4>
+                                        <h4>${flower.eventProductName}</h4>
                                     </a>
-                                    <p>${productDetail}</p>
+                                    <p>${flower.eventProductDetail}</p>
                                     <!-- Hidden inputs to pass product details to the servlet -->
-                                    <input type="hidden" name="productId" value="${flower.productId}">
-                                    <input type="hidden" name="storeId" value="${flower.storeId}">
-                                    <input type="hidden" name="imageURL" value="${flower.imageURL}">
-                                    <input type="hidden" name="productName" value="${flower.productName}">
-                                    <input type="hidden" name="productPrice" value="${flower.productPrice}">
-                                    <input type="hidden" name="productQuantity" value="${flower.productQuantity}">
+                                    <input type="hidden" name="productId" value="${flower.eventProductId}">
+                                    <input type="hidden" name="eventId" value="${flower.eventId}">
+                                    <input type="hidden" name="imageURL" value="${flower.eventProductImg}">
+                                    <input type="hidden" name="productName" value="${flower.eventProductName}">
+                                    <input type="hidden" name="productPrice" value="${flower.eventProductPrice}">
+                                    <input type="hidden" name="productQuantity" value="${flower.eventProductQuantity}">
                                     <input type="hidden" name="itemQuantity" value="1">
                                     <div class="d-flex justify-content-between flex-lg-wrap">
                                         <p class="text-dark fs-5 fw-bold mb-0">
-                                            <fmt:formatNumber value="${flower.productPrice}" type="number" groupingUsed="true" />đ
+                                            <fmt:formatNumber value="${flower.eventProductPrice}" type="number" groupingUsed="true" />đ
                                         </p>
-                                        <c:if test="${not empty sessionScope.USER}">
-                                            <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                            </button>
-                                        </c:if>
-                                        <c:if test="${empty sessionScope.USER}">
-                                            <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                            </a>
-                                        </c:if>
+                                        <a href="${urlRewriting}" class="btn border border-secondary rounded-pill px-3 text-third">
+                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Xem chi tiết
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -451,20 +437,20 @@
                     <div class="col-lg-6">
                         <div class="py-4">
                             <h1 class="display-2 text-white">Cheapest Flower</h1>
-                            <p class="fw-normal display-3 text-dark mb-4">${flower.productName}</p>
-                            <p class="mb-4 text-dark display-6">Type: ${flower.productType}</p>
-                            <c:url var="urlRewriting" value="productDetail">
-                                <c:param name="productId" value="${flower.productId}"/>
-                                <c:param name="productType" value="${flower.productType}"/>
+                            <p class="fw-normal display-3 text-dark mb-4">${flower.eventProductName}</p>
+                            <p class="mb-4 text-dark display-6">Type: ${flower.eventProductType}</p>
+                            <c:url var="urlRewriting" value="flowerDetail">
+                                <c:param name="productId" value="${flower.eventProductId}"/>
+                                <c:param name="eventId" value="${flower.eventId}"/>
                             </c:url>
                             <a href="${urlRewriting}" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">View</a>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="position-relative">
-                            <img src="${flower.imageURL}" class="img-fluid rounded" alt="" style="border-radius: 50%; width: 500px">
+                            <img src="${flower.eventProductImg}" class="img-fluid rounded" alt="" style="border-radius: 50%; width: 500px">
                             <div class="d-flex align-items-center justify-content-center bg-white rounded-circle position-absolute" style="width: 140px; height: 140px; top: 0; left: 0;">
-                                <h2 style="font-size: 30px;"><fmt:formatNumber value="${flower.productPrice}" type="number" groupingUsed="true" />đ</h2>
+                                <h2 style="font-size: 30px;"><fmt:formatNumber value="${flower.eventProductPrice}" type="number" groupingUsed="true" />đ</h2>
                             </div>
                         </div>
                     </div>
@@ -653,13 +639,13 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="js/notification.js"></script>
         <script src="lib/easing/easing.min.js"></script>
         <script src="lib/waypoints/waypoints.min.js"></script>
         <script src="lib/lightbox/js/lightbox.min.js"></script>
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
         <!-- Template Javascript -->
+        <script src="js/notification.js"></script>
         <script src="js/main.js"></script>
     </body>
 

@@ -24,6 +24,7 @@
 
         <!-- Icon Font Stylesheet -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <script src="https://kit.fontawesome.com/4cb3201524.js" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
 
@@ -37,6 +38,7 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/snackbar.css">
         <link rel="stylesheet" href="alertPackage/alertCss.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
@@ -91,7 +93,7 @@
             <div class="spinner-grow text-third" role="status"></div>
         </div>
         <!-- Spinner End -->
-
+        <div id="snackbar"></div>
 
         <!-- Navbar start -->
         <div class="container-fluid fixed-top">
@@ -140,12 +142,12 @@
 
                         </div>
                         <div class="d-flex align-items-center justify-content-center m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
-                                <i class="fas fa-search text-third"></i>
+                            <button class="btn-search btn bg-white" data-bs-toggle="modal" data-bs-target="#searchModal" style="padding-top: 10px">
+                                <i class="fa-solid fa-2x fa-bell"  style="color: #81c408"></i>
                             </button>
 
                             <c:if test="${empty sessionScope.USER}">
-                                <a href="loginPage" class="position-relative me-4">
+                                <a href="loginPage" class="position-relative" style="margin-right: 20px; margin-left: 12px;">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                 </a>
                                 <a href="loginPage" class="my-auto">
@@ -177,13 +179,14 @@
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
-                                </div>                         
+                                    </div>                         
                             </c:if>
                         </div>
                     </div>
                 </nav>
             </div>
         </div>
+
         <!-- Navbar End -->
 
 
@@ -832,6 +835,7 @@
             }
         </script>
         <!-- Template Javascript -->
+        <script src="js/notification.js"></script>
         <script src="alertPackage/alertJs.js"></script>
         <script src="js/main.js"></script>
     </body>

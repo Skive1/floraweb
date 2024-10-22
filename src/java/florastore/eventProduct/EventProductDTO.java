@@ -21,6 +21,7 @@ public class EventProductDTO implements Serializable {
     private String eventProductImg;
     private int eventProductQuantity;
     private double eventProductPrice;
+    private int eventId;
 
     public EventProductDTO() {
     }
@@ -38,6 +39,18 @@ public class EventProductDTO implements Serializable {
         this.eventProductImg = eventProductImg;
         this.eventProductQuantity = eventProductQuantity;
         this.eventProductPrice = eventProductPrice;
+    }
+
+    public EventProductDTO(int eventProductId, String eventProductName, String eventProductType, String eventProductCondition, String eventProductDetail, String eventProductImg, int eventProductQuantity, double eventProductPrice, int eventId) {
+        this.eventProductId = eventProductId;
+        this.eventProductName = eventProductName;
+        this.eventProductType = eventProductType;
+        this.eventProductCondition = eventProductCondition;
+        this.eventProductDetail = eventProductDetail;
+        this.eventProductImg = eventProductImg;
+        this.eventProductQuantity = eventProductQuantity;
+        this.eventProductPrice = eventProductPrice;
+        this.eventId = eventId;
     }
 
     /**
@@ -150,6 +163,20 @@ public class EventProductDTO implements Serializable {
      */
     public void setEventProductPrice(double eventProductPrice) {
         this.eventProductPrice = eventProductPrice;
+    }
+
+    /**
+     * @return the eventId
+     */
+    public int getEventId() {
+        return eventId;
+    }
+
+    /**
+     * @param eventId the eventId to set
+     */
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
     }
 
 }

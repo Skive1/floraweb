@@ -6,6 +6,8 @@
 package florastore.servlet;
 
 import florastore.eventOrder.EventOrderDAO;
+import florastore.eventProduct.EventProductDAO;
+import florastore.eventProduct.EventProductDTO;
 import florastore.flowerProducts.FlowerProductsDAO;
 import florastore.flowerProducts.FlowerProductsDTO;
 import florastore.utils.MyAppConstants;
@@ -48,15 +50,13 @@ public class HomeServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.HomeFeatures.ERROR_PAGE);
         try {
             //1. Call DAO/Models
-            FlowerProductsDAO dao = new FlowerProductsDAO();
+            EventProductDAO dao = new EventProductDAO();
             //1.1 Get best seller products
-            dao.getBestSeller();
+            List<EventProductDTO> bestSeller = dao.getBestSellers();
             //1.2 Get new arrival products
-            dao.getNewArrival();
+            List<EventProductDTO> newArrival = dao.getNewArrivals();
             //2. Process result
-            List<FlowerProductsDTO> bestSeller = dao.getBestSellers();
-            List<FlowerProductsDTO> newArrival = dao.getNewArrivals();
-            FlowerProductsDTO cheapestFlower = dao.getCheapestFlower();
+            EventProductDTO cheapestFlower = dao.getCheapestFlower();
             EventOrderDAO eDao = new EventOrderDAO();
             HttpSession session = request.getSession(false);
             if (session != null) {

@@ -5,41 +5,23 @@
  */
 
 
-
-$(document).ready(function () {
-    var notificationQueue = []; // Hàng đợi thông báo
-    var isShowing = false; // Kiểm tra trạng thái có đang hiển thị thông báo hay không
-
-    function showNextNotification() {
-        if (notificationQueue.length > 0 && !isShowing) {
-            isShowing = true; // Đánh dấu trạng thái đang hiển thị
-            var message = notificationQueue.shift(); // Lấy thông báo đầu tiên ra khỏi hàng đợi
-
-            $('#snackbar').text(message); // Đảm bảo cập nhật đúng nội dung thông báo
-            $('#snackbar').addClass('show'); // Hiển thị snackbar
-
-            setTimeout(function () {
-                $('#snackbar').removeClass('show'); // Ẩn snackbar
-                $('#snackbar').text(''); // Xóa nội dung thông báo
-
-                isShowing = false; // Đánh dấu là không còn hiển thị thông báo nữa
-                showNextNotification(); // Gọi lại để hiển thị thông báo tiếp theo nếu có
-            }, 3000); // Thời gian hiển thị thông báo (3 giây)
-        }
-    }
-
-    // Hàm kiểm tra thông báo và đẩy vào hàng đợi
-    function checkNotifications() {
+function checkNotifications() {
+    setInterval(function () {
         $.ajax({
-            url: '/checkNotifications',
+            url: 'checkNotifications',
             method: 'GET',
             success: function (data) {
-                console.log('Dữ liệu trả về:', data);
+                console.log('Dữ liệu trả về:', data); // In ra dữ liệu trả về
                 if (Array.isArray(data) && data.length > 0) {
-                    data.forEach(function (notification) {
-                        notificationQueue.push(notification.message); // Thêm thông báo vào hàng đợi
+                    data.forEach(function (notification, index) {
+                        setTimeout(function () {
+                            $('#snackbar').text(notification.message);
+                            $('#snackbar').addClass('show');
+                            setTimeout(function () {
+                                $('#snackbar').removeClass('show');
+                            }, 3000); // Hiển thị trong 3 giây
+                        }, index * 3500); // Đảm bảo mỗi thông báo hiển thị cách nhau 3.5 giây (3000ms hiển thị + 500ms cho hiệu ứng)
                     });
-                    showNextNotification(); // Bắt đầu hiển thị thông báo
                 } else {
                     console.log('Không có thông báo chưa đọc.');
                 }
@@ -48,11 +30,8 @@ $(document).ready(function () {
                 console.error('Lỗi khi gọi AJAX:', textStatus, errorThrown);
             }
         });
-    }
-
-    // Gọi kiểm tra thông báo định kỳ
-    setInterval(checkNotifications, 5000); // Kiểm tra thông báo mỗi 5 giây
-});
+    }, 5000); // 5000ms = 5 giây
+}
 
 // Gọi hàm khi tài liệu đã sẵn sàng
 $(document).ready(function () {

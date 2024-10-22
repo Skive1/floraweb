@@ -23,6 +23,7 @@
 
         <!-- Icon Font Stylesheet -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <script src="https://kit.fontawesome.com/4cb3201524.js" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
         <!-- Libraries Stylesheet -->
@@ -35,6 +36,7 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/snackbar.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
 
@@ -42,12 +44,12 @@
 
     <body>
 
-       <!-- Spinner Start -->
+        <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-third" role="status"></div>
         </div>
         <!-- Spinner End -->
-
+        <div id="snackbar"></div>
 
         <!-- Navbar start -->
         <div class="container-fluid fixed-top">
@@ -72,7 +74,7 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link">Home</a>
+                            <a href="home" class="nav-item nav-link ">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
                             <a href="searchAction" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link active">Event</a>
@@ -96,12 +98,12 @@
 
                         </div>
                         <div class="d-flex align-items-center justify-content-center m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
-                                <i class="fas fa-search text-third"></i>
+                            <button class="btn-search btn bg-white" data-bs-toggle="modal" data-bs-target="#searchModal" style="padding-top: 10px">
+                                <i class="fa-solid fa-2x fa-bell"  style="color: #81c408"></i>
                             </button>
 
                             <c:if test="${empty sessionScope.USER}">
-                                <a href="loginPage" class="position-relative me-4">
+                                <a href="loginPage" class="position-relative" style="margin-right: 20px; margin-left: 12px;">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                 </a>
                                 <a href="loginPage" class="my-auto">
@@ -133,13 +135,14 @@
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
-                                </div>                         
+                                    </div>                         
                             </c:if>
                         </div>
                     </div>
                 </nav>
             </div>
         </div>
+
         <!-- Navbar End -->
 
 
@@ -200,33 +203,33 @@
                                                     <div class="d-flex justify-content-between fruite-name"> 
                                                         <a href="event" 
                                                            <c:if test="${empty STATUS}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2" ></i>All Events</a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name"> 
-                                                        <a href="events?status=comingsoon" 
-                                                           <c:if test="${STATUS == 'comingsoon'}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>Sắp diễn ra</a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name"> 
-                                                        <a href="events?status=in-progress" 
-                                                           <c:if test="${STATUS == 'in-progress'}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>Đang diễn ra</a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name"> 
-                                                        <a href="events?status=end"
-                                                           <c:if test="${STATUS == 'end'}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>Đã kết thúc</a>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="d-flex justify-content-between fruite-name"> 
+                                                            <a href="events?status=comingsoon" 
+                                                            <c:if test="${STATUS == 'comingsoon'}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>Sắp diễn ra</a>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="d-flex justify-content-between fruite-name"> 
+                                                            <a href="events?status=in-progress" 
+                                                            <c:if test="${STATUS == 'in-progress'}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>Đang diễn ra</a>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="d-flex justify-content-between fruite-name"> 
+                                                            <a href="events?status=end"
+                                                            <c:if test="${STATUS == 'end'}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>Đã kết thúc</a>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-9">
-                                <div class="row g-4 justify-content-center">
+                                <div class="col-lg-9">
+                                    <div class="row g-4 justify-content-center">
                                     <c:set var="event" value="${requestScope.EVENT_LIST}"/>
                                     <c:if test="${not empty event}">
                                         <c:forEach var="eventList" items="${requestScope.EVENT_LIST}">
@@ -294,12 +297,14 @@
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>
         <script src="lib/waypoints/waypoints.min.js"></script>
         <script src="lib/lightbox/js/lightbox.min.js"></script>
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
         <!-- Template Javascript -->
+        <script src="js/notification.js"></script>
         <script src="js/main.js"></script>
     </body>
 
