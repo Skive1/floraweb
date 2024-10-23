@@ -52,10 +52,10 @@
                             <ul class="flex-box">
                                 <i>Số dư tài khoản: <fmt:formatNumber value="${sessionScope.Staff_Balance}" pattern="#,###"/></i>
                                 <li>
-                                    <c:if test="${sessionScope.Total_Order != null}">
-                                        <i class="ri-notification-4-line" number="${sessionScope.Total_Order}"></i>
+                                    <c:if test="${requestScope.Total_Order != null}">
+                                        <i class="ri-notification-4-line" number="${requestScope.Total_Order}"></i>
                                     </c:if>
-                                    <c:if test="${sessionScope.Total_Order == null}">
+                                    <c:if test="${requestScope.Total_Order == null}">
                                         <i class="ri-notification-4-line" number="0"></i>
                                     </c:if>
                                 </li>
