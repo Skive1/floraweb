@@ -390,8 +390,8 @@
                                             <c:if test="${sessionScope.currentPage != 1}"> 
                                                 <form id="backForm" action="searchPageChange" method="POST">
                                                     <input type="hidden" id="pageBack" name="pageBack"/>
-                                                    <a href="#" class="rounded" style="margin: 1"
-                                                       onclick="document.getElementById('pageBack').value = '${sessionScope.currentPage}';
+                                                    <a href="#" class="rounded" style="margin: 1;"
+                                                       onclick="document.getElementById('pageBack').value = '${(sessionScope.currentPage - 1)}';
                                                                document.getElementById('backForm').submit();">
                                                         &laquo;
                                                     </a>
@@ -399,38 +399,149 @@
                                             </c:if>
                                             <form id="paginationForm" action="searchPageChange" method="POST">
                                                 <input type="hidden" id="pageNo" name="pageNo">
-                                                <c:forEach var="i" begin="1" end="${sessionScope.pageSize}">
-                                                    <c:if test="${sessionScope.currentPage == i}">
-                                                        <a href="#" class="active rounded" 
-                                                           onclick="document.getElementById('pageNo').value = '${i}';
-                                                                   document.getElementById('paginationForm').submit();
-                                                                   return false;" style="margin: 0">${i}</a>
+                                                <c:if test="${sessionScope.pageSize <= 5}">
+                                                    <c:forEach var="i" begin="1" end="${sessionScope.pageSize}">
+                                                        <c:if test="${sessionScope.currentPage == i}">
+                                                            <a href="#" class="active rounded" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 0;
+                                                             ">${i}</a>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.currentPage != i}">
+                                                            <a href="#" class="rounded" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 0; 
+                                                             ">${i}</a>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </c:if>
+                                                <c:if test="${sessionScope.pageSize >= 5}">
+                                                    <c:if test="${sessionScope.currentPage == 1 || sessionScope.currentPage == 2}">
+                                                        <c:forEach var="i" begin="1" end="5">
+                                                            <c:if test="${sessionScope.currentPage == i}">
+                                                                <a href="#" class="active rounded" 
+                                                                   onclick="document.getElementById('pageNo').value = '${i}';
+                                                                           document.getElementById('paginationForm').submit();
+                                                                           return false;" style="margin: 0;
+                                                                 ">${i}</a>
+                                                            </c:if>
+                                                            <c:if test="${sessionScope.currentPage != i}">
+                                                                <a href="#" class="rounded" 
+                                                                   onclick="document.getElementById('pageNo').value = '${i}';
+                                                                           document.getElementById('paginationForm').submit();
+                                                                           return false;" style="margin: 0; 
+                                                                 ">${i}</a>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                        <a href="#" class="rounded" style="margin: 1; border-color: black;
+                                                           background-color: white; color: black; pointer-events: none; opacity: 0.6;">
+                                                            ...
+                                                        </a>
                                                     </c:if>
-                                                    <c:if test="${sessionScope.currentPage != i}">
-                                                        <a href="#" class="rounded" 
-                                                           onclick="document.getElementById('pageNo').value = '${i}';
-                                                                   document.getElementById('paginationForm').submit();
-                                                                   return false;" style="margin: 0">${i}</a>
+                                                    <c:if test="${sessionScope.currentPage != 1 && sessionScope.currentPage != 2 &&
+                                                                  sessionScope.currentPage != (sessionScope.pageSize - 2) &&
+                                                                  sessionScope.currentPage != (sessionScope.pageSize - 1) &&
+                                                                  sessionScope.currentPage != sessionScope.pageSize}">
+                                                        <c:forEach var="i" begin="1" end="2">
+                                                            <c:if test="${sessionScope.currentPage == i}">
+                                                                <a href="#" class="active rounded" 
+                                                                   onclick="document.getElementById('pageNo').value = '${i}';
+                                                                           document.getElementById('paginationForm').submit();
+                                                                           return false;" style="margin: 0;
+                                                                 ">${i}</a>
+                                                            </c:if>
+                                                            <c:if test="${sessionScope.currentPage != i}">
+                                                                <a href="#" class="rounded" 
+                                                                   onclick="document.getElementById('pageNo').value = '${i}';
+                                                                           document.getElementById('paginationForm').submit();
+                                                                           return false;" style="margin: 0; 
+                                                                 ">${i}</a>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                        <a href="#" class="rounded" style="margin: 1; border-color: black;
+                                                           background-color: white; color: black; pointer-events: none; opacity: 0.6;">
+                                                            ...
+                                                        </a>
+                                                        <c:forEach var="i" begin="${sessionScope.currentPage}" end="${(sessionScope.currentPage + 2)}">
+                                                            <c:if test="${sessionScope.currentPage == i}">
+                                                                <a href="#" class="active rounded" 
+                                                                   onclick="document.getElementById('pageNo').value = '${i}';
+                                                                           document.getElementById('paginationForm').submit();
+                                                                           return false;" style="margin: 0;
+                                                                 ">${i}</a>
+                                                            </c:if>
+                                                            <c:if test="${sessionScope.currentPage != i}">
+                                                                <a href="#" class="rounded" 
+                                                                   onclick="document.getElementById('pageNo').value = '${i}';
+                                                                           document.getElementById('paginationForm').submit();
+                                                                           return false;" style="margin: 0; 
+                                                                 ">${i}</a>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                        <a href="#" class="rounded" style="margin: 1; border-color: black;
+                                                           background-color: white; color: black; pointer-events: none; opacity: 0.6;">
+                                                            ...
+                                                        </a>
                                                     </c:if>
-                                                </c:forEach>
+                                                    <c:if test="${sessionScope.currentPage == (sessionScope.pageSize - 2) ||
+                                                                  sessionScope.currentPage == (sessionScope.pageSize - 1) ||
+                                                                  sessionScope.currentPage == sessionScope.pageSize}">
+                                                        <c:forEach var="i" begin="1" end="2">
+                                                            <c:if test="${sessionScope.currentPage == i}">
+                                                                <a href="#" class="active rounded" 
+                                                                   onclick="document.getElementById('pageNo').value = '${i}';
+                                                                           document.getElementById('paginationForm').submit();
+                                                                           return false;" style="margin: 0;
+                                                                 ">${i}</a>
+                                                            </c:if>
+                                                            <c:if test="${sessionScope.currentPage != i}">
+                                                                <a href="#" class="rounded" 
+                                                                   onclick="document.getElementById('pageNo').value = '${i}';
+                                                                           document.getElementById('paginationForm').submit();
+                                                                           return false;" style="margin: 0; 
+                                                                 ">${i}</a>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                        <a href="#" class="rounded" style="margin: 1; border-color: black;
+                                                           background-color: white; color: black; pointer-events: none; opacity: 0.6;">
+                                                            ...
+                                                        </a>
+                                                        <c:forEach var="i" begin="${(sessionScope.pageSize - 2)}" end="${sessionScope.pageSize}">
+                                                            <c:if test="${sessionScope.currentPage == i}">
+                                                                <a href="#" class="active rounded" 
+                                                                   onclick="document.getElementById('pageNo').value = '${i}';
+                                                                           document.getElementById('paginationForm').submit();
+                                                                           return false;" style="margin: 0;
+                                                                 ">${i}</a>
+                                                            </c:if>
+                                                            <c:if test="${sessionScope.currentPage != i}">
+                                                                <a href="#" class="rounded" 
+                                                                   onclick="document.getElementById('pageNo').value = '${i}';
+                                                                           document.getElementById('paginationForm').submit();
+                                                                           return false;" style="margin: 0; 
+                                                                 ">${i}</a>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </c:if>
+                                                </c:if>
                                             </form>
                                             <c:if test="${sessionScope.currentPage != sessionScope.pageSize}"> 
                                                 <form id="forwardForm" action="searchPageChange" method="POST">
                                                     <input type="hidden" id="pageForward" name="pageForward"/>
-                                                    <a href="#" class="rounded" style="margin: 1"
-                                                       onclick="document.getElementById('pageForward').value = '${sessionScope.currentPage}';
+                                                    <a href="#" class="rounded" style="margin: 1;"
+                                                       onclick="document.getElementById('pageForward').value = '${(sessionScope.currentPage + 1)}';
                                                                document.getElementById('forwardForm').submit();">
                                                         &raquo;
                                                     </a>
                                                 </form>
                                             </c:if>
                                             <c:if test="${sessionScope.currentPage == sessionScope.pageSize}"> 
-                                                <form>
-                                                    <a href="#" class="rounded" style="margin: 1; 
-                                                       background-color: gray; color: white; pointer-events: none; opacity: 0.6;">
-                                                        &raquo;
-                                                    </a>
-                                                </form>
+                                                <a href="#" class="rounded" style="margin: 1; border-color: black;
+                                                   background-color: gray; color: white; pointer-events: none; opacity: 0.6;">
+                                                    &raquo;
+                                                </a>
                                             </c:if>  
                                         </div>
                                     </div>
