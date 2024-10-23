@@ -215,9 +215,9 @@
 
                                                                     </c:if> 
                                                                     <c:forEach var="total" items="${requestScope.TOTAL}" varStatus="counter3">
-                                                                        <c:if test="${eventList.eventId == total.eventId}">
+                                                                        <c:if test="${eventOrder.eventOrderId == total.eventId}">
                                                                             <tr>
-                                                                                <td colspan="5"></td>
+                                                                                <td colspan="6"></td>
                                                                                 <td style="font-weight: 700;">Tổng giá:</td>
                                                                                 <td style="font-weight: 700;" >${total.total}</td> 
                                                                             </tr>
