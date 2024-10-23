@@ -12,7 +12,8 @@ import java.sql.Timestamp;
  *
  * @author Admin
  */
-public class EventOrderDTO implements Serializable{
+public class EventOrderDTO implements Serializable {
+
     private int eventId;
     private int eventOrderId;
     private String fullname;
@@ -27,13 +28,14 @@ public class EventOrderDTO implements Serializable{
     private boolean isPaid;
     private String paymentOptions;
     private String note;
+    private Timestamp orderDate;
 
     public EventOrderDTO() {
     }
 
-    public EventOrderDTO(int eventId, int eventOrderId, 
-            String fullname, String phone, String street, String city, 
-            Timestamp deliveryDate, String deliveryOption, String status, 
+    public EventOrderDTO(int eventId, int eventOrderId,
+            String fullname, String phone, String street, String city,
+            Timestamp deliveryDate, String deliveryOption, String status,
             double amount, int deliveryStaffId, boolean isPaid, String paymentOptions, String note) {
         this.eventId = eventId;
         this.eventOrderId = eventOrderId;
@@ -51,7 +53,26 @@ public class EventOrderDTO implements Serializable{
         this.note = note;
     }
 
-    
+    public EventOrderDTO(int eventId, int eventOrderId, String fullname, String phone, String street, String city, Timestamp deliveryDate, String deliveryOption, String status, double amount, int deliveryStaffId, boolean isPaid, String paymentOptions, String note, Timestamp orderDate) {
+        this.eventId = eventId;
+        this.eventOrderId = eventOrderId;
+        this.fullname = fullname;
+        this.phone = phone;
+        this.street = street;
+        this.city = city;
+        this.deliveryDate = deliveryDate;
+        this.deliveryOption = deliveryOption;
+        this.status = status;
+        this.amount = amount;
+        this.deliveryStaffId = deliveryStaffId;
+        this.isPaid = isPaid;
+        this.paymentOptions = paymentOptions;
+        this.note = note;
+        this.orderDate = orderDate;
+    }
+
+   
+
     /**
      * @return the eventId
      */
@@ -248,6 +269,18 @@ public class EventOrderDTO implements Serializable{
         this.note = note;
     }
 
-    
+    /**
+     * @return the orderDate
+     */
+    public Timestamp getOrderDate() {
+        return orderDate;
+    }
+
+    /**
+     * @param orderDate the orderDate to set
+     */
+    public void setOrderDate(Timestamp orderDate) {
+        this.orderDate = orderDate;
+    }
+
 }
-    

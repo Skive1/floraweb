@@ -332,7 +332,7 @@ public class EventDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 // 2. Create SQL String to get the next 5 orders with pagination
-                String sql = "select eo.Fullname, eo.EventOrderId, eo.Phone,eo.Street, eo.Note, eo.Status, eo.OrderDate "
+                String sql = "select eo.Fullname, eo.EventOrderId, eo.Phone,eo.Street, eo.Note, eo.Status, eo.OrderDate, eo.DeliveryOption, eo.isPaid, eo.City "
                         + "from EventOrder eo "
                         + "join Event e on eo.EventId = e.EventId "
                         + "where e.AccountUsername = ?";
@@ -349,13 +349,16 @@ public class EventDAO implements Serializable {
                     String street = rs.getString("Street");
                     String note = rs.getString("Note");
                     String status = rs.getString("Status");
+                    String city = rs.getString("City");
+                    String deliveryOpt = rs.getString("DeliveryOption");
+                    boolean isPaid = rs.getBoolean("isPaid");
                     Timestamp orderDate = rs.getTimestamp("OrderDate");                    
                     if ("Chờ giao".equals(status)) {
                         EventOrderDTO dto
                                 = new EventOrderDTO(0, eventOrderId,
-                                        fullName, phone, street, "",
-                                        orderDate, "", status,
-                                        0, 0, false, "", note);
+                                        fullName, phone, street, city,
+                                        null, deliveryOpt, status,
+                                        0, 0, isPaid, "", note, orderDate);
                         orders.add(dto);
                     }
                 }
@@ -400,7 +403,88 @@ public class EventDAO implements Serializable {
             }
         }
     }
+    
+    public void confirm2(int orderId) throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
 
+        try {
+            // 1. Connect to DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                // 2. Write SQL string
+                String sql = "UPDATE EventOrder SET Status = ? WHERE eventOrderId = ?";
+                // 3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, "Đã giao");
+                stm.setInt(2, orderId);
+                // 4. Execute the update
+                stm.executeUpdate(); // No need to check affected rows if we don't return a value
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+    public void insertDeliveryDate(int orderId, Timestamp deliveryDate) throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        try {
+            // 1. Connect to DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                // 2. Write SQL string
+                String sql = "UPDATE EventOrder SET DeliveryDate = ? WHERE eventOrderId = ?";
+                // 3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setTimestamp(1, deliveryDate);
+                stm.setInt(2, orderId);
+                // 4. Execute the update
+                stm.executeUpdate(); // No need to check affected rows if we don't return a value
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+    
+    public void updatePaymentStatus(int orderId) throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        try {
+            // 1. Connect to DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                // 2. Write SQL string
+                String sql = "UPDATE EventOrder SET isPaid = ? WHERE eventOrderId = ?";
+                // 3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setBoolean(1, true);
+                stm.setInt(2, orderId);
+                // 4. Execute the update
+                stm.executeUpdate(); // No need to check affected rows if we don't return a value
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+    
     public void cancelOrder(int orderId) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -440,7 +524,7 @@ public class EventDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 // 2. Create SQL String to get the next 5 orders with pagination
-                String sql = "select eo.Fullname, eo.EventOrderId, eo.Phone,eo.Street, eo.Note, eo.Status, eo.OrderDate "
+                String sql = "select eo.Fullname, eo.EventOrderId, eo.Phone,eo.Street, eo.Note, eo.Status, eo.OrderDate, eo.isPaid "
                         + "from EventOrder eo "
                         + "join Event e on eo.EventId = e.EventId "
                         + "where e.AccountUsername = ?";
@@ -456,13 +540,14 @@ public class EventDAO implements Serializable {
                     String street = rs.getString("Street");
                     String note = rs.getString("Note");
                     String status = rs.getString("Status");
+                    boolean isPaid = rs.getBoolean("isPaid");
                     Timestamp orderDate = rs.getTimestamp("OrderDate");
                     if ("Đã giao".equals(status)) {
                         EventOrderDTO dto
                                 = new EventOrderDTO(0, eventOrderId,
                                         fullName, phone, street, "",
                                         orderDate, "", status,
-                                        0, 0, false, "", note);
+                                        0, 0, isPaid, "", note);
                         delivered.add(dto);
                     }
                 }

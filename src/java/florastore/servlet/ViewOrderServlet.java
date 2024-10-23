@@ -60,7 +60,7 @@ public class ViewOrderServlet extends HttpServlet {
             List<EventOrderDTO> orders = dao.getOrders(username);
 
             // Paging
-            int pageSize = 10; // Number of orders per page
+            int pageSize = 6; // Number of orders per page
             String pageParam = request.getParameter("page"); // Get the current page number from the request
             int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
             int totalOrders = orders.size();

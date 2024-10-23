@@ -369,7 +369,6 @@
                                     </c:if>
                                     <c:if test="${empty products}">
                                         Sản phẩm của Event này đang không tồn tại!!!
-                                        <a href="<c:url value='eventCategory'><c:param name='eventId' value='${requestScope.EVENT_ID}'/></c:url>">Add Event Product</a>
                                     </c:if>
 
                                     <div class="col-12">

@@ -40,14 +40,7 @@
                 <div class="admin-content">
                     <div class="admin-content-top">
                         <div class="admin-content-top-left">
-                            <ul class="flex-box">
-                                <li>
-                                    <i class="ri-search-2-line">SEARCH</i>               
-                                </li>
-                                <li>
-                                    <i class="ri-zoom-in-line">Zoom</i>
-                                </li>
-                            </ul>          
+                                      
                         </div>
                         <div class="admin-content-top-right">
                             <ul class="flex-box">

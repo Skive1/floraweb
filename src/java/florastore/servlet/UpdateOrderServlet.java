@@ -6,14 +6,16 @@
 package florastore.servlet;
 
 import florastore.event.EventDAO;
+import florastore.event.EventOrderDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,17 +52,43 @@ public class UpdateOrderServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         int orderId = Integer.parseInt(orderIdStr);
-        
+
         String username = request.getParameter("accountUsername");
+        String deliveryOpt = request.getParameter("deliveryOpt");
+        
+        LocalDateTime now = LocalDateTime.now();
+        Timestamp deliveryDate = Timestamp.valueOf(now);
+        
+        
+        String pageParam = request.getParameter("page"); // Get the current page number from the request  
+        int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
 
         try {
             EventDAO dao = new EventDAO();
-            if ("confirm".equals(action)) {
+            if ("confirm".equals(action) && "Delivery".equals(deliveryOpt)) {
                 dao.confirm(orderId); // Call the confirm method
+            } else if ("confirm".equals(action) && "Pick Up".equals(deliveryOpt)) {
+                dao.confirm2(orderId); // Call the confirm method
+                //insert ngày giao
+                dao.insertDeliveryDate(orderId, deliveryDate);
+                //udpate trạng thái thanh toán thành true
+                dao.updatePaymentStatus(orderId);
             } else if ("cancel".equals(action)) {
                 dao.cancelOrder(orderId); // Call the cancel method
             }
-            url = url + "?accountUsername=" + URLEncoder.encode(username, "UTF-8");
+            
+            // Get total number of remaining orders for the current page after the update
+            List<EventOrderDTO> orders = dao.getOrders(username);
+            int totalOrders = orders.size();
+            int pageSize = 6; // Same as in your ViewOrderServlet
+
+            // If no orders left on the current page, go to the previous page
+            if (currentPage > 1 && (currentPage - 1) * pageSize >= totalOrders) {
+                currentPage--; // Go to previous page if current page is now empty
+            }
+
+            
+            url = url + "?accountUsername=" + URLEncoder.encode(username, "UTF-8") + "&page=" + currentPage;
         } catch (SQLException ex) {
             log("UpdateOrderServlet _SQL_" + ex.getMessage());
         } catch (NamingException ex) {
