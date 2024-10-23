@@ -11,6 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 
 /**
@@ -32,9 +35,9 @@ public class EventOrderDAO implements Serializable {
             if (con != null) {
                 //2. Create SQL String 
                 String sql = "Insert Into EventOrder( "
-                        + "AccountUsername, EventId, Fullname, Phone, Street, City, DeliveryDate, DeliveryOption, Status, Amount, isPaid, PaymentOptions "
+                        + "AccountUsername, EventId, Fullname, Phone, Street, City, DeliveryDate, DeliveryOption, Status, Amount, isPaid, PaymentOptions, Note "
                         + ") Values( "
-                        + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? "
+                        + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? "
                         + ")";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
@@ -50,6 +53,7 @@ public class EventOrderDAO implements Serializable {
                 stm.setDouble(10, order.getAmmount());
                 stm.setBoolean(11, order.isPaid());
                 stm.setString(12, order.getPaymentOptions());
+                stm.setString(13, order.getNote());
                 //4. Execute Query
                 int affectedRows = stm.executeUpdate();
                 //5. process result
@@ -96,6 +100,7 @@ public class EventOrderDAO implements Serializable {
                         + "AND Amount = ? "
                         + "AND isPaid = ? "
                         + "AND PaymentOptions = ? "
+                        + "AND Note = ? "
                         + "ORDER BY EventOrderId DESC";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
@@ -110,6 +115,7 @@ public class EventOrderDAO implements Serializable {
                 stm.setDouble(9, order.getAmmount());
                 stm.setBoolean(10, order.isPaid());
                 stm.setString(11, order.getPaymentOptions());
+                stm.setString(12, order.getNote());
                 //4. Execute Query
                 rs = stm.executeQuery();
                 //5. process result
@@ -117,6 +123,348 @@ public class EventOrderDAO implements Serializable {
                     result = rs.getInt("EventOrderId");
                 }
             }//connection has been available
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+
+    public List<EventOrderDTO> getPendingOrder(String username)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<EventOrderDTO> orders = new ArrayList<>();
+
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "Select eo.EventId, EventOrderId, Fullname, Phone, Street, City, OrderDate, DeliveryOption, PaymentOptions, Status, Amount, isPaid, Note, e.EventName "
+                        + "From EventOrder eo "
+                        + "JOIN [Event] e on e.EventId = eo.EventId "
+                        + "Where Status = N'Chờ giao' AND eo.AccountUsername = ? "
+                        + "Order by OrderDate desc";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    int eventId = rs.getInt("EventId");
+                    int eventOrderId = rs.getInt("EventOrderId");
+                    String fullname = rs.getString("Fullname");
+                    String phone = rs.getString("Phone");
+                    String address = rs.getString("Street");
+                    String city = rs.getString("City");
+                    Timestamp orderDate = rs.getTimestamp("OrderDate");
+                    String deliveryOption = rs.getString("DeliveryOption");
+                    String paymentOption = rs.getString("PaymentOptions");
+                    String status = rs.getString("Status");
+                    double amount = rs.getDouble("Amount");
+                    boolean isPaid = rs.getBoolean("isPaid");
+                    String note = rs.getString("Note");
+                    String eventName = rs.getString("EventName");
+                    EventOrderDTO order
+                            = new EventOrderDTO(username, eventId, eventName, eventOrderId, fullname, phone, address, city, orderDate, null, deliveryOption, paymentOption, status, amount, isPaid, note);
+                    orders.add(order);
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return orders;
+    }
+
+    public List<EventOrderDTO> getConfirmedOrder(String username)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<EventOrderDTO> orders = new ArrayList<>();
+
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "Select eo.EventId, EventOrderId, Fullname, Phone, Street, City, OrderDate, DeliveryOption, PaymentOptions, Status, Amount, isPaid, Note, e.EventName "
+                        + "From EventOrder eo "
+                        + "JOIN [Event] e on e.EventId = eo.EventId "
+                        + "Where Status = N'Chưa nhận' AND eo.AccountUsername = ? AND eo.DeliveryStaffId IS NULL "
+                        + "Order by OrderDate desc";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    int eventId = rs.getInt("EventId");
+                    int eventOrderId = rs.getInt("EventOrderId");
+                    String fullname = rs.getString("Fullname");
+                    String phone = rs.getString("Phone");
+                    String address = rs.getString("Street");
+                    String city = rs.getString("City");
+                    Timestamp orderDate = rs.getTimestamp("OrderDate");
+                    String deliveryOption = rs.getString("DeliveryOption");
+                    String paymentOption = rs.getString("PaymentOptions");
+                    String status = rs.getString("Status");
+                    double amount = rs.getDouble("Amount");
+                    boolean isPaid = rs.getBoolean("isPaid");
+                    String note = rs.getString("Note");
+                    String eventName = rs.getString("EventName");
+                    EventOrderDTO order
+                            = new EventOrderDTO(username, eventId, eventName, eventOrderId, fullname, phone, address, city, orderDate, null, deliveryOption, paymentOption, status, amount, isPaid, note);
+                    orders.add(order);
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return orders;
+    }
+
+    public List<EventOrderDTO> getShippingOrder(String username)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<EventOrderDTO> orders = new ArrayList<>();
+
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "Select eo.EventId, EventOrderId, Fullname, Phone, Street, City, OrderDate, DeliveryOption, PaymentOptions, Status, Amount, isPaid, Note, e.EventName "
+                        + "From EventOrder eo "
+                        + "JOIN [Event] e on e.EventId = eo.EventId "
+                        + "Where Status = N'Chưa nhận' AND eo.DeliveryStaffId IS NOT NULL AND eo.AccountUsername = ? "
+                        + "Order by OrderDate desc";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    int eventId = rs.getInt("EventId");
+                    int eventOrderId = rs.getInt("EventOrderId");
+                    String fullname = rs.getString("Fullname");
+                    String phone = rs.getString("Phone");
+                    String address = rs.getString("Street");
+                    String city = rs.getString("City");
+                    Timestamp orderDate = rs.getTimestamp("OrderDate");
+                    String deliveryOption = rs.getString("DeliveryOption");
+                    String paymentOption = rs.getString("PaymentOptions");
+                    String status = rs.getString("Status");
+                    double amount = rs.getDouble("Amount");
+                    boolean isPaid = rs.getBoolean("isPaid");
+                    String note = rs.getString("Note");
+                    String eventName = rs.getString("EventName");
+                    EventOrderDTO order
+                            = new EventOrderDTO(username, eventId, eventName, eventOrderId, fullname, phone, address, city, orderDate, null, deliveryOption, paymentOption, status, amount, isPaid, note);
+                    orders.add(order);
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return orders;
+    }
+
+    public List<EventOrderDTO> getReceivedOrder(String username)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<EventOrderDTO> orders = new ArrayList<>();
+
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "Select eo.EventId, eo.EventOrderId, Fullname, Phone, Street, City, OrderDate, DeliveryDate, DeliveryOption, PaymentOptions, eo.[Status], Amount, isPaid, Note, e.EventName "
+                        + "From EventOrder eo "
+                        + "JOIN [Event] e on e.EventId = eo.EventId "
+                        + "Where eo.[Status] = N'Đã giao' AND eo.AccountUsername = ? "
+                        + "Order by DeliveryDate desc";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    int eventId = rs.getInt("EventId");
+                    int eventOrderId = rs.getInt("EventOrderId");
+                    String fullname = rs.getString("Fullname");
+                    String phone = rs.getString("Phone");
+                    String address = rs.getString("Street");
+                    String city = rs.getString("City");
+                    Timestamp orderDate = rs.getTimestamp("OrderDate");
+                    Timestamp deliveryDate = rs.getTimestamp("DeliveryDate");
+                    String deliveryOption = rs.getString("DeliveryOption");
+                    String paymentOption = rs.getString("PaymentOptions");
+                    String status = rs.getString("Status");
+                    double amount = rs.getDouble("Amount");
+                    boolean isPaid = rs.getBoolean("isPaid");
+                    String note = rs.getString("Note");
+                    String eventName = rs.getString("EventName");
+                    EventOrderDTO order
+                            = new EventOrderDTO(username, eventId, eventName, eventOrderId, fullname, phone, address, city, orderDate, deliveryDate, deliveryOption, paymentOption, status, amount, isPaid, note);
+                    orders.add(order);
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return orders;
+    }
+
+    public List<EventOrderDTO> getCancelledOrder(String username)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<EventOrderDTO> orders = new ArrayList<>();
+
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "Select eo.EventId, EventOrderId, Fullname, Phone, Street, City, OrderDate, DeliveryOption, PaymentOptions, Status, Amount, isPaid, Note, e.EventName "
+                        + "From EventOrder eo "
+                        + "JOIN [Event] e on e.EventId = eo.EventId "
+                        + "Where Status = N'Hủy' AND eo.AccountUsername = ? "
+                        + "Order by OrderDate desc";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    int eventId = rs.getInt("EventId");
+                    int eventOrderId = rs.getInt("EventOrderId");
+                    String fullname = rs.getString("Fullname");
+                    String phone = rs.getString("Phone");
+                    String address = rs.getString("Street");
+                    String city = rs.getString("City");
+                    Timestamp orderDate = rs.getTimestamp("OrderDate");
+                    String deliveryOption = rs.getString("DeliveryOption");
+                    String paymentOption = rs.getString("PaymentOptions");
+                    String status = rs.getString("Status");
+                    double amount = rs.getDouble("Amount");
+                    boolean isPaid = rs.getBoolean("isPaid");
+                    String note = rs.getString("Note");
+                    String eventName = rs.getString("EventName");
+                    EventOrderDTO order
+                            = new EventOrderDTO(username, eventId, eventName, eventOrderId, fullname, phone, address, city, orderDate, null, deliveryOption, paymentOption, status, amount, isPaid, note);
+                    orders.add(order);
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return orders;
+    }
+
+    public int countNumberOrder(String username)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int result = 0;
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "Select COUNT(EventOrderId) as NumberOfOrder "
+                        + "From EventOrder "
+                        + "Where AccountUsername = ? ";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                if (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    int number = rs.getInt("NumberOfOrder");
+                    result = number;
+                }//process each record in resultset  
+            }//connection has been available 
         } finally {
             if (rs != null) {
                 rs.close();

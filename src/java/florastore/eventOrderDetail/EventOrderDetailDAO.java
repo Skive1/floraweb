@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 
 /**
@@ -29,7 +31,7 @@ public class EventOrderDetailDAO implements Serializable {
         try {
             //1. connect DB
             con = DBHelper.getConnection();
-            if(con != null){
+            if (con != null) {
                 //2. Create SQL String 
                 String sql = "Insert Into EventOrderDetail("
                         + "Quantity, UnitPrice, Discount, Total, EventOrderId, EventProductID"
@@ -47,7 +49,7 @@ public class EventOrderDetailDAO implements Serializable {
                 //4. Execute Query
                 int affectedRows = stm.executeUpdate();
                 //5. process result
-                if (affectedRows > 0){
+                if (affectedRows > 0) {
                     result = true;
                 }
             }//connection has been available
@@ -63,5 +65,55 @@ public class EventOrderDetailDAO implements Serializable {
             }
         }
         return result;
+    }
+
+    public List<PurchasedOrderDetailDTO> getOrderInfoByOrderId(int id)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<PurchasedOrderDetailDTO> products = new ArrayList<>();
+
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "SELECT ep.EPName, ep.Img, eod.UnitPrice, eod.Quantity, eod.Total "
+                        + "From EventOrderDetail eod "
+                        + "join EventProduct ep on eod.EventProductID = ep.EPId "
+                        + "WHERE eod.EventOrderId = ?";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, id);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    String productName = rs.getString("EPName");
+                    String img = rs.getString("Img");
+                    double unitPrice = rs.getDouble("UnitPrice");
+                    int quantity = rs.getInt("Quantity");
+                    double total = rs.getDouble("Total");
+                    PurchasedOrderDetailDTO product
+                            = new PurchasedOrderDetailDTO(productName, img, unitPrice, quantity, total);
+                    products.add(product);
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return products;
     }
 }

@@ -9,6 +9,7 @@ import florastore.event.EventDAO;
 import florastore.eventCart.EventCartBean;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
@@ -75,6 +76,15 @@ public class CartAddEventItemServlet extends HttpServlet {
                     url = MyAppConstants.EventCartAddItemFeatures.EVENT_VIEW + "?eventId=" + eventId + "&page=" + pageIndex;
                 } else if (page.equals("EProduct_detail")) {
                     url = MyAppConstants.EventCartAddItemFeatures.VIEW_ECART_PAGE;
+                } else if (page.equals("conditionCate")) {
+                    String condition = request.getParameter("condition");
+                    log(condition);
+                    if (condition != null) {
+                        condition = URLEncoder.encode(condition, "UTF-8");
+                        condition = condition.replaceAll("%20", "+");
+                    }
+                    url = MyAppConstants.EventCartAddItemFeatures.CATE_VIEW + "?eventId=" + eventId + "&page=" + pageIndex + "&condition=" + condition;
+                    log(condition);
                 }
             }
             // 4. Add item to cart
@@ -87,6 +97,13 @@ public class CartAddEventItemServlet extends HttpServlet {
                             url = MyAppConstants.EventCartAddItemFeatures.EVENT_VIEW + "?eventId=" + eventId + "&page=" + pageIndex;
                         } else if (page.equals("EProduct_detail")) {
                             url = MyAppConstants.EventCartAddItemFeatures.ERROR_PAGE + "?productId=" + productId + "&eventId=" + eventId;
+                        } else if (page.equals("conditionCate")) {
+                            String condition = request.getParameter("condition");
+                            if (condition != null) {
+                                condition = URLEncoder.encode(condition, "UTF-8");
+                                condition = condition.replaceAll("%20", "+");
+                            }
+                            url = MyAppConstants.EventCartAddItemFeatures.CATE_VIEW + "?eventId=" + eventId + "&page=" + pageIndex + "&condition=" + condition;
                         }
                     }
                 }
@@ -96,7 +113,6 @@ public class CartAddEventItemServlet extends HttpServlet {
                 ECartSession.setAttribute("ETOTAL", total);
                 ECartSession.setAttribute("ECART", cart);
             }
-
         } catch (SQLException ex) {
             log("CartAddEventItemServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {

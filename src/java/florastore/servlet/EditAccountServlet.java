@@ -6,6 +6,7 @@
 package florastore.servlet;
 
 import florastore.account.AccountDAO;
+import florastore.delivery.DeliveryDAO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -54,10 +55,14 @@ public class EditAccountServlet extends HttpServlet {
             //2. Call DAO/Model
             AccountDAO dao = new AccountDAO();
             result = dao.adminEditAccount(username, role);
+            if("Delivery".equals(role)){
+                String phone = request.getParameter("txtPhone");
+                DeliveryDAO deliveryDAO = new DeliveryDAO();
+                deliveryDAO.assignDelivery(username, phone);
+            }
             //3. Process result
             if (result) {
                 url = ((String) siteMap.get(MyAppConstants.AdminEditFeatures.MANAGE_ACCOUNT_PAGE)) + "?page=" + page;
-//                url = url + "?page=" + page;
             }
         } catch (SQLException ex) {
             log("EditAccountServlet _SQL_ " + ex.getMessage());

@@ -55,6 +55,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Name</label>
+<<<<<<< HEAD
                                     <input name="nameE" value="${detail.name}" type="text" maxlength="20" class="form-control" required>
                                 </div>
                                 <div class="form-group">
@@ -68,14 +69,29 @@
                                 <div class="form-group">
                                     <label>Detail</label>
                                     <input name="detailE" value="${detail.detail}" type="text" maxlength="20" class="form-control" required>
+=======
+                                    <input name="nameE" value="${detail.name}" type="text" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Type</label>
+                                    <input name="typeE" value="${detail.type}" type="text" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Condition</label>
+                                    <input name="conditionE" value="${detail.condition}" type="text" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Detail</label>
+                                    <input name="detailE" value="${detail.detail}" type="text" class="form-control" required>
+>>>>>>> main
                                 </div>
                                 <div class="form-group">
                                     <label>Price</label>
-                                    <input name="priceE" value="${detail.price}" type="number" maxlength="10" oninput="this.value = Math.max(0, Math.min(this.value, 9999999999)) class="form-control" required>
+                                    <input name="priceE" value="${detail.price}" type="number" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Quantity</label>
-                                    <input type="number" name="quantityE" value="${detail.quantity}" maxlength="4" oninput="this.value = Math.max(0, Math.min(this.value, 9999))" class="form-control" required>
+                                    <input type="number" name="quantityE" value="${detail.quantity}" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Image Link</label>
