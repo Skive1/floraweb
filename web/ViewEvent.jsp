@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html lang="en">
@@ -74,7 +75,7 @@
                             <h1>Viewing event product: ${requestScope.EVENT_NAME}</h1>
                         </div>
                         <div class="admin-content-main-content">
-                            <!-- N?i dung ? ?ây -->
+                            <!-- N?i dung ? ?Ã¢y -->
                             <div class="admin-content-main-content-product-list">
                                 <table>
                                     <thead>

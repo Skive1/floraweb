@@ -46,6 +46,9 @@
                     </div>
                     <div class="admin-sidebar-content">
                         <ul>
+                            <div class="logout-admin"><a href="logoutAction" class="logout-btn">Logout</a></div>
+                            <p class="admin-p">Admin</p>
+                            <div class="admin-under-p">Flora Store Admin</div>
                             <li>
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
@@ -75,12 +78,7 @@
                     <div class="admin-content-top">
                         <div class="admin-content-top-left">
                             <ul class="flex-box">
-                                <li>
-                                    <i class="ri-search-2-line">SEARCH</i>               
-                                </li>
-                                <li>
-                                    <i class="ri-zoom-in-line">Zoom</i>
-                                </li>
+                                <a style="padding-left:20px" href="home"/><button type="button" class="btn btn-primary">BACK TO STORE</button></a>
                             </ul>          
                         </div>
                         <div class="admin-content-top-right">
@@ -174,7 +172,7 @@
                                                             <c:param name="txtUsername" value="${dto.username}"/>
                                                             <c:param name="page" value="${currentPage}"/>
                                                         </c:url>
-                                                        <a href="#deleteAccountServlet" class="delete" data-toggle="modal" data-url="${urlRewriting}"><i class="material-icons" style="color: red" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                                        <a href="#deleteAccountServlet" class="delete" data-toggle="modal" data-url="${urlRewriting}"><i class="material-icons" style="color: red" data-toggle="tooltip" title="Ban">&#xE872;</i></a>
                                                     </td>
                                                 </tr>
                                             </form>

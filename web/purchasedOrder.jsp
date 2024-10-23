@@ -666,6 +666,17 @@
                                 <label for="feedbackText">Nội dung Feedback</label>
                                 <textarea class="form-control" id="feedbackText" rows="3" required></textarea>
                             </div>
+                            <div class="form-group">
+                                <label for="feedbackRating">Đánh giá (0-5 sao)</label>
+                                <div id="starRating">
+                                    <i class="fa fa-star-o" data-value="1"></i>
+                                    <i class="fa fa-star-o" data-value="2"></i>
+                                    <i class="fa fa-star-o" data-value="3"></i>
+                                    <i class="fa fa-star-o" data-value="4"></i>
+                                    <i class="fa fa-star-o" data-value="5"></i>
+                                </div>
+                            </div>
+                            <input type="hidden" id="feedbackRatingValue" name="feedbackRatingValue"/>
                             <input type="hidden" id="feedbackOrderId" />
                         </form>
                     </div>
@@ -835,6 +846,7 @@
             }
         </script>
         <!-- Template Javascript -->
+        <script src="js/starRating.js"></script>
         <script src="js/notification.js"></script>
         <script src="alertPackage/alertJs.js"></script>
         <script src="js/main.js"></script>
