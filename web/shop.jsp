@@ -34,6 +34,7 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="alertPackage/alertCss.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
 
@@ -71,8 +72,8 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link active">Shop</a>
+                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="SearchServlet" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
@@ -80,6 +81,7 @@
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="manageAccount" class="nav-item nav-link">Manage Account</a>
+                                    <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
@@ -87,7 +89,7 @@
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
-                                    <a href="ProductManagementAction" class="nav-item nav-link">Manage Shop</a>
+                                    <a href="showStoreName" class="nav-item nav-link">Manage Shop</a>
                                 </c:if>
                             </c:if>
 
@@ -107,24 +109,29 @@
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
                                         <i class="fa fa-shopping-bag fa-2x"></i>
+                                        <c:if test="${sessionScope.PENDING_EITEMS != 0 || sessionScope.PENDING_ITEMS != 0}">
+                                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 4px; left: 39px; height: 10px; min-width: 10px;"></span>
+                                        </c:if>
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                         <a href="cartPage" class="dropdown-item">Cart</a>
+                                        <c:if test="${sessionScope.PENDING_ITEMS != 0}">
+                                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 15px; left: 122px; height: 18px; min-width: 18px;">${sessionScope.PENDING_ITEMS}</span>
+                                        </c:if>
                                         <a href="eventCart" class="dropdown-item">Event Cart</a>
+                                        <c:if test="${sessionScope.PENDING_EITEMS != 0}">
+                                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 47px; left: 122px; height: 18px; min-width: 18px;">${sessionScope.PENDING_EITEMS}</span>
+                                        </c:if>
                                     </div>
                                 </div>
 
                                 <div class="nav-item dropdown">
-                                    <a href="" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
-                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                        <a href="viewProfileAction" class="dropdown-item">My Profile</a>
-                                        <a href="#" class="dropdown-item">Purchase Order</a>
-                                        <a href="logoutAction" class="dropdown-item">Logout</a>
-                                    </div>
+                                    <jsp:include page="navUser.jsp"></jsp:include>
                                 </div>                         
                             </c:if>
                         </div>
@@ -362,14 +369,28 @@
                                                             <input type="hidden" name="productQuantity" value="${product.productQuantity}">
                                                             <input type="hidden" name="itemQuantity" value="1">
                                                             <c:if test="${not empty sessionScope.USER}">
-                                                                <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                                    <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                                                </button>
+                                                                <c:if test="${product.productQuantity > 0}">
+                                                                    <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                                                    </button>
+                                                                </c:if>
+                                                                <c:if test="${product.productQuantity == 0}">
+                                                                    <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third" disabled="">
+                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                                    </button>
+                                                                </c:if>
                                                             </c:if>
                                                             <c:if test="${empty sessionScope.USER}">
-                                                                <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                                    <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                                                </a>
+                                                                <c:if test="${product.productQuantity == 0}">
+                                                                    <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third disabled-link">
+                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                                    </a>
+                                                                </c:if>
+                                                                <c:if test="${product.productQuantity > 0}">
+                                                                    <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                                                    </a>
+                                                                </c:if>
                                                             </c:if>
                                                         </div>
                                                     </div>
@@ -401,7 +422,6 @@
                                                 </c:if>
                                             </ul>
                                         </nav>
-
                                     </div>
                                 </div>
                             </div>
@@ -415,26 +435,32 @@
 
         <!-- Footer Start -->
         <jsp:include page="footer.jsp"></jsp:include>
-        <!-- Footer End -->
+            <!-- Footer End -->
 
-        <!-- Copyright Start -->
-        <div class="container-fluid copyright bg-dark py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
-                    </div>
-                    <div class="col-md-6 my-auto text-center text-md-end text-white">
-                        <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
-                        <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
-                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a class="border-bottom" href="https://themewagon.com">ThemeWagon</a>
+            <!-- Copyright Start -->
+            <div class="container-fluid copyright bg-dark py-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Copyright End -->
-
+            <!-- Copyright End -->
+        <c:if test="${not empty requestScope.INSUFFICIENTSHOP}">
+            <div id="modal-alert" class="modal-alert">
+                <div class="modal-alert-fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="" role="document">
+                        <div class="modal-content-alert">
+                            <h5 class="modal-title-alert">${requestScope.INSUFFICIENTSHOP}</h5>
+                            <p>Vui lòng hãy chọn sản phẩm khác</p>
+                            <button class="btn-secondary-alert">Ok</button>
+                        </div>                     `
+                    </div>
+                </div>
+            </div>
+        </c:if>
 
 
         <!-- Back to Top -->
@@ -450,6 +476,7 @@
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
         <!-- Template Javascript -->
+        <script src="alertPackage/alertJs.js"></script>
         <script src="js/main.js"></script>
     </body>
 

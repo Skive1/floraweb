@@ -78,7 +78,7 @@
                     <div class="admin-content-top">
                         <div class="admin-content-top-left">
                             <ul class="flex-box"> 
-                                <a style="padding-left:20px" href="homePage"/><button type="button" class="btn btn-primary">BACK TO STORE</button></a>    
+                                <a style="padding-left:20px" href="home"/><button type="button" class="btn btn-primary">BACK TO STORE</button></a>    
                             </ul>          
                         </div>
                         <div class="admin-content-top-right">

@@ -5,16 +5,15 @@
  */
 package florastore.servlet;
 
-import florastore.cart.CartBean;
-import florastore.cart.CartItem;
+import florastore.eventOrder.EventOrderDAO;
+import florastore.eventProduct.EventProductDAO;
+import florastore.eventProduct.EventProductDTO;
 import florastore.flowerProducts.FlowerProductsDAO;
 import florastore.flowerProducts.FlowerProductsDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -49,35 +48,22 @@ public class HomeServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.HomeFeatures.ERROR_PAGE);
-
         try {
-            //Check cart place
+            //1. Call DAO/Models
+            EventProductDAO dao = new EventProductDAO();
+            //1.1 Get best seller products
+            List<EventProductDTO> bestSeller = dao.getBestSellers();
+            //1.2 Get new arrival products
+            List<EventProductDTO> newArrival = dao.getNewArrivals();
+            //2. Process result
+            EventProductDTO cheapestFlower = dao.getCheapestFlower();
+            EventOrderDAO eDao = new EventOrderDAO();
             HttpSession session = request.getSession(false);
             if (session != null) {
-                //Check user cart
-                CartBean cart = (CartBean) session.getAttribute("CART");
-                if (cart != null) {
-                    //Check items
-                    Map<String, List<CartItem>> items = cart.getItems();
-                    if (items != null) {
-                        int pendingItems = cart.getUniqueItemCount();
-                        session.setAttribute("PENDING_ITEMS", pendingItems);
-                    }
-                }
-                int pendingItems = 0;
-                session.setAttribute("PENDING_ITEMS", pendingItems);
+                String username = (String) session.getAttribute("USERNAME");
+                int numberofOrder = eDao.countNumberOrder(username);
+                session.setAttribute("NUMBER_ORDER", numberofOrder);
             }
-            //1. Call DAO/Models
-            FlowerProductsDAO dao = new FlowerProductsDAO();
-            //1.1 Get best seller products
-            dao.getBestSeller();
-            //1.2 Get new arrival products
-            dao.getNewArrival();
-            //2. Process result
-            List<FlowerProductsDTO> bestSeller = dao.getBestSellers();
-            List<FlowerProductsDTO> newArrival = dao.getNewArrivals();
-            FlowerProductsDTO cheapestFlower = dao.getCheapestFlower();
-
             if (bestSeller != null && newArrival != null) {//check flower list is available
                 //3. To Home Page
                 url = (String) siteMap.get(MyAppConstants.HomeFeatures.HOME_PAGE);

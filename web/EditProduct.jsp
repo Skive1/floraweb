@@ -55,6 +55,21 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Name</label>
+<<<<<<< HEAD
+                                    <input name="nameE" value="${detail.name}" type="text" maxlength="20" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Type</label>
+                                    <input name="typeE" value="${detail.type}" type="text" maxlength="15" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Condition</label>
+                                    <input name="conditionE" value="${detail.condition}" type="text" maxlength="20" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Detail</label>
+                                    <input name="detailE" value="${detail.detail}" type="text" maxlength="20" class="form-control" required>
+=======
                                     <input name="nameE" value="${detail.name}" type="text" class="form-control" required>
                                 </div>
                                 <div class="form-group">
@@ -68,6 +83,7 @@
                                 <div class="form-group">
                                     <label>Detail</label>
                                     <input name="detailE" value="${detail.detail}" type="text" class="form-control" required>
+>>>>>>> main
                                 </div>
                                 <div class="form-group">
                                     <label>Price</label>
