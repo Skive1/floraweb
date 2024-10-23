@@ -131,19 +131,19 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Name</label>
-                                        <input name="nameAdd" type="text" maxlength="20" placeholder="Nhập tối đa 20 ký tự" class="form-control" required>
+                                        <input name="nameAdd" type="text" maxlength="20" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Type</label>
-                                        <input name="typeAdd" type="text" maxlength="15" placeholder="Nhập tối đa 15 ký tự" class="form-control" required>
+                                        <input name="typeAdd" type="text" maxlength="15" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Condition</label>
-                                        <input name="conditionAdd" type="text" maxlength="20" placeholder="Nhập tối đa 20 ký tự" class="form-control" required>
+                                        <input name="conditionAdd" type="text" maxlength="20" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Detail</label>
-                                        <input name="detailAdd" type="text" maxlength="20" placeholder="Nhập tối đa 20 ký tự" class="form-control" required>
+                                        <input name="detailAdd" type="text" maxlength="20" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Price</label>

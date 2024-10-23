@@ -55,19 +55,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input name="nameE" value="${detail.name}" type="text" maxlength="20" placeholder="Nhập tối đa 20 ký tự" class="form-control" required>
+                                    <input name="nameE" value="${detail.name}" type="text" maxlength="20" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Type</label>
-                                    <input name="typeE" value="${detail.type}" type="text" maxlength="15" placeholder="Nhập tối đa 15 ký tự" class="form-control" required>
+                                    <input name="typeE" value="${detail.type}" type="text" maxlength="15" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Condition</label>
-                                    <input name="conditionE" value="${detail.condition}" type="text" maxlength="20" placeholder="Nhập tối đa 20 ký tự" class="form-control" required>
+                                    <input name="conditionE" value="${detail.condition}" type="text" maxlength="20" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Detail</label>
-                                    <input name="detailE" value="${detail.detail}" type="text" maxlength="20" placeholder="Nhập tối đa 20 ký tự" class="form-control" required>
+                                    <input name="detailE" value="${detail.detail}" type="text" maxlength="20" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Price</label>
