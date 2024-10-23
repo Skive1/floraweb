@@ -62,13 +62,8 @@
                 <div class="admin-content">
                     <div class="admin-content-top">
                         <div class="admin-content-top-left">
-<<<<<<< HEAD
                             <ul class="flex-box"> 
-                                <a style="padding-left:20px" href="home"/><button type="button" class="btn btn-primary">BACK TO STORE</button></a>    
-=======
-                            <ul class="flex-box">                    
->>>>>>> main
-                            </ul>          
+                                <a style="padding-left:20px" href="home"/><button type="button" class="btn btn-primary">BACK TO STORE</button></a>            
                         </div>
                         <div class="admin-content-top-right">
                             <ul class="flex-box">
