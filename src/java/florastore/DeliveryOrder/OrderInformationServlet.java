@@ -63,13 +63,12 @@ public class OrderInformationServlet extends HttpServlet {
                 }
                 request.setAttribute("DELIVERY_INFO_LIST", productList);
                 request.setAttribute("TOTAL", totalPrint);
-                if (session.getAttribute("viewOrders") != null) {
-                    url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
-                } else if (session.getAttribute("viewOrdersForDelivery") != null) {
-                    url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING_PAGE);
-                }
             }
-
+            if (session.getAttribute("viewOrders") != null) {
+                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
+            } else if (session.getAttribute("viewOrdersForDelivery") != null) {
+                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING_PAGE);
+            }
         } catch (SQLException ex) {
             log("ViewOrderServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
