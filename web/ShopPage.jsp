@@ -329,9 +329,9 @@
                                                         <h5 class="fw-bold me-2">
                                                             <fmt:formatNumber value="${dto.getProductPrice()}" pattern="#,###"/> vnd
                                                         </h5>
-<!--                                                        <h5 class="text-danger text-decoration-line-through">
-                                                            <fmt:formatNumber value="${(dto.getProductPrice() + 1000000)}" pattern="#,###"/> vnd
-                                                        </h5>-->
+                                                        <!--                                                        <h5 class="text-danger text-decoration-line-through">
+                                                        <fmt:formatNumber value="${(dto.getProductPrice() + 1000000)}" pattern="#,###"/> vnd
+                                                    </h5>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -341,7 +341,7 @@
                                         <div class="position-relative">
                                             <img src="img/classic-autumn.jpg" class="img-fluid w-100 rounded" alt="">
                                             <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
-<!--                                                <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>-->
+                                                <!--                                                <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>-->
                                             </div>
                                         </div>
                                     </div>
@@ -357,7 +357,9 @@
                                                     <input type="hidden" name="productID" value="">
                                                     <div class="fruite-img">
                                                         <button type="submit" style="border: none; background: none; padding: 0;">
-                                                            <img src="${dto.getImageURL()}" class="img-fluid square-img rounded-top" alt="">
+                                                            <div class="img-searchPage">
+                                                                <img src="${dto.getImageURL()}" class="img-fluid square-img rounded-top" alt="">
+                                                            </div>                                                           
                                                         </button>
                                                     </div>
                                                     <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">New</div>
@@ -406,14 +408,14 @@
                                                                onclick="document.getElementById('pageNo').value = '${i}';
                                                                        document.getElementById('paginationForm').submit();
                                                                        return false;" style="margin: 0;
-                                                             ">${i}</a>
+                                                               ">${i}</a>
                                                         </c:if>
                                                         <c:if test="${sessionScope.currentPage != i}">
                                                             <a href="#" class="rounded" 
                                                                onclick="document.getElementById('pageNo').value = '${i}';
                                                                        document.getElementById('paginationForm').submit();
                                                                        return false;" style="margin: 0; 
-                                                             ">${i}</a>
+                                                               ">${i}</a>
                                                         </c:if>
                                                     </c:forEach>
                                                 </c:if>
@@ -425,14 +427,14 @@
                                                                    onclick="document.getElementById('pageNo').value = '${i}';
                                                                            document.getElementById('paginationForm').submit();
                                                                            return false;" style="margin: 0;
-                                                                 ">${i}</a>
+                                                                   ">${i}</a>
                                                             </c:if>
                                                             <c:if test="${sessionScope.currentPage != i}">
                                                                 <a href="#" class="rounded" 
                                                                    onclick="document.getElementById('pageNo').value = '${i}';
                                                                            document.getElementById('paginationForm').submit();
                                                                            return false;" style="margin: 0; 
-                                                                 ">${i}</a>
+                                                                   ">${i}</a>
                                                             </c:if>
                                                         </c:forEach>
                                                         <a href="#" class="rounded" style="margin: 1; border-color: black;
@@ -450,14 +452,14 @@
                                                                    onclick="document.getElementById('pageNo').value = '${i}';
                                                                            document.getElementById('paginationForm').submit();
                                                                            return false;" style="margin: 0;
-                                                                 ">${i}</a>
+                                                                   ">${i}</a>
                                                             </c:if>
                                                             <c:if test="${sessionScope.currentPage != i}">
                                                                 <a href="#" class="rounded" 
                                                                    onclick="document.getElementById('pageNo').value = '${i}';
                                                                            document.getElementById('paginationForm').submit();
                                                                            return false;" style="margin: 0; 
-                                                                 ">${i}</a>
+                                                                   ">${i}</a>
                                                             </c:if>
                                                         </c:forEach>
                                                         <a href="#" class="rounded" style="margin: 1; border-color: black;
@@ -470,14 +472,14 @@
                                                                    onclick="document.getElementById('pageNo').value = '${i}';
                                                                            document.getElementById('paginationForm').submit();
                                                                            return false;" style="margin: 0;
-                                                                 ">${i}</a>
+                                                                   ">${i}</a>
                                                             </c:if>
                                                             <c:if test="${sessionScope.currentPage != i}">
                                                                 <a href="#" class="rounded" 
                                                                    onclick="document.getElementById('pageNo').value = '${i}';
                                                                            document.getElementById('paginationForm').submit();
                                                                            return false;" style="margin: 0; 
-                                                                 ">${i}</a>
+                                                                   ">${i}</a>
                                                             </c:if>
                                                         </c:forEach>
                                                         <a href="#" class="rounded" style="margin: 1; border-color: black;
@@ -494,14 +496,14 @@
                                                                    onclick="document.getElementById('pageNo').value = '${i}';
                                                                            document.getElementById('paginationForm').submit();
                                                                            return false;" style="margin: 0;
-                                                                 ">${i}</a>
+                                                                   ">${i}</a>
                                                             </c:if>
                                                             <c:if test="${sessionScope.currentPage != i}">
                                                                 <a href="#" class="rounded" 
                                                                    onclick="document.getElementById('pageNo').value = '${i}';
                                                                            document.getElementById('paginationForm').submit();
                                                                            return false;" style="margin: 0; 
-                                                                 ">${i}</a>
+                                                                   ">${i}</a>
                                                             </c:if>
                                                         </c:forEach>
                                                         <a href="#" class="rounded" style="margin: 1; border-color: black;
@@ -514,14 +516,14 @@
                                                                    onclick="document.getElementById('pageNo').value = '${i}';
                                                                            document.getElementById('paginationForm').submit();
                                                                            return false;" style="margin: 0;
-                                                                 ">${i}</a>
+                                                                   ">${i}</a>
                                                             </c:if>
                                                             <c:if test="${sessionScope.currentPage != i}">
                                                                 <a href="#" class="rounded" 
                                                                    onclick="document.getElementById('pageNo').value = '${i}';
                                                                            document.getElementById('paginationForm').submit();
                                                                            return false;" style="margin: 0; 
-                                                                 ">${i}</a>
+                                                                   ">${i}</a>
                                                             </c:if>
                                                         </c:forEach>
                                                     </c:if>
@@ -538,10 +540,12 @@
                                                 </form>
                                             </c:if>
                                             <c:if test="${sessionScope.currentPage == sessionScope.pageSize}"> 
-                                                <a href="#" class="rounded" style="margin: 1; border-color: black;
-                                                   background-color: gray; color: white; pointer-events: none; opacity: 0.6;">
-                                                    &raquo;
-                                                </a>
+                                                <form>
+                                                    <a href="#" class="rounded" style="margin: 1;
+                                                       background-color: gray; color: white; pointer-events: none; opacity: 0.6;">
+                                                        &raquo;
+                                                    </a>
+                                                </form>
                                             </c:if>  
                                         </div>
                                     </div>
