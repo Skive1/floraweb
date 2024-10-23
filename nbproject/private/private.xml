@@ -11,19 +11,7 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/revenueDTO.java</file>
-            <file>file:/D:/GitHubSWP/floraweb/web/MonthlyDB.jsp</file>
-            <file>file:/D:/GitHubSWP/floraweb/web/WeeklyDB.jsp</file>
-        </group>
-        <group>
-            <file>file:/D:/GitHubSWP/floraweb/web/WEB-INF/siteMap.properties</file>
-            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/utils/MyAppConstants.java</file>
-            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/revenueDAO.java</file>
-            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/EventRevenueDAO.java</file>
-            <file>file:/D:/GitHubSWP/floraweb/web/WeeklyProductDB.jsp</file>
-            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/servlet/WeeklyProductRevenueServlet.java</file>
-            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/servlet/WeeklyRevenueServlet.java</file>
-        </group>
+        <group/>
+        <group/>
     </open-files>
 </project-private>
