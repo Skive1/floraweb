@@ -5,17 +5,16 @@
  */
 package florastore.servlet;
 
-import florastore.account.AccountDTO;
-import florastore.revenue.revenueDAO;
+import florastore.revenue.EventRevenueDAO;
+import florastore.revenue.EventRevenueDTO;
 import florastore.revenue.revenueDTO;
-import florastore.revenue.yearlyRevenueDAO;
-import florastore.revenue.yearlyRevenueDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -25,14 +24,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author acer
  */
-@WebServlet(name = "MonthlyRevenueServlet", urlPatterns = {"/MonthlyRevenueServlet"})
-public class MonthlyRevenueServlet extends HttpServlet {
+@WebServlet(name = "WeeklyRevenueServlet", urlPatterns = {"/WeeklyRevenueServlet"})
+public class WeeklyRevenueServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,69 +44,54 @@ public class MonthlyRevenueServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.MONTHLY_PAGE);
-        int month;
-        int year;
-
-        String monthStr = request.getParameter("month");
-        String yearStr = request.getParameter("year");
-        HttpSession session = request.getSession(false);
-        AccountDTO dto = (AccountDTO) session.getAttribute("USER");
-        String name = dto.getFullName();
-        if (monthStr == null || monthStr.isEmpty()) {
-            month = 10;
-        } else {
-            month = Integer.parseInt(monthStr);
-        }
-
-        if (yearStr == null || yearStr.isEmpty()) {
-            year = 2024;
-        } else {
-            year = Integer.parseInt(yearStr);
-        }
+        String url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.WEAKLY_PAGE);
+        String year_raw = request.getParameter("year");
+        String month_raw = request.getParameter("month");
+        String from_raw = request.getParameter("from");
+        String to_raw = request.getParameter("to");
         try {
-            //1. Lấy id từ session Scope
-            revenueDAO dao = new revenueDAO();
-            //2. Call method
-            dao.loadAmountByMonth(month, year);
-            //3. Get list
-            ArrayList<revenueDTO> list = dao.getMonthList();
+            //Tìm ngày hiện tại của hệ thống
+            LocalDate currentDate = LocalDate.now();
+            //Tìm ngày thứ 2 của tuần hiện tại
+            LocalDate startOfWeek = currentDate.with(DayOfWeek.MONDAY);
+            //Tìm ngày chủ nhật
+            LocalDate endOfWeek = startOfWeek.plusDays(6);
+            int startDay = startOfWeek.getDayOfMonth();
+            int endDay = endOfWeek.getDayOfMonth();
+            int monthValue = startOfWeek.getMonthValue();
 
-            yearlyRevenueDAO yearDao = new yearlyRevenueDAO();
-            yearDao.loadTotalAmountOfAllMonthByYear(year);
-            ArrayList<yearlyRevenueDTO> listYear = yearDao.getAllMonthList();
-            //4. Lưu vào trong attribute
-            request.setAttribute("pro1", list.get(0));
-            request.setAttribute("pro2", list.get(1));
-            request.setAttribute("pro3", list.get(2));
-            request.setAttribute("pro4", list.get(3));
-            request.setAttribute("pro5", list.get(4));
-            request.setAttribute("MonthList", list);
-            //Attribute chứa tổng giá của 12 tháng
+            int year = (year_raw == null ? 2024 : Integer.parseInt(year_raw));
+            int month = (month_raw == null ? monthValue : Integer.parseInt(month_raw));
+            int from = (from_raw == null ? startDay : Integer.parseInt(from_raw));
+            int to = (to_raw == null ? endDay : Integer.parseInt(to_raw));
 
-            request.setAttribute("month1", listYear.get(0));
-            request.setAttribute("month2", listYear.get(1));
-            request.setAttribute("month3", listYear.get(2));
-            request.setAttribute("month4", listYear.get(3));
-            request.setAttribute("month5", listYear.get(4));
-            request.setAttribute("month6", listYear.get(5));
-            request.setAttribute("month7", listYear.get(6));
-            request.setAttribute("month8", listYear.get(7));
-            request.setAttribute("month9", listYear.get(8));
-            request.setAttribute("month10", listYear.get(9));
-            request.setAttribute("month11", listYear.get(10));
-            request.setAttribute("month12", listYear.get(11));
-            request.setAttribute("allMonth", listYear);
-            request.setAttribute("fullName", name);
-            request.setAttribute("curMonth",month);
+            EventRevenueDAO dao = new EventRevenueDAO();
+            double monday = dao.loadEventTotalAmount(year, month, from, to, 2);
+            double tuesday = dao.loadEventTotalAmount(year, month, from, to, 3);
+            double wednesday = dao.loadEventTotalAmount(year, month, from, to, 4);
+            double thursday = dao.loadEventTotalAmount(year, month, from, to, 5);
+            double friday = dao.loadEventTotalAmount(year, month, from, to, 6);
+            double saturday = dao.loadEventTotalAmount(year, month, from, to, 7);
+            double sunday = dao.loadEventTotalAmount(year, month, from, to, 1);
+            
+            request.setAttribute("totalMoney2", monday);
+            request.setAttribute("totalMoney3", tuesday);
+            request.setAttribute("totalMoney4", wednesday);
+            request.setAttribute("totalMoney5", thursday);
+            request.setAttribute("totalMoney6", friday);
+            request.setAttribute("totalMoney7", saturday);
+            request.setAttribute("totalMoney1", sunday);
+            request.setAttribute("year", year);
+            
         } catch (SQLException ex) {
             String msg = ex.getMessage();
-            log("MonthlyRevenueServlet _ SQL: " + msg);
+            log("WeeklyRevenueServlet _ SQL: " + msg);
         } catch (NamingException ex) {
-             String msg = ex.getMessage();
-            log("MonthlyRevenueServlet _ SQL: " + msg);
+            String msg = ex.getMessage();
+            log("WeeklyRevenueServlet _ SQL: " + msg);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

@@ -6,6 +6,8 @@
 package florastore.servlet;
 
 import florastore.account.AccountDTO;
+import florastore.revenue.EventRevenueDAO;
+import florastore.revenue.EventRevenueDTO;
 import florastore.revenue.revenueDAO;
 import florastore.revenue.revenueDTO;
 import florastore.revenue.yearlyRevenueDAO;
@@ -15,7 +17,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -31,8 +32,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author acer
  */
-@WebServlet(name = "MonthlyRevenueServlet", urlPatterns = {"/MonthlyRevenueServlet"})
-public class MonthlyRevenueServlet extends HttpServlet {
+@WebServlet(name = "MonthlyEventRevenueServlet", urlPatterns = {"/MonthlyEventRevenueServlet"})
+public class MonthlyEventRevenueServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,17 +47,15 @@ public class MonthlyRevenueServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.MONTHLY_PAGE);
+        String url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.MONTHLY_EVENT_PAGE);
         int month;
         int year;
-
         String monthStr = request.getParameter("month");
         String yearStr = request.getParameter("year");
         HttpSession session = request.getSession(false);
-        AccountDTO dto = (AccountDTO) session.getAttribute("USER");
-        String name = dto.getFullName();
         if (monthStr == null || monthStr.isEmpty()) {
             month = 10;
         } else {
@@ -70,15 +69,14 @@ public class MonthlyRevenueServlet extends HttpServlet {
         }
         try {
             //1. Lấy id từ session Scope
-            revenueDAO dao = new revenueDAO();
+            EventRevenueDAO eventDao = new EventRevenueDAO();
             //2. Call method
-            dao.loadAmountByMonth(month, year);
+            eventDao.loadEventAmountByMonth(month, year);
             //3. Get list
-            ArrayList<revenueDTO> list = dao.getMonthList();
+            ArrayList<EventRevenueDTO> list = eventDao.getEventAmountByMonth();
 
-            yearlyRevenueDAO yearDao = new yearlyRevenueDAO();
-            yearDao.loadTotalAmountOfAllMonthByYear(year);
-            ArrayList<yearlyRevenueDTO> listYear = yearDao.getAllMonthList();
+            eventDao.loadTotalEventOfAllMonthByYear(year);
+            ArrayList<yearlyRevenueDTO> listYear = eventDao.getListYearEvent();
             //4. Lưu vào trong attribute
             request.setAttribute("pro1", list.get(0));
             request.setAttribute("pro2", list.get(1));
@@ -101,14 +99,13 @@ public class MonthlyRevenueServlet extends HttpServlet {
             request.setAttribute("month11", listYear.get(10));
             request.setAttribute("month12", listYear.get(11));
             request.setAttribute("allMonth", listYear);
-            request.setAttribute("fullName", name);
             request.setAttribute("curMonth",month);
         } catch (SQLException ex) {
             String msg = ex.getMessage();
-            log("MonthlyRevenueServlet _ SQL: " + msg);
+            log("MonthlyEventRevenueServlet _ SQL: " + msg);
         } catch (NamingException ex) {
-             String msg = ex.getMessage();
-            log("MonthlyRevenueServlet _ SQL: " + msg);
+            String msg = ex.getMessage();
+            log("MonthlyEventRevenueServlet _ SQL: " + msg);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
