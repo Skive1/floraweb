@@ -123,7 +123,7 @@
                                                         </td>
                                                     </c:if>
                                                     <td>
-                                                        <a href="javascript:void(0);" class="btn btn-primary" style="color: black"
+                                                        <a href="javascript:void(0);" class="btn btn-primary" style="color: white"
                                                            onclick="toggleDetails(${counter.count});">Xem</a>
                                                     </td>
                                                     <c:if test="${eventOrder.status == 'Chưa nhận' && eventOrder.deliveryStaffId == 0}">
@@ -181,14 +181,14 @@
                                                         <div>
                                                             <table>
                                                                 <thead>
-                                                                <th style="background-color: #007bff; color: black">No</th>
-                                                                <th style="background-color: #007bff; color: black">Tên mặt hàng</th>
-                                                                <th style="background-color: #007bff; color: black">Ngày đặt</th>
-                                                                <th style="background-color: #007bff; color: black">Phân loại</th>
-                                                                <th style="background-color: #007bff; color: black">Tình trạng</th>
-                                                                <th style="background-color: #007bff; color: black">Hình thức thanh toán</th>
-                                                                <th style="background-color: #007bff; color: black">Số lượng</th>        
-                                                                <th style="background-color: #007bff; color: black">Đơn giá</th>
+                                                                <th style="background-color: #007bff; color: white">No</th>
+                                                                <th style="background-color: #007bff; color: white">Tên mặt hàng</th>
+                                                                <th style="background-color: #007bff; color: white">Ngày đặt</th>
+                                                                <th style="background-color: #007bff; color: white">Phân loại</th>
+                                                                <th style="background-color: #007bff; color: white">Tình trạng</th>
+                                                                <th style="background-color: #007bff; color: white">Hình thức thanh toán</th>
+                                                                <th style="background-color: #007bff; color: white">Số lượng</th>        
+                                                                <th style="background-color: #007bff; color: white">Đơn giá</th>
                                                                 </thead>
                                                                 <tbody style="height: 100px;">
                                                                     <c:set var="deliveryList" value="${requestScope.DELIVERY_INFO_LIST}"/>
@@ -227,6 +227,11 @@
                                                                                 <td style="font-weight: 700;">Tổng giá:</td>
                                                                                 <td style="font-weight: 700;" >${total.total}</td> 
                                                                             </tr>
+                                                                            <tr>
+                                                                                <c:forEach begin="1" end="8">
+                                                                                    <td style="background-color: #007bff; color: white"></td>
+                                                                                </c:forEach>
+                                                                            </tr>
                                                                         </c:if>
                                                                     </c:forEach>
                                                                 </tbody>
@@ -235,23 +240,34 @@
                                                                 </c:if>
                                                             </table>
                                                             <script>
-                                                                var infoCounter = 1;
+                                                                var infoCounter = 0;
+                                                                var deliveryOrders = ${requestScope.Total_Order_On_Page};
+                                                                var deliveryInfo = ${requestScope.Total_Info_On_Page};
                                                                 function toggleDetails(index) {
                                                                     var detailsRow = document.getElementById("details-" + index);
-                                                                    var customSidebar = "100%";
+                                                                    var customSidebar = "105%";
                                                                     var customSidebar2 = "100vh";
-
                                                                     if (detailsRow.style.display === "none" || detailsRow.style.display === "") {
                                                                         detailsRow.style.display = "table-row"; // Hiện hàng chi tiết
                                                                         infoCounter++; // Tăng biến đếm khi hiển thị chi tiết
-                                                                        document.getElementById("adminSidebar").style.height = customSidebar;
+                                                                        if (deliveryOrders === infoCounter && deliveryOrders != 1) {
+                                                                            document.getElementById("adminSidebar").style.height = customSidebar;
+                                                                        } else if ((deliveryInfo + deliveryOrders + infoCounter - 1) <= 12) {
+                                                                            document.getElementById("adminSidebar").style.height = customSidebar2;
+                                                                        } else {
+                                                                            document.getElementById("adminSidebar").style.height = customSidebar;
+                                                                        }
                                                                     } else {
                                                                         detailsRow.style.display = "none"; // Ẩn hàng chi tiết
                                                                         infoCounter--; // Giảm biến đếm khi ẩn chi tiết
 
                                                                         // Nếu không còn hàng nào hiển thị, điều chỉnh chiều cao sidebar
-                                                                        if (infoCounter === 1) {
+                                                                        if (infoCounter === 0) {
                                                                             document.getElementById("adminSidebar").style.height = customSidebar2;
+                                                                        } else if ((deliveryInfo + deliveryOrders + infoCounter - 1) <= 7) {
+                                                                            document.getElementById("adminSidebar").style.height = customSidebar2;
+                                                                        } else {
+                                                                            document.getElementById("adminSidebar").style.height = customSidebar;
                                                                         }
                                                                     }
                                                                 }

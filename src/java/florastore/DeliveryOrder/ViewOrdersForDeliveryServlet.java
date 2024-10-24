@@ -82,6 +82,7 @@ public class ViewOrdersForDeliveryServlet extends HttpServlet {
                 }
                 request.setAttribute("Total_Order", orderList.size());
                 request.setAttribute("DELIVERY_LIST", deliveryList);
+                request.setAttribute("Total_Order_On_Page", deliveryList.size());
             }
             pageSize = service.getPage(orderList.size(), 7);                                   //thanh chuyển trang << 1 2 3 4 >>
             

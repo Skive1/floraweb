@@ -62,6 +62,7 @@ public class OrderInformationServlet extends HttpServlet {
                     }
                 }
                 request.setAttribute("DELIVERY_INFO_LIST", productList);
+                request.setAttribute("Total_Info_On_Page", productList.size());
                 request.setAttribute("TOTAL", totalPrint);
             }
             if (session.getAttribute("viewOrders") != null) {

@@ -246,7 +246,7 @@ public class DeliverDAO {
                 stm.setString(1, "Đã giao");
                 stm.setString(2, formattedDateTime);
                 stm.setBoolean(3, true);
-                stm.setInt(3, eventOrderID);
+                stm.setInt(4, eventOrderID);
                 int affectedRow = stm.executeUpdate();
 
                 if (affectedRow > 0) {
