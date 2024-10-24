@@ -39,6 +39,7 @@
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
         <link rel="stylesheet" href="css/snackbar.css">
+        <link rel="stylesheet" href="rateStar/ratecss.css">
         <link rel="stylesheet" href="alertPackage/alertCss.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
@@ -120,7 +121,7 @@
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link active">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
-                            <a href="searchAction" class="nav-item nav-link">Shop</a>
+                            <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
@@ -128,7 +129,6 @@
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
-                                    <a href="viewEvent" class="nav-item nav-link">Manage System</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
@@ -156,7 +156,7 @@
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center" style="padding-right: 0px">
                                         <i class="fa fa-shopping-bag fa-2x"></i>
                                         <c:if test="${sessionScope.PENDING_EITEMS != 0 || sessionScope.PENDING_ITEMS != 0}">
                                             <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 4px; left: 39px; height: 10px; min-width: 10px;"></span>
@@ -175,7 +175,7 @@
                                 </div>
 
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
@@ -186,7 +186,6 @@
                 </nav>
             </div>
         </div>
-
         <!-- Navbar End -->
 
 
@@ -250,7 +249,7 @@
                             <table class="table" style="border-radius: 10px; z-index: 1; background-color: #ffffff">
                                 <thead>
                                 <th style="text-align: center">Đơn hàng</th>
-                                <th style="text-align: center">Ngày</th>
+                                <th style="text-align: center">Ngày đặt</th>
                                 <th style="text-align: center">Hình thức thanh toán</th>
                                 <th style="text-align: center">Hình thức vận chuyển</th>
                                 <th style="text-align: center">Thanh toán</th>
@@ -291,14 +290,14 @@
                                             </td>
                                             <td>
                                                 <c:if test="${pending.paid == true}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Đã thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Đã thanh toán</p>
                                                 </c:if>
                                                 <c:if test="${pending.paid == false}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Chưa thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Chưa thanh toán</p>
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <p class="mb-4 mt-4 price-per-unit" style="text-align: center"><fmt:formatNumber value="${pending.ammount}" type="number" groupingUsed="true"/>đ</p>
+                                                <p class="mb-4 mt-4 price-per-unit" style="text-align: center; font-weight: bold"><fmt:formatNumber value="${pending.ammount}" type="number" groupingUsed="true"/>đ</p>
                                             </td>
                                         </tr>
                                     </c:forEach> 
@@ -317,7 +316,7 @@
                             <table class="table" style="border-radius: 10px; z-index: 1; background-color: #ffffff">
                                 <thead>
                                 <th style="text-align: center">Đơn hàng</th>
-                                <th style="text-align: center">Ngày</th>
+                                <th style="text-align: center">Ngày đặt</th>
                                 <th style="text-align: center">Hình thức thanh toán</th>
                                 <th style="text-align: center">Hình thức vận chuyển</th>
                                 <th style="text-align: center">Thanh toán</th>
@@ -358,14 +357,14 @@
                                             </td>
                                             <td>
                                                 <c:if test="${confirm.paid == true}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Đã thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Đã thanh toán</p>
                                                 </c:if>
                                                 <c:if test="${confirm.paid == false}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Chưa thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Chưa thanh toán</p>
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <p class="mb-4 mt-4 price-per-unit" style="text-align: center"><fmt:formatNumber value="${confirm.ammount}" type="number" groupingUsed="true"/>đ</p>
+                                                <p class="mb-4 mt-4 price-per-unit" style="text-align: center; font-weight: bold"><fmt:formatNumber value="${confirm.ammount}" type="number" groupingUsed="true"/>đ</p>
                                             </td>
                                         </tr>
                                     </c:forEach> 
@@ -384,7 +383,7 @@
                             <table class="table" style="border-radius: 10px; z-index: 1; background-color: #ffffff">
                                 <thead>
                                 <th style="text-align: center">Đơn hàng</th>
-                                <th style="text-align: center">Ngày</th>
+                                <th style="text-align: center">Ngày đặt</th>
                                 <th style="text-align: center">Hình thức thanh toán</th>
                                 <th style="text-align: center">Hình thức vận chuyển</th>
                                 <th style="text-align: center">Thanh toán</th>
@@ -425,14 +424,14 @@
                                             </td>
                                             <td>
                                                 <c:if test="${shipping.paid == true}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Đã thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Đã thanh toán</p>
                                                 </c:if>
                                                 <c:if test="${shipping.paid == false}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Chưa thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Chưa thanh toán</p>
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <p class="mb-4 mt-4 price-per-unit" style="text-align: center"><fmt:formatNumber value="${shipping.ammount}" type="number" groupingUsed="true"/>đ</p>
+                                                <p class="mb-4 mt-4 price-per-unit" style="text-align: center; font-weight: bold"><fmt:formatNumber value="${shipping.ammount}" type="number" groupingUsed="true"/>đ</p>
                                             </td>
                                         </tr>
                                     </c:forEach> 
@@ -451,7 +450,7 @@
                             <table class="table" style="border-radius: 10px; z-index: 1; background-color: #ffffff">
                                 <thead>
                                 <th style="text-align: center">Đơn hàng</th>
-                                <th style="text-align: center">Ngày</th>
+                                <th style="text-align: center">Ngày đặt</th>
                                 <th style="text-align: center">Ngày nhận hàng</th>
                                 <th style="text-align: center">Hình thức thanh toán</th>
                                 <th style="text-align: center">Hình thức vận chuyển</th>
@@ -499,10 +498,10 @@
                                             </td>
                                             <td style="text-align: center">
                                                 <c:if test="${receive.paid == true}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Đã thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Đã thanh toán</p>
                                                 </c:if>
                                                 <c:if test="${receive.paid == false}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Chưa thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Chưa thanh toán</p>
                                                 </c:if>
                                                 <c:set var="result" value="NHANHANG"/> <!-- Khởi tạo với giá trị mặc định -->
                                                 <c:forEach var="feedbacks" items="${requestScope.LIST_CHECK_FEEDBACK}">
@@ -514,17 +513,17 @@
                                                     </c:if>
                                                 </c:forEach>
                                                 <c:if test="${result == 'NHANHANG'}">
-                                                    <button id="myButton-${receive.eventOrderId}" onclick="handleButtonClick(${receive.eventOrderId}, event)" class="btn border-secondary rounded-pill px-4 py-3 text-third" style="text-align: center" type="button">Nhận hàng</button>
+                                                    <button id="myButton-${receive.eventOrderId}" onclick="handleButtonClick(${receive.eventOrderId},${receive.deliveryId}, event)" class="btn border-secondary rounded-pill px-4 py-3 text-third" style="text-align: center" type="button">Nhận hàng</button>
                                                 </c:if>
                                                 <c:if test="${result == 'DANHGIA'}">
-                                                    <button id="myButton-${receive.eventOrderId}" class="btn border-secondary rounded-pill px-4 py-3 text-third" style="text-align: center" type="button"  onclick="openFeedbackModal(${receive.eventOrderId}, event)">Đánh giá</button>
+                                                    <button id="myButton-${receive.eventOrderId}" class="btn border-secondary rounded-pill px-4 py-3 text-third" style="text-align: center" type="button"  onclick="openFeedbackModal(${receive.eventOrderId},${receive.deliveryId}, event)">Đánh giá</button>
                                                 </c:if>
                                                 <c:if test="${result == 'DADANHGIA'}">
                                                     <button class="btn border-secondary rounded-pill px-4 py-3 text-third" style="text-align: center" type="button" disabled="">Đã đánh giá</button>
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <p class="mb-4 mt-4 price-per-unit" style="text-align: center"><fmt:formatNumber value="${receive.ammount}" type="number" groupingUsed="true"/>đ</p>
+                                                <p class="mb-4 mt-4 price-per-unit" style="text-align: center; font-weight: bold"><fmt:formatNumber value="${receive.ammount}" type="number" groupingUsed="true"/>đ</p>
                                             </td>
                                         </tr>
                                     </c:forEach> 
@@ -543,7 +542,7 @@
                             <table class="table" style="border-radius: 10px; z-index: 1; background-color: #ffffff">
                                 <thead>
                                 <th style="text-align: center">Đơn hàng</th>
-                                <th style="text-align: center">Ngày</th>
+                                <th style="text-align: center">Ngày đặt</th>
                                 <th style="text-align: center">Hình thức thanh toán</th>
                                 <th style="text-align: center">Hình thức vận chuyển</th>
                                 <th style="text-align: center">Thanh toán</th>
@@ -578,14 +577,14 @@
                                             </td>
                                             <td>
                                                 <c:if test="${cancel.paid == true}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Đã thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Đã thanh toán</p>
                                                 </c:if>
                                                 <c:if test="${cancel.paid == false}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Chưa thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Chưa thanh toán</p>
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <p class="mb-4 mt-4 price-per-unit" style="text-align: center"><fmt:formatNumber value="${cancel.ammount}" type="number" groupingUsed="true"/>đ</p>
+                                                <p class="mb-4 mt-4 price-per-unit" style="text-align: center; font-weight: bold"><fmt:formatNumber value="${cancel.ammount}" type="number" groupingUsed="true"/>đ</p>
                                             </td>
                                         </tr>
                                     </c:forEach> 
@@ -665,19 +664,22 @@
                             <div class="form-group">
                                 <label for="feedbackText">Nội dung Feedback</label>
                                 <textarea class="form-control" id="feedbackText" rows="3" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="feedbackRating">Đánh giá (0-5 sao)</label>
-                                <div id="starRating">
-                                    <i class="fa fa-star-o" data-value="1"></i>
-                                    <i class="fa fa-star-o" data-value="2"></i>
-                                    <i class="fa fa-star-o" data-value="3"></i>
-                                    <i class="fa fa-star-o" data-value="4"></i>
-                                    <i class="fa fa-star-o" data-value="5"></i>
+                                <label for="rateFeedback">Đánh giá dịch vụ giao hàng</label>
+                                <div class="stars" id="rateFeedback">
+                                    <input class="star star-5" id="star-5" type="radio" name="star" value="5" />
+                                    <label class="star star-5" for="star-5"></label>
+                                    <input class="star star-4" id="star-4" type="radio" name="star" value="4" />
+                                    <label class="star star-4" for="star-4"></label>
+                                    <input class="star star-3" id="star-3" type="radio" name="star" value="3" />
+                                    <label class="star star-3" for="star-3"></label>
+                                    <input class="star star-2" id="star-2" type="radio" name="star" value="2" />
+                                    <label class="star star-2" for="star-2"></label>
+                                    <input class="star star-1" id="star-1" type="radio" name="star" value="1" />
+                                    <label class="star star-1" for="star-1"></label>
                                 </div>
                             </div>
-                            <input type="hidden" id="feedbackRatingValue" name="feedbackRatingValue"/>
-                            <input type="hidden" id="feedbackOrderId" />
+                            <input type="hidden" id="feedbackOrderId"/>
+                            <input type="hidden" id="deliveryId"/>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -763,12 +765,22 @@
                                                             $('#submitFeedback').click(function () {
                                                                 var feedbackText = $('#feedbackText').val();
                                                                 var orderId = $('#feedbackOrderId').val();
+                                                                var deliveryId = $('#deliveryId').val();
+                                                                var starRating = $('input[name="star"]:checked').val();
+                                                                if (!starRating) {
+                                                                    Swal.fire({
+                                                                        icon: 'warning',
+                                                                        title: 'Chưa chọn đánh giá',
+                                                                        text: 'Vui lòng chọn số sao đánh giá!'
+                                                                    });
+                                                                    return;
+                                                                }
 
                                                                 $.ajax({
                                                                     url: 'submitFeedback', // Đường dẫn đến servlet xử lý feedback
                                                                     type: 'POST',
                                                                     contentType: 'application/json',
-                                                                    data: JSON.stringify({orderId: orderId, feedback: feedbackText}),
+                                                                    data: JSON.stringify({orderId: orderId, feedback: feedbackText, rating: starRating, staffId: deliveryId}),
                                                                     success: function (response) {
                                                                         if (response.success) {
                                                                             // Hiển thị thông báo SweetAlert sau khi gửi feedback thành công
@@ -811,7 +823,7 @@
                                                         });
         </script>
         <script>
-            function handleButtonClick(orderId, event) {
+            function handleButtonClick(orderId, deliveryId, event) {
                 // Gửi yêu cầu đến servlet để cập nhật trạng thái đã nhận hàng
                 event.stopPropagation(); // Ngăn sự kiện click của <a>
                 event.preventDefault();  // Ngăn chặn hành vi mặc định của thẻ <a>
@@ -829,7 +841,7 @@
                                 var button = document.getElementById('myButton-' + orderId);
                                 button.innerHTML = 'Đánh giá';
                                 button.onclick = function (e) {
-                                    openFeedbackModal(orderId, e); // Gán sự kiện mới để mở modal feedback
+                                    openFeedbackModal(orderId, deliveryId, e); // Gán sự kiện mới để mở modal feedback
                                 };
                             }
                         }
@@ -838,10 +850,11 @@
                             console.error('Error:', error);
                         });
             }
-            function openFeedbackModal(orderId, event) {
+            function openFeedbackModal(orderId, deliveryId, event) {
                 event.stopPropagation(); // Ngăn sự kiện click của <a>
                 event.preventDefault();  // Ngăn chặn hành vi mặc định của thẻ <a>
                 $('#feedbackOrderId').val(orderId); // Gán orderId vào input ẩn
+                $('#deliveryId').val(deliveryId);
                 $('#feedbackModal').modal('show'); // Hiện modal
             }
         </script>

@@ -30,6 +30,7 @@ public class EventOrderDTO implements Serializable {
     private double ammount;
     private boolean paid;
     private String note;
+    private int deliveryId;
 
     public EventOrderDTO(String fullname, String phone, String street, String city, String deliveryOptions, String paymentOptions, String note) {
         this.fullname = fullname;
@@ -74,6 +75,26 @@ public class EventOrderDTO implements Serializable {
         this.ammount = ammount;
         this.paid = paid;
         this.note = note;
+    }
+
+    public EventOrderDTO(String username, int eventId, int eventOrderId, String eventName, String fullname, String phone, String street, String city, Timestamp orderDate, Timestamp deliveryDate, String deliveryOptions, String paymentOptions, String status, double ammount, boolean paid, String note, int deliveryId) {
+        this.username = username;
+        this.eventId = eventId;
+        this.eventOrderId = eventOrderId;
+        this.eventName = eventName;
+        this.fullname = fullname;
+        this.phone = phone;
+        this.street = street;
+        this.city = city;
+        this.orderDate = orderDate;
+        this.deliveryDate = deliveryDate;
+        this.deliveryOptions = deliveryOptions;
+        this.paymentOptions = paymentOptions;
+        this.status = status;
+        this.ammount = ammount;
+        this.paid = paid;
+        this.note = note;
+        this.deliveryId = deliveryId;
     }
 
     /**
@@ -298,6 +319,20 @@ public class EventOrderDTO implements Serializable {
      */
     public void setEventName(String eventName) {
         this.eventName = eventName;
+    }
+
+    /**
+     * @return the deliveryId
+     */
+    public int getDeliveryId() {
+        return deliveryId;
+    }
+
+    /**
+     * @param deliveryId the deliveryId to set
+     */
+    public void setDeliveryId(int deliveryId) {
+        this.deliveryId = deliveryId;
     }
 
 }

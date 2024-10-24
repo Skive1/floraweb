@@ -43,7 +43,10 @@ public class CheckNotificationsServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         HttpSession session = request.getSession(false);
-        String username = (String) session.getAttribute("USERNAME");
+        String username = null;
+        if (session != null) {
+            username = (String) session.getAttribute("USERNAME");
+        }
         // Sử dụng Gson để chuyển đổi danh sách thông báo thành JSON
         Gson gson = new Gson();
 

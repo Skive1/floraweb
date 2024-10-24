@@ -81,6 +81,8 @@ public class CartAddItemServlet extends HttpServlet {
                     url = MyAppConstants.CartAddItemFeatures.SHOP_VIEW + "?page=" + pageIndex;
                 } else if (page.equals("DETAIL_PAGE")) {
                     url = MyAppConstants.CartAddItemFeatures.VIEW_CART_PAGE;
+                } else if (page.equals("shopSearch")){
+                    url = MyAppConstants.SearchFeature.SEARCH;
                 }
             }
             // 4. Add item to cart
@@ -93,6 +95,8 @@ public class CartAddItemServlet extends HttpServlet {
                             url = MyAppConstants.CartAddItemFeatures.SHOP_VIEW + "?page=" + pageIndex;
                         } else if (page.equals("DETAIL_PAGE")) {
                             url = MyAppConstants.CartAddItemFeatures.ERROR_PAGE + "?productId=" + productId + "&productType=" + productType;
+                        } else if (page.equals("shopSearch")){
+                            url = MyAppConstants.SearchFeature.SEARCH;
                         }
                     }
                 }

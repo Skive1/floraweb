@@ -63,7 +63,7 @@
 
     <body>
 
-       <!-- Spinner Start -->
+        <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-third" role="status"></div>
         </div>
@@ -95,7 +95,7 @@
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link active">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
-                            <a href="searchAction" class="nav-item nav-link">Shop</a>
+                            <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
@@ -103,7 +103,6 @@
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
-                                    <a href="viewEvent" class="nav-item nav-link">Manage System</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
@@ -131,7 +130,7 @@
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center" style="padding-right: 0px">
                                         <i class="fa fa-shopping-bag fa-2x"></i>
                                         <c:if test="${sessionScope.PENDING_EITEMS != 0 || sessionScope.PENDING_ITEMS != 0}">
                                             <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 4px; left: 39px; height: 10px; min-width: 10px;"></span>
@@ -150,7 +149,7 @@
                                 </div>
 
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
@@ -161,7 +160,6 @@
                 </nav>
             </div>
         </div>
-
         <!-- Navbar End -->
 
 
@@ -202,7 +200,7 @@
         <div class="container-fluid py-5">
             <div class="container py-5">
                 <h1 class="mb-4">Thông tin thanh toán</h1>
-                <form action="checkouts" method="POST">
+                <form action="checkouts" method="POST" id="checkoutForm" onsubmit="disableButton()">
                     <div class="row g-5">
                         <div class="col-md-12 col-lg-6 col-xl-6">
                             <div class="form-item">
@@ -609,7 +607,7 @@
                                 </table>
                             </div>
                             <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                                <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-third">Đặt hàng</button>
+                                <button id="submitBtn" type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-third" >Đặt hàng</button>
                             </div>
                         </div>
                     </div>
@@ -650,7 +648,11 @@
         <script src="lib/lightbox/js/lightbox.min.js"></script>
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
         <script src="https://kit.fontawesome.com/4cb3201524.js" crossorigin="anonymous"></script>
-
+        <script>
+                    function disableButton() {
+                        document.getElementById('submitBtn').disabled = true;
+                    }
+        </script>
         <!-- Template Javascript -->
         <script src="js/notification.js"></script>
         <script src="js/main.js"></script>

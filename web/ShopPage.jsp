@@ -17,6 +17,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
 
         <!-- Icon Font Stylesheet -->
+        <script src="https://kit.fontawesome.com/4cb3201524.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -27,6 +28,7 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="alertPackage/alertCss.css">
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
@@ -41,7 +43,7 @@
             <div class="spinner-grow text-third" role="status"></div>
         </div>
         <!-- Spinner End -->
-
+        <div id="snackbar"></div>
 
         <!-- Navbar start -->
         <div class="container-fluid fixed-top">
@@ -76,7 +78,6 @@
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
-                                    <a href="viewEvent" class="nav-item nav-link">Manage System</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
@@ -90,12 +91,12 @@
 
                         </div>
                         <div class="d-flex align-items-center justify-content-center m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
-                                <i class="fas fa-search text-third"></i>
+                            <button class="btn-search btn bg-white" data-bs-toggle="modal" data-bs-target="#searchModal" style="padding-top: 10px">
+                                <i class="fa-solid fa-2x fa-bell"  style="color: #81c408"></i>
                             </button>
 
                             <c:if test="${empty sessionScope.USER}">
-                                <a href="loginPage" class="position-relative me-4">
+                                <a href="loginPage" class="position-relative" style="margin-right: 20px; margin-left: 12px;">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                 </a>
                                 <a href="loginPage" class="my-auto">
@@ -104,25 +105,30 @@
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
                                         <i class="fa fa-shopping-bag fa-2x"></i>
+                                        <c:if test="${sessionScope.PENDING_EITEMS != 0 || sessionScope.PENDING_ITEMS != 0}">
+                                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 4px; left: 39px; height: 10px; min-width: 10px;"></span>
+                                        </c:if>
                                     </a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                         <a href="cartPage" class="dropdown-item">Cart</a>
+                                        <c:if test="${sessionScope.PENDING_ITEMS != 0}">
+                                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 15px; left: 122px; height: 18px; min-width: 18px;">${sessionScope.PENDING_ITEMS}</span>
+                                        </c:if>
                                         <a href="eventCart" class="dropdown-item">Event Cart</a>
+                                        <c:if test="${sessionScope.PENDING_EITEMS != 0}">
+                                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 47px; left: 122px; height: 18px; min-width: 18px;">${sessionScope.PENDING_EITEMS}</span>
+                                        </c:if>
                                     </div>
                                 </div>
 
                                 <div class="nav-item dropdown">
-                                    <a href="" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
-                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                        <a href="viewProfileAction" class="dropdown-item">My Profile</a>
-                                        <a href="#" class="dropdown-item">Purchase Order</a>
-                                        <a href="logoutAction" class="dropdown-item">Logout</a>
-                                    </div>
-                                </div>                         
+                                    <jsp:include page="navUser.jsp"></jsp:include>
+                                    </div>                         
                             </c:if>
                         </div>
                     </div>
@@ -327,11 +333,11 @@
                                                     <h6 class="mb-2">${dto.getProductName()}</h6>
                                                     <div class="d-flex mb-2">
                                                         <h5 class="fw-bold me-2">
-                                                            <fmt:formatNumber value="${dto.getProductPrice()}" pattern="#,###"/> vnd
+                                                            <fmt:formatNumber value="${dto.getProductPrice()}" pattern="#,###"/>đ
                                                         </h5>
-<!--                                                        <h5 class="text-danger text-decoration-line-through">
-                                                            <fmt:formatNumber value="${(dto.getProductPrice() + 1000000)}" pattern="#,###"/> vnd
-                                                        </h5>-->
+                                                        <!--                                                        <h5 class="text-danger text-decoration-line-through">
+                                                        <fmt:formatNumber value="${(dto.getProductPrice() + 1000000)}" pattern="#,###"/> vnd
+                                                    </h5>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -341,7 +347,7 @@
                                         <div class="position-relative">
                                             <img src="img/classic-autumn.jpg" class="img-fluid w-100 rounded" alt="">
                                             <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
-<!--                                                <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>-->
+                                                <!--                                                <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>-->
                                             </div>
                                         </div>
                                     </div>
@@ -350,31 +356,67 @@
                             <div class="col-lg-9">
                                 <div class="row g-4 justify-content-center">
                                     <c:set var="result" value="${requestScope.requestResultList}"/>
-                                    <c:forEach var="dto" items="${result}">
+                                    <c:forEach var="product" items="${result}">
                                         <div class="col-md-6 col-lg-6 col-xl-4">
-                                            <div class="rounded position-relative fruite-item">
-                                                <form action="ProductDetail.jsp" method="POST">
-                                                    <input type="hidden" name="productID" value="">
+                                            <form action="cartAddItem">
+                                                <input type="hidden" name="page" value="shopSearch"/>
+                                                <input type="hidden" name="pageIndex" value="${currentPage}"/>
+                                                <div class="rounded position-relative fruite-item">
                                                     <div class="fruite-img">
-                                                        <button type="submit" style="border: none; background: none; padding: 0;">
-                                                            <img src="${dto.getImageURL()}" class="img-fluid square-img rounded-top" alt="">
-                                                        </button>
+                                                        <img src="${product.imageURL}" class="img-fluid w-100 rounded-top" alt="${product.productName}">
                                                     </div>
-                                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">New</div>
+                                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
+                                                        ${product.productType} 
+                                                    </div>
                                                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                        <h4 class="small-heading">${dto.getProductName()}</h4>
-                                                        <p>${dto.getProductDetail()}</p>
+                                                        <c:url var="urlRewriting" value="productDetail">
+                                                            <c:param name="productId" value="${product.productID}"/>
+                                                            <c:param name="productType" value="${product.productType}"/>
+                                                        </c:url>
+                                                        <a href="${urlRewriting}">
+                                                            <h4>${product.productName}</h4>
+                                                        </a>
+                                                        <p>${product.productDetail}</p>
                                                         <div class="d-flex justify-content-between flex-lg-wrap">
-                                                            <p class="text-dark fs-5 fw-bold mb-0" style="margin-right: 10px">
-                                                                <fmt:formatNumber value="${dto.getProductPrice()}" pattern="#,###"/> vnd
+                                                            <p class="text-dark fs-5 fw-bold mb-0">
+                                                                <fmt:formatNumber value="${product.productPrice}" type="number" groupingUsed="true"/>đ
                                                             </p>
-                                                            <button type="submit" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
-                                                            </button>
+                                                            <!-- Hidden inputs to pass product details to the servlet -->
+                                                            <input type="hidden" name="productId" value="${product.productID}">
+                                                            <input type="hidden" name="storeId" value="${product.storeId}">
+                                                            <input type="hidden" name="imageURL" value="${product.imageURL}">
+                                                            <input type="hidden" name="productName" value="${product.productName}">
+                                                            <input type="hidden" name="productPrice" value="${product.productPrice}">
+                                                            <input type="hidden" name="productQuantity" value="${product.productQuantity}">
+                                                            <input type="hidden" name="itemQuantity" value="1">
+                                                            <c:if test="${not empty sessionScope.USER}">
+                                                                <c:if test="${product.productQuantity > 0}">
+                                                                    <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                                                    </button>
+                                                                </c:if>
+                                                                <c:if test="${product.productQuantity == 0}">
+                                                                    <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third" disabled="">
+                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                                    </button>
+                                                                </c:if>
+                                                            </c:if>
+                                                            <c:if test="${empty sessionScope.USER}">
+                                                                <c:if test="${product.productQuantity == 0}">
+                                                                    <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third disabled-link">
+                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                                    </a>
+                                                                </c:if>
+                                                                <c:if test="${product.productQuantity > 0}">
+                                                                    <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third">
+                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Add to cart
+                                                                    </a>
+                                                                </c:if>
+                                                            </c:if>
                                                         </div> 
                                                     </div>
-                                                </form>
-                                            </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </c:forEach>
                                     <div class="col-12" >
@@ -445,97 +487,34 @@
 
 
         <!-- Footer Start -->
-        <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
-            <div class="container py-5">
-                <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
-                    <div class="row g-4">
-                        <div class="col-lg-3">
-                            <a href="#">
-                                <h1 class="text-third mb-0">Fruitables</h1>
-                                <p class="text-secondary mb-0">Fresh products</p>
-                            </a>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="position-relative mx-auto">
-                                <input class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="number" placeholder="Your Email">
-                                <button type="submit" class="btn btn-primary border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;">Subscribe Now</button>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="d-flex justify-content-end pt-3">
-                                <a class="btn  btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-youtube"></i></a>
-                                <a class="btn btn-outline-secondary btn-md-square rounded-circle" href=""><i class="fab fa-linkedin-in"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row g-5">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-item">
-                            <h4 class="text-light mb-3">Why People Like us!</h4>
-                            <p class="mb-4">typesetting, remaining essentially unchanged. It was 
-                                popularised in the 1960s with the like Aldus PageMaker including of Lorem Ipsum.</p>
-                            <a href="" class="btn border-secondary py-2 px-4 rounded-pill text-third">Read More</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="d-flex flex-column text-start footer-item">
-                            <h4 class="text-light mb-3">Shop Info</h4>
-                            <a class="btn-link" href="">About Us</a>
-                            <a class="btn-link" href="">Contact Us</a>
-                            <a class="btn-link" href="">Privacy Policy</a>
-                            <a class="btn-link" href="">Terms & Condition</a>
-                            <a class="btn-link" href="">Return Policy</a>
-                            <a class="btn-link" href="">FAQs & Help</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="d-flex flex-column text-start footer-item">
-                            <h4 class="text-light mb-3">Account</h4>
-                            <a class="btn-link" href="">My Account</a>
-                            <a class="btn-link" href="">Shop details</a>
-                            <a class="btn-link" href="">Shopping Cart</a>
-                            <a class="btn-link" href="">Wishlist</a>
-                            <a class="btn-link" href="">Order History</a>
-                            <a class="btn-link" href="">International Orders</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-item">
-                            <h4 class="text-light mb-3">Contact</h4>
-                            <p>Address: 1429 Netus Rd, NY 48247</p>
-                            <p>Email: Example@gmail.com</p>
-                            <p>Phone: +0123 4567 8910</p>
-                            <p>Payment Accepted</p>
-                            <img src="img/payment.png" class="img-fluid" alt="">
+        <jsp:include page="footer.jsp"></jsp:include>
+            <!-- Footer End -->
+
+            <!-- Copyright Start -->
+            <div class="container-fluid copyright bg-dark py-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Footer End -->
+            <!-- Copyright End -->
 
-        <!-- Copyright Start -->
-        <div class="container-fluid copyright bg-dark py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
-                    </div>
-                    <div class="col-md-6 my-auto text-center text-md-end text-white">
-                        <!--/*** This template is free as long as you keep the below author?s credit link/attribution link/backlink. ***/-->
-                        <!--/*** If you'd like to use the template without the below author?s credit link/attribution link/backlink, ***/-->
-                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a class="border-bottom" href="https://themewagon.com">ThemeWagon</a>
+        <c:if test="${not empty requestScope.INSUFFICIENTSHOP}">
+            <div id="modal-alert" class="modal-alert">
+                <div class="modal-alert-fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="" role="document">
+                        <div class="modal-content-alert">
+                            <h5 class="modal-title-alert">${requestScope.INSUFFICIENTSHOP}</h5>
+                            <p>Vui lòng hãy chọn sản phẩm khác</p>
+                            <button class="btn-secondary-alert">Ok</button>
+                        </div>                     `
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Copyright End -->
-
-
+        </c:if>
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
@@ -550,6 +529,7 @@
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
         <!-- Template Javascript -->
+        <script src="alertPackage/alertJs.js"></script>
         <script src="js/main.js"></script>
     </body>
 
