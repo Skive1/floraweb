@@ -131,6 +131,21 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Name</label>
+<<<<<<< HEAD
+                                        <input name="nameAdd" type="text" maxlength="20" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Type</label>
+                                        <input name="typeAdd" type="text" maxlength="15" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Condition</label>
+                                        <input name="conditionAdd" type="text" maxlength="20" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Detail</label>
+                                        <input name="detailAdd" type="text" maxlength="20" class="form-control" required>
+=======
                                         <input name="nameAdd" type="text" class="form-control" required>
                                     </div>
                                     <div class="form-group">
@@ -144,6 +159,7 @@
                                     <div class="form-group">
                                         <label>Detail</label>
                                         <input name="detailAdd" type="text" class="form-control" required>
+>>>>>>> main
                                     </div>
                                     <div class="form-group">
                                         <label>Price</label>
