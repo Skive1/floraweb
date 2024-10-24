@@ -66,9 +66,13 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
-                            <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
+                            <input type="hidden" name="navbarShop" value="1" id="navbarShop"/>
+                            <form method="POST" action="searchAction" id="searchProduct">
+                                <a href="#" class="nav-item nav-link active"
+                                   onclick="document.getElementById('navbarShop'); document.getElementById('searchProduct').submit()">Shop</a>
+                            </form>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
@@ -134,13 +138,9 @@
         <!-- Modal Search End -->
 
         <!-- Single Page Header start -->
-        <div class="container-fluid page-header py-5">
+        <div class="container-fluid py-5 mb-5 hero-header">
             <h1 class="text-center text-white display-6">Shop</h1>
-            <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                <li class="breadcrumb-item active text-white">Shop</li>
-            </ol>
+
         </div>
         <!-- Single Page Header End -->
 
@@ -321,7 +321,7 @@
                                             <div class="d-flex align-items-center justify-content-start">
                                                 <div class="rounded me-4" style="width: 100px; height: 100px;">
                                                     <img src="${dto.getImageURL()}" class="img-fluid rounded" alt=""
-                                                         style="width: 100%; height: 100%; object-fit: cover;">
+                                                         style="width: 75%; height: 75%; object-fit: cover;">
                                                 </div>
                                                 <div>
                                                     <h6 class="mb-2">${dto.getProductName()}</h6>
