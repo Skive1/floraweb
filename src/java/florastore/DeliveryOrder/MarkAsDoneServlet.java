@@ -1,4 +1,3 @@
-
 package florastore.DeliveryOrder;
 
 import florastore.utils.MyAppConstants;
@@ -16,39 +15,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 @WebServlet(name = "MarkAsDoneServlet", urlPatterns = {"/MarkAsDoneServlet"})
 public class MarkAsDoneServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        
-        
+
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
 
         HttpSession session = request.getSession();
-        
+
         String eventOrderID = request.getParameter("getEventOrderID");
-//        String getEventOrderAmount = request.getParameter("getEventOrderAmount");
-        int intEventOrderID = Integer.parseInt(eventOrderID);
-//        int staffID = (int) session.getAttribute("Staff_ID");
-//        
-//        double staffBalance = (double) session.getAttribute("Staff_Balance");
-//        double eventOrderAmount = Double.parseDouble(getEventOrderAmount);
-//        double balance = 0;
+        int intEventOrderID = 0;
+
         try {
             DeliverDAO dao = new DeliverDAO();
+            if (eventOrderID != null) {
+                eventOrderID = eventOrderID.trim();
+                intEventOrderID = Integer.parseInt(eventOrderID);
+            }
             boolean result = dao.markAsDone(intEventOrderID);
             if (result) {
-                if (!eventOrderID.isEmpty()) eventOrderID.trim();
-//                balance = staffBalance + eventOrderAmount;
-//                dao.setDeliveryStaffBalance(staffID, balance);
-//                session.removeAttribute("Staff_Balance");
-//                session.setAttribute("Staff_Balance", balance);
                 session.removeAttribute("Total_Order");
                 url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING);
             }
@@ -61,7 +51,7 @@ public class MarkAsDoneServlet extends HttpServlet {
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-            
+
         }
     }
 

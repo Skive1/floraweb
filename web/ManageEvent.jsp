@@ -7,13 +7,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="css/css/style.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/css/admincss.css"> 
-        <link rel="stylesheet" href="css/_all-skins.min.css">
-        <link rel="stylesheet" href="css/jquery-ui.css">
+        <link rel="stylesheet" href="css/css/font-awesome.min.css">
+        <!-- <link rel="stylesheet" href="css/AdminLTE.css"> -->
+        <link rel="stylesheet" href="css/css/_all-skins.min.css">
+        <link rel="stylesheet" href="css/css/jquery-ui.css">
         <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/css/admincss.css" />
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -23,31 +24,32 @@
     <body>
         <section class="admin">
             <div class="row-grid">
-                <div class="admin-sidebar" style="height: 170%"> <%--Side bar here--%>
+                <div id="adminSidebar" class="admin-sidebar"> <%--Side bar here--%>
                     <div class="admin-sidebar-top">
                         <img src="data:image/png;base64,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" alt=""> 
                     </div>
                     <div class="admin-sidebar-content">
                         <ul>
                             <li>
-                                <a href="" style="color: white"><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #131EAD"><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
+
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="" style="color: white">Product</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="" style="color: white">Event</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="dashBoard" style="color: #131EAD">Theo tuần</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard" style="color: #131EAD">Theo tháng</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" style="color: white"><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #131EAD"><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="" style="color: white">Account</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="viewEvent" style="color: white">Event</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="manageAccount" style="color: #131EAD">Account</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewEvent" style="color: #131EAD">Event</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" style="color: white"><i class="ri-file-list-line"></i>Order<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #131EAD"><i class="ri-file-list-line"></i>Order<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="" style="color: white">Order List</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="" style="color: white">Delivery</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="productList.html" style="color: #131EAD">Danh sách đơn hàng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="" style="color: #131EAD">Delivery</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -90,9 +92,9 @@
                                     <th>Đóng sự kiện</th>
                                     </thead>
                                     <tbody style="height: 100px;">
-                                        <c:set var="event" value="${requestScope.EVENT_LIST}"/>
+                                        <c:set var="event" value="${requestScope.Event_List}"/>
                                         <c:if test="${not empty event}">
-                                            <c:forEach var="eventList" items="${requestScope.EVENT_LIST}" varStatus="counter">
+                                            <c:forEach var="eventList" items="${requestScope.Event_List}" varStatus="counter">
                                                 <tr>
                                                     <td>${counter.count}</td>
                                                     <td>${eventList.eventOwner}</td>
@@ -104,7 +106,7 @@
                                                         <fmt:formatDate value="${eventList.endDate}" pattern="dd-MM-yyy HH:mm:ss" />
                                                     </td>
                                                     <td>
-                                                        <a href="javascript:void(0);" class="btn btn-primary" style="color: black"
+                                                        <a href="javascript:void(0);" class="btn btn-primary" style="color: white"
                                                            onclick="toggleDetails(${counter.count});">Xem</a>
                                                     </td>                     
                                                     <td>  
@@ -151,19 +153,19 @@
                                                         <div>
                                                             <table>
                                                                 <thead>
-                                                                <th style="background-color: #007bff; color: black">No</th>
-                                                                <th style="background-color: #007bff; color: black">Tên sản phẩm</th>
-                                                                <th style="background-color: #007bff; color: black">Phân loại</th>
-                                                                <th style="background-color: #007bff; color: black">Tình trạng</th>
-                                                                <th style="background-color: #007bff; color: black">Thông tin thêm</th>
-                                                                <th style="background-color: #007bff; color: black">Số lượng</th>        
-                                                                <th style="background-color: #007bff; color: black">Đơn giá</th>
+                                                                <th style="background-color: #007bff; color: white">No</th>
+                                                                <th style="background-color: #007bff; color: white">Tên sản phẩm</th>
+                                                                <th style="background-color: #007bff; color: white">Phân loại</th>
+                                                                <th style="background-color: #007bff; color: white">Tình trạng</th>
+                                                                <th style="background-color: #007bff; color: white">Thông tin thêm</th>
+                                                                <th style="background-color: #007bff; color: white">Số lượng</th>        
+                                                                <th style="background-color: #007bff; color: white">Đơn giá</th>
                                                                 </thead>
                                                                 <tbody style="height: 100px;">
-                                                                    <c:set var="flowerList2" value="${requestScope.FLOWER_LIST}"/>
+                                                                    <c:set var="flowerList2" value="${requestScope.Flower_List}"/>
                                                                     <c:if test="${not empty flowerList2}">
                                                                         <c:set var="customCounter" value="1" scope="page"/>
-                                                                        <c:forEach var="eventList2" items="${requestScope.FLOWER_LIST}" varStatus="counter2">
+                                                                        <c:forEach var="eventList2" items="${requestScope.Flower_List}" varStatus="counter2">
                                                                             <c:if test="${eventList.eventId == eventList2.eventEventId}">
                                                                                 <tr>
                                                                                     <td style="font-weight: bold">${customCounter}</td>
@@ -186,12 +188,17 @@
                                                                         </c:forEach>
 
                                                                     </c:if> 
-                                                                    <c:forEach var="total" items="${requestScope.TOTAL}" varStatus="counter3">
+                                                                    <c:forEach var="total" items="${requestScope.Total}" varStatus="counter3">
                                                                         <c:if test="${eventList.eventId == total.eventId}">
                                                                             <tr>
                                                                                 <td colspan="5"></td>
                                                                                 <td style="font-weight: 700;">Tổng giá:</td>
                                                                                 <td style="font-weight: 700;" >${total.total}</td> 
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <c:forEach begin="1" end="8">
+                                                                                    <td style="background-color: #007bff; color: white"></td>
+                                                                                </c:forEach>
                                                                             </tr>
                                                                         </c:if>
                                                                     </c:forEach>
@@ -211,12 +218,35 @@
                                     </c:if>
                                 </table>
                                 <script>
+                                    var infoCounter = 0;
+                                    var totalEvent = ${requestScope.Total_Event};
+                                    var totalFlower = ${requestScope.Total_Flower};
                                     function toggleDetails(index) {
                                         var detailsRow = document.getElementById("details-" + index);
-                                        if (detailsRow.style.display === "none") {
-                                            detailsRow.style.display = "table-row"; // Show the details row
+                                        var customSidebar = "105%";
+                                        var customSidebar2 = "100vh";
+                                        if (detailsRow.style.display === "none" || detailsRow.style.display === "") {
+                                            detailsRow.style.display = "table-row"; // Hiện hàng chi tiết
+                                            infoCounter++; // Tăng biến đếm khi hiển thị chi tiết
+                                            if (totalEvent === infoCounter && totalEvent != 1) {
+                                                document.getElementById("adminSidebar").style.height = customSidebar;
+                                            } else if ((totalFlower + totalEvent + infoCounter - 1) <= 12) {
+                                                document.getElementById("adminSidebar").style.height = customSidebar2;
+                                            } else {
+                                                document.getElementById("adminSidebar").style.height = customSidebar;
+                                            }
                                         } else {
-                                            detailsRow.style.display = "none"; // Hide the details row
+                                            detailsRow.style.display = "none"; // Ẩn hàng chi tiết
+                                            infoCounter--; // Giảm biến đếm khi ẩn chi tiết
+
+                                            // Nếu không còn hàng nào hiển thị, điều chỉnh chiều cao sidebar
+                                            if (infoCounter === 0) {
+                                                document.getElementById("adminSidebar").style.height = customSidebar2;
+                                            } else if ((totalFlower + totalEvent + infoCounter - 1) <= 7) {
+                                                document.getElementById("adminSidebar").style.height = customSidebar2;
+                                            } else {
+                                                document.getElementById("adminSidebar").style.height = customSidebar;
+                                            }
                                         }
                                     }
                                 </script>
@@ -234,7 +264,7 @@
                                                 <input type="hidden" id="pageBack" name="pageBack"/>
                                                 <a href="#" class="btn btn-secondary" style="margin: 1; background-color: white; border-color: black; color: black; font-weight: bold"
                                                    onclick="document.getElementById('pageBack').value = '${sessionScope.currentPage}';
-                                                               document.getElementById('backForm').submit();">
+                                                           document.getElementById('backForm').submit();">
                                                     &laquo;
                                                 </a>
                                             </form>
@@ -246,15 +276,15 @@
                                                     <c:if test="${sessionScope.currentPage == i}">
                                                         <a href="#" class="active btn btn-secondary" 
                                                            onclick="document.getElementById('pageNo').value = '${i}';
-                                                                       document.getElementById('paginationForm').submit();
-                                                                       return false;" style="margin: 0; background-color: #000066; border-color: black; color: white;
+                                                                   document.getElementById('paginationForm').submit();
+                                                                   return false;" style="margin: 0; background-color: #000066; border-color: black; color: white;
                                                            font-weight: bold">${i}</a>
                                                     </c:if>
                                                     <c:if test="${sessionScope.currentPage != i}">
                                                         <a href="#" class="btn btn-secondary" 
                                                            onclick="document.getElementById('pageNo').value = '${i}';
-                                                                       document.getElementById('paginationForm').submit();
-                                                                       return false;" style="margin: 0; background-color: white; border-color: black; color: black; 
+                                                                   document.getElementById('paginationForm').submit();
+                                                                   return false;" style="margin: 0; background-color: white; border-color: black; color: black; 
                                                            font-weight: bold">${i}</a>
                                                     </c:if>
                                                 </c:forEach>
@@ -265,15 +295,15 @@
                                                         <c:if test="${sessionScope.currentPage == i}">
                                                             <a href="#" class="active btn btn-secondary" 
                                                                onclick="document.getElementById('pageNo').value = '${i}';
-                                                                           document.getElementById('paginationForm').submit();
-                                                                           return false;" style="margin: 0; background-color: #000066; border-color: black; color: white;
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 0; background-color: #000066; border-color: black; color: white;
                                                                font-weight: bold">${i}</a>
                                                         </c:if>
                                                         <c:if test="${sessionScope.currentPage != i}">
                                                             <a href="#" class="btn btn-secondary" 
                                                                onclick="document.getElementById('pageNo').value = '${i}';
-                                                                           document.getElementById('paginationForm').submit();
-                                                                           return false;" style="margin: 0; background-color: white; border-color: black; color: black; 
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 0; background-color: white; border-color: black; color: black; 
                                                                font-weight: bold">${i}</a>
                                                         </c:if>
                                                     </c:forEach>
@@ -290,15 +320,15 @@
                                                         <c:if test="${sessionScope.currentPage == i}">
                                                             <a href="#" class="active btn btn-secondary" 
                                                                onclick="document.getElementById('pageNo').value = '${i}';
-                                                                           document.getElementById('paginationForm').submit();
-                                                                           return false;" style="margin: 0; background-color: #000066; border-color: black; color: white;
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 0; background-color: #000066; border-color: black; color: white;
                                                                font-weight: bold">${i}</a>
                                                         </c:if>
                                                         <c:if test="${sessionScope.currentPage != i}">
                                                             <a href="#" class="btn btn-secondary" 
                                                                onclick="document.getElementById('pageNo').value = '${i}';
-                                                                           document.getElementById('paginationForm').submit();
-                                                                           return false;" style="margin: 0; background-color: white; border-color: black; color: black; 
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 0; background-color: white; border-color: black; color: black; 
                                                                font-weight: bold">${i}</a>
                                                         </c:if>
                                                     </c:forEach>
@@ -310,15 +340,15 @@
                                                         <c:if test="${sessionScope.currentPage == i}">
                                                             <a href="#" class="active btn btn-secondary" 
                                                                onclick="document.getElementById('pageNo').value = '${i}';
-                                                                           document.getElementById('paginationForm').submit();
-                                                                           return false;" style="margin: 0; background-color: #000066; border-color: black; color: white;
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 0; background-color: #000066; border-color: black; color: white;
                                                                font-weight: bold">${i}</a>
                                                         </c:if>
                                                         <c:if test="${sessionScope.currentPage != i}">
                                                             <a href="#" class="btn btn-secondary" 
                                                                onclick="document.getElementById('pageNo').value = '${i}';
-                                                                           document.getElementById('paginationForm').submit();
-                                                                           return false;" style="margin: 0; background-color: white; border-color: black; color: black; 
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 0; background-color: white; border-color: black; color: black; 
                                                                font-weight: bold">${i}</a>
                                                         </c:if>
                                                     </c:forEach>
@@ -334,15 +364,15 @@
                                                         <c:if test="${sessionScope.currentPage == i}">
                                                             <a href="#" class="active btn btn-secondary" 
                                                                onclick="document.getElementById('pageNo').value = '${i}';
-                                                                           document.getElementById('paginationForm').submit();
-                                                                           return false;" style="margin: 0; background-color: #000066; border-color: black; color: white;
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 0; background-color: #000066; border-color: black; color: white;
                                                                font-weight: bold">${i}</a>
                                                         </c:if>
                                                         <c:if test="${sessionScope.currentPage != i}">
                                                             <a href="#" class="btn btn-secondary" 
                                                                onclick="document.getElementById('pageNo').value = '${i}';
-                                                                           document.getElementById('paginationForm').submit();
-                                                                           return false;" style="margin: 0; background-color: white; border-color: black; color: black; 
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 0; background-color: white; border-color: black; color: black; 
                                                                font-weight: bold">${i}</a>
                                                         </c:if>
                                                     </c:forEach>
@@ -354,15 +384,15 @@
                                                         <c:if test="${sessionScope.currentPage == i}">
                                                             <a href="#" class="active btn btn-secondary" 
                                                                onclick="document.getElementById('pageNo').value = '${i}';
-                                                                           document.getElementById('paginationForm').submit();
-                                                                           return false;" style="margin: 0; background-color: #000066; border-color: black; color: white;
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 0; background-color: #000066; border-color: black; color: white;
                                                                font-weight: bold">${i}</a>
                                                         </c:if>
                                                         <c:if test="${sessionScope.currentPage != i}">
                                                             <a href="#" class="btn btn-secondary" 
                                                                onclick="document.getElementById('pageNo').value = '${i}';
-                                                                           document.getElementById('paginationForm').submit();
-                                                                           return false;" style="margin: 0; background-color: white; border-color: black; color: black; 
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 0; background-color: white; border-color: black; color: black; 
                                                                font-weight: bold">${i}</a>
                                                         </c:if>
                                                     </c:forEach>
@@ -374,7 +404,7 @@
                                                 <input type="hidden" id="pageForward" name="pageForward"/>
                                                 <a href="#" class="btn btn-secondary" style="margin: 1; background-color: white; border-color: black; color: black; font-weight: bold"
                                                    onclick="document.getElementById('pageForward').value = '${sessionScope.currentPage}';
-                                                               document.getElementById('forwardForm').submit();">
+                                                           document.getElementById('forwardForm').submit();">
                                                     &raquo;
                                                 </a>
                                             </form>
@@ -389,6 +419,9 @@
                                 </div>
                             </div>
                         </div>
+                        <script>
+                            document.getElementById("adminSidebar").style.height = "100vh";
+                        </script>
                     </div>
                 </div>
             </div>
