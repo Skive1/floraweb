@@ -52,7 +52,10 @@ public class ViewOrderServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.ViewEventOrderFeatures.ORDER_LIST_PAGE);
 
         HttpSession session = request.getSession();
-        String username = request.getParameter("accountUsername");
+        String username = null;
+        if(session != null){
+            username = (String) session.getAttribute("USERNAME");
+        }
 
         try {
             //call method of order list

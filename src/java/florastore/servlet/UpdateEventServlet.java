@@ -40,9 +40,7 @@ public class UpdateEventServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        ServletContext context = request.getServletContext();
-        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.VIEW_EVENT_LIST);
+        String url = MyAppConstants.SellerManagementFeatures.VIEW_EVENT_LIST;
 
         String eventIdStr = request.getParameter("eventId");
         String action = request.getParameter("action");
@@ -52,14 +50,14 @@ public class UpdateEventServlet extends HttpServlet {
         String pageParam = request.getParameter("page"); // Get the current page number from the request  
         int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
         
-        String username = request.getParameter("accountUsername");
+        
 
         try {
             EventDAO dao = new EventDAO();
             if (action != null) {
                 dao.cancelEvent(eventId);
             }
-            url = url + "?accountUsername=" + URLEncoder.encode(username, "UTF-8") + "&page=" + currentPage;
+            url = url + "?page=" + currentPage;
         } catch (SQLException ex) {
             log("UpdateEventServlet _SQL_" + ex.getMessage());
         } catch (NamingException ex) {

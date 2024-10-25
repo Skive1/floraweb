@@ -48,14 +48,14 @@
                                 <a href=""><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="">Account</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent?username=${sessionScope.USER.username}">Event</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent">Event</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Order<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction?accountUsername=${sessionScope.USER.username}">Đơn hàng chờ giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction?accountUsername=${sessionScope.USER.username}">Đơn hàng đã giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction">Đơn hàng chờ giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction">Đơn hàng đã giao</a></li>
                                 </ul>
                             </li>
                         </ul>

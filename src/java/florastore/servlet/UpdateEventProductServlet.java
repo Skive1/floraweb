@@ -43,9 +43,8 @@ public class UpdateEventProductServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        ServletContext context = request.getServletContext();
-        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.VIEW_EVENT_PRODUCT);
+
+        String url = MyAppConstants.SellerManagementFeatures.VIEW_EVENT_PRODUCT;
 
         String epIdStr = request.getParameter("eventProductId");
         String action = request.getParameter("action");
