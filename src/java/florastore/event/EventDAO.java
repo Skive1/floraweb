@@ -513,6 +513,44 @@ public class EventDAO implements Serializable {
         return events;
     }
 
+
+    public List<EventDTO> getNewForNotification(Timestamp currentTime)
+              throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<EventDTO> events = new ArrayList<>();
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "SELECT TOP 5 AccountUsername, EventId, EventName, EventLocation, EventCity, StartDate, EndDate, EventImg "
+                        + "FROM Event "
+                        + "WHERE StartDate > ? AND EventStatus = 1 "
+                        + "ORDER BY StartDate DESC";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setTimestamp(1, currentTime);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    String eventOwner = rs.getString("AccountUsername");
+                    int eventId = rs.getInt("EventId");
+                    String eventName = rs.getString("EventName");
+                    String eventLocation = rs.getString("EventLocation");
+                    String eventCity = rs.getString("EventCity");
+                    Timestamp startDate = rs.getTimestamp("StartDate");
+                    Timestamp endDate = rs.getTimestamp("EndDate");
+                    String eventImg = rs.getString("EventImg");
+                    EventDTO event = new EventDTO(eventOwner, eventId, eventName, eventLocation, eventCity, startDate, endDate, eventImg);
+                    events.add(event);
+              
+                }//process each record in resultset  
+            }
     public boolean addEvent(EventDTO dto)
             throws SQLException, NamingException {
 
@@ -947,17 +985,6 @@ public class EventDAO implements Serializable {
     }
 
     public List<EventDTO> getEventByAccount(String accountUsername)
-            throws SQLException, NamingException {
-        Connection con = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        List<EventDTO> events = new ArrayList<>();
-
-        try {
-            //1. connect DB
-            con = DBHelper.getConnection();
-            if (con != null) {
-                //2. Create SQL String
                 String sql = "SELECT EventId, EventName, EventLocation, EventCity, StartDate, EndDate, EventImg, EventStatus "
                         + "FROM Event "
                         + "Where AccountUsername Like ?";
@@ -974,7 +1001,6 @@ public class EventDAO implements Serializable {
                     String eventName = rs.getString("EventName");
                     String eventLocation = rs.getString("EventLocation");
                     String eventCity = rs.getString("EventCity");
-
                     Timestamp startDate = rs.getTimestamp("StartDate");
                     Timestamp endDate = rs.getTimestamp("EndDate");
                     String eventImg = rs.getString("EventImg");
