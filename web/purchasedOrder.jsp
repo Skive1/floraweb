@@ -796,6 +796,7 @@
                                                                             button.onclick = null;  // Không cần onclick sau khi đã thay đổi
                                                                             button.disabled = true; // Vô hiệu hóa nút
                                                                             $('#feedbackText').val('');
+                                                                            $('input[name="star"]').prop('checked', false);
                                                                             $('#feedbackModal').modal('hide');
                                                                         } else {
                                                                             Swal.fire({

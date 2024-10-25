@@ -38,7 +38,7 @@
 
     <body>
 
-       <!-- Spinner Start -->
+        <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-third" role="status"></div>
         </div>
@@ -206,7 +206,7 @@
                                                 <li>
                                                     <div class="d-flex justify-content-between fruite-name"> 
                                                         <a href="eventDetail?eventId=${requestScope.EVENT_ID}&page=${currentPage}" 
-                                                           <c:if test="${empty CATEGORIES}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>All products</a>
+                                                           <c:if test="${empty CATEGORIES}">style="color: var(--bs-secondary)"</c:if>><i class="bi bi-flower3 me-2"></i>All products</a>
                                                         </div>
                                                     </li>
                                                 <c:forEach var="category" items="${requestScope.CATEGORY_CONDITION}">
@@ -219,7 +219,7 @@
 
                                                             </c:url>
                                                             <a href="${urlRewriting}" 
-                                                               <c:if test="${requestScope.CATEGORIES == category.eventProductCondition}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>${category.eventProductCondition}</a>
+                                                               <c:if test="${requestScope.CATEGORIES == category.eventProductCondition}">style="color: var(--bs-secondary)"</c:if>><i class="bi bi-flower3 me-2"></i>${category.eventProductCondition}</a>
                                                             </div>
                                                         </li>
                                                 </c:forEach>
@@ -228,10 +228,25 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="position-relative">
-                                            <img src="img/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
+                                            <img src="https://assets.eflorist.com/site/75411600/assets/products/PZM_/skusku12840589.jpg?1714161268982&impolicy=hero&impolicy=hero" class="img-fluid w-100 rounded" alt="">
                                             <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
-                                                <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
+                                                <h3 class="text-secondary fw-bold">Fresh <br> Flower <br> Banner</h3>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="position-relative">
+                                            <img src="https://www.shandonflowers.com/upload/mt/shan533/products/lg_null-florist-choice-%E2%82%AC60-spring.jpg" class="img-fluid w-100 rounded" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="position-relative">
+                                            <img src="img/floraBanner.png" class="img-fluid w-100 rounded" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="position-relative">
+                                            <img src="img/saleBanner.png" class="img-fluid w-100 rounded" alt="">
                                         </div>
                                     </div>
                                 </div>

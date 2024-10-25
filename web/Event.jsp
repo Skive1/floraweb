@@ -44,7 +44,7 @@
 
     <body>
 
-       <!-- Spinner Start -->
+        <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-third" role="status"></div>
         </div>
@@ -200,28 +200,51 @@
                                                 <li>
                                                     <div class="d-flex justify-content-between fruite-name"> 
                                                         <a href="event" 
-                                                           <c:if test="${empty STATUS}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2" ></i>All Events</a>
+                                                           <c:if test="${empty STATUS}">style="color: var(--bs-secondary)"</c:if>><i class="bi bi-flower1 me-2"></i>All Events</a>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name"> 
                                                             <a href="events?status=comingsoon" 
-                                                            <c:if test="${STATUS == 'comingsoon'}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>Sắp diễn ra</a>
+                                                            <c:if test="${STATUS == 'comingsoon'}">style="color: var(--bs-secondary)"</c:if>><i class="bi bi-flower1 me-2"></i>Sắp diễn ra</a>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name"> 
                                                             <a href="events?status=in-progress" 
-                                                            <c:if test="${STATUS == 'in-progress'}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>Đang diễn ra</a>
+                                                            <c:if test="${STATUS == 'in-progress'}">style="color: var(--bs-secondary)"</c:if>><i class="bi bi-flower1 me-2"></i>Đang diễn ra</a>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name"> 
                                                             <a href="events?status=end"
-                                                            <c:if test="${STATUS == 'end'}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>Đã kết thúc</a>
+                                                            <c:if test="${STATUS == 'end'}">style="color: var(--bs-secondary)"</c:if>><i class="bi bi-flower1 me-2"></i>Đã kết thúc</a>
                                                         </div>
                                                     </li>
                                                 </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="position-relative">
+                                                <img src="https://assets.eflorist.com/site/75411600/assets/products/PZM_/skusku12840589.jpg?1714161268982&impolicy=hero&impolicy=hero" class="img-fluid w-100 rounded" alt="">
+                                                <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
+                                                    <h3 class="text-secondary fw-bold">Fresh <br> Flower <br> Banner</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="position-relative">
+                                                <img src="https://www.shandonflowers.com/upload/mt/shan533/products/lg_null-florist-choice-%E2%82%AC60-spring.jpg" class="img-fluid w-100 rounded" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="position-relative">
+                                                <img src="img/floraBanner.png" class="img-fluid w-100 rounded" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="position-relative">
+                                                <img src="img/saleBanner.png" class="img-fluid w-100 rounded" alt="">
                                             </div>
                                         </div>
                                     </div>
