@@ -21,6 +21,12 @@
         <link rel="stylesheet" href="css/css/style.css" />
         <link rel="stylesheet" href="css/css/admincss.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <title>Seller - Monthly Event DashBoard</title>
     </head>
@@ -31,6 +37,49 @@
         .form-control {
             background-color: whitesmoke;
             margin: 10px                
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #9FE2BF;
+        }
+        button {
+            background-color: white;
+            border: 2px solid blue;
+            color: black;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .form-control {
+            width: 100px;
+            padding: 0;           
+            background-color: #01DF01; 
+            color: #fff; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: bold; 
+            text-align: center; 
+            transition: background-color 0.2s ease-in-out; 
+        }
+
+        .form-control:hover {
+            background-color: #0069d9; 
         }
     </style>
     <body>
@@ -75,16 +124,16 @@
                     <div class="admin-content-main">
                         <h1 style="text-align: center;">Dashboard</h1>                    
                         <h3 class="mb-0 text-center">
-                            <strong>Revenue Event flower(s) by month </strong>
+                            <strong style="color: green">Doanh thu các sản phẩm trong event theo tháng </strong>
                             <c:if test="${empty MonthList}">
-                                <p>Không có sản phẩm trong tháng này được bán.</p>
+                                <p style="color: red; font-weight: bold">Chưa tìm thấy thông tin sản phẩm trong tháng này được bán.</p>
                             </c:if>
                             <form id="f1" method="get" action="monthlyEventSell">
 
                                 <div style="padding-left: 20px">
                                     <select name="eventInfo" class="form-control" style="width: 120px" >
                                         <c:forEach items="${sessionScope.ListEventId}" var="info">
-                                            <option value="${info.evId}">${info.evName} ${info.evId}</option>                           
+                                            <option value="${info.evId}">${info.evName}</option>                           
                                         </c:forEach>
                                     </select>
 
@@ -118,13 +167,63 @@
                                 <canvas id="myBarChart"></canvas>
                             </div>
                         </div>
-                    </div>                             
-                </div>
-            </div>
+                        <c:if test="${not empty MonthList}">
+                            <div class="col-sm-6">
+                                <a id="addProductButton" href="#addProductModal"  class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Xem chi tiết</span></a>
+                            </div>
+                        </c:if>                
+                        <div id="addProductModal" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
+                                    <div class="modal-header">						
+                                        <h4 class="modal-title">Thông tin chi tiết</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body">                                     
+                                        <div class="form-group">
+
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Name</th>
+                                                        <th>Price</th>
+                                                        <th>Sold</th>
+                                                        <th>Total</th>
+                                                    </tr>  
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${MonthList}" var="o" varStatus="counter">
+                                                        <tr>                          
+                                                            <td>${counter.count}</td>                            
+                                                            <td>${o.name}</td>
+                                                            <td>${o.price}</td>
+                                                            <td>
+                                                                ${o.sold}
+                                                            </td>
+                                                            <td>${o.total}</td>
+                                                        </tr>
+                                                    </c:forEach> 
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>                       
+                        </div>                             
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
-</div> 
+    </div> 
 
 </section>
 <script>
