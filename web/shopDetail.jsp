@@ -197,10 +197,10 @@
 
 
         <!-- Single Product Start -->
-        <div class="container-fluid py-5 mt-5">
+        <div class="container-fluid py-5" style="display: flex;">
             <div class="container py-5">
-                <div class="row g-4 mb-5">
-                    <div class="col-lg-8 col-xl-9">
+                <div class="row g-4">
+                    <div class="col-lg-9">
                         <div class="row g-4">
                             <c:set var="detail" value="${requestScope.PRODUCT_DETAIL}"/>
                             <div class="col-lg-6">
@@ -295,7 +295,6 @@
                                     <input type="hidden" id="productType" value="${detail.productType}">
                                 </div>
                             </div>
-
                             <form action="shopReview" id="commentForm" method="POST">
                                 <h4 class="mb-5 fw-bold">Leave a Reply</h4>
                                 <div class="row g-4">
@@ -325,13 +324,37 @@
                                 </form>
                             </div>
                         </div>
+                        <div class="col-lg-3 d-flex flex-column">
+                            <h4 class="mb-3">Sản phẩm mới</h4>
+                        <c:set var="newIncome" value="${requestScope.requestNewProduct}"/>
+                        <c:forEach var="dto" items="${newIncome}">
+                            <div class="d-flex align-items-center justify-content-start">
+                                <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                    <img src="${dto.getImageURL()}" class="img-fluid rounded" alt=""
+                                         style="width: 75%; height: 75%; object-fit: cover;">
+                                </div>
+                                <div>
+                                    <h6 class="mb-2">${dto.getProductName()}</h6>
+                                    <div class="d-flex mb-2">
+                                        <h5 class="fw-bold me-2">
+                                            <fmt:formatNumber value="${dto.getProductPrice()}" pattern="#,###"/>đ
+                                        </h5>
+                                        <!--                                                        <h5 class="text-danger text-decoration-line-through">
+                                        <fmt:formatNumber value="${(dto.getProductPrice() + 1000000)}" pattern="#,###"/> vnd
+                                    </h5>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
-            <!-- Single Product End -->
+
+        </div>
+        <!-- Single Product End -->
 
 
-            <!-- Footer Start -->
+        <!-- Footer Start -->
         <jsp:include page="footer.jsp"></jsp:include>
             <!-- Footer End -->
 

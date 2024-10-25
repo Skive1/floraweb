@@ -168,11 +168,8 @@ public class SearchServlet extends HttpServlet {
             } else {
                 session.setAttribute("currentPage", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
             }
-
-            //dao.searchTotalProduct("", true);                                   //giữ cho categories luôn cập nhật sản phẩm mới
-            List<ProductDTO> newIncome = service.getNewProduct(dao.searchAllProduct());
-            request.removeAttribute("requestNewProduct");                              //giữ cho categories luôn cập nhật
-            request.setAttribute("requestNewProduct", newIncome);
+            
+            request.setAttribute("requestNewProduct", service.getNewProduct(dao.searchAllProduct())); //giữ cho categories luôn cập nhật
 
             session.removeAttribute("txtOrderBy");
             session.setAttribute("txtOrderBy", "default");

@@ -143,10 +143,8 @@ public class SearchPriceRangeServlet extends HttpServlet {
 
                 request.setAttribute("requestColor", service.chooseColor(totalProduct));
 
-                request.removeAttribute("requestNewProduct");
                 request.setAttribute("requestNewProduct", service.getNewProduct(categoryUpdate));
 
-                request.removeAttribute("requestResultList");
                 request.setAttribute("requestResultList", productList);                   //9 sản phẩm đã vào attribute result chuẩn bị được show
 
                 session.removeAttribute("currentPage");
