@@ -8,13 +8,10 @@ package florastore.servlet;
 import florastore.event.EventAddNotification;
 import florastore.event.EventDAO;
 import florastore.event.EventDTO;
-import florastore.event.EventProductDTO;
 import florastore.utils.MyAppConstants;
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Properties;
@@ -35,9 +32,9 @@ import javax.servlet.http.Part;
  */
 @WebServlet(name = "AddEventServlet", urlPatterns = {"/AddEventServlet"})
 @MultipartConfig(
-        fileSizeThreshold = 1024 * 1024, // 1 MB
+        fileSizeThreshold = 1024 * 1024 * 5, // 5 MB
         maxFileSize = 1024 * 1024 * 10, // 10 MB
-        maxRequestSize = 1024 * 1024 * 50 // 50 MB
+        maxRequestSize = 1024 * 1024 * 15 // 15 MB
 )
 public class AddEventServlet extends HttpServlet {
 
@@ -54,6 +51,27 @@ public class AddEventServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+        // Đường dẫn thư mục trong project để lưu ảnh
+        Properties properties = new Properties();
+        try (InputStream input = getServletContext().getResourceAsStream("/WEB-INF/config.properties")) {
+            properties.load(input);
+        }
+        String uploadPath = properties.getProperty("eventImg.path");
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();  // Tạo thư mục nếu không tồn tại
+        }
+
+        // Lấy file từ form
+        Part filePart = request.getPart("eventImg");
+        if (filePart == null) {
+            return;
+        }
+
+        String fileName = filePart.getSubmittedFileName();
+
+        // Đường dẫn lưu file trong project
+        String filePath = uploadPath + File.separator + fileName;
 
         String eventName = request.getParameter("eventName");
         String accountUsername = request.getParameter("accountUsername");
@@ -67,20 +85,9 @@ public class AddEventServlet extends HttpServlet {
         boolean bErr = false;
 
         try {
-//            Part eventImg = request.getPart("eventImg");
-            String eventImgUrl = request.getParameter("eventImgUrl");
-
-//                String realPath = request.getServletContext().getRealPath("/uploads");
-//                Path uploadPath = Paths.get(realPath);
-//                String filename = eventImg.getSubmittedFileName();
-//                System.out.println("Uploading file: " + filename + " to path: " + uploadPath);
-//                //Check if the directory exists, and if not, create it
-//                if (!Files.exists(uploadPath)) {
-//                    Files.createDirectories(uploadPath);
-//                    System.out.println("Created upload directory: " + uploadPath);
-//                }
-//
-//                eventImg.write(uploadPath + "/" + filename);
+            if (filePart.getSize() > 0 && filePart.getContentType().startsWith("image")) {
+                filePart.write(filePath);
+            }
             // event description
             String eventDescriptionParam = request.getParameter("eventDescription");
             String[] eventDescription = eventDescriptionParam.split("\\s*,\\s*");
@@ -89,23 +96,24 @@ public class AddEventServlet extends HttpServlet {
             String startDateStr = request.getParameter("startDate");
             String endDateStr = request.getParameter("endDate");
 
-            if (eventImgUrl == null) {
-                error.setUploadImgError("Image upload failed. Please try again.");
-                bErr = true;
-            } else if (city == null || eventLocation == null) {
-                error.setDescriptionError("Missing event description");
-                bErr = true;
-            }
-
             // Convert the strings to Timestamp
             Timestamp startDate = Timestamp.valueOf(startDateStr.replace("T", " ") + ":00");
             Timestamp endDate = Timestamp.valueOf(endDateStr.replace("T", " ") + ":00");
 
-            if (bErr) {
+            // Validate file format
+            if (!fileName.endsWith(".png") || !"image/png".equals(filePart.getContentType())) {
+                error.setUploadImgError("Wrong file format. Please upload a PNG image.");
+                bErr = true;
+            } else if (fileName.contains("..")) {
+                error.setUploadImgError("File name must not have scpecial charaters");
+                bErr = true;
+            }
+
+            if (!bErr) {
                 request.setAttribute("ERROR", error);
-            } else {
+            
                 EventDAO dao = new EventDAO();
-                EventDTO eDTO = new EventDTO(accountUsername, 0, eventName, eventLocation, city, startDate, endDate, eventImgUrl, true);
+                EventDTO eDTO = new EventDTO(accountUsername, 0, eventName, eventLocation, city, startDate, endDate, fileName, true);
 
                 boolean result = dao.addEvent(eDTO);
 
@@ -115,16 +123,25 @@ public class AddEventServlet extends HttpServlet {
                 }
             }
 
+        } catch (IOException ex) {
+            log("AddEventServlet _ IO_ " + ex.getMessage());
+            // Handle size limit exceptions thrown by @MultipartConfig
+            error.setUploadImgError("File too large. Please upload a file smaller than 10 MB.");
+            request.setAttribute("ERROR", error);
+            bErr = true;
         } catch (SQLException ex) {
             String msg = ex.getMessage();
             log("AddEventServlet _ SQL " + msg);
             if (msg.contains("duplicate")) {
                 error.setEventNameError(eventName + " is already existed in the system.");
-                request.setAttribute("ERROR", error);
+                bErr = true;
             }
         } catch (NamingException ex) {
             log("AddEventServlet _ Naming " + ex.getMessage());
         } finally {
+            if (bErr) {
+                request.setAttribute("ERROR", error);
+            }
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

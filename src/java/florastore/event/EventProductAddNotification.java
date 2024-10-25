@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class EventProductAddNotification implements Serializable {
     private String eventProductAddSuccess;
     private String discountError;
+    private String uploadImgError;
 
     public String getEventProductAddSuccess() {
         return eventProductAddSuccess;
@@ -29,6 +30,14 @@ public class EventProductAddNotification implements Serializable {
 
     public void setDiscountError(String discountError) {
         this.discountError = discountError;
+    }
+
+    public String getUploadImgError() {
+        return uploadImgError;
+    }
+
+    public void setUploadImgError(String uploadImgError) {
+        this.uploadImgError = uploadImgError;
     }
     
     

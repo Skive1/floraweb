@@ -49,6 +49,9 @@ public class UpdateEventServlet extends HttpServlet {
 
         int eventId = Integer.parseInt(eventIdStr);
 
+        String pageParam = request.getParameter("page"); // Get the current page number from the request  
+        int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
+        
         String username = request.getParameter("accountUsername");
 
         try {
@@ -56,7 +59,7 @@ public class UpdateEventServlet extends HttpServlet {
             if (action != null) {
                 dao.cancelEvent(eventId);
             }
-            url = url + "?accountUsername=" + URLEncoder.encode(username, "UTF-8");
+            url = url + "?accountUsername=" + URLEncoder.encode(username, "UTF-8") + "&page=" + currentPage;
         } catch (SQLException ex) {
             log("UpdateEventServlet _SQL_" + ex.getMessage());
         } catch (NamingException ex) {

@@ -9,23 +9,32 @@ import florastore.event.EventDAO;
 import florastore.event.EventProductAddNotification;
 import florastore.event.EventProductDTO;
 import florastore.utils.MyAppConstants;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Admin
  */
 @WebServlet(name = "AddEventProductServlet", urlPatterns = {"/AddEventProductServlet"})
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 5, // 5 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 15 // 15 MB
+)
 public class AddEventProductServlet extends HttpServlet {
 
     /**
@@ -46,6 +55,28 @@ public class AddEventProductServlet extends HttpServlet {
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.AddEventProductFeatures.ADD_EVENT_PRODUCT_PAGE);
 
+        // Đường dẫn thư mục trong project để lưu ảnh
+        Properties properties = new Properties();
+        try (InputStream input = getServletContext().getResourceAsStream("/WEB-INF/config.properties")) {
+            properties.load(input);
+        }
+        String uploadPath = properties.getProperty("eventProductImg.path");
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();  // Tạo thư mục nếu không tồn tại
+        }
+
+        // Lấy file từ form
+        Part filePart = request.getPart("flowerImg");
+        if (filePart == null) {
+            return;
+        }
+
+        String fileName = filePart.getSubmittedFileName();
+
+        // Đường dẫn lưu file trong project
+        String filePath = uploadPath + File.separator + fileName;
+
         // Getting form parameters
         String productName = request.getParameter("name");
         String quantityStr = request.getParameter("quantity");
@@ -55,9 +86,7 @@ public class AddEventProductServlet extends HttpServlet {
         String condition = request.getParameter("condition");
         String type = request.getParameter("type");
         String categoryInfo = request.getParameter("ddlCategory");
-        String imgUrl = request.getParameter("flowerImgUrl");
 
-        log("category info" + categoryInfo);
         // Splitting category info to get categoryId and categoryName
         String[] categoryParts = categoryInfo.split("\\|");
         String categoryIdStr = categoryParts[0];
@@ -76,16 +105,26 @@ public class AddEventProductServlet extends HttpServlet {
         boolean bErr = false;
 
         try {
+            if (filePart.getSize() > 0 && filePart.getContentType().startsWith("image")) {
+                filePart.write(filePath);
+            }
+
             if (discount == price || discount > price) {
                 error.setDiscountError("Discount must be lower than price");
                 bErr = true;
+            } else if (!fileName.endsWith(".png") || !"image/png".equals(filePart.getContentType())) {
+                error.setUploadImgError("Wrong file format. Please upload a PNG image.");
+                bErr = true;
+            } else if (fileName.contains("..")) {
+                error.setUploadImgError("File name must not have scpecial charaters");
+                bErr = true;
             }
 
-            if (bErr) {
+            if (!bErr) {
                 request.setAttribute("ERROR", error);
-            } else {
+
                 // Create a new EventProduct object and save to the database (pseudo code)
-                EventProductDTO newProduct = new EventProductDTO(0, eventId, productName, type, condition, detail, imgUrl, quantity, price - discount, 0);
+                EventProductDTO newProduct = new EventProductDTO(0, eventId, productName, type, condition, detail, fileName, quantity, price - discount, 0);
 
                 // Assuming you have a DAO or service to add the product to the database
                 EventDAO dao = new EventDAO();
@@ -97,11 +136,20 @@ public class AddEventProductServlet extends HttpServlet {
                     request.setAttribute("EVENT_ID", eventId);
                 }
             }
+        } catch (IOException ex) {
+            log("AddEventProductServlet _IO_ " + ex.getMessage());
+            // Handle size limit exceptions thrown by @MultipartConfig
+            error.setUploadImgError("File too large. Please upload a file smaller than 10 MB.");
+            request.setAttribute("ERROR", error);
+            bErr = true;
         } catch (SQLException ex) {
             log("AddEventProductServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
             log("AddEventProductServlet _Naming_ " + ex.getMessage());
         } finally {
+            if (bErr) {
+                request.setAttribute("ERROR", error);
+            }
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

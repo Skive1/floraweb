@@ -65,7 +65,7 @@
                 <div class="admin-content">
                     <div class="admin-content-top">
                         <div class="admin-content-top-left">
-                                    
+
                         </div>
                         <div class="admin-content-top-right">
                             <ul class="flex-box">
@@ -125,7 +125,7 @@
                                                     <a href="viewSellerEventProduct?eventId=${event.eventId}" class="show-class">Xem</a>
                                                 </td>
                                                 <td>
-                                                    <form action="updateEvent?eventId=${event.eventId}&accountUsername=${sessionScope.USER.username}" method="post" style="display:inline;">                                                        
+                                                    <form action="updateEvent?eventId=${event.eventId}&accountUsername=${sessionScope.USER.username}&page=${currentPage}" method="post" style="display:inline;">                                                        
                                                         <button type="submit" name="action" value="cancel" class="delete-class">Hủy</button>
                                                     </form>
                                                 </td>
@@ -133,6 +133,31 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
+                                <div class="col-12">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination d-flex justify-content-center mt-5">
+                                            <c:if test="${currentPage > 1}">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="viewSellerEvent?username=${sessionScope.USER.username}&page=${currentPage - 1}" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                    </a>
+                                                </li>
+                                            </c:if>
+                                            <c:forEach var="i" begin="1" end="${totalPages}">
+                                                <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                                    <a class="page-link" href="viewSellerEvent?username=${sessionScope.USER.username}&page=${i}">${i}</a>
+                                                </li>
+                                            </c:forEach>
+                                            <c:if test="${currentPage < totalPages}">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="viewSellerEvent?username=${sessionScope.USER.username}&page=${currentPage + 1}" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                    </a>
+                                                </li>
+                                            </c:if>
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
                         </div>
                     </div>

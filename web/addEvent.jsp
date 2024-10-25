@@ -40,7 +40,7 @@
                 <div class="admin-content">
                     <div class="admin-content-top">
                         <div class="admin-content-top-left">
-                                      
+
                         </div>
                         <div class="admin-content-top-right">
                             <ul class="flex-box">
@@ -59,7 +59,7 @@
                         </div>
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
-                            <form action="addEventAction" method="POST" accept-charset="UTF-8">
+                            <form action="AddEventServlet" method="POST" enctype="multipart/form-data">
                                 <c:set var="error" value="${requestScope.ERROR}"/>
                                 <c:set var="success" value="${requestScope.SUCCESS_MESSAGE}"/>
                                 <div class="admin-content-main-event-add">
@@ -90,16 +90,16 @@
 
                                     <div class="admin-content-main-content-right">
                                         <div class="admin-content-main-content-right-img">
-                                            <!--                                                    <label for="file">Ảnh sự kiện</label>
-                                                                                                <input id="file" name="eventImg" type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'image-show')">
-                                                                                                <div class="image-show">
-                                                                                                    <img id="event-image-preview" src="" alt="Preview" style="max-width: 100%; display: none;">
-                                                                                                </div>-->
-                                            <label for="eventImgUrl">Ảnh sự kiện</label>
-                                            <input id="eventImgUrl" name="eventImgUrl" type="text" class="form-control" placeholder="Enter image URL">
+                                            <label for="file">Ảnh sự kiện</label>
+                                            <input id="file" name="eventImg" type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'image-show')">
                                             <div class="image-show">
-                                                <img id="event-image-preview" src="" alt="Preview" style="max-width: 70%; display: none;">
+                                                <img id="event-image-preview" src="" alt="Preview" style="max-width: 100%; display: none;">
                                             </div>
+                                            <!--<label for="eventImgUrl">Ảnh sự kiện</label>
+                                                <input id="eventImgUrl" name="eventImgUrl" type="text" class="form-control" placeholder="Enter image URL">
+                                                <div class="image-show">
+                                                    <img id="event-image-preview" src="" alt="Preview" style="max-width: 70%; display: none;">
+                                                </div>-->
                                             <c:if test="${not empty error.uploadImgError}">
                                                 <font color="red">
                                                 ${error.uploadImgError}
@@ -183,34 +183,34 @@
         </script>
 
         <script>
-document.getElementById("eventImgUrl").addEventListener("input", function () {
-    var url = document.getElementById("eventImgUrl").value;
-    var img = document.getElementById("event-image-preview");
-    if (url.match(/^(http|https):\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}(\/[a-zA-Z0-9.-]+)*\/?$/)) {
-        img.src = url;
-        img.style.display = "block";
-    } else {
-        img.src = "";
-        img.style.display = "none";
-    }
-});
-//                                                        function previewImage(event, containerClass) {
-//                                                            const input = event.target;
-//                                                            const file = input.files[0];
-//                                                            if (file) {
-//                                                                const reader = new FileReader();
-//                                                                reader.onload = function (e) {
-//                                                                    // Select the correct preview element based on the input's ID
-//                                                                    const previewElement = containerClass === 'image-show'
-//                                                                            ? document.getElementById('event-image-preview')
-//                                                                            : document.getElementById('product-image-preview');
-//
-//                                                                    previewElement.src = e.target.result; // Set image source to file
-//                                                                    previewElement.style.display = 'block'; // Show the image
-//                                                                };
-//                                                                reader.readAsDataURL(file); // Read the file
-//                                                            }
-//                                                        }
+                                                document.getElementById("eventImgUrl").addEventListener("input", function () {
+                                                    var url = document.getElementById("eventImgUrl").value;
+                                                    var img = document.getElementById("event-image-preview");
+                                                    if (url.match(/^(http|https):\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}(\/[a-zA-Z0-9.-]+)*\/?$/)) {
+                                                        img.src = url;
+                                                        img.style.display = "block";
+                                                    } else {
+                                                        img.src = "";
+                                                        img.style.display = "none";
+                                                    }
+                                                });
+                                                function previewImage(event, containerClass) {
+                                                    const input = event.target;
+                                                    const file = input.files[0];
+                                                    if (file) {
+                                                        const reader = new FileReader();
+                                                        reader.onload = function (e) {
+                                                            // Select the correct preview element based on the input's ID
+                                                            const previewElement = containerClass === 'image-show'
+                                                                    ? document.getElementById('event-image-preview')
+                                                                    : document.getElementById('product-image-preview');
+
+                                                            previewElement.src = e.target.result; // Set image source to file
+                                                            previewElement.style.display = 'block'; // Show the image
+                                                        };
+                                                        reader.readAsDataURL(file); // Read the file
+                                                    }
+                                                }
         </script>
 
     </body>

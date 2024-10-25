@@ -80,7 +80,7 @@ public class UpdateOrderServlet extends HttpServlet {
             // Get total number of remaining orders for the current page after the update
             List<EventOrderDTO> orders = dao.getOrders(username);
             int totalOrders = orders.size();
-            int pageSize = 6; // Same as in your ViewOrderServlet
+            int pageSize = 5; // Same as in your ViewOrderServlet
 
             // If no orders left on the current page, go to the previous page
             if (currentPage > 1 && (currentPage - 1) * pageSize >= totalOrders) {

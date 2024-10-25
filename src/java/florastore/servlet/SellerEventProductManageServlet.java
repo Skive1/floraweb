@@ -6,6 +6,7 @@
 package florastore.servlet;
 
 import florastore.event.EventDAO;
+import florastore.event.EventOrderDTO;
 import florastore.event.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
@@ -49,13 +50,32 @@ public class SellerEventProductManageServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        int id = Integer.parseInt(request.getParameter("eventId"));
+        String idStr = request.getParameter("eventId");
+        int eId = Integer.parseInt(idStr);
 
         try {
             EventDAO dao = new EventDAO();
-            List<EventProductDTO> products = dao.getAvailableEventFlower(id);
+            List<EventProductDTO> products = dao.getAvailableEventFlower(eId);
+            
+            // Paging
+            int pageSize = 5; // Number of orders per page
+            String pageParam = request.getParameter("page"); // Get the current page number from the request
+            int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
+            int totalProducts = products.size();
+            int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 
-            session.setAttribute("EVENT_PRODUCTS", products);
+            // Calculate the starting and ending indexes for the sublist of products to display
+            int start = (currentPage - 1) * pageSize;
+            int end = Math.min(start + pageSize, totalProducts);
+
+            // Get the products for the current page
+            List<EventProductDTO> productsForPage = products.subList(start, end);
+
+            session.setAttribute("EVENT_PRODUCTS", productsForPage);
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("eventId", eId);
+
         } catch (SQLException ex) {
             log("SellerEventProductManageServlet _SQL_" + ex.getMessage());
         } catch (NamingException ex) {

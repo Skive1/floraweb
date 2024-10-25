@@ -6,11 +6,14 @@
 package florastore.servlet;
 
 import florastore.event.EventDAO;
+import florastore.event.EventOrderDTO;
+import florastore.event.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.ServletContext;
@@ -51,13 +54,27 @@ public class UpdateEventProductServlet extends HttpServlet {
 
         String eventIdStr = request.getParameter("eventId");
         int eId = Integer.parseInt(eventIdStr);
+        
+        String pageParam = request.getParameter("page"); // Get the current page number from the request  
+        int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
 
         try {
             EventDAO dao = new EventDAO();
             if (action != null) {
                 dao.updateEPStatus(epId);
             }
-            url = url + "?eventId=" + eId;
+            
+            // Get total number of remaining orders for the current page after the update
+            List<EventProductDTO> products = dao.getAvailableEventFlower(eId);
+            int totalProducts = products.size();
+            int pageSize = 5; // Same as in your ViewOrderServlet
+
+            // If no orders left on the current page, go to the previous page
+            if (currentPage > 1 && (currentPage - 1) * pageSize >= totalProducts) {
+                currentPage--; // Go to previous page if current page is now empty
+            }
+            
+            url = url + "?eventId=" + eId + "&page=" + currentPage;
         } catch (SQLException ex) {
             log("UpdateEventProductServlet _SQL_" + ex.getMessage());
         } catch (NamingException ex) {

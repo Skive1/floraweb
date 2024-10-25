@@ -7,6 +7,7 @@ package florastore.servlet;
 
 import florastore.event.EventDAO;
 import florastore.event.EventDTO;
+import florastore.event.EventOrderDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -54,7 +55,23 @@ public class SellerEventManageServlet extends HttpServlet {
             EventDAO dao = new EventDAO();
             List<EventDTO> events = dao.getEventByAccount(account);
             
-            session.setAttribute("EVENTS", events);
+            // Paging
+            int pageSize = 5; // Number of orders per page
+            String pageParam = request.getParameter("page"); // Get the current page number from the request
+            int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
+            int totalEvents = events.size();
+            int totalPages = (int) Math.ceil((double) totalEvents / pageSize);
+
+            // Calculate the starting and ending indexes for the sublist of products to display
+            int start = (currentPage - 1) * pageSize;
+            int end = Math.min(start + pageSize, totalEvents);
+
+            // Get the products for the current page
+            List<EventDTO> eventsForPage = events.subList(start, end);
+            
+            session.setAttribute("EVENTS", eventsForPage);
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("totalPages", totalPages);
         } catch(SQLException ex) {
             log("SellerEventManageServlet _SQL_" + ex.getMessage());
         } catch(NamingException ex) {

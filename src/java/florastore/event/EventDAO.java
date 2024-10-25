@@ -203,7 +203,7 @@ public class EventDAO implements Serializable {
                 stm.setString(4, dto.getEventCity());
                 stm.setTimestamp(5, dto.getStartDate());
                 stm.setTimestamp(6, dto.getEndDate());
-                stm.setString(7, dto.getEventImg());
+                stm.setString(7, "upload/" + dto.getEventImg());
                 stm.setBoolean(8, dto.isEventStatus());
                 // 4. Execute the update
                 int affectedRows = stm.executeUpdate();
@@ -295,7 +295,7 @@ public class EventDAO implements Serializable {
                 stm.setString(4, dto.getEventProductType());
                 stm.setString(5, dto.getEventProductCondition());
                 stm.setString(6, dto.getEventProductDetail());
-                stm.setString(7, dto.getEventProductImg());
+                stm.setString(7, "upload/" + dto.getEventProductImg());
                 stm.setInt(8, dto.getEventProductQuantity());
                 stm.setDouble(9, dto.getEventProductPrice());
                 // 4. Execute the update
