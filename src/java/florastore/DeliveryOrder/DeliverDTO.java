@@ -11,6 +11,7 @@ public class DeliverDTO {
     private String city;
     private Timestamp orderDate;
     private String paymentOptions;
+    private String deliveryOption;
     private Timestamp deliveryDate;
     private String status;
     private int deliveryStaffId;
@@ -46,7 +47,7 @@ public class DeliverDTO {
 
 
     
-    public DeliverDTO(int eventOrderId, String fullname, String phone, String street, String city, Timestamp deliveryDate, String status, int deliveryStaffId, double amount, boolean isPaid, String note) {
+    public DeliverDTO(int eventOrderId, String fullname, String phone, String street, String city, Timestamp deliveryDate, String status, int deliveryStaffId, double amount, boolean isPaid, String note, String deliveryOption) {
         this.eventOrderId = eventOrderId;
         this.fullname = fullname;
         this.phone = phone;
@@ -58,6 +59,15 @@ public class DeliverDTO {
         this.amount = amount;
         this.isPaid = isPaid;
         this.note = note;
+        this.deliveryOption = deliveryOption;
+    }
+
+    public String getDeliveryOption() {
+        return deliveryOption;
+    }
+
+    public void setDeliveryOption(String deliveryOption) {
+        this.deliveryOption = deliveryOption;
     }
 
     public String getNote() {
