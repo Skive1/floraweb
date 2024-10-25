@@ -7,13 +7,10 @@ package florastore.ManageEvent;
 
 import florastore.event.EventDAO;
 import florastore.event.EventDTO;
-import florastore.eventProduct.EventProductDTO;
 import florastore.searchProduct.ServiceLayer;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
@@ -83,7 +80,8 @@ public class ShowEventServlet extends HttpServlet {
             if (!events.isEmpty()) {
                 List<EventDTO> eventList = service.getSevenEvent(events, range);
                 if (!eventList.isEmpty()) {
-                    request.setAttribute("EVENT_LIST", eventList);
+                    request.setAttribute("Event_List", eventList);
+                    request.setAttribute("Total_Event", eventList.size());
                     url = (String) siteMap.get(MyAppConstants.ManageEvent.VIEW_EVENT_DETAIL);
                 }
             }

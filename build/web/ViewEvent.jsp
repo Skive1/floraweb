@@ -1,7 +1,6 @@
+<!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -15,7 +14,6 @@
         <link rel="stylesheet" href="css/css/jquery-ui.css">
         <link rel="stylesheet" href="css/css/style.css" />
         <link rel="stylesheet" href="css/css/admincss.css" />
-        <link rel="icon" href="img/flora-favicon.png"/>
         <title>View Event</title>
     </head>
     <body>
@@ -30,20 +28,24 @@
                             <li>
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event theo tháng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event theo tuần</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Sản phẩm theo tháng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="weeklyProductBoard">Sản phẩm theo tuần</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="">Product</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="">Event</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="manageAccount">Account</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="viewEvent">Event</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="">Account</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="ShowEventServlet">Event</a></li>
                                 </ul>
                             </li>
-           
+                            <li>
+                                <a href=""><i class="ri-file-list-line"></i>Order<i class="ri-add-circle-line"></i></a>
+                                <ul class="sub-menu">
+                                    <li><a class="ri-arrow-right-s-fill" href="">Order List</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="">Delivery</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
 
@@ -71,7 +73,7 @@
                             <h1>Viewing event product: ${requestScope.EVENT_NAME}</h1>
                         </div>
                         <div class="admin-content-main-content">
-                            <!-- Nội dung ở đây -->
+                            <!-- N?i dung ? ?�y -->
                             <div class="admin-content-main-content-product-list">
                                 <table>
                                     <thead>
@@ -81,7 +83,7 @@
                                     <th>Condition</th>
                                     <th>Detail</th>
                                     <th>Quantity</th>        
-                                    <th>Price per product</th>
+                                    <th>Price</th>
                                     </thead>
                                     <tbody style="height: 100px;">
                                         <c:set var="flowerList" value="${requestScope.FLOWER_LIST}"/>
@@ -97,7 +99,7 @@
                                                         <fmt:formatNumber value="${eventList.eventProductQuantity}" pattern="#,###"/>
                                                     </td>  
                                                     <td>
-                                                        <fmt:formatNumber value="${eventList.eventProductPrice.intValue()}"
+                                                        <fmt:formatNumber value="${eventList.eventProductPrice.intValue() * eventList.eventProductQuantity.intValue()}"
                                                                           pattern="#,###"/>
                                                     </td>  
                                                 </tr>
@@ -107,7 +109,7 @@
                                             <td colspan="5"></td>
                                             <td style="font-weight: 700;">Total:</td>
                                             <td style="font-weight: 700;" >${requestScope.TOTAL}</td> 
-
+                                            
                                         </tr> 
                                     </tbody>
                                     <c:if test="${empty flowerList}">
