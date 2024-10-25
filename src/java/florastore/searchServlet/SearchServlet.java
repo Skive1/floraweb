@@ -46,7 +46,8 @@ public class SearchServlet extends HttpServlet {
         String pageIsActive = request.getParameter("pageNo");
         String goBack = request.getParameter("pageBack");
         String goForward = request.getParameter("pageForward");
-
+        String lastSearchValue = null;
+        
         String paramPriceFrom = request.getParameter("txtPriceFrom");
         String paramPriceTo = request.getParameter("txtPriceTo");
 
@@ -63,14 +64,17 @@ public class SearchServlet extends HttpServlet {
                 session.removeAttribute("INSUFFICIENTSHOP");
             }
         }
-        String lastSearchValue = (String) session.getAttribute("lastSearch");
+        if (session.getAttribute("lastSearch") != null) {
+            lastSearchValue = (String) session.getAttribute("lastSearch");
+        }
+        
         String searchErrorExist = (String) session.getAttribute("errorExist");
 
         String checkPageActive = (String) session.getAttribute("pageIsActive");
         String checkNavbar = (String) session.getAttribute("navbar");
         String checkSearch = (String) session.getAttribute("searchValue");
 
-        try {                                                                   //nhớ tối ưu hóa như cách create error và chech Note
+        try {
             ProductDAO dao = new ProductDAO();
             ServiceLayer service = new ServiceLayer();
             pageIsActive = service.checkPagination(pageIsActive, goBack, goForward); //kiểm tra user có nhấn thanh chuyển trang ko
@@ -102,7 +106,6 @@ public class SearchServlet extends HttpServlet {
             if (navbar != null || searchValue == null) {
                 session.removeAttribute("lastSearch");                          //xóa attribute để không bị nhảy sai
                 dao.searchTotalProduct("", true);               //get total product founded
-
             } else {             //user search → show 9 sản phẩm đầu tiên được tìm thấy
                 session.removeAttribute("lastSearch");                          //xóa attribute ghi lại cái mới (ghi nhiều lần mà ko xóa sẽ gây quá tải)
                 session.setAttribute("lastSearch", searchValue);                //ghi attribute lastSearch với chuỗi lấy được từ search bar

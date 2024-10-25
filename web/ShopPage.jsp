@@ -70,8 +70,8 @@
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
-                            <input type="hidden" name="navbarShop" value="1" id="navbarShop"/>
                             <form method="POST" action="searchAction" id="searchProduct">
+                                <input type="hidden" name="navbarShop" value="1" id="navbarShop"/>
                                 <a href="#" class="nav-item nav-link active"
                                    onclick="document.getElementById('navbarShop'); document.getElementById('searchProduct').submit()">Shop</a>
                             </form>
