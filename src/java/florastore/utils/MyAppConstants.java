@@ -157,6 +157,7 @@ public class MyAppConstants {
         public static final String MONTHLY_EVENT_PAGE = "monthlyEvent";
         public static final String WEEKLY_PRODUCT_PAGE = "weeklyProductBoard";
         public static final String SELLER_DASHBOARD_PAGE = "sellerDashboard";
+        public static final String DELIVERY_DASHBOARD_PAGE = "deliveryBoard";
     }
 
     public class CartAddItemFeatures {
