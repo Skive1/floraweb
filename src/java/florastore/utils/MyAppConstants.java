@@ -65,6 +65,7 @@ public class MyAppConstants {
 
         public static final String DETAIL_PAGE = "productDetailPage";
         public static final String ERROR_PAGE = "error404";
+        public static final String VIEW_CART_PAGE = "cartPage";
     }
 
     public class ShopFeatures {
@@ -163,6 +164,33 @@ public class MyAppConstants {
 
         public static final String SHOP_VIEW = "shoppingAction";
         public static final String VIEW_CART_PAGE = "cartPage";
+        public static final String ERROR_PAGE = "insufficient.html";
+    }
+
+    public class AddEventFeatures {
+
+        public static final String ADD_EVENT_PAGE = "addEventPage";
+        public static final String HOME_PAGE = "home";
+    }
+
+    public class AddEventProductFeatures {
+
+        public static final String ADD_EVENT_PRODUCT_PAGE = "addEventProductPage";
+        public static final String ERROR_PAGE = "error404";
+    }
+
+    public class ViewEventOrderFeatures {
+
+        public static final String ORDER_LIST_PAGE = "orderList";
+        public static final String DELIVERED_LIST_PAGE = "deliveredList";
+        public static final String VIEW_ORDER_LIST = "viewOrderAction";
+    }
+
+    public class SellerManagementFeatures{
+        public static final String EVENT_LIST = "sellerManageEventPage";
+        public static final String VIEW_EVENT_LIST = "viewSellerEvent";
+        public static final String PRODUCT_LIST = "sellerManageEventProductPage";
+        public static final String VIEW_EVENT_PRODUCT = "viewSellerEventProduct";
         public static final String ERROR_PAGE = "productDetail";
     }
 

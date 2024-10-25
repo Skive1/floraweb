@@ -1,11 +1,10 @@
-
 package florastore.event;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class EventDTO implements Serializable{
-    
+public class EventDTO implements Serializable {
+
     private String eventOwner;
     private int eventId;
     private String eventName;
@@ -17,6 +16,18 @@ public class EventDTO implements Serializable{
     private boolean eventStatus;
 
     public EventDTO() {
+    }
+
+    public EventDTO(String eventOwner, int eventId, String eventName, String eventLocation, String eventCity, Timestamp startDate, Timestamp endDate, String eventImg, boolean eventStatus) {
+        this.eventOwner = eventOwner;
+        this.eventId = eventId;
+        this.eventName = eventName;
+        this.eventLocation = eventLocation;
+        this.eventCity = eventCity;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.eventImg = eventImg;
+        this.eventStatus = eventStatus;
     }
 
     public EventDTO(String eventOwner, int eventId, String eventName, String eventLocation, String eventCity, Timestamp startDate, Timestamp endDate, String eventImg) {
@@ -155,7 +166,5 @@ public class EventDTO implements Serializable{
     public void setEventStatus(boolean eventStatus) {
         this.eventStatus = eventStatus;
     }
-    
-    
-    
+
 }
