@@ -34,7 +34,7 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
-
+        <link href="css/indicator.css" rel="stylesheet">
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
         <link rel="stylesheet" href="alertPackage/alertCss.css">
@@ -48,12 +48,30 @@
                 pointer-events: none;                /* Ngăn thay đổi */
                 cursor: none;
             }
+            .non-order{
+                background-image: url(https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/cart/9bdd8040b334d31946f4.png);
+                background-position: 50%;
+                background-repeat: no-repeat;
+                background-size: contain;
+                height: 100px;
+                width: 100px
+
+            }
+            .background-img{
+                display: flex;
+                height: 400px;
+                text-align: center;
+                flex-direction: column;
+                align-content: center;
+                justify-content: center;
+                align-items: center;
+            }
         </style>
     </head>
 
     <body>
 
-       <!-- Spinner Start -->
+        <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-third" role="status"></div>
         </div>
@@ -85,7 +103,7 @@
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link active">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
-                            <a href="searchAction" class="nav-item nav-link">Shop</a>
+                            <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
@@ -93,7 +111,6 @@
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
-                                    <a href="viewEvent" class="nav-item nav-link">Manage System</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
@@ -102,16 +119,22 @@
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
                                     <a href="showStoreName" class="nav-item nav-link">Manage Shop</a>
+                                    <a href="showEventId" class="nav-item nav-link">DashBoard</a>
                                 </c:if>
                             </c:if>
 
                         </div>
                         <div class="d-flex align-items-center justify-content-center m-3 me-0">
-                            <button class="btn-search btn bg-white" data-bs-toggle="modal" data-bs-target="#searchModal" style="padding-top: 10px">
-                                <i class="fa-solid fa-2x fa-bell"  style="color: #81c408"></i>
-                            </button>
-
                             <c:if test="${empty sessionScope.USER}">
+                                <div style="position: relative">
+                                    <div id="bell">
+                                        <a href="loginPage">
+                                            <button style="border: none; background-color:white; color: white; padding-top:10px; cursor: pointer;">
+                                                <i class="fa-solid fa-2x fa-bell" style="color: #81c408"></i>
+                                            </button>
+                                        </a>   
+                                    </div>
+                                </div>
                                 <a href="loginPage" class="position-relative" style="margin-right: 20px; margin-left: 12px;">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                 </a>
@@ -120,8 +143,20 @@
                                 </a>
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
+                                <div style="position: relative">
+                                    <div id="bell">
+                                        <button id="notifyButton"style="border: none; background-color:white; color: white; padding-top:10px; cursor: pointer;">
+                                            <i class="fa-solid fa-2x fa-bell" style="color: #81c408"></i>
+                                            <span id="newProductIndicator" class="new-product-indicator" style="display: none;"></span>
+                                        </button>
+                                    </div>
+                                    <div id="notificationBox" class="notification-box" style="display: none; position: absolute; background-color: white; border: 1px solid #ddd; padding: 10px; width: 300px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);">
+
+                                    </div>
+                                </div>
+
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center" style="padding-right: 0px">
                                         <i class="fa fa-shopping-bag fa-2x"></i>
                                         <c:if test="${sessionScope.PENDING_EITEMS != 0 || sessionScope.PENDING_ITEMS != 0}">
                                             <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 4px; left: 39px; height: 10px; min-width: 10px;"></span>
@@ -140,7 +175,7 @@
                                 </div>
 
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
@@ -151,7 +186,6 @@
                 </nav>
             </div>
         </div>
-
         <!-- Navbar End -->
 
 
@@ -267,50 +301,52 @@
                         </c:forEach>
                     </c:if>
                     <c:if test="${empty cart || empty cart.items}">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <h3>Your cart is empty</h3>
+                        <div class="background-img">
+                            <div class="non-order"></div>
+                            <h5 style="text-align: center">Giỏ hàng của bạn đang trống</h5>
                         </div>
-
                     </c:if>
                 </div>
-                <div class="mt-5">
-                    <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code" <c:if test="${empty cart || empty cart.items}">readonly=""</c:if>>
-                    <button class="btn border-secondary rounded-pill px-4 py-3 text-third" type="button" <c:if test="${empty cart || empty cart.items}">disabled="disabled"</c:if>>Apply Coupon</button>
-                    </div>
-                    <div class="row g-4 justify-content-end">
-                        <div class="col-8"></div>
-                        <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                            <form action="shopCheckout" method="POST">
-                                <div class="bg-light rounded">
-                                    <div class="p-4">
-                                        <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
-                                        <div class="d-flex justify-content-between mb-4">
-                                            <h5 class="mb-0 me-4">Tổng tiền hàng:</h5>
-                                            <p class="mb-0"><c:if test="${not empty cart || not empty cart.items}"><fmt:formatNumber value="${sessionScope.TOTAL}" type="number" groupingUsed="true"/>đ</c:if></p>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <h5 class="mb-0 me-4">Discount:</h5>
-                                            <div class="">
-                                                <p class="mb-0"></p>
+                <c:if test="${not empty cart && not empty cart.items}">
+                    <div class="mt-5">
+                        <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code" <c:if test="${empty cart || empty cart.items}">readonly=""</c:if>>
+                        <button class="btn border-secondary rounded-pill px-4 py-3 text-third" type="button" <c:if test="${empty cart || empty cart.items}">disabled="disabled"</c:if>>Apply Coupon</button>
+                        </div>
+                        <div class="row g-4 justify-content-end">
+                            <div class="col-8"></div>
+                            <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
+                                <form action="shopCheckout" method="POST">
+                                    <div class="bg-light rounded">
+                                        <div class="p-4">
+                                            <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
+                                            <div class="d-flex justify-content-between mb-4">
+                                                <h5 class="mb-0 me-4">Tổng tiền hàng:</h5>
+                                                <p class="mb-0"><c:if test="${not empty cart || not empty cart.items}"><fmt:formatNumber value="${sessionScope.TOTAL}" type="number" groupingUsed="true"/>đ</c:if></p>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <h5 class="mb-0 me-4">Discount:</h5>
+                                                <div class="">
+                                                    <p class="mb-0"></p>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                                            <h5 class="mb-0 ps-4 me-4">Tổng thanh toán:</h5>
+                                            <p class="mb-0 pe-4"><c:if test="${not empty cart || not empty cart.items}"><fmt:formatNumber value="${sessionScope.TOTAL}" type="number" groupingUsed="true"/>đ</c:if></p>
+                                        <input type="hidden" name="totalShop" value="${sessionScope.TOTAL}"/>
                                     </div>
-                                    <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                                        <h5 class="mb-0 ps-4 me-4">Tổng thanh toán:</h5>
-                                        <p class="mb-0 pe-4"><c:if test="${not empty cart || not empty cart.items}"><fmt:formatNumber value="${sessionScope.TOTAL}" type="number" groupingUsed="true"/>đ</c:if></p>
-                                    <input type="hidden" name="totalShop" value="${sessionScope.TOTAL}"/>
-                                </div>
-                                <button class="btn border-secondary rounded-pill px-4 py-3 text-third text-uppercase mb-4 ms-4" type="submit" <c:if test="${empty cart || empty cart.items}">disabled="disabled"</c:if>>Mua Hàng</button>
-                                </div>
-                            </form>
+                                    <button class="btn border-secondary rounded-pill px-4 py-3 text-third text-uppercase mb-4 ms-4" type="submit" <c:if test="${empty cart || empty cart.items}">disabled="disabled"</c:if>>Mua Hàng</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                </c:if>
             </div>
-            <!-- Cart Page End -->
+        </div>
+        <!-- Cart Page End -->
 
 
-            <!-- Footer Start -->
+        <!-- Footer Start -->
         <jsp:include page="footer.jsp"></jsp:include>
             <!-- Footer End -->
 
@@ -355,6 +391,7 @@
 
         <!-- Template Javascript -->
         <script src="alertPackage/alertJs.js"></script>
+        <script src="js/newProduct.js"></script>
         <script src="js/notification.js"></script>
         <script src="js/main.js"></script>
     </body>

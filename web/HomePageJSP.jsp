@@ -34,17 +34,12 @@
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/snackbar.css">
-
+        <link href="css/editbutton.css" rel="stylesheet">
+        <link href="css/indicator.css" rel="stylesheet">
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
-        <style>
-            .btn-search:hover {
-                background-color: #f0f0f0; /* Màu nền khi hover */
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng khi hover */
-            }
-        </style>
     </head>
 
     <body>
@@ -104,11 +99,16 @@
 
                         </div>
                         <div class="d-flex align-items-center justify-content-center m-3 me-0">
-                            <button class="btn-search btn bg-white" data-bs-toggle="modal" data-bs-target="#searchModal" style="padding-top: 10px">
-                                <i class="fa-solid fa-2x fa-bell"  style="color: #81c408"></i>
-                            </button>
-
                             <c:if test="${empty sessionScope.USER}">
+                                <div style="position: relative">
+                                    <div id="bell">
+                                        <a href="loginPage">
+                                            <button style="border: none; background-color:white; color: white; padding-top:10px; cursor: pointer;">
+                                                <i class="fa-solid fa-2x fa-bell" style="color: #81c408"></i>
+                                            </button>
+                                        </a>   
+                                    </div>
+                                </div>
                                 <a href="loginPage" class="position-relative" style="margin-right: 20px; margin-left: 12px;">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                 </a>
@@ -117,8 +117,20 @@
                                 </a>
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
+                                <div style="position: relative">
+                                    <div id="bell">
+                                        <button id="notifyButton"style="border: none; background-color:white; color: white; padding-top:10px; cursor: pointer;">
+                                            <i class="fa-solid fa-2x fa-bell" style="color: #81c408"></i>
+                                            <span id="newProductIndicator" class="new-product-indicator" style="display: none;"></span>
+                                        </button>
+                                    </div>
+                                    <div id="notificationBox" class="notification-box" style="display: none; position: absolute; background-color: white; border: 1px solid #ddd; padding: 10px; width: 300px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);">
+
+                                    </div>
+                                </div>
+
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center" style="padding-right: 0px">
                                         <i class="fa fa-shopping-bag fa-2x"></i>
                                         <c:if test="${sessionScope.PENDING_EITEMS != 0 || sessionScope.PENDING_ITEMS != 0}">
                                             <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 4px; left: 39px; height: 10px; min-width: 10px;"></span>
@@ -137,7 +149,7 @@
                                 </div>
 
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
@@ -298,7 +310,7 @@
                                                         <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                             <c:url var="urlRewriting" value="flowerDetail">
                                                                 <c:param name="productId" value="${flower.eventProductId}"/>
-                                                                <c:param name="eventId" value="${flower.eventId}"/>
+                                                                <c:param name="eventId" value="${flower.eventEventId}"/>
                                                             </c:url>
                                                             <a href="${urlRewriting}">
                                                                 <h4>${flower.eventProductName}</h4>
@@ -306,7 +318,7 @@
                                                             <p>${flower.eventProductDetail}</p>
                                                             <!-- Hidden inputs to pass product details to the servlet -->
                                                             <input type="hidden" name="productId" value="${flower.eventProductId}">
-                                                            <input type="hidden" name="eventId" value="${flower.eventId}">
+                                                            <input type="hidden" name="eventId" value="${flower.eventEventId}">
                                                             <input type="hidden" name="imageURL" value="${flower.eventProductImg}">
                                                             <input type="hidden" name="productName" value="${flower.eventProductName}">
                                                             <input type="hidden" name="productPrice" value="${flower.eventProductPrice}">
@@ -398,7 +410,7 @@
                                 <div class="p-4 rounded-bottom">
                                     <c:url var="urlRewriting" value="flowerDetail">
                                         <c:param name="productId" value="${flower.eventProductId}"/>
-                                        <c:param name="eventId" value="${flower.eventId}"/>
+                                        <c:param name="eventId" value="${flower.eventEventId}"/>
                                     </c:url>
                                     <a href="${urlRewriting}">
                                         <h4>${flower.eventProductName}</h4>
@@ -406,7 +418,7 @@
                                     <p>${flower.eventProductDetail}</p>
                                     <!-- Hidden inputs to pass product details to the servlet -->
                                     <input type="hidden" name="productId" value="${flower.eventProductId}">
-                                    <input type="hidden" name="eventId" value="${flower.eventId}">
+                                    <input type="hidden" name="eventId" value="${flower.eventEventId}">
                                     <input type="hidden" name="imageURL" value="${flower.eventProductImg}">
                                     <input type="hidden" name="productName" value="${flower.eventProductName}">
                                     <input type="hidden" name="productPrice" value="${flower.eventProductPrice}">
@@ -442,7 +454,7 @@
                             <p class="mb-4 text-dark display-6">Type: ${flower.eventProductType}</p>
                             <c:url var="urlRewriting" value="flowerDetail">
                                 <c:param name="productId" value="${flower.eventProductId}"/>
-                                <c:param name="eventId" value="${flower.eventId}"/>
+                                <c:param name="eventId" value="${flower.eventEventId}"/>
                             </c:url>
                             <a href="${urlRewriting}" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">View</a>
                         </div>
@@ -631,7 +643,6 @@
         <!-- Copyright End -->
 
 
-
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
 
@@ -648,6 +659,7 @@
         <!-- Template Javascript -->
         <script src="js/notification.js"></script>
         <script src="js/main.js"></script>
+        <script src="js/newProduct.js"></script>
     </body>
 
 </html>

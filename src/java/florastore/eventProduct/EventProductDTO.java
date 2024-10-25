@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author ADMIN
  */
 public class EventProductDTO implements Serializable {
+
     private int eventEventId;
     private int eventProductId;
     private String eventProductName;
@@ -21,7 +22,6 @@ public class EventProductDTO implements Serializable {
     private String eventProductImg;
     private int eventProductQuantity;
     private double eventProductPrice;
-    private int eventId;
 
     public EventProductDTO() {
     }
@@ -51,26 +51,6 @@ public class EventProductDTO implements Serializable {
         this.eventProductImg = eventProductImg;
         this.eventProductQuantity = eventProductQuantity;
         this.eventProductPrice = eventProductPrice;
-    }
-
-    public EventProductDTO(int eventProductId, String eventProductName, String eventProductType, String eventProductCondition, String eventProductDetail, String eventProductImg, int eventProductQuantity, double eventProductPrice, int eventId) {
-        this.eventProductId = eventProductId;
-        this.eventProductName = eventProductName;
-        this.eventProductType = eventProductType;
-        this.eventProductCondition = eventProductCondition;
-        this.eventProductDetail = eventProductDetail;
-        this.eventProductImg = eventProductImg;
-        this.eventProductQuantity = eventProductQuantity;
-        this.eventProductPrice = eventProductPrice;
-        this.eventId = eventId;
-    }
-  
-    public int getEventEventId() {
-        return eventEventId;
-    }
-
-    public void setEventEventId(int eventEventId) {
-        this.eventEventId = eventEventId;
     }
 
     /**
@@ -186,17 +166,17 @@ public class EventProductDTO implements Serializable {
     }
 
     /**
-     * @return the eventId
+     * @return the eventEventId
      */
-    public int getEventId() {
-        return eventId;
+    public int getEventEventId() {
+        return eventEventId;
     }
 
     /**
-     * @param eventId the eventId to set
+     * @param eventEventId the eventEventId to set
      */
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
+    public void setEventEventId(int eventEventId) {
+        this.eventEventId = eventEventId;
     }
 
 }

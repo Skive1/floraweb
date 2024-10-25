@@ -8,17 +8,17 @@ and open the template in the editor.
     Author     : ADMIN
 */
 .edit-button {
-    background-color: transparent; /* Clear background */
-    border: none; /* Outline color */
-    color: #337bb5; /* Icon color */
-    padding: 5px 10px; /* Add padding for a better look */
-    border-radius: 4px; /* Optional: rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
+    background-color: transparent;
+    border: none;
+    color: #337bb5;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
     padding: 0 0 0 0;
 }
 
 .edit-button:hover {
-    color: #0056b3; /* Darker color on hover */
+    color: #0056b3;
 }
 
 .cart{
@@ -27,4 +27,7 @@ and open the template in the editor.
 }
 .radio-shipping{
     padding: 17px;
+}
+.bellButton:hover{
+    color:#517b05;
 }

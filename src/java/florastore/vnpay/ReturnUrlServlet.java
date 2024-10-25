@@ -7,11 +7,14 @@ package florastore.vnpay;
 
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,12 +40,15 @@ public class ReturnUrlServlet extends HttpServlet {
         // Nhận các thông tin phản hồi từ VNPay
         String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
         double totalAmount = Double.parseDouble(request.getParameter("vnp_Amount")) / 100;
+        String vnp_TxnRef = request.getParameter("vnp_TxnRef");
         String total = String.valueOf(totalAmount);
+        String query = "responseCode=00&totalamount=" + total + "&vnp_TxnRef=" + vnp_TxnRef + "&status=paid";
+        String encodedQuery = Base64.getEncoder().encodeToString(query.getBytes(StandardCharsets.UTF_8));
         // Kiểm tra mã phản hồi
         if ("00".equals(vnp_ResponseCode)) {
             // Thanh toán thành công, xử lý lưu đơn hàng
             // Chuyển hướng đến trang xác nhận đơn hàng
-            response.sendRedirect(url + "?responseCode=00" + "&totalamount=" + total + "&status=paid");
+            response.sendRedirect(url + "?data=" + encodedQuery);
         } else {
             url = MyAppConstants.PlaceOrderFeatures.CHECKOUT_FAIL;
             // Thanh toán thất bại, chuyển hướng đến trang checkout

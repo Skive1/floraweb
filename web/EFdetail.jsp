@@ -37,6 +37,7 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/indicator.css" rel="stylesheet">
         <link rel="stylesheet" href="alertPackage/alertCss.css">
         <link rel="stylesheet" href="css/snackbar.css">
         <!-- FavIcon -->
@@ -94,17 +95,16 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link ">Home</a>
+                            <a href="home" class="nav-item nav-link active">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
-                            <a href="searchAction" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link active">Event</a>
+                            <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
+                            <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
                                 <!--                Manager Session-->
                                 <c:if test="${sessionScope.USER.role == 'Admin'}">
                                     <a href="monthlyBoard" class="nav-item nav-link">DashBoard</a>
-                                    <a href="viewEvent" class="nav-item nav-link">Manage System</a>
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
@@ -113,16 +113,22 @@
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
                                     <a href="showStoreName" class="nav-item nav-link">Manage Shop</a>
+                                    <a href="showEventId" class="nav-item nav-link">DashBoard</a>
                                 </c:if>
                             </c:if>
 
                         </div>
                         <div class="d-flex align-items-center justify-content-center m-3 me-0">
-                            <button class="btn-search btn bg-white" data-bs-toggle="modal" data-bs-target="#searchModal" style="padding-top: 10px">
-                                <i class="fa-solid fa-2x fa-bell"  style="color: #81c408"></i>
-                            </button>
-
                             <c:if test="${empty sessionScope.USER}">
+                                <div style="position: relative">
+                                    <div id="bell">
+                                        <a href="loginPage">
+                                            <button style="border: none; background-color:white; color: white; padding-top:10px; cursor: pointer;">
+                                                <i class="fa-solid fa-2x fa-bell" style="color: #81c408"></i>
+                                            </button>
+                                        </a>   
+                                    </div>
+                                </div>
                                 <a href="loginPage" class="position-relative" style="margin-right: 20px; margin-left: 12px;">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                 </a>
@@ -131,8 +137,20 @@
                                 </a>
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
+                                <div style="position: relative">
+                                    <div id="bell">
+                                        <button id="notifyButton"style="border: none; background-color:white; color: white; padding-top:10px; cursor: pointer;">
+                                            <i class="fa-solid fa-2x fa-bell" style="color: #81c408"></i>
+                                            <span id="newProductIndicator" class="new-product-indicator" style="display: none;"></span>
+                                        </button>
+                                    </div>
+                                    <div id="notificationBox" class="notification-box" style="display: none; position: absolute; background-color: white; border: 1px solid #ddd; padding: 10px; width: 300px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);">
+
+                                    </div>
+                                </div>
+
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center" style="padding-right: 0px">
                                         <i class="fa fa-shopping-bag fa-2x"></i>
                                         <c:if test="${sessionScope.PENDING_EITEMS != 0 || sessionScope.PENDING_ITEMS != 0}">
                                             <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 4px; left: 39px; height: 10px; min-width: 10px;"></span>
@@ -151,7 +169,7 @@
                                 </div>
 
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
@@ -162,9 +180,7 @@
                 </nav>
             </div>
         </div>
-
         <!-- Navbar End -->
-
 
         <!-- Modal Search Start -->
         <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -209,7 +225,7 @@
                             <c:set var="detail" value="${requestScope.EPRODUCT_DETAIL}"/>
                             <div class="col-lg-6">
                                 <div class="border rounded">
-                                    <img src="${detail.eventProductImg}" class="img-fluid rounded" alt="Image">
+                                    <img src="${detail.eventProductImg}" class="img-fluid rounded" alt="Image" style="width: 471px;height: 536px">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -461,6 +477,7 @@
         <script src="js/notification.js"></script>
         <script src="alertPackage/alertJs.js"></script>
         <script src="js/main.js"></script>
+        <script src="js/newProduct.js"></script>
     </body>
 
 </html>

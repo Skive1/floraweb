@@ -1,0 +1,54 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 26, 2024, 1:46:38 AM
+    Author     : ADMIN
+*/
+
+.new-product-indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 12px;  /* Đường kính của dấu chấm */
+    height: 12px; /* Đường kính của dấu chấm */
+    background-color: orange; /* Màu cam */
+    border-radius: 50%; /* Tạo hình tròn */
+    display: none; /* Ẩn mặc định */
+}
+.notification-box {
+    display: none; 
+    top: 50px; 
+    right: -116px;
+    width: 300px;
+    max-height: 400px;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    overflow-y: auto;
+    z-index: 9999; 
+}
+.notification-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+#bell button:hover {
+    transform: scale(1.05); 
+}
+#bell button i:hover {
+    color: #517b05; 
+}
+.notification-item a {
+    color: black;         /* Đặt màu chữ thành đen */
+    text-decoration: none; /* Bỏ gạch chân cho thẻ <a> */
+}
+
+a .notification-item  strong,
+a .notification-item  p,
+a .notification-item  small {
+    color: black;         /* Đặt màu chữ bên trong thẻ <a> thành đen */
+    text-decoration: none; /* Bỏ gạch chân cho các phần tử bên trong */
+}
