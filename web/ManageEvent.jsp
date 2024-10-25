@@ -32,10 +32,11 @@
                         <ul>
                             <li>
                                 <a href="" style="color: #131EAD"><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
-
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="dashBoard" style="color: #131EAD">Theo tuần</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard" style="color: #131EAD">Theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event theo tuần</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Sản phẩm theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyProductBoard">Sản phẩm theo tuần</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -45,13 +46,7 @@
                                     <li><a class="ri-arrow-right-s-fill" href="viewEvent" style="color: #131EAD">Event</a></li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href="" style="color: #131EAD"><i class="ri-file-list-line"></i>Order<i class="ri-add-circle-line"></i></a>
-                                <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="productList.html" style="color: #131EAD">Danh sách đơn hàng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="" style="color: #131EAD">Delivery</a></li>
-                                </ul>
-                            </li>
+
                         </ul>
                     </div>
                 </div>

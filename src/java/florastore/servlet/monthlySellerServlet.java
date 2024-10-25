@@ -23,6 +23,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -63,12 +64,13 @@ public class monthlySellerServlet extends HttpServlet {
         } else {
             year = Integer.parseInt(yearStr);
         }
+        HttpSession session = request.getSession(false);      
         try {
 
             EventSellerDAO dao = new EventSellerDAO();
             dao.loadTop5AmountByMonth(month, year, id);
             ArrayList<EventSellerRevenueDTO> list = dao.getListEventRevenue();
-            if (id != null && !id.isEmpty()) {
+            if (session.getAttribute("ListEventId") != null) {
             request.setAttribute("pro1", list.get(0));
             request.setAttribute("pro2", list.get(1));
             request.setAttribute("pro3", list.get(2));
@@ -79,7 +81,6 @@ public class monthlySellerServlet extends HttpServlet {
             }
             else{
                url = (String) siteMap.get(MyAppConstants.ManageAccountFeatures.ERROR_PAGE);
-
             }
         } catch (SQLException ex) {
             String msg = ex.getMessage();
