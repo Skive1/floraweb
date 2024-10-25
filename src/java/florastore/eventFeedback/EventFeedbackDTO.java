@@ -17,6 +17,7 @@ public class EventFeedbackDTO implements Serializable {
     private String feedback;
     private int eventOrderId;
     private int feedbackId;
+    private String fullname;
 
     public EventFeedbackDTO() {
     }
@@ -26,6 +27,14 @@ public class EventFeedbackDTO implements Serializable {
         this.feedback = feedback;
         this.eventOrderId = eventOrderId;
         this.feedbackId = feedbackId;
+    }
+
+    public EventFeedbackDTO(String username, String feedback, int eventOrderId, int feedbackId, String fullname) {
+        this.username = username;
+        this.feedback = feedback;
+        this.eventOrderId = eventOrderId;
+        this.feedbackId = feedbackId;
+        this.fullname = fullname;
     }
 
     /**
@@ -82,6 +91,20 @@ public class EventFeedbackDTO implements Serializable {
      */
     public void setFeedbackId(int feedbackId) {
         this.feedbackId = feedbackId;
+    }
+
+    /**
+     * @return the fullname
+     */
+    public String getFullname() {
+        return fullname;
+    }
+
+    /**
+     * @param fullname the fullname to set
+     */
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
 }

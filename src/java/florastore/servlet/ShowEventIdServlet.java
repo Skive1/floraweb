@@ -48,25 +48,33 @@ public class ShowEventIdServlet extends HttpServlet {
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ShowProductManager.ERROR_PAGE);
         HttpSession session = request.getSession(false);
-        AccountDTO dto = (AccountDTO) session.getAttribute("USER");
-        String username = dto.getUsername();
+
         try {
-            if(dto.getUsername() != null){
-            EventSellerDAO dao = new EventSellerDAO();
-            dao.loadListEventIdByUsername(username);
-            ArrayList<EventSellerDTO> listEventIds = dao.getListEventId();
-            session.setAttribute("ListEventId", listEventIds);
-            url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.SELLER_DASHBOARD_PAGE);
+            if (session != null) {
+                AccountDTO dto = (AccountDTO) session.getAttribute("USER");
+                String username = dto.getUsername();
+                if ("Seller".equals(dto.getRole())) {
+                    EventSellerDAO dao = new EventSellerDAO();
+                    dao.loadListEventIdByUsername(username);
+                    ArrayList<EventSellerDTO> listEventIds = dao.getListEventId();
+                    session.setAttribute("ListEventId", listEventIds);
+                    url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.SELLER_DASHBOARD_PAGE);
+                }
+            } else if (session == null) {
+                url = MyAppConstants.ShowProductManager.SESSION_PAGE;
+                response.sendRedirect(url);
             }
         } catch (SQLException ex) {
             String msg = ex.getMessage();
             log("ShowEventIdServlet _ SQL: " + msg);
         } catch (NamingException ex) {
             String msg = ex.getMessage();
-            log("ShowEventIdServlet _ SQL: " + msg);
+            log("ShowEventIdServlet _ Naming: " + msg);
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            if (!response.isCommitted()) {
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            }
         }
     }
 

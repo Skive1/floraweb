@@ -150,4 +150,109 @@ public class EventFeedbackDAO implements Serializable {
         return feedbacks;
     }
 
+    public List<EventFeedbackDTO> getNumberOfFeedback(String username)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<EventFeedbackDTO> feedbacks = new ArrayList<>();
+
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "Select efb.FeedbackId, efb.EventOrderId, eo.Fullname, efb.Status "
+                        + "From EventFeedback efb "
+                        + "join EventOrder eo on efb.EventOrderId = eo.EventOrderId "
+                        + "join [Event] e on eo.EventId = e.EventId "
+                        + "Where e.AccountUsername = ? "
+                        + "Order by efb.EventOrderId";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    int feedbackId = rs.getInt("FeedbackId");
+                    String fullname = rs.getString("Fullname");
+                    int eventOrderId = rs.getInt("EventOrderId");
+                    String feedbackComment = rs.getString("Status");
+
+                    EventFeedbackDTO feedback
+                            = new EventFeedbackDTO(username, feedbackComment, eventOrderId, feedbackId, fullname);
+                    feedbacks.add(feedback);
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return feedbacks;
+    }
+
+    public List<EventFeedbackDTO> getListFeedback(String username, int page)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<EventFeedbackDTO> feedbacks = new ArrayList<>();
+
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "Select efb.FeedbackId, efb.EventOrderId, eo.Fullname, efb.Status "
+                        + "From EventFeedback efb "
+                        + "join EventOrder eo on efb.EventOrderId = eo.EventOrderId "
+                        + "join [Event] e on eo.EventId = e.EventId " 
+                        + "Where e.AccountUsername = ? "
+                        + "Order by efb.EventOrderId "
+                        + "OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                stm.setInt(2, (page - 1) * 10);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    int feedbackId = rs.getInt("FeedbackId");
+                    String fullname = rs.getString("Fullname");
+                    int eventOrderId = rs.getInt("EventOrderId");
+                    String feedbackComment = rs.getString("Status");
+
+                    EventFeedbackDTO feedback
+                            = new EventFeedbackDTO(username, feedbackComment, eventOrderId, feedbackId, fullname);
+                    feedbacks.add(feedback);
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return feedbacks;
+    }
 }

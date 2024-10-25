@@ -6,13 +6,12 @@
 package florastore.servlet;
 
 import florastore.account.AccountDTO;
-import florastore.revenue.EventSellerDAO;
-import florastore.revenue.EventSellerRevenueDTO;
+import florastore.eventFeedback.EventFeedbackDAO;
+import florastore.eventFeedback.EventFeedbackDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
@@ -27,10 +26,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author acer
+ * @author ADMIN
  */
-@WebServlet(name = "monthlySellerServlet", urlPatterns = {"/monthlySellerServlet"})
-public class monthlySellerServlet extends HttpServlet {
+@WebServlet(name = "ViewFeebacksServlet", urlPatterns = {"/ViewFeebacksServlet"})
+public class ViewFeebacksServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,57 +43,48 @@ public class monthlySellerServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.ERROR_PAGE);
-        String id = request.getParameter("eventInfo");
-        String monthStr = request.getParameter("month");
-        String yearStr = request.getParameter("year");
-        int month;
-        int year;
-        if (monthStr == null || monthStr.isEmpty()) {
-            month = 10;
-        } else {
-            month = Integer.parseInt(monthStr);
+        String url = (String) siteMap.get(MyAppConstants.SellerViewEventFeedbackFeatures.VIEW_FEEDBACK);
+        String username = null;
+        //1. Get page of list
+        String indexPage = request.getParameter("page");
+        if (indexPage == null) {
+            indexPage = "1";
         }
-
-        if (yearStr == null || yearStr.isEmpty()) {
-            year = 2024;
-        } else {
-            year = Integer.parseInt(yearStr);
-        }
+        int page = Integer.parseInt(indexPage);
         HttpSession session = request.getSession(false);
-        AccountDTO dto = null;
+        if (session == null) {
+            url = MyAppConstants.SellerViewEventFeedbackFeatures.SESSION_PAGE;
+            response.sendRedirect(url);
+        }
         try {
             if (session != null) {
-                dto = (AccountDTO) session.getAttribute("USER");
-                if ("Seller".equals(dto.getRole())) {
-                    EventSellerDAO dao = new EventSellerDAO();
-                    dao.loadTop5AmountByMonth(month, year, id);
-                    ArrayList<EventSellerRevenueDTO> list = dao.getListEventRevenue();
-                    if (session.getAttribute("ListEventId") != null) {
-                        url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.SELLER_DASHBOARD_PAGE);
-                        request.setAttribute("pro1", list.get(0));
-                        request.setAttribute("pro2", list.get(1));
-                        request.setAttribute("pro3", list.get(2));
-                        request.setAttribute("pro4", list.get(3));
-                        request.setAttribute("pro5", list.get(4));
-                        request.setAttribute("MonthList", list);
-                        request.setAttribute("curMonth", month);
-                    } else {
-                        url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.ERROR_PAGE);
+                username = (String) session.getAttribute("USERNAME");
+                AccountDTO userInfo = (AccountDTO) session.getAttribute("USER");
+                if (!"Seller".equals(userInfo.getRole())) {
+                    url = (String) siteMap.get(MyAppConstants.SellerViewEventFeedbackFeatures.ERROR_PAGE);
+                } else if ("Seller".equals(userInfo.getRole())) {
+                    //Call dao/model
+                    EventFeedbackDAO dao = new EventFeedbackDAO();
+                    List<EventFeedbackDTO> listAll = dao.getNumberOfFeedback(username);
+                    int count = listAll.size();
+                    int endPage = count / 10;
+                    if (count % 10 != 0) {
+                        endPage++;
                     }
+                    List<EventFeedbackDTO> listFeeback = dao.getListFeedback(username, page);
+                    request.setAttribute("FEEDBACK_LIST", listFeeback);
+                    request.setAttribute("TOTAL_FEEDBACK", count);
+                    request.setAttribute("END_PAGE", endPage);
+                    request.setAttribute("FEEDBACK_PER_PAGE", listFeeback.size());
                 }
-            } else if (session == null) {
-                url = MyAppConstants.DashBoardFeatures.SESSION_PAGE;
-                response.sendRedirect(url);
             }
         } catch (SQLException ex) {
-            String msg = ex.getMessage();
-            log("MonthlySellerServlet _ SQL: " + msg);
+            log("ViewFeebacksServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
-            String msg = ex.getMessage();
-            log("MonthlySellerServlet _ Naming: " + msg);
+            log("ViewFeebacksServlet _Naming_ " + ex.getMessage());
         } finally {
             if (!response.isCommitted()) {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
