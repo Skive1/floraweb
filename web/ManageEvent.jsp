@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="css/css/_all-skins.min.css">
         <link rel="stylesheet" href="css/css/jquery-ui.css">
         <link rel="stylesheet" href="css/style.css" />
-        <link rel="stylesheet" href="css/css/admincss.css" />
+        <link rel="stylesheet" href="css/css/admincss.css"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -30,6 +30,9 @@
                     </div>
                     <div class="admin-sidebar-content">
                         <ul>
+                            <div class="logout-admin"><a href="logoutAction" class="logout-btn">Logout</a></div>
+                            <p class="admin-p">Admin</p>
+                            <div class="admin-under-p">Flora Store Admin</div>
                             <li>
                                 <a href="" style="color: #131EAD"><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
 
@@ -59,7 +62,7 @@
                     <div class="admin-content-top">
                         <div class="admin-content-top-left">
                             <ul class="flex-box">
-
+                                <a style="padding-left:20px" href="home"/><button type="button" class="btn btn-primary">BACK TO STORE</button></a>
                             </ul>          
                         </div>
                         <div class="admin-content-top-right">
