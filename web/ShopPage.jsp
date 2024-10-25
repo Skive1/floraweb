@@ -209,7 +209,7 @@
                                                         <div class="d-flex justify-content-between fruite-name">
                                                             <input type="hidden" id="categories" name="categories"/>
                                                             <a href="#" onclick="document.getElementById('categories').value = 'Toàn bộ';
-                                                                    document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
+                                                                    document.getElementById('categoriesForm').submit();"><i class="bi bi-flower1 me-2"></i>
                                                                 Toàn bộ
                                                             </a>
                                                             <span>(${sessionScope.allType})</span>
@@ -220,7 +220,7 @@
                                                             <div class="d-flex justify-content-between fruite-name">
                                                                 <input type="hidden" id="categories" name="categories"/>
                                                                 <a href="#" onclick="document.getElementById('categories').value = 'Hoa ly';
-                                                                        document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
+                                                                        document.getElementById('categoriesForm').submit();"><i class="bi bi-flower1 me-2"></i>
                                                                     Hoa ly
                                                                 </a>
                                                                 <span>(${sessionScope.freshFlower})</span>
@@ -232,7 +232,7 @@
                                                             <div class="d-flex justify-content-between fruite-name">
                                                                 <input type="hidden" id="categories" name="categories"/>
                                                                 <a href="#" onclick="document.getElementById('categories').value = 'Hoa hồng';
-                                                                        document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
+                                                                        document.getElementById('categoriesForm').submit();"><i class="bi bi-flower1 me-2"></i>
                                                                     Hoa hồng
                                                                 </a>
                                                                 <span>(${sessionScope.pottedFlower})</span>
@@ -244,7 +244,7 @@
                                                             <div class="d-flex justify-content-between fruite-name">
                                                                 <input type="hidden" id="categories" name="categories"/>
                                                                 <a href="#" onclick="document.getElementById('categories').value = 'Hoa hướng dương';
-                                                                        document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
+                                                                        document.getElementById('categoriesForm').submit();"><i class="bi bi-flower1 me-2"></i>
                                                                     Hoa hướng dương
                                                                 </a>
                                                                 <span>(${sessionScope.dryFlower})</span>
@@ -256,7 +256,7 @@
                                                             <div class="d-flex justify-content-between fruite-name">
                                                                 <input type="hidden" id="categories" name="categories"/>
                                                                 <a href="#" onclick="document.getElementById('categories').value = 'Other Flower';
-                                                                        document.getElementById('categoriesForm').submit();"><i class="fas fa-apple-alt me-2"></i>
+                                                                        document.getElementById('categoriesForm').submit();"><i class="bi bi-flower1 me-2"></i>
                                                                     Other type
                                                                 </a>
                                                                 <span>(${sessionScope.otherType})</span>
