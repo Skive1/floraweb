@@ -112,7 +112,7 @@
                                                     </td>
                                                     <c:if test="${eventOrder.status == 'Chưa nhận'}">
                                                         <td style="color: orangered">
-                                                            Chờ giao
+                                                            Đang giao
                                                         </td>
                                                     </c:if>
                                                     <c:if test="${eventOrder.status == 'Chưa nhận'}">

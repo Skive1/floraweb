@@ -30,7 +30,7 @@ public class DeliverDAO {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String
-                String sql = "Select EventOrderId, Fullname, Phone, Street, City, DeliveryDate, DeliveryStaffId, Status, Amount, isPaid, Note "
+                String sql = "Select EventOrderId, Fullname, Phone, Street, City, DeliveryDate, DeliveryStaffId, Status, Amount, isPaid, Note, DeliveryOption "
                         + "From EventOrder Order By EventOrderId";
                 //3. create statement
                 stm = con.prepareStatement(sql);
@@ -51,9 +51,10 @@ public class DeliverDAO {
                     double amount = rs.getDouble("Amount");
                     boolean isPaid = rs.getBoolean("isPaid");
                     String note = rs.getString("Note");
-                    if ("Chưa nhận".equals(status) && deliveryStaffId == 0) {
+                    String deliveryOption = rs.getString("DeliveryOption");
+                    if ("Chưa nhận".equals(status) && deliveryStaffId == 0 && "Delivery".equals(deliveryOption)) {
                         DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street,
-                                city, deliveryDate, status, deliveryStaffId, amount, isPaid, note);
+                                city, deliveryDate, status, deliveryStaffId, amount, isPaid, note, deliveryOption);
                         products.add(product);
                     }
                 }//process each record in resultset  
@@ -83,7 +84,7 @@ public class DeliverDAO {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String
-                String sql = "Select EventOrderId, Fullname, Phone, Street, City, DeliveryDate, DeliveryStaffId, Status, Amount, isPaid, Note "
+                String sql = "Select EventOrderId, Fullname, Phone, Street, City, DeliveryDate, DeliveryStaffId, Status, Amount, isPaid, Note, DeliveryOption "
                         + "From EventOrder ";
                 //3. create statement
                 stm = con.prepareStatement(sql);
@@ -101,10 +102,11 @@ public class DeliverDAO {
                     String status = rs.getString("Status");
                     double amount = rs.getDouble("Amount");
                     boolean isPaid = rs.getBoolean("isPaid");
+                    String deliveryOption = rs.getString("DeliveryOption");
                     String note = rs.getString("Note");
-                    if ("Chưa nhận".equals(status) && deliveryStaffId == staffID) {
+                    if ("Chưa nhận".equals(status) && deliveryStaffId == staffID && "Delivery".equals(deliveryOption)) {
                         DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street,
-                                city, deliveryDate, status, deliveryStaffId, amount, isPaid, note);
+                                city, deliveryDate, status, deliveryStaffId, amount, isPaid, note, deliveryOption);
                         products.add(product);
                     }
                 }
