@@ -118,7 +118,7 @@
                             </c:if>
                             <c:if test="${not empty sessionScope.USER}">
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center">
+                                    <a href="#" class="position-relative me-0 nav-link dropdown-toggle d-flex align-items-center" style="padding-right: 0px">
                                         <i class="fa fa-shopping-bag fa-2x"></i>
                                         <c:if test="${sessionScope.PENDING_EITEMS != 0 || sessionScope.PENDING_ITEMS != 0}">
                                             <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 4px; left: 39px; height: 10px; min-width: 10px;"></span>
@@ -137,7 +137,7 @@
                                 </div>
 
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
@@ -298,7 +298,7 @@
                                                         <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                             <c:url var="urlRewriting" value="flowerDetail">
                                                                 <c:param name="productId" value="${flower.eventProductId}"/>
-                                                                <c:param name="eventId" value="${flower.eventId}"/>
+                                                                <c:param name="eventId" value="${flower.eventEventId}"/>
                                                             </c:url>
                                                             <a href="${urlRewriting}">
                                                                 <h4>${flower.eventProductName}</h4>
@@ -306,7 +306,7 @@
                                                             <p>${flower.eventProductDetail}</p>
                                                             <!-- Hidden inputs to pass product details to the servlet -->
                                                             <input type="hidden" name="productId" value="${flower.eventProductId}">
-                                                            <input type="hidden" name="eventId" value="${flower.eventId}">
+                                                            <input type="hidden" name="eventId" value="${flower.eventEventId}">
                                                             <input type="hidden" name="imageURL" value="${flower.eventProductImg}">
                                                             <input type="hidden" name="productName" value="${flower.eventProductName}">
                                                             <input type="hidden" name="productPrice" value="${flower.eventProductPrice}">
@@ -398,7 +398,7 @@
                                 <div class="p-4 rounded-bottom">
                                     <c:url var="urlRewriting" value="flowerDetail">
                                         <c:param name="productId" value="${flower.eventProductId}"/>
-                                        <c:param name="eventId" value="${flower.eventId}"/>
+                                        <c:param name="eventId" value="${flower.eventEventId}"/>
                                     </c:url>
                                     <a href="${urlRewriting}">
                                         <h4>${flower.eventProductName}</h4>
@@ -406,7 +406,7 @@
                                     <p>${flower.eventProductDetail}</p>
                                     <!-- Hidden inputs to pass product details to the servlet -->
                                     <input type="hidden" name="productId" value="${flower.eventProductId}">
-                                    <input type="hidden" name="eventId" value="${flower.eventId}">
+                                    <input type="hidden" name="eventId" value="${flower.eventEventId}">
                                     <input type="hidden" name="imageURL" value="${flower.eventProductImg}">
                                     <input type="hidden" name="productName" value="${flower.eventProductName}">
                                     <input type="hidden" name="productPrice" value="${flower.eventProductPrice}">
@@ -442,7 +442,7 @@
                             <p class="mb-4 text-dark display-6">Type: ${flower.eventProductType}</p>
                             <c:url var="urlRewriting" value="flowerDetail">
                                 <c:param name="productId" value="${flower.eventProductId}"/>
-                                <c:param name="eventId" value="${flower.eventId}"/>
+                                <c:param name="eventId" value="${flower.eventEventId}"/>
                             </c:url>
                             <a href="${urlRewriting}" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">View</a>
                         </div>
