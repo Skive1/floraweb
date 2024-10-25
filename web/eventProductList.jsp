@@ -86,8 +86,11 @@
                         </div>
                     </div> 
                     <div class="admin-content-main">
-                        <div class="admin-content-main-title">
-                            <h1>Danh sách sự kiện</h1>
+                        <div class="admin-content-main-title" style="display: flex; justify-content: space-between; align-items: baseline;">
+                            <h1 style="margin: 0;">Danh sách sản phẩm</h1>
+                            <a href="<c:url value='eventCategory'><c:param name='eventId' value='${requestScope.eventId}'/></c:url>" style="text-decoration: none;">
+                                <button class="btn btn-primary" style="padding: 10px 20px; font-size: 16px;">Add Event Product</button>
+                            </a>
                         </div>
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->

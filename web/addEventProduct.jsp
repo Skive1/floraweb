@@ -60,7 +60,7 @@
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
                             <!--                            <form action="addEventAction" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">-->
-                            <form action="addEventProductAction?eventId=${requestScope.EVENT_ID}" method="POST" accept-charset="UTF-8">
+                            <form action="addEventProductAction?eventId=${requestScope.EVENT_ID}" method="POST" enctype="multipart/form-data">
                                 <c:set var="success" value="${requestScope.SUCCESS}"/>
                                 <c:set var="error" value="${requestScope.ERROR}"/>
                                 <div class="admin-content-main-event-add">
@@ -98,32 +98,24 @@
 
                                         <button type="submit" class="main-btn">Thêm sản phẩm</button>
                                     </div>
-
-                                    <!--                                    <div class="admin-content-main-content-right">-->
-                                    <!--                                        <div class="admin-content-main-content-right-img">
-                                                                                <label for="flowerImgUrl">Ảnh sản phẩm</label>
-                                                                                <input id="flowerImgUrl" name="flowerImgUrl" type="text" class="form-control" placeholder="Enter image URL">
-                                                                                <div class="image-show">
-                                                                                    <img id="flower-image-preview" src="" alt="Preview" style="max-width: 70%; display: none;">
-                                                                                </div>
-                                                                            </div>   -->
-                                    <div class="admin-content-main-content-right-img">
-                                        <label for="flowerImgUrl">Ảnh sản phẩm</label>
-                                        <input id="files" name="flowerImg" type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'images-show')">
-                                        <input id="flowerImgUrl" name="flowerImgUrl" type="text" class="form-control" placeholder="Enter image URL">
-                                        <div class="images-show">
-                                            <img id="flower-image-preview" src="" alt="Preview" style="max-width: 70%; display: none;">
+                                    <div class="admin-content-main-content-right">
+                                        <div class="admin-content-main-content-right-img">
+                                            <label for="file">Ảnh sản phẩm</label>
+                                            <input id="file" name="flowerImg" type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'images-show')">
+                                            <div class="images-show">
+                                                <img id="product-image-preview" src="" alt="Preview" style="max-width: 100%; display: none;">
+                                            </div>
                                         </div>
+                                        <a href="eventDetail?eventId=${requestScope.EVENT_ID}">Go to Event Detail</a>
                                     </div>
-                                    <a href="eventDetail?eventId=${requestScope.EVENT_ID}">Go back</a>
                                 </div>
                                 <c:if test="${not empty success.eventProductAddSuccess}">
                                     <font color="green">
                                     ${success.eventProductAddSuccess}
                                     </font>
                                 </c:if>
+                            </form>
                         </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -190,7 +182,7 @@
         // ...
         } );    
     </script>
-
+    
     <script>
                                                 function previewImage(event, containerClass) {
                                                     const input = event.target;
@@ -209,18 +201,6 @@
                                                         reader.readAsDataURL(file); // Read the file
                                                     }
                                                 }
-
-//    document.getElementById("flowerImgUrl").addEventListener("input", function () {
-//        var url = document.getElementById("flowerImgUrl").value;
-//        var img = document.getElementById("flower-image-preview");
-//        if (url.match(/^(http|https):\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}(\/[a-zA-Z0-9.-]+)*\/?$/)) {
-//            img.src = url;
-//            img.style.display = "block";
-//        } else {
-//            img.src = "";
-//            img.style.display = "none";
-//        }
-//    });
     </script>
 
 </body>
