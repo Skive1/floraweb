@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,19 +6,25 @@
  */
 package florastore.servlet;
 
+import florastore.account.AccountDTO;
 import florastore.managerProduct.ManagerProductDAO;
+import florastore.managerProduct.ManagerProductDTO;
+import florastore.managerProduct.ProductTypeDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,29 +48,23 @@ public class DelProManagementServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ShowProductManager.STORE_PAGE);
+
         String proId = request.getParameter("proId");
-        int id = Integer.parseInt(proId);
-        String page = request.getParameter("index");
-        String indexPage = request.getParameter("index");
-        if(indexPage == null){
-            indexPage = "1";
-        }
-        int indexInt = Integer.parseInt(indexPage);
-        
+        String storeId = request.getParameter("storeId");
+        String currentPage = request.getParameter("page");
         try {
             ManagerProductDAO dao = new ManagerProductDAO();
-            boolean result = dao.deleteProduct(id);
-            if (result) {  url = "ProductManagementServlet?index=" +indexInt;
-                url = "ProductManagementServlet?index=" +indexInt;
+            boolean result = dao.deleteProductByUpdate(proId);
+            if (result) {
+                url = "ProductManagementServlet?storeInfo=" + storeId + "&index=" + currentPage;
             }
-        } catch (NamingException ex) {
-            String msg = ex.getMessage();
-            log("DelProManagementServlet _ SQL: " + msg);
         } catch (SQLException ex) {
-            String msg = ex.getMessage();
-            log("DelProManagementServlet _ SQL: " + msg);
+            ex.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

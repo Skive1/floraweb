@@ -265,7 +265,7 @@ public class AccountDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2.Create SQL String
-                String sql = "SELECT Fullname, Email, Gender, Phone, Street, City, Img"
+                String sql = "SELECT Fullname, Email, Gender, Phone, Street, City, Img "
                         + "FROM Account "
                         + "WHERE Username = ? "
                         + "COLLATE Latin1_General_BIN";
@@ -326,8 +326,7 @@ public class AccountDAO implements Serializable {
 //              2. khởi tạo lệnh SQL
                 String sql = "UPDATE Account "
                         + "SET Phone = ?, Street = ?, City = ?, Gender = ? "
-                        + "WHERE Username = ? "
-                        + "COLLATE Latin1_General_BIN";
+                        + "WHERE Username = ? ";
                 //3. khởi tạo statement obj
                 stm = con.prepareStatement(sql);
                 stm.setString(1, phone);
@@ -368,8 +367,9 @@ public class AccountDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String 
-                String sql = "Select count(*) AS Total "
-                        + "From Account";
+                String sql = "Select count(Username) AS Total "
+                        + "From Account "
+                        + "WHERE isBanned = 0";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
                 //4. Execute Query
@@ -408,6 +408,7 @@ public class AccountDAO implements Serializable {
                 //2. Create SQL String
                 String sql = "SELECT Username, Fullname, Gender, Role, Email, Phone, Street, City, Img "
                         + "FROM Account "
+                        + "WHERE isBanned = 0 "
                         + "ORDER BY Username "
                         + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
                 //3. Create Statement Object
@@ -459,7 +460,8 @@ public class AccountDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) { //nếu kết nối DB được
                 //2. khởi tạo lệnh SQL
-                String sql = "DELETE FROM ACCOUNT "
+                String sql = "UPDATE ACCOUNT "
+                        + "SET isBanned = 1 "
                         + "WHERE Username = ? "
                         + "COLLATE Latin1_General_BIN";
                 //3. khởi tạo statement obj

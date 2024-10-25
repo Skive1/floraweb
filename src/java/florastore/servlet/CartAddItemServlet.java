@@ -6,7 +6,6 @@
 package florastore.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -16,7 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import florastore.cart.CartBean;
+import florastore.flowerStore.FlowerStoreDAO;
 import florastore.utils.MyAppConstants;
+import java.net.URLEncoder;
+import java.sql.SQLException;
+import javax.naming.NamingException;
 
 /**
  *
@@ -37,8 +40,12 @@ public class CartAddItemServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
-        String url = MyAppConstants.CartAddItemFeatures.SHOP_VIEW;
+        ServletContext context = request.getServletContext();
+        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
+        String url = (String) siteMap.get(MyAppConstants.CartAddItemFeatures.SHOP_VIEW);
 
         try {
             //1.Cust goes to the cart place
@@ -49,33 +56,60 @@ public class CartAddItemServlet extends HttpServlet {
                 cart = new CartBean();
             }
             // 3. Customer drops an item into the cart
+            int productId = Integer.parseInt(request.getParameter("productId"));
+            String productType = request.getParameter("type");
+            if(productType != null){
+                productType = URLEncoder.encode(productType, "UTF-8");
+                productType = productType.replaceAll("%20", "+");
+            }
+            int storeId = Integer.parseInt(request.getParameter("storeId"));
             String imageURL = request.getParameter("imageURL");
             String productName = request.getParameter("productName");
             double price = Double.parseDouble(request.getParameter("productPrice"));
             int stockQuantity = Integer.parseInt(request.getParameter("productQuantity"));
             String itemQuantityStr = request.getParameter("itemQuantity");
             int itemQuantity = (itemQuantityStr != null && !itemQuantityStr.isEmpty()) ? Integer.parseInt(itemQuantityStr) : 1;
-            log("Product Name: " + productName + ", Price: " + price + ", Item Quantity: " + itemQuantity + ", Stock Quantity: " + stockQuantity);
-
+            //Get store name by productId
+            FlowerStoreDAO dao = new FlowerStoreDAO();
+            String storeName = dao.getStoreName(productId);
             // Get the page that made the request
             String page = request.getParameter("page");
+            String pageIndex = request.getParameter("pageIndex");
             // Forward to the correct page
             if (page != null && !page.isEmpty()) {
-                if (page.equals("SHOP_VIEW")) {
-                    url = MyAppConstants.CartAddItemFeatures.SHOP_VIEW;
+                if (page.equals("shop")) {
+                    url = MyAppConstants.CartAddItemFeatures.SHOP_VIEW + "?page=" + pageIndex;
                 } else if (page.equals("DETAIL_PAGE")) {
-                    if (itemQuantity > stockQuantity) {
-                        url = MyAppConstants.CartAddItemFeatures.ERROR_PAGE;
-                    } else {
-                        url = MyAppConstants.CartAddItemFeatures.VIEW_CART_PAGE;
-                    }
+                    url = MyAppConstants.CartAddItemFeatures.VIEW_CART_PAGE;
+                } else if (page.equals("shopSearch")){
+                    url = MyAppConstants.SearchFeature.SEARCH;
                 }
             }
-
             // 4. Add item to cart
-            cart.addItemToCart(imageURL, productName, itemQuantity, price, stockQuantity);
-            session.setAttribute("CART", cart);
-
+            if (itemQuantity > 0 || itemQuantity <= stockQuantity) {
+                boolean result = cart.addItemToCart(productId, storeId, storeName, imageURL, productName, itemQuantity, price, stockQuantity);
+                if (result == false) {
+                    session.setAttribute("INSUFFICIENTSHOP", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
+                    if (page != null && !page.isEmpty()) {
+                        if (page.equals("shop")) {
+                            url = MyAppConstants.CartAddItemFeatures.SHOP_VIEW + "?page=" + pageIndex;
+                        } else if (page.equals("DETAIL_PAGE")) {
+                            url = MyAppConstants.CartAddItemFeatures.ERROR_PAGE + "?productId=" + productId + "&productType=" + productType;
+                        } else if (page.equals("shopSearch")){
+                            url = MyAppConstants.SearchFeature.SEARCH;
+                        }
+                    }
+                }
+                int pendingItems = cart.getUniqueItemCount();
+                double total = cart.calculateTotal();
+                session.setAttribute("PENDING_ITEMS", pendingItems);
+                session.setAttribute("TOTAL", total);
+                session.setAttribute("CART", cart);
+            }
+        } catch (SQLException ex) {
+            log("CartAddItemServlet _SQL_ " + ex.getMessage());
+        } catch (NamingException ex) {
+            log("CartAddItemServlet _Naming_ " + ex.getMessage());
         } finally {
             //4.cust goes to shopping
             response.sendRedirect(url);

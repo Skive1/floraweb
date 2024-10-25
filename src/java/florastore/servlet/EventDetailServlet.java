@@ -6,12 +6,15 @@
 package florastore.servlet;
 
 import florastore.event.EventDAO;
-import florastore.event.EventProductDTO;
-import florastore.flowerProducts.FlowerProductsDTO;
+import florastore.eventCart.EventCartBean;
+import florastore.eventCart.EventCartItem;
+import florastore.eventProduct.EventProductDAO;
+import florastore.eventProduct.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -21,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,6 +45,8 @@ public class EventDetailServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         //1. Get event id
         int eventId = Integer.parseInt(request.getParameter("eventId"));
@@ -50,8 +56,21 @@ public class EventDetailServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.EventFeatures.DETAIL_PAGE);
 
         try {
-            EventDAO dao = new EventDAO();
-            List<EventProductDTO> flowerList = dao.getEventFlower(eventId);
+            //Check cart place
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                if (session.getAttribute("INSUFFICIENT") != null) {
+                    request.setAttribute("INSUFFICIENT", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
+                    session.removeAttribute("INSUFFICIENT");
+                }
+            }
+
+            EventDAO eDao = new EventDAO();
+            String eventName = eDao.getEventNameByEventId(eventId);
+            EventProductDAO epDao = new EventProductDAO();
+            List<EventProductDTO> flowerList = epDao.getEventFlower(eventId);
+            List<EventProductDTO> conditionCate = epDao.getAllCondition(eventId);
+            
             if (flowerList != null) {
                 // Paging
                 int pageSize = 9; // Number of products per page
@@ -66,12 +85,14 @@ public class EventDetailServlet extends HttpServlet {
 
                 // Get the products for the current page
                 List<EventProductDTO> productsForPage = flowerList.subList(start, end);
-                
+
+                request.setAttribute("CATEGORY_CONDITION", conditionCate);
                 request.setAttribute("PRODUCTS", productsForPage);
                 request.setAttribute("currentPage", currentPage);
                 request.setAttribute("totalPages", totalPages);
                 request.setAttribute("FLOWER_LIST", flowerList);
                 request.setAttribute("EVENT_ID", eventId);
+                request.setAttribute("EVENT_NAME", eventName);
             }
         } catch (SQLException ex) {
             log("EventDetailServlet _SQL_ " + ex.getMessage());

@@ -11,156 +11,103 @@ import java.io.Serializable;
  *
  * @author acer
  */
-public class ManagerProductDTO implements Serializable{
-    private int productId;
+public class ManagerProductDTO implements Serializable {
+
+    private String id;
     private String storeId;
-    private String name;
     private String type;
+    private String name;
     private String condition;
     private String detail;
+    private String img;
+    private int quantity;
     private double price;
-    private int quantity;    
-    private String imageURL;
-    
-    public ManagerProductDTO(){
-        
-    }
-    public ManagerProductDTO(int productId, String storeId, String name, String type, String condition, String detail, double price, int quantity, String imageURL) {
-        this.productId = productId;
+
+    public ManagerProductDTO(String id, String storeId, String type, String name, String condition, String detail, String img, int quantity, double price) {
+        this.id = id;
         this.storeId = storeId;
-        this.name = name;
         this.type = type;
+        this.name = name;
         this.condition = condition;
         this.detail = detail;
-        this.price = price;
+        this.img = img;
         this.quantity = quantity;
-        this.imageURL = imageURL;
+        this.price = price;
     }
 
-    /**
-     * @return the productId
-     */
-    public int getProductId() {
-        return productId;
+    public ManagerProductDTO() {
     }
 
-    /**
-     * @param productId the productId to set
-     */
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public String getId() {
+        return id;
     }
 
-    /**
-     * @return the storeId
-     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getStoreId() {
         return storeId;
     }
 
-    /**
-     * @param storeId the storeId to set
-     */
     public void setStoreId(String storeId) {
         this.storeId = storeId;
     }
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return the type
-     */
     public String getType() {
         return type;
     }
 
-    /**
-     * @param type the type to set
-     */
     public void setType(String type) {
         this.type = type;
     }
 
-    /**
-     * @return the condition
-     */
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getCondition() {
         return condition;
     }
 
-    /**
-     * @param condition the condition to set
-     */
     public void setCondition(String condition) {
         this.condition = condition;
     }
 
-    /**
-     * @return the detail
-     */
     public String getDetail() {
         return detail;
     }
 
-    /**
-     * @param detail the detail to set
-     */
     public void setDetail(String detail) {
         this.detail = detail;
     }
 
-    /**
-     * @return the price
-     */
-    public double getPrice() {
-        return price;
+    public String getImg() {
+        return img;
     }
 
-    /**
-     * @param price the price to set
-     */
-    public void setPrice(double price) {
-        this.price = price;
+    public void setImg(String img) {
+        this.img = img;
     }
 
-    /**
-     * @return the quantity
-     */
     public int getQuantity() {
         return quantity;
     }
 
-    /**
-     * @param quantity the quantity to set
-     */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    /**
-     * @return the imageURL
-     */
-    public String getImageURL() {
-        return imageURL;
+    public double getPrice() {
+        return price;
     }
 
-    /**
-     * @param imageURL the imageURL to set
-     */
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setPrice(double price) {
+        this.price = price;
     }
-    
+
 }

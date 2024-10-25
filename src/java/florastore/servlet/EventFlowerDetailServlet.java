@@ -5,14 +5,12 @@
  */
 package florastore.servlet;
 
-import florastore.event.EventDAO;
-import florastore.event.EventProductDTO;
-import florastore.flowerProducts.FlowerProductsCategoryDTO;
-import florastore.flowerProducts.FlowerProductsDTO;
+import florastore.eventProduct.EventProductDAO;
+import florastore.eventProduct.EventProductDTO;
+import florastore.reviewEvent.ReviewEventDAO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -22,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -42,7 +41,8 @@ public class EventFlowerDetailServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         //1. Get id of flower
         int productId = Integer.parseInt(request.getParameter("productId"));
         int eventId = Integer.parseInt(request.getParameter("eventId"));
@@ -52,15 +52,22 @@ public class EventFlowerDetailServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.EventFlowerFeatures.ERROR_PAGE);
 
         try {
+            //Check cart place
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                if (session.getAttribute("INSUFFICIENT") != null) {
+                    request.setAttribute("INSUFFICIENT", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
+                    session.removeAttribute("INSUFFICIENT");
+                }
+            }
             //2. Call DAO/Model
-            EventDAO dao = new EventDAO();
+            EventProductDAO dao = new EventProductDAO();
             //2.1 Get flower detail
             EventProductDTO flowerDetail = dao.getFlowerDetail(productId);
-
             if (flowerDetail != null) {//check flower in detail is available
                 url = (String) siteMap.get(MyAppConstants.EventFlowerFeatures.DETAIL_PAGE);
                 //4. Push to Product Detail
-                request.setAttribute("PRODUCT_DETAIL", flowerDetail);
+                request.setAttribute("EPRODUCT_DETAIL", flowerDetail);
                 request.setAttribute("EVENT_ID", eventId);
             }//check flower in detail is available
         } catch (SQLException ex) {

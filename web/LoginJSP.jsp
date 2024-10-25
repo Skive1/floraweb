@@ -9,10 +9,30 @@
 <!DOCTYPE html>
 <html lang="en">
     <style>
-
+        header {
+            height: 200px; /* Chiều cao của header */
+            display: flex; /* Để dễ dàng căn giữa hình ảnh */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            justify-content: center; /* Căn giữa theo chiều ngang */
+        }
+        .logo-header {
+            background-color: rgba(255, 255, 255, 0.5); /* Màu nền cho container với độ trong suốt */
+            border-radius: 10px; /* Bo góc cho container nếu muốn */
+        }
+        main {
+            padding: 20px; /* Thêm padding nếu cần */
+            height: 100vh; /* Đảm bảo chiều cao của main bằng chiều cao của viewport */
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9); /* Màu nền cho container với độ trong suốt */
+            border-radius: 10px; /* Bo góc cho container nếu muốn */
+            padding: 20px; /* Thêm padding cho container */
+            position: relative; /* Để có thể điều chỉnh vị trí */
+            z-index: 1; /* Đảm bảo container nằm trên background */
+        }
         #notification {
             position: absolute; /* Định vị cố định */
-            top: 38%;
+            top: 25%;
             left: 50%;
             transform: translate(-50%, -50%); /* Di chuyển về giữa */
             background-color: #ffffff;
@@ -21,6 +41,14 @@
             border-radius: 5px;
             color: red;
 
+        }
+        body {
+            background-image: url(img/ThousandFlower.jpg); /* Đường dẫn đến hình ảnh background */
+            background-size: cover; /* Để hình ảnh bao phủ toàn bộ phần main */
+            background-position: center; /* Để căn giữa hình ảnh */
+            background-repeat: no-repeat; /* Không lặp lại hình ảnh */
+            margin: 0; /* Để loại bỏ margin mặc định */
+            padding: 0; /* Để loại bỏ padding mặc định */
         }
     </style>
     <head>
@@ -38,7 +66,7 @@
     <body>
         <header class="cd__intro">
             <a href="home">
-                <img src="img/floralogo.png" alt="Home Page" width="360px">
+                <img class="logo-header" src="img/floralogo.png" alt="Home Page" width="360px">
             </a> 
         </header>
 
@@ -55,7 +83,6 @@
                     <div class="row justify-content-center">
                         <div class="col-12">
                             <div class="mb-5 text-center">
-
                                 <c:set var="error" value="${requestScope.LOGIN_ERROR}"/>
                                 <c:if test="${not empty error.loginErr}">   
                                     <div id="notification" style="background-color: rgb(245, 229, 229)">
@@ -81,8 +108,9 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <input type="password" name="txtPassword" value="" class="form-control" id="password" placeholder="Password" required/>
+                                                    <input type="password" id="myPassword" name="txtPassword" value="" class="form-control" placeholder="Password" required/>
                                                     <label for="password" class="form-label">Password</label>
+                                                    <i class="fa fa-eye" onclick="togglePassword()"></i>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -137,7 +165,7 @@
         </main>
 
         <!-- Script JS -->
-        <script src="./js/script.js"></script>
+        <script src="js/javascript.js"></script>
         <!--$%analytics%$-->
     </body>
 </html>

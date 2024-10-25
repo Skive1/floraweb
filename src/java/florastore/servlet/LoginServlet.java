@@ -12,7 +12,6 @@ import florastore.account.AccountDTO;
 import florastore.googleAccount.GoogleAccount;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
@@ -58,31 +57,47 @@ public class LoginServlet extends HttpServlet {
         AccountLoginError error = new AccountLoginError();
         boolean foundErr = false;
 
+        log("LoginServlet _ Code: " + code);
+        log("LoginServlet _ Error: " + authError);
+        log("LoginServlet _ Username: " + username);
+        log("LoginServlet _ Password: " + (password != null ? "********" : null)); // Mask password
+        log("LoginServlet _ Initial URL: " + url);
+
         try {
             if (code != null) {
                 if (authError == null) {
+                    log("Google login code received: " + code);
                     GoogleLogin googleLogin = new GoogleLogin();
                     String accessToken = googleLogin.getToken(code);
                     GoogleAccount googleAccount = GoogleLogin.getUserInfo(accessToken);
                     String email = googleAccount.getEmail();
                     String saleId = null;
+                    log("Google Account Email: " + email);
 
                     // Extract username from email
                     String newUsername = email.substring(0, email.indexOf("@"));
+                    log("Extracted Username: " + newUsername);
 
                     AccountDAO dao = new AccountDAO();
                     AccountDTO authUser = dao.getAccountByGoogleAccount(email);
                     if (authUser == null) {
-                        authUser = new AccountDTO(newUsername, "GOOGLE_AUTH", newUsername, "Customer", email, "Hidden", "", "", "",saleId);
+                        log("User not found. Creating new user.");
+                        authUser = new AccountDTO(newUsername, "GOOGLE_AUTH", newUsername, "Customer", email, "Hidden", "", "", "", saleId);
                         dao.createAccount(authUser); // Add user to the database
+                    } else {
+                        log("User found: " + authUser.getUsername());
+                        log("User found: " + authUser.getEmail());
                     }
 
                     url = (String) siteMap.get(MyAppConstants.LoginFeatures.HOME_PAGE);
                     HttpSession session = request.getSession(true);
                     session.setAttribute("USER", authUser);
                     session.setAttribute("USERNAME", authUser.getUsername());
+                    session.setAttribute("PENDING_EITEMS", 0);
+                    session.setAttribute("PENDING_ITEMS", 0);
 
                 } else {
+                    log("OAuth Error: " + authError);
                     url = (String) siteMap.get(MyAppConstants.LoginFeatures.INVALID_PAGE);
                 }
             } else {
@@ -90,15 +105,18 @@ public class LoginServlet extends HttpServlet {
                 AccountDAO dao = new AccountDAO();
                 AccountDTO validUser = null;
                 if (username.equals(username.trim()) && password.equals(password.trim())) {
-                    validUser= dao.getAccountByLogin(username, password);
+                    validUser = dao.getAccountByLogin(username, password);
                     //3. process result
                     if (validUser != null) {//user login successful
-                        url = (String) siteMap.get(MyAppConstants.LoginFeatures.HOME_PAGE);
+                        url = MyAppConstants.LoginFeatures.HOME_PAGE;
                         //3.1 Create new session
                         HttpSession session = request.getSession(true);
                         session.setAttribute("USER", validUser);
                         session.setAttribute("USERNAME", username);
                         session.setAttribute("PASSWORD", password);
+                        session.setAttribute("PENDING_EITEMS", 0);
+                        session.setAttribute("PENDING_ITEMS", 0);
+                        response.sendRedirect(url);
                     }//end if validAccount is not null
                 }
                 if (validUser == null) {//user login failed
@@ -114,8 +132,10 @@ public class LoginServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("LoginServlet _ Naming _ " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
+            if(!response.isCommitted()){
+                RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+            }   
         }
     }
 

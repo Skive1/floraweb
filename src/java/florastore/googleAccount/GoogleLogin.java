@@ -3,7 +3,6 @@ package florastore.googleAccount;
 import com.google.gson.Gson;
 import florastore.utils.Iconstant;
 import com.google.gson.JsonObject;
-import florastore.googleAccount.GoogleAccount;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.ClientProtocolException;

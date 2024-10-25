@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+body{background-color: #eee;font-family: "Poppins", sans-serif;font-weight: 600}
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+::marker {
+  content: none; 
+}
+.container {
+    height: 100%;
+}
+.cart{height: 80vh}.progresses{display: flex;align-items: center}
+.line{width: 76px;height: 6px;background: #63d19e}
+.non-line{width: 76px;height: 6px;background: #C0C0C0}
+.steps{display: flex;background-color: #63d19e;color: #fff;font-size: 12px;width: 30px;height: 30px;align-items: center;justify-content: center;border-radius: 50%}
+.non-steps{display: flex;background-color: #C0C0C0;color: #fff;font-size: 12px;width: 30px;height: 30px;align-items: center;justify-content: center;border-radius: 50%}
+.check1{display: flex;background-color: #63d19e;color: #fff;font-size: 17px;width: 60px;height: 60px;align-items: center;justify-content: center;border-radius: 50%;margin-bottom: 10px}
+.invoice-link{font-size: 15px}
+.order-button{height: 50px}
+.background-muted{background-color:#fafafc}
+
+/*text-center-content*/
+.text-center-content {
+display: grid;
+grid-template-columns: 1fr 1fr; 
+gap: 20px;
+}
+.admin-left-content-left , .admin-left-content-right {
+  padding: 5px;   
+}
+.admin-left-content-left p, .admin-left-content-right p {
+  color: rgb(88, 115, 194);
+}
+.admin-left-content-left-input , .admin-left-content-right-input {
+  padding: 5px
+}
+
+/* admin-sidebar-content */
+.admin-sidebar-content {
+  padding: 30px 0 0 30px;
+  color: black;
+}
+.admin-sidebar-content ul li a i {
+ margin-right: 12px;
+}
+.admin-sidebar-content > ul > li {
+  padding: -10px ;
+  transition: all 0.3s ease;
+}
+.admin-sidebar-content > ul > li > a {
+width: 100%;
+display: block;
+display: flex;
+justify-content: flex-start;
+}
+.admin-sidebar-content > ul > li > a i:last-child {
+margin-left: auto ;
+}
+.admin-sidebar-content ul a:hover{
+  background-color: whitesmoke;
+  background-clip: text;
+}
+.admin-sidebar-content .sub-menu li:hover {
+  background-color: #414e66;
+  color: #fff;
+}
+.admin-sidebar-content-detail {
+  margin-left: -50px;
+}
+.sub-menu {
+  height: 0;
+  overflow: hidden;
+  padding-top: 10px;
+  margin-left: -85px;
+}
+
+/*Table*/
+.admin-content-main-content-product-list a {
+  display:inline-block;
+}
+.admin-content-main-content-product-list table {
+  width: 100%;
+  
+}
+.admin-content-main-content-product-list table th,td {
+  text-align: center;
+  
+  border-bottom: 1px solid black;
+}
+.admin-content-main-content-product-list table th {
+  background-color: rgb(9, 16, 71);
+  color: whitesmoke;
+  
+  
+}

@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package florastore.event;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-/**
- *
- * @author ADMIN
- */
 public class EventDTO implements Serializable{
     
     private String eventOwner;
@@ -27,7 +19,7 @@ public class EventDTO implements Serializable{
     public EventDTO() {
     }
 
-    public EventDTO(String eventOwner, int eventId, String eventName, String eventLocation, String eventCity, Timestamp startDate, Timestamp endDate, String eventImg, boolean eventStatus) {
+    public EventDTO(String eventOwner, int eventId, String eventName, String eventLocation, String eventCity, Timestamp startDate, Timestamp endDate, String eventImg) {
         this.eventOwner = eventOwner;
         this.eventId = eventId;
         this.eventName = eventName;
@@ -36,7 +28,6 @@ public class EventDTO implements Serializable{
         this.startDate = startDate;
         this.endDate = endDate;
         this.eventImg = eventImg;
-        this.eventStatus = eventStatus;
     }
 
     /**
@@ -151,10 +142,16 @@ public class EventDTO implements Serializable{
         this.eventImg = eventImg;
     }
 
+    /**
+     * @return the eventStatus
+     */
     public boolean isEventStatus() {
         return eventStatus;
     }
 
+    /**
+     * @param eventStatus the eventStatus to set
+     */
     public void setEventStatus(boolean eventStatus) {
         this.eventStatus = eventStatus;
     }

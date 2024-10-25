@@ -5,11 +5,13 @@
  */
 package florastore.servlet;
 
+import florastore.eventOrder.EventOrderDAO;
+import florastore.eventProduct.EventProductDAO;
+import florastore.eventProduct.EventProductDTO;
 import florastore.flowerProducts.FlowerProductsDAO;
 import florastore.flowerProducts.FlowerProductsDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
@@ -46,18 +48,22 @@ public class HomeServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.HomeFeatures.ERROR_PAGE);
-
         try {
             //1. Call DAO/Models
-            FlowerProductsDAO dao = new FlowerProductsDAO();
+            EventProductDAO dao = new EventProductDAO();
             //1.1 Get best seller products
-            dao.getBestSeller();
+            List<EventProductDTO> bestSeller = dao.getBestSellers();
             //1.2 Get new arrival products
-            dao.getNewArrival();
+            List<EventProductDTO> newArrival = dao.getNewArrivals();
             //2. Process result
-            List<FlowerProductsDTO> bestSeller = dao.getBestSellers();
-            List<FlowerProductsDTO> newArrival = dao.getNewArrivals();
-            FlowerProductsDTO cheapestFlower = dao.getCheapestFlower();
+            EventProductDTO cheapestFlower = dao.getCheapestFlower();
+            EventOrderDAO eDao = new EventOrderDAO();
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                String username = (String) session.getAttribute("USERNAME");
+                int numberofOrder = eDao.countNumberOrder(username);
+                session.setAttribute("NUMBER_ORDER", numberofOrder);
+            }
             if (bestSeller != null && newArrival != null) {//check flower list is available
                 //3. To Home Page
                 url = (String) siteMap.get(MyAppConstants.HomeFeatures.HOME_PAGE);

@@ -9,7 +9,6 @@ import florastore.event.EventDAO;
 import florastore.event.EventDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
@@ -41,7 +40,7 @@ public class EventServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.EventFeatures.EVENT_PAGE);
@@ -51,7 +50,7 @@ public class EventServlet extends HttpServlet {
             EventDAO dao = new EventDAO();
             List<EventDTO> events = dao.getAllEvent();
             //Process result
-            if(events != null){
+            if (events != null) {
                 request.setAttribute("EVENT_LIST", events);
             }
         } catch (SQLException ex) {
