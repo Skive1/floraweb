@@ -73,12 +73,11 @@ public class ViewOrdersServlet extends HttpServlet {
             if (session.getAttribute("Staff_ID") == null && session.getAttribute("Staff_Balance") == null) {
                 staffID = dao.getDeliveryStaffId(getFullName);                  //staffID không có thì tạo session cho nó, những lần sau chỉ gần getAttribute
                 session.setAttribute("Staff_ID", staffID);
-                staffBalance = dao.getDeliveryStaffBalance(getFullName);
-                session.setAttribute("Staff_Balance", staffBalance);
             } else {
                 staffID = (int) session.getAttribute("Staff_ID");
             }
-
+            staffBalance = dao.getDeliveryStaffBalance(getFullName);
+            session.setAttribute("Staff_Balance", staffBalance);
             List<DeliverDTO> orderList = dao.getDeliveryOrder();                //lấy danh sách các đơn hàng để nhận giao
             List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName, staffID);       //lấy danh sách các đơn hàng để đi giao
             request.setAttribute("Total_Order", orderToDelivery.size());
