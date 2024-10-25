@@ -307,7 +307,7 @@ public class EventProductDAO implements Serializable {
         }
         return products;
     }
-    
+
     public List<EventProductDTO> getBestSellers()
             throws SQLException, NamingException {
 
@@ -345,7 +345,7 @@ public class EventProductDAO implements Serializable {
                     double epPrice = rs.getDouble("EPPrice");
                     int eventId = rs.getInt("EventEventId");
                     EventProductDTO product
-                            = new EventProductDTO(epId, epName, epType, epCondition, epDetail, img, epQuantity, epPrice,eventId);
+                            = new EventProductDTO(eventId, epId, epName, epType, epCondition, epDetail, img, epQuantity, epPrice);
                     products.add(product);
                 }//process each record in resultset  
             }//connection has been available 
@@ -397,7 +397,7 @@ public class EventProductDAO implements Serializable {
                     double epPrice = rs.getDouble("EPPrice");
                     int eventId = rs.getInt("EventEventId");
                     EventProductDTO product
-                            = new EventProductDTO(epId, epName, epType, epCondition, epDetail, img, epQuantity, epPrice, eventId);
+                            = new EventProductDTO(eventId, epId, epName, epType, epCondition, epDetail, img, epQuantity, epPrice);
                     products.add(product);
                 }//process each record in resultset  
             }//connection has been available 
@@ -449,7 +449,7 @@ public class EventProductDAO implements Serializable {
                     int eventId = rs.getInt("EventEventId");
                     //set data to DTO properties
                     dto
-                            = new EventProductDTO(EPId, EPName, EPType, EPCondition, EPDetail, Img, EPQuantity, EPPrice, eventId);
+                            = new EventProductDTO(eventId, EPId, EPName, EPType, EPCondition, EPDetail, Img, EPQuantity, EPPrice);
                 }//flower detail is loaded
             }//connection has been available 
         } finally {

@@ -108,7 +108,7 @@ public class LoginServlet extends HttpServlet {
                     validUser = dao.getAccountByLogin(username, password);
                     //3. process result
                     if (validUser != null) {//user login successful
-                        url = (String) siteMap.get(MyAppConstants.LoginFeatures.HOME_PAGE);
+                        url = MyAppConstants.LoginFeatures.HOME_PAGE;
                         //3.1 Create new session
                         HttpSession session = request.getSession(true);
                         session.setAttribute("USER", validUser);
@@ -116,6 +116,7 @@ public class LoginServlet extends HttpServlet {
                         session.setAttribute("PASSWORD", password);
                         session.setAttribute("PENDING_EITEMS", 0);
                         session.setAttribute("PENDING_ITEMS", 0);
+                        response.sendRedirect(url);
                     }//end if validAccount is not null
                 }
                 if (validUser == null) {//user login failed
@@ -131,8 +132,10 @@ public class LoginServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("LoginServlet _ Naming _ " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
+            if(!response.isCommitted()){
+                RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+            }   
         }
     }
 

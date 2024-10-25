@@ -35,7 +35,7 @@ public class SearchServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        
+
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.SearchFeature.SUCCESS);
@@ -46,20 +46,26 @@ public class SearchServlet extends HttpServlet {
         String pageIsActive = request.getParameter("pageNo");
         String goBack = request.getParameter("pageBack");
         String goForward = request.getParameter("pageForward");
-        
+
         String paramPriceFrom = request.getParameter("txtPriceFrom");
         String paramPriceTo = request.getParameter("txtPriceTo");
-        
+
         int pageSize = 0;
         int page = 0;
         int[] range = null;
         int[] categories = null;
 
         double list = 0;
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            if (session.getAttribute("INSUFFICIENTSHOP") != null) {
+                request.setAttribute("INSUFFICIENTSHOP", "Số lượng sản phẩm này trong giỏ hàng vượt qua giới hạn!");
+                session.removeAttribute("INSUFFICIENTSHOP");
+            }
+        }
         String lastSearchValue = (String) session.getAttribute("lastSearch");
         String searchErrorExist = (String) session.getAttribute("errorExist");
-        
+
         String checkPageActive = (String) session.getAttribute("pageIsActive");
         String checkNavbar = (String) session.getAttribute("navbar");
         String checkSearch = (String) session.getAttribute("searchValue");
@@ -96,14 +102,14 @@ public class SearchServlet extends HttpServlet {
             if (navbar != null || searchValue == null) {
                 session.removeAttribute("lastSearch");                          //xóa attribute để không bị nhảy sai
                 dao.searchTotalProduct("", true);               //get total product founded
-                
+
             } else {             //user search → show 9 sản phẩm đầu tiên được tìm thấy
                 session.removeAttribute("lastSearch");                          //xóa attribute ghi lại cái mới (ghi nhiều lần mà ko xóa sẽ gây quá tải)
                 session.setAttribute("lastSearch", searchValue);                //ghi attribute lastSearch với chuỗi lấy được từ search bar
                 dao.searchTotalProduct(searchValue, false);
-                
+
             }
-            
+
             if (searchErrorExist != null) {
                 session.removeAttribute("errorExist");
             } else {
@@ -111,7 +117,7 @@ public class SearchServlet extends HttpServlet {
                 session.removeAttribute("PriceTo");
                 session.removeAttribute("currentColor");
             }
-            
+
             List<ProductDTO> totalProduct = dao.getTotalProduct();              //lấy tổng sản phẩm tìm được trong kho
             list = totalProduct.size();
 
@@ -127,18 +133,18 @@ public class SearchServlet extends HttpServlet {
 
             List<ProductDTO> productList = service.getNine(totalProduct, range);               //đã lấy được 9 sản phẩm để show trang chính
             request.setAttribute("requestResultList", productList);                   //9 sản phẩm đã vào attribute result chuẩn bị được show
-            
+
             session.removeAttribute("totalProduct");
             session.setAttribute("totalProduct", totalProduct);                //Dùng để search theo giá
-            
+
             session.removeAttribute("productOrdered");
             session.setAttribute("productOrdered", totalProduct);               //dùng để in theo giá giảm/tăng
-            
+
             categories = service.getCategories(totalProduct);                   //để gán số lượng cho categories dựa trên phân loại từ tổng sản phẩm tìm thấy
-            
+
             session.removeAttribute("PriceFromSave");
             session.removeAttribute("PriceToSave");
-            
+
             session.removeAttribute("allType");
             session.removeAttribute("freshFlower");
             session.removeAttribute("pottedFlower");
@@ -146,7 +152,7 @@ public class SearchServlet extends HttpServlet {
             session.removeAttribute("otherType");
 
             request.setAttribute("requestColor", service.chooseColor(totalProduct));
-            
+
             session.setAttribute("allType", categories[0]);
             session.setAttribute("freshFlower", categories[1]);
             session.setAttribute("pottedFlower", categories[2]);
@@ -164,10 +170,10 @@ public class SearchServlet extends HttpServlet {
             List<ProductDTO> newIncome = service.getNewProduct(dao.searchAllProduct());
             request.removeAttribute("requestNewProduct");                              //giữ cho categories luôn cập nhật
             request.setAttribute("requestNewProduct", newIncome);
-            
+
             session.removeAttribute("txtOrderBy");
             session.setAttribute("txtOrderBy", "default");
-            
+
             session.removeAttribute("searchExtend");                            //phân luồng để PageChanger chạy
             session.removeAttribute("searchForType");
             session.removeAttribute("searchForColor");

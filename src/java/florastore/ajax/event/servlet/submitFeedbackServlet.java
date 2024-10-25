@@ -8,6 +8,7 @@ package florastore.ajax.event.servlet;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import florastore.eventFeedback.EventFeedbackDAO;
+import florastore.rateDelivery.RateDeliveryDAO;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -57,11 +58,15 @@ public class submitFeedbackServlet extends HttpServlet {
         JsonObject jsonObject = gson.fromJson(jsonBuilder.toString(), JsonObject.class);
         int orderId = jsonObject.get("orderId").getAsInt();
         String feedback = jsonObject.get("feedback").getAsString();
+        int starRating = jsonObject.get("rating").getAsInt();
+        int deliveryId = jsonObject.get("staffId").getAsInt();
 
         try {
             EventFeedbackDAO dao = new EventFeedbackDAO();
             boolean result = dao.insertFeedback(orderId, feedback);
-            if (result) {
+            RateDeliveryDAO rateDAO = new RateDeliveryDAO();
+            boolean resultRate = rateDAO.ratingStar(starRating, orderId, deliveryId);
+            if (result && resultRate) {
                 // Phản hồi cho client
                 response.getWriter().write("{\"success\": true}");
             }
