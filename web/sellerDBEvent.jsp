@@ -100,6 +100,19 @@
                                     <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell">Sản phẩm theo tháng</a></li>
                                 </ul>
                             </li>
+                            <li>
+                                <a href=""><i class="ri-file-list-line"></i>Quản lý sự kiện<i class="ri-add-circle-line"></i></a>
+                                <ul class="sub-menu">
+                                    <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent">Event</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href=""><i class="ri-file-list-line"></i>Quản lý đơn hàng<i class="ri-add-circle-line"></i></a>
+                                <ul class="sub-menu">
+                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction">Đơn hàng chờ giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction">Đơn hàng đã giao</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
