@@ -45,6 +45,8 @@ public class EventDetailServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         //1. Get event id
         int eventId = Integer.parseInt(request.getParameter("eventId"));
@@ -67,6 +69,8 @@ public class EventDetailServlet extends HttpServlet {
             String eventName = eDao.getEventNameByEventId(eventId);
             EventProductDAO epDao = new EventProductDAO();
             List<EventProductDTO> flowerList = epDao.getEventFlower(eventId);
+            List<EventProductDTO> conditionCate = epDao.getAllCondition(eventId);
+            
             if (flowerList != null) {
                 // Paging
                 int pageSize = 9; // Number of products per page
@@ -82,6 +86,7 @@ public class EventDetailServlet extends HttpServlet {
                 // Get the products for the current page
                 List<EventProductDTO> productsForPage = flowerList.subList(start, end);
 
+                request.setAttribute("CATEGORY_CONDITION", conditionCate);
                 request.setAttribute("PRODUCTS", productsForPage);
                 request.setAttribute("currentPage", currentPage);
                 request.setAttribute("totalPages", totalPages);

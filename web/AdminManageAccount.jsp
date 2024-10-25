@@ -49,8 +49,10 @@
                             <li>
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="dashBoard">Theo tuần</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event theo tuần</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Sản phẩm theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyProductBoard">Sản phẩm theo tuần</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -60,16 +62,8 @@
                                     <li><a class="ri-arrow-right-s-fill" href="viewEvent">Event</a></li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href=""><i class="ri-file-list-line"></i>Order<i class="ri-add-circle-line"></i></a>
-                                <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="">Danh sách đơn hàng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="">Delivery</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </div>
-
                 </div>
                 <div class="admin-content">
                     <div class="admin-content-top">
@@ -128,11 +122,11 @@
                                                         ${dto.fullName}
                                                     </td>
                                                     <td>
-                                                        <select name="txtRole">
-                                                            <option value="Admin"    
-                                                                    <c:if test="${dto.role == 'Admin'}">
-                                                                        selected="selected"
-                                                                    </c:if>>Admin</option>
+                                                        <select name="txtRole" <c:if test="${dto.role == 'Delivery'}">disabled=""</c:if>>
+                                                                <option value="Admin"    
+                                                                <c:if test="${dto.role == 'Admin'}">
+                                                                    selected="selected"
+                                                                </c:if>>Admin</option>
                                                             <option value="Seller" 
                                                                     <c:if test="${dto.role == 'Seller'}">
                                                                         selected="selected"
@@ -155,6 +149,7 @@
                                                     </td>
                                                     <td>
                                                         ${dto.phone}
+                                                        <input type="hidden" name="txtPhone" value="${dto.phone}"/>
                                                     </td>                           
                                                     <td>
                                                         ${dto.street}

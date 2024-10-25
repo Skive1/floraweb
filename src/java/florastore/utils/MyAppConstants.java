@@ -78,6 +78,7 @@ public class MyAppConstants {
     }
 
     public class ManageAccountFeatures {
+
         public static final String MANAGE_ACCOUNT_PAGE = "adminManageAccount";
         public static final String ERROR_PAGE = "error404";
     }
@@ -149,11 +150,12 @@ public class MyAppConstants {
     }
 
     public class DashBoardFeatures {
-
         public static final String DASHBOARD_PAGE = "dashBoard";
         public static final String ERROR_PAGE = "error404";
         public static final String MONTHLY_PAGE = "monthlyBoard";
-
+        public static final String WEAKLY_PAGE = "weeklyBoard";
+        public static final String MONTHLY_EVENT_PAGE = "monthlyEvent";
+        public static final String WEEKLY_PRODUCT_PAGE = "weeklyProductBoard";
     }
 
     public class CartAddItemFeatures {
@@ -173,6 +175,7 @@ public class MyAppConstants {
         public static final String EVENT_VIEW = "eventDetail";
         public static final String VIEW_ECART_PAGE = "eventCart";
         public static final String ERROR_PAGE = "flowerDetail";
+        public static final String CATE_VIEW = "category";
     }
 
     public class EventCartFeatures {
@@ -214,5 +217,10 @@ public class MyAppConstants {
         public static final String ONLINE_PAYMENT = "vnpayShopCheckout";
         public static final String CHECKOUT_SUCCESS = "shopCheckouts";
         public static final String CHECKOUT_FAIL = "shopCheckout";
-    }   
+    }
+
+    public class PurchasedOrderFeatures {
+
+        public static final String PURCHASED_ORDER = "purchasedOrderPage";
+    }
 }

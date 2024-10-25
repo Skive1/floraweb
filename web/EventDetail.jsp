@@ -16,6 +16,7 @@
 
         <!-- Icon Font Stylesheet -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <script src="https://kit.fontawesome.com/4cb3201524.js" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
         <!-- Libraries Stylesheet -->
@@ -29,6 +30,7 @@
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
         <link rel="stylesheet" href="alertPackage/alertCss.css">
+        <link rel="stylesheet" href="css/snackbar.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
 
@@ -41,7 +43,7 @@
             <div class="spinner-grow text-third" role="status"></div>
         </div>
         <!-- Spinner End -->
-
+        <div id="snackbar"></div>
 
         <!-- Navbar start -->
         <div class="container-fluid fixed-top">
@@ -66,10 +68,10 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="home" class="nav-item nav-link ">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
                             <a href="searchAction" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link">Event</a>
+                            <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
@@ -90,12 +92,12 @@
 
                         </div>
                         <div class="d-flex align-items-center justify-content-center m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
-                                <i class="fas fa-search text-third"></i>
+                            <button class="btn-search btn bg-white" data-bs-toggle="modal" data-bs-target="#searchModal" style="padding-top: 10px">
+                                <i class="fa-solid fa-2x fa-bell"  style="color: #81c408"></i>
                             </button>
 
                             <c:if test="${empty sessionScope.USER}">
-                                <a href="loginPage" class="position-relative me-4">
+                                <a href="loginPage" class="position-relative" style="margin-right: 20px; margin-left: 12px;">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                 </a>
                                 <a href="loginPage" class="my-auto">
@@ -126,18 +128,15 @@
                                     <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                                         <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
-                                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                        <a href="viewProfileAction" class="dropdown-item">My Profile</a>
-                                        <a href="#" class="dropdown-item">Purchase Order</a>
-                                        <a href="logoutAction" class="dropdown-item">Logout</a>
-                                    </div>
-                                </div>                         
+                                    <jsp:include page="navUser.jsp"></jsp:include>
+                                    </div>                         
                             </c:if>
                         </div>
                     </div>
                 </nav>
             </div>
         </div>
+
         <!-- Navbar End -->
 
 
@@ -209,118 +208,25 @@
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
                                                     <div class="d-flex justify-content-between fruite-name"> 
-                                                        <a href="shoppingAction"><i class="fas fa-apple-alt me-2"></i>All products</a>
-                                                        <span>(${requestScope.allProducts})</span>
-                                                    </div>
-                                                </li>
-                                                <c:forEach var="category" items="${categories}">
+                                                        <a href="eventDetail?eventId=${requestScope.EVENT_ID}&page=${currentPage}" 
+                                                           <c:if test="${empty CATEGORIES}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>All products</a>
+                                                        </div>
+                                                    </li>
+                                                <c:forEach var="category" items="${requestScope.CATEGORY_CONDITION}">
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name"> 
                                                             <c:url var="urlRewriting" value="category">
-                                                                <c:param name="type" value="${category.key}"/>
+                                                                <c:param name="eventId" value="${requestScope.EVENT_ID}"/>
                                                                 <c:param name="page" value="1"/>
+                                                                <c:param name="condition" value="${category.eventProductCondition}"/>
+
                                                             </c:url>
-                                                            <a href="${urlRewriting}"><i class="fas fa-apple-alt me-2"></i>${category.key}</a>
-                                                            <span>(${category.value})</span>
-                                                        </div>
-                                                    </li>
+                                                            <a href="${urlRewriting}" 
+                                                               <c:if test="${requestScope.CATEGORIES == category.eventProductCondition}">style="color: var(--bs-secondary)"</c:if>><i class="fas fa-apple-alt me-2"></i>${category.eventProductCondition}</a>
+                                                            </div>
+                                                        </li>
                                                 </c:forEach>
                                             </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <h4 class="mb-2">Price</h4>
-                                            <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
-                                            <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <h4>Additional</h4>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
-                                                <label for="Categories-1"> Organic</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
-                                                <label for="Categories-2"> Fresh</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
-                                                <label for="Categories-3"> Sales</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-4" name="Categories-1" value="Beverages">
-                                                <label for="Categories-4"> Discount</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-5" name="Categories-1" value="Beverages">
-                                                <label for="Categories-5"> Expired</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <h4 class="mb-3">Featured products</h4>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-1.jpg" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-2.jpg" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-3.jpg" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-center my-4">
-                                            <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-third w-100">View More</a>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -340,7 +246,13 @@
                                         <c:forEach var="flower" items="${requestScope.PRODUCTS}">
                                             <div class="col-md-6 col-lg-6 col-xl-4">
                                                 <form action="cartAddEventItem">
-                                                    <input type="hidden" name="page" value="eventDetail"/>
+                                                    <c:if test="${not empty requestScope.CATEGORIES}">
+                                                        <input type="hidden" name="page" value="conditionCate"/>
+                                                        <input type="hidden" name="condition" value="${requestScope.CATEGORIES}" />
+                                                    </c:if>
+                                                    <c:if test="${empty requestScope.CATEGORIES}">
+                                                        <input type="hidden" name="page" value="eventDetail"/>
+                                                    </c:if>
                                                     <input type="hidden" name="pageIndex" value="${currentPage}"/>
                                                     <div class="rounded position-relative fruite-item">
                                                         <div class="fruite-img">
@@ -458,7 +370,7 @@
             </div>
             <!-- Copyright End -->
 
-            <c:if test="${not empty requestScope.INSUFFICIENT}">
+        <c:if test="${not empty requestScope.INSUFFICIENT}">
             <div id="modal-alert" class="modal-alert">
                 <div class="modal-alert-fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="" role="document">
@@ -479,12 +391,14 @@
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>
         <script src="lib/waypoints/waypoints.min.js"></script>
         <script src="lib/lightbox/js/lightbox.min.js"></script>
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
         <!-- Template Javascript -->
+        <script src="js/notification.js"></script>
         <script src="alertPackage/alertJs.js"></script>
         <script src="js/main.js"></script>
     </body>

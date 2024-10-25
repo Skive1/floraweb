@@ -44,8 +44,8 @@
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="">Account</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="">Event</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="manageAccount">Account</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewEvent">Event</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -62,7 +62,12 @@
                 <div class="admin-content">
                     <div class="admin-content-top">
                         <div class="admin-content-top-left">
+<<<<<<< HEAD
+                            <ul class="flex-box"> 
+                                <a style="padding-left:20px" href="home"/><button type="button" class="btn btn-primary">BACK TO STORE</button></a>    
+=======
                             <ul class="flex-box">                    
+>>>>>>> main
                             </ul>          
                         </div>
                         <div class="admin-content-top-right">

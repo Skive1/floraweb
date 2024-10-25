@@ -1,7 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -31,24 +30,20 @@
                             <li>
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="">Product</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="">Event</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event theo tuần</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Sản phẩm theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyProductBoard">Sản phẩm theo tuần</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="">Account</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="manageAccount">Account</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="viewEvent">Event</a></li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href=""><i class="ri-file-list-line"></i>Order<i class="ri-add-circle-line"></i></a>
-                                <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="">Order List</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="">Delivery</a></li>
-                                </ul>
-                            </li>
+           
                         </ul>
                     </div>
 
@@ -112,7 +107,7 @@
                                             <td colspan="5"></td>
                                             <td style="font-weight: 700;">Total:</td>
                                             <td style="font-weight: 700;" >${requestScope.TOTAL}</td> 
-                                            
+
                                         </tr> 
                                     </tbody>
                                     <c:if test="${empty flowerList}">
