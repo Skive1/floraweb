@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Uni/SWP/GitHub/floraweb/src/java/florastore/servlet/AddEventProductServlet.java</file>
-            <file>file:/D:/Uni/SWP/GitHub/floraweb/web/WEB-INF/siteMap.properties</file>
-            <file>file:/D:/Uni/SWP/GitHub/floraweb/web/addEventProduct.jsp</file>
-            <file>file:/D:/Uni/SWP/GitHub/floraweb/web/addEvent.jsp</file>
-            <file>file:/D:/Uni/SWP/GitHub/floraweb/src/java/florastore/servlet/AddEventServlet.java</file>
+            <file>file:/D:/Uni/SWP/GitHub/floraweb/web/sellerDBEvent.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -1060,7 +1060,7 @@ public class EventDAO implements Serializable {
                     int epQuantity = rs.getInt("EPQuantity");
                     double epPrice = rs.getDouble("EPPrice");
                     EventProductDTO product
-                            = new EventProductDTO(epId, eventId, epName, epType, epCondition, epDetail, img, epQuantity, epPrice);
+                            = new EventProductDTO(eventId, epId, epName, epType, epCondition, epDetail, img, epQuantity, epPrice);
                     products.add(product);
                 }//process each record in resultset  
             }//connection has been available 

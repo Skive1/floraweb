@@ -53,7 +53,11 @@ public class ViewDeliveredListServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        String username = request.getParameter("accountUsername");
+        String username = null;
+        if(session != null){
+            username = (String)session.getAttribute("USERNAME");
+        }
+        
 
         try {
             EventDAO dao = new EventDAO();

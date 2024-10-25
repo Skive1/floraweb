@@ -46,15 +46,17 @@ public class SellerEventManageServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.EVENT_LIST);
-        
+
         HttpSession session = request.getSession();
-        
-        String account = request.getParameter("username");
+        String account = null;
+        if (session != null) {
+            account = (String) session.getAttribute("USERNAME");
+        }
 
         try {
             EventDAO dao = new EventDAO();
             List<EventDTO> events = dao.getEventByAccount(account);
-            
+
             // Paging
             int pageSize = 5; // Number of orders per page
             String pageParam = request.getParameter("page"); // Get the current page number from the request
@@ -68,13 +70,13 @@ public class SellerEventManageServlet extends HttpServlet {
 
             // Get the products for the current page
             List<EventDTO> eventsForPage = events.subList(start, end);
-            
+
             session.setAttribute("EVENTS", eventsForPage);
             request.setAttribute("currentPage", currentPage);
             request.setAttribute("totalPages", totalPages);
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
             log("SellerEventManageServlet _SQL_" + ex.getMessage());
-        } catch(NamingException ex) {
+        } catch (NamingException ex) {
             log("SellerEventManageServlet _Naming_" + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
