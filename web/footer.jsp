@@ -53,7 +53,7 @@
                     <a class="btn-link" href="viewProfileAction">My Account</a>
                     <a class="btn-link" href="eventCart">Event Cart</a>
                     <a class="btn-link" href="cartPage">Shopping Cart</a>
-                    <a class="btn-link" href="">Order History</a>
+                    <a class="btn-link" href="purchasedOrder">Order History</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">

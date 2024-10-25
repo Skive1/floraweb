@@ -3,12 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.vnpay;
+package florastore.servlet;
 
+import florastore.account.AccountDTO;
+import florastore.revenue.EventSellerDAO;
+import florastore.revenue.EventSellerDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,10 +27,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ADMIN
+ * @author acer
  */
-@WebServlet(name = "ReturnUrlServlet", urlPatterns = {"/ReturnUrlServlet"})
-public class ReturnUrlServlet extends HttpServlet {
+@WebServlet(name = "ShowEventIdServlet", urlPatterns = {"/ShowEventIdServlet"})
+public class ShowEventIdServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,24 +44,29 @@ public class ReturnUrlServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String url = MyAppConstants.PlaceOrderFeatures.CHECKOUT_SUCCESS;
-        // Nhận các thông tin phản hồi từ VNPay
-        String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
-        double totalAmount = Double.parseDouble(request.getParameter("vnp_Amount")) / 100;
-        String vnp_TxnRef = request.getParameter("vnp_TxnRef");
-        String total = String.valueOf(totalAmount);
-        String query = "responseCode=00&totalamount=" + total + "&vnp_TxnRef=" + vnp_TxnRef + "&status=paid";
-        String encodedQuery = Base64.getEncoder().encodeToString(query.getBytes(StandardCharsets.UTF_8));
-        // Kiểm tra mã phản hồi
-        if ("00".equals(vnp_ResponseCode)) {
-            // Thanh toán thành công, xử lý lưu đơn hàng
-            // Chuyển hướng đến trang xác nhận đơn hàng
-            response.sendRedirect(url + "?data=" + encodedQuery);
-        } else {
-            url = MyAppConstants.PlaceOrderFeatures.CHECKOUT_FAIL;
-            // Thanh toán thất bại, chuyển hướng đến trang checkout
-            response.sendRedirect(url + "?total=" + total);
+        ServletContext context = request.getServletContext();
+        Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
+        String url = (String) siteMap.get(MyAppConstants.ShowProductManager.ERROR_PAGE);
+        HttpSession session = request.getSession(false);
+        AccountDTO dto = (AccountDTO) session.getAttribute("USER");
+        String username = dto.getUsername();
+        try {
+            if(dto.getUsername() != null){
+            EventSellerDAO dao = new EventSellerDAO();
+            dao.loadListEventIdByUsername(username);
+            ArrayList<EventSellerDTO> listEventIds = dao.getListEventId();
+            session.setAttribute("ListEventId", listEventIds);
+            url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.SELLER_DASHBOARD_PAGE);
+            }
+        } catch (SQLException ex) {
+            String msg = ex.getMessage();
+            log("ShowEventIdServlet _ SQL: " + msg);
+        } catch (NamingException ex) {
+            String msg = ex.getMessage();
+            log("ShowEventIdServlet _ SQL: " + msg);
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

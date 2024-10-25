@@ -6,6 +6,7 @@
 package florastore.servlet;
 
 import florastore.account.AccountDTO;
+import florastore.decodeDataVNPay.DecodeData;
 import florastore.eventCart.EventCartBean;
 import florastore.eventCart.EventCartItem;
 import florastore.eventOrder.EventOrderDAO;
@@ -111,7 +112,14 @@ public class PlaceOrderServlet extends HttpServlet {
                 note = temporaryInfo.getNote();
             }
         }
-        String responseCode = request.getParameter("responseCode");
+        String responseCode = null;
+        String vnp_OrderId = null;
+        String encodedQuery = request.getParameter("data");
+        if (encodedQuery != null) {
+            DecodeData decode = new DecodeData();
+            responseCode = decode.decodeResponse(encodedQuery, "response");
+            vnp_OrderId = decode.decodeResponse(encodedQuery, "vnp_TxnRef");
+        }
         EventOrderDTO newTemporaryInfo = new EventOrderDTO(fullname, phone, address, city, shipping, payment, note);
         session.setAttribute("TEMPORARY_INFO", newTemporaryInfo);
         String status = null;
@@ -154,11 +162,30 @@ public class PlaceOrderServlet extends HttpServlet {
                                 return;
                             }
                         }//ONLINE PAYMENT PROCESS
-                        if ("COD".equals(payment) || "00".equals(responseCode)) {//COD PAYMENT PROCESS AND PAID ORDER PROCESS
+                        if ("COD".equals(payment) || "00".equals(responseCode)) {//COD PAYMENT PROCESS AND PAID ORDER PROCESS                           
                             // Build dynamic HTML content for the email
                             StringBuilder htmlContent = new StringBuilder();
-                            htmlContent.append("<h2>Thank you for your order (BUYING FROM EVENT)!</h2>");
-                            htmlContent.append("<p>Here is your order summary:</p>");
+                            htmlContent.append("<h2>Cảm ơn ").append(fullname).append(" đã mua hoa trên nền tảng chúng tôi (BUYING FROM EVENT)!</h2>");
+                            htmlContent.append("<h4>Dưới đây là thông tin đặt hàng: </h4>");
+                            htmlContent.append("<p>Số điện thoại: ").append(phone).append("</p>");
+                            htmlContent.append("<p>Địa chỉ giao hàng: ").append(address).append(", ").append(city).append("</p>");
+                            if ("Delivery".equals(shipping)) {
+                                htmlContent.append("<p>Phương thức vận chuyển: Giao hàng bởi Flora Delivery</p>");
+                            } else if ("Pick Up".equals(shipping)) {
+                                htmlContent.append("<p>Phương thức vận chuyển: Lấy hàng tại sự kiện</p>");
+                            }
+                            if ("ONLINE".equals(payment)) {
+                                htmlContent.append("<p>Phương thức thanh toán: Thanh toán online (VNPay)</p>");
+                                htmlContent.append("<p style='font-weight: bold'>Mã hóa đơn: ").append(vnp_OrderId).append("</p>");
+                            } else if ("COD".equals(payment)) {
+                                htmlContent.append("<p>Phương thức thanh toán: Thanh toán khi nhận hàng</p>");
+                            }
+                            if ("Paid".equals(status)) {
+                                htmlContent.append("<p>Tình trạng thanh toán: <span style='color: #00FF00; font-weight: bold'>Đã thanh toán</span></p>");
+                            } else {
+                                htmlContent.append("<p>Tình trạng thanh toán: <span style='color: red; font-weight: bold'>Chưa thanh toán</span></p>");
+                            }
+                            htmlContent.append("<h4>Tóm tắt chi tiết đơn hàng:</h4>");
                             // Build dynamic HTML content for the email
                             for (Map.Entry<String, List<EventCartItem>> entry : items.entrySet()) {//saving order info to order by each event
                                 double total = 0;
@@ -197,7 +224,7 @@ public class PlaceOrderServlet extends HttpServlet {
                                 EventOrderDAO EOrderDao = new EventOrderDAO();
                                 //Saving order by each event
                                 boolean resultOrder = EOrderDao.saveOrder(orderInfo);
-                                numberOfUserOrder= EOrderDao.countNumberOrder(username);
+                                numberOfUserOrder = EOrderDao.countNumberOrder(username);
                                 int eventOrderId = 0;
                                 if (resultOrder) {//Get eventOrderId after insert order to database
                                     eventOrderId = EOrderDao.getEventOrderId(orderInfo);
@@ -232,7 +259,7 @@ public class PlaceOrderServlet extends HttpServlet {
                             session.setAttribute("NUMBER_ORDER", numberOfUserOrder);
                             url = (String) siteMap.get(MyAppConstants.PlaceOrderFeatures.BILL_PAGE);
                             // Build dynamic HTML content for the email
-                            htmlContent.append("<p>We hope you enjoy your purchase. If you have any questions, feel free to contact us!</p>");
+                            htmlContent.append("<p>Chúng tôi hy vọng bạn thích mua hàng của bạn. Nếu bạn có bất kỳ câu hỏi nào, vui lòng liên hệ với chúng tôi!</p>");
                             // Build dynamic HTML content for the email
                             //Compose email                 
                             MimeMessage message = new MimeMessage(emailSession);

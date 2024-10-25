@@ -131,7 +131,6 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Name</label>
-<<<<<<< HEAD
                                         <input name="nameAdd" type="text" maxlength="20" class="form-control" required>
                                     </div>
                                     <div class="form-group">
@@ -145,29 +144,14 @@
                                     <div class="form-group">
                                         <label>Detail</label>
                                         <input name="detailAdd" type="text" maxlength="20" class="form-control" required>
-=======
-                                        <input name="nameAdd" type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Type</label>
-                                        <input name="typeAdd" type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Condition</label>
-                                        <input name="conditionAdd" type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Detail</label>
-                                        <input name="detailAdd" type="text" class="form-control" required>
->>>>>>> main
                                     </div>
                                     <div class="form-group">
                                         <label>Price</label>
-                                        <input name="priceAdd" type="number" class="form-control" required>
+                                        <input name="priceAdd" type="number" maxlength="10" oninput="this.value = Math.max(0, Math.min(this.value, 9999999999))" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Quantity</label>
-                                        <input type="number" name="quantityAdd" class="form-control" required>
+                                        <input type="number" name="quantityAdd" maxlength="4" oninput="this.value = Math.max(0, Math.min(this.value, 9999))" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Image Link</label>

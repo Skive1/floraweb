@@ -61,7 +61,7 @@ public class EventRevenueDAO implements Serializable {
                         + "FROM EventProduct ep "
                         + "JOIN EventOrderDetail eod ON ep.EPId = eod.EventProductID "
                         + "JOIN EventOrder eo ON eod.EventOrderId = eo.EventOrderId "
-                        + "WHERE eo.Status = 'Đã giao' AND YEAR(OrderDate) = ? "
+                        + "WHERE eo.Status = N'Đã giao' AND YEAR(OrderDate) = ? "
                         + "GROUP BY Month(Cast(eo.OrderDate as DATE));";
                 //2. Create stm obj
                 stm = con.prepareStatement(sql);
@@ -104,7 +104,7 @@ public class EventRevenueDAO implements Serializable {
                         + "From EventProduct ep "
                         + "JOIN EventOrderDetail eod on ep.EPId = eod.EventProductID "
                         + "JOIN EventOrder eo on eod.EventOrderId = eo.EventOrderId "
-                        + "WHERE eo.Status = 'Đã giao' And Month(OrderDate) = ? And Year(OrderDate) = ? "
+                        + "WHERE eo.Status = N'Đã giao' And Month(OrderDate) = ? And Year(OrderDate) = ? "
                         + "GROUP BY ep.EPName, ep.EPId, eod.UnitPrice";
                 //2. Create stm obj
                 stm = con.prepareStatement(sql);
@@ -152,7 +152,7 @@ public class EventRevenueDAO implements Serializable {
                             + "FROM EventProduct ep "
                             + "JOIN EventOrderDetail eod ON ep.EPId = eod.EventProductID "
                             + "JOIN EventOrder eo ON eod.EventOrderId = eo.EventOrderId "
-                            + "WHERE eo.Status = 'Đã giao' "
+                            + "WHERE eo.Status = N'Đã giao' "
                             + "AND YEAR(eo.OrderDate) = ? "
                             + "AND ((DAY(eo.OrderDate) >= ? AND MONTH(eo.OrderDate) = ?) OR (DAY(eo.OrderDate) <= ? AND MONTH(eo.OrderDate) = ?)) AND DATEPART(dw,eo.OrderDate) = ? "
                             + "GROUP BY ep.EPName, ep.EPId, eod.UnitPrice, Cast(eo.OrderDate AS DATE) "
@@ -167,7 +167,7 @@ public class EventRevenueDAO implements Serializable {
                             + "FROM EventProduct ep "
                             + "JOIN EventOrderDetail eod ON ep.EPId = eod.EventProductID "
                             + "JOIN EventOrder eo ON eod.EventOrderId = eo.EventOrderId "
-                            + "WHERE eo.Status = 'Đã giao' "
+                            + "WHERE eo.Status = N'Đã giao' "
                             + "AND YEAR(eo.OrderDate) = ? "
                             + "AND MONTH(eo.OrderDate) = ? "
                             + "AND DAY(eo.OrderDate) BETWEEN ? AND ? AND DATEPART(dw,eo.OrderDate) = ? "
@@ -323,7 +323,7 @@ public class EventRevenueDAO implements Serializable {
                             + "FROM EventProduct ep "
                             + "JOIN EventOrderDetail eod ON ep.EPId = eod.EventProductID "
                             + "JOIN EventOrder eo ON eod.EventOrderId = eo.EventOrderId "
-                            + "WHERE eo.Status = 'Đã giao' "
+                            + "WHERE eo.Status = N'Đã giao' "
                             + "AND YEAR(eo.OrderDate) = ? "
                             + "AND ((MONTH(eo.OrderDate) >= ? AND DAY(eo.OrderDate) >= ?) "
                             + "OR (MONTH(eo.OrderDate) = ? AND DAY(eo.OrderDate) <= ?))";
@@ -409,7 +409,7 @@ public class EventRevenueDAO implements Serializable {
                             + "FROM EventProduct ep "
                             + "JOIN EventOrderDetail eod ON ep.EPId = eod.EventProductID "
                             + "JOIN EventOrder eo ON eod.EventOrderId = eo.EventOrderId "
-                            + "WHERE eo.Status = 'Đã giao' "
+                            + "WHERE eo.Status = N'Đã giao' "
                             + "AND YEAR(eo.OrderDate) = ? "
                             + "AND ((MONTH(eo.OrderDate) >= ? AND DAY(eo.OrderDate) >= ?) "
                             + "OR (MONTH(eo.OrderDate) = ? AND DAY(eo.OrderDate) <= ?))";
@@ -421,7 +421,7 @@ public class EventRevenueDAO implements Serializable {
                             + "FROM EventProduct ep\n"
                             + "JOIN EventOrderDetail eod ON ep.EPId = eod.EventProductID "
                             + "JOIN EventOrder eo ON eod.EventOrderId = eo.EventOrderId "
-                            + "WHERE eo.Status = 'Đã giao' "
+                            + "WHERE eo.Status = N'Đã giao' "
                             + "AND YEAR(eo.OrderDate) = ? "
                             + "AND MONTH(eo.OrderDate) = ? "
                             + "AND DAY(eo.OrderDate) BETWEEN ? AND ? "

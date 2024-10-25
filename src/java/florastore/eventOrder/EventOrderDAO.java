@@ -330,7 +330,7 @@ public class EventOrderDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String
-                String sql = "Select eo.EventId, eo.EventOrderId, Fullname, Phone, Street, City, OrderDate, DeliveryDate, DeliveryOption, PaymentOptions, eo.[Status], Amount, isPaid, Note, e.EventName "
+                String sql = "Select eo.EventId, eo.EventOrderId, Fullname, Phone, Street, City, OrderDate, DeliveryDate, DeliveryOption, PaymentOptions, eo.[Status], Amount, isPaid, Note, e.EventName, eo.DeliveryStaffId "
                         + "From EventOrder eo "
                         + "JOIN [Event] e on e.EventId = eo.EventId "
                         + "Where eo.[Status] = N'Đã giao' AND eo.AccountUsername = ? "
@@ -359,8 +359,9 @@ public class EventOrderDAO implements Serializable {
                     boolean isPaid = rs.getBoolean("isPaid");
                     String note = rs.getString("Note");
                     String eventName = rs.getString("EventName");
+                    int deliveryId = rs.getInt("DeliveryStaffId");
                     EventOrderDTO order
-                            = new EventOrderDTO(username, eventId, eventName, eventOrderId, fullname, phone, address, city, orderDate, deliveryDate, deliveryOption, paymentOption, status, amount, isPaid, note);
+                            = new EventOrderDTO(username, eventId, eventOrderId, eventName, fullname, phone, address, city, orderDate, deliveryDate, deliveryOption, paymentOption, status, amount, isPaid, note, deliveryId);
                     orders.add(order);
                 }//process each record in resultset  
             }//connection has been available 
