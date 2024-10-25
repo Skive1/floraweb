@@ -50,32 +50,32 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                <input type="hidden" name="idE" value="${ProductId}">  
-                                <input type="hidden" name="storeId" value="${StoreId}">
+                                    <input type="hidden" name="idE" value="${ProductId}">  
+                                    <input type="hidden" name="storeId" value="${StoreId}">
                                 </div>
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input name="nameE" value="${detail.name}" type="text" class="form-control" required>
+                                    <input name="nameE" value="${detail.name}" type="text" maxlength="20" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Type</label>
-                                    <input name="typeE" value="${detail.type}" type="text" class="form-control" required>
+                                    <input name="typeE" value="${detail.type}" type="text" maxlength="15" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Condition</label>
-                                    <input name="conditionE" value="${detail.condition}" type="text" class="form-control" required>
+                                    <input name="conditionE" value="${detail.condition}" type="text" maxlength="20" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Detail</label>
-                                    <input name="detailE" value="${detail.detail}" type="text" class="form-control" required>
+                                    <input name="detailE" value="${detail.detail}" type="text" maxlength="20" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Price</label>
-                                    <input name="priceE" value="${detail.price}" type="number" class="form-control" required>
+                                    <input name="priceE" value="${detail.price}" type="number" maxlength="10" oninput="this.value = Math.max(0, Math.min(this.value, 9999999999))" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Quantity</label>
-                                    <input type="number" name="quantityE" value="${detail.quantity}" class="form-control" required>
+                                    <input type="number" name="quantityE" value="${detail.quantity}" maxlength="4" oninput="this.value = Math.max(0, Math.min(this.value, 9999))" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Image Link</label>
@@ -130,12 +130,12 @@
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.action = 'confirmEdit';
-               
+
                 document.body.appendChild(form);
                 form.submit();
             })
-            
-    ;
+
+                    ;
         </script>
         <script src="alertPackage/alertJs.js" type="text/javascript"></script>
         <script src="js/manager.js" type="text/javascript"></script>

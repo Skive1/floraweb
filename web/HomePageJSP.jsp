@@ -97,6 +97,7 @@
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
                                     <a href="showStoreName" class="nav-item nav-link">Manage Shop</a>
+                                    <a href="showEventId" class="nav-item nav-link">DashBoard</a>
                                 </c:if>
                             </c:if>
 

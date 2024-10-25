@@ -42,13 +42,13 @@ public class ShowEventDetailServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.ManageEvent.ERROR_PAGE);
         
         DecimalFormat df = new DecimalFormat("#,###.##");
-        List<EventDTO> events = (List<EventDTO>) request.getAttribute("EVENT_LIST");
+        List<EventDTO> events = (List<EventDTO>) request.getAttribute("Event_List");
         List<EventProductDTO> productList = new ArrayList<>();
         List<TotalPriceDTO> totalPrint = new ArrayList<>();
         try {
             EventDAO dao = new EventDAO();
             if (events != null) {
-                request.setAttribute("EVENT_LIST", events);
+                request.setAttribute("Event_List", events);
                 for (int i = 0; i < events.size(); i++) {
                     List<EventProductDTO> flowerList = dao.getEventFlower2(events.get(i).getEventId());
                     if (flowerList != null && !flowerList.isEmpty()) {
@@ -63,8 +63,9 @@ public class ShowEventDetailServlet extends HttpServlet {
                         totalPrint.add(result);
                     }
                 }
-                request.setAttribute("FLOWER_LIST", productList);
-                request.setAttribute("TOTAL", totalPrint);
+                request.setAttribute("Flower_List", productList);
+                request.setAttribute("Total", totalPrint);
+                request.setAttribute("Total_Flower", productList.size());
                 url = (String) siteMap.get(MyAppConstants.ManageEvent.MANAGE_EVENT_PAGE);
             }
         } catch (SQLException ex) {
