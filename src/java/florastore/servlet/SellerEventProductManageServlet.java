@@ -7,7 +7,7 @@ package florastore.servlet;
 
 import florastore.event.EventDAO;
 import florastore.event.EventOrderDTO;
-import florastore.event.EventProductDTO;
+import florastore.eventProduct.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;

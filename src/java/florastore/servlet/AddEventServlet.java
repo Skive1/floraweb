@@ -30,7 +30,7 @@ import javax.servlet.http.Part;
  *
  * @author Admin
  */
-@WebServlet(name = "AddEventServlet", urlPatterns = {"/AddEventServlet"})
+@WebServlet(name = "AddEventServlet", urlPatterns = {"/addEventAction"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 5, // 5 MB
         maxFileSize = 1024 * 1024 * 10, // 10 MB

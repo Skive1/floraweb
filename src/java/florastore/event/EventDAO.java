@@ -59,7 +59,7 @@ public class EventDAO implements Serializable {
                     String eventImg = rs.getString("EventImg");
                     boolean eventStatus = rs.getBoolean("EventStatus");
                     EventDTO event
-                            = new EventDTO(eventOwner, eventId, eventName, eventLocation, eventCity, startDate, endDate, eventImg, eventStatus);
+                            = new EventDTO(eventOwner, eventId, eventName, eventLocation, eventCity, startDate, endDate, eventImg);
                     events.add(event);
                 }//process each record in resultset  
             }//connection has been available 
@@ -112,7 +112,7 @@ public class EventDAO implements Serializable {
                     int epQuantity = rs.getInt("EPQuantity");
                     double epPrice = rs.getDouble("EPPrice");
                     EventProductDTO product
-                            = new EventProductDTO(epId, eventId, epName, epType, epCondition, epDetail, img, epQuantity, epPrice, 0);
+                            = new EventProductDTO(epId, epName, epType, epCondition, epDetail, img, epQuantity, epPrice);
                     products.add(product);
                 }//process each record in resultset  
             }//connection has been available 
@@ -185,7 +185,7 @@ public class EventDAO implements Serializable {
         }
         return products;
     }
-    
+
     public String getEventNameByProductId(int productId)
             throws SQLException, NamingException {
 
@@ -272,7 +272,7 @@ public class EventDAO implements Serializable {
         return result;
     }
 
-        public boolean closeEvent(String eventID) throws SQLException, ClassNotFoundException, NamingException {
+    public boolean closeEvent(String eventID) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -685,7 +685,7 @@ public class EventDAO implements Serializable {
                     String city = rs.getString("City");
                     String deliveryOpt = rs.getString("DeliveryOption");
                     boolean isPaid = rs.getBoolean("isPaid");
-                    Timestamp orderDate = rs.getTimestamp("OrderDate");                    
+                    Timestamp orderDate = rs.getTimestamp("OrderDate");
                     if ("Chờ giao".equals(status)) {
                         EventOrderDTO dto
                                 = new EventOrderDTO(0, eventOrderId,
@@ -736,7 +736,7 @@ public class EventDAO implements Serializable {
             }
         }
     }
-    
+
     public void confirm2(int orderId) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -790,7 +790,7 @@ public class EventDAO implements Serializable {
             }
         }
     }
-    
+
     public void updatePaymentStatus(int orderId) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -817,7 +817,7 @@ public class EventDAO implements Serializable {
             }
         }
     }
-    
+
     public void cancelOrder(int orderId) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -974,7 +974,7 @@ public class EventDAO implements Serializable {
                     String eventName = rs.getString("EventName");
                     String eventLocation = rs.getString("EventLocation");
                     String eventCity = rs.getString("EventCity");
-                    
+
                     Timestamp startDate = rs.getTimestamp("StartDate");
                     Timestamp endDate = rs.getTimestamp("EndDate");
                     String eventImg = rs.getString("EventImg");
@@ -997,7 +997,7 @@ public class EventDAO implements Serializable {
         }
         return events;
     }
-    
+
     public void cancelEvent(int eventId) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -1024,7 +1024,7 @@ public class EventDAO implements Serializable {
             }
         }
     }
-    
+
     public List<EventProductDTO> getAvailableEventFlower(int eventId)
             throws SQLException, NamingException {
 
@@ -1041,11 +1041,10 @@ public class EventDAO implements Serializable {
                 String sql = "Select ep.EPId, ep.EPName, ep.EPType, ep.EPCondition, ep.EPDetail, ep.Img, ep.EPQuantity, ep.EPPrice "
                         + "From EventProduct ep "
                         + "Join Event e on ep.EventEventId = e.EventId "
-                        + "Where ep.EventEventId = ? AND isDel = ?";
+                        + "Where ep.EventEventId = ? AND isDel = 0";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, eventId);
-                stm.setInt(2, 0);
                 //4. Execute Query
                 rs = stm.executeQuery();
                 //5. process result
@@ -1061,7 +1060,7 @@ public class EventDAO implements Serializable {
                     int epQuantity = rs.getInt("EPQuantity");
                     double epPrice = rs.getDouble("EPPrice");
                     EventProductDTO product
-                            = new EventProductDTO(epId, eventId, epName, epType, epCondition, epDetail, img, epQuantity, epPrice, 0);
+                            = new EventProductDTO(epId, eventId, epName, epType, epCondition, epDetail, img, epQuantity, epPrice);
                     products.add(product);
                 }//process each record in resultset  
             }//connection has been available 
@@ -1078,7 +1077,7 @@ public class EventDAO implements Serializable {
         }
         return products;
     }
-    
+
     public void updateEPStatus(int epId) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;

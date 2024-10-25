@@ -15,7 +15,6 @@ public class EventProductDTO implements Serializable {
 
     private int eventEventId;
     private int eventProductId;
-    private int eventId;
     private String eventProductName;
     private String eventProductType;
     private String eventProductCondition;
@@ -23,7 +22,6 @@ public class EventProductDTO implements Serializable {
     private String eventProductImg;
     private int eventProductQuantity;
     private double eventProductPrice;
-    private int isDel;
 
     public EventProductDTO() {
     }

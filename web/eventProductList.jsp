@@ -121,7 +121,7 @@
                                                 <td>${product.eventProductQuantity}</td>
                                                 <td>${product.eventProductPrice}</td>
                                                 <td>
-                                                    <form action="updateEventProduct?eventProductId=${product.eventProductId}&eventId=${product.eventId}&page=${currentPage}" method="post" style="display:inline;">                                                        
+                                                    <form action="updateEventProduct?eventProductId=${product.eventProductId}&eventId=${product.eventEventId}&page=${currentPage}" method="post" style="display:inline;">                                                        
                                                         <button type="submit" name="action" value="cancel" class="delete-class">Xóa</button>
                                                     </form>
                                                 </td>

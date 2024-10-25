@@ -7,7 +7,7 @@ package florastore.servlet;
 
 import florastore.event.EventDAO;
 import florastore.event.EventProductAddNotification;
-import florastore.event.EventProductDTO;
+import florastore.eventProduct.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import javax.servlet.http.Part;
  *
  * @author Admin
  */
-@WebServlet(name = "AddEventProductServlet", urlPatterns = {"/AddEventProductServlet"})
+@WebServlet(name = "AddEventProductServlet", urlPatterns = {"/addEventProductAction"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 5, // 5 MB
         maxFileSize = 1024 * 1024 * 10, // 10 MB
@@ -124,7 +124,7 @@ public class AddEventProductServlet extends HttpServlet {
                 request.setAttribute("ERROR", error);
 
                 // Create a new EventProduct object and save to the database (pseudo code)
-                EventProductDTO newProduct = new EventProductDTO(0, eventId, productName, type, condition, detail, fileName, quantity, price - discount, 0);
+                EventProductDTO newProduct = new EventProductDTO(0, eventId, productName, type, condition, detail, fileName, quantity, price - discount);
 
                 // Assuming you have a DAO or service to add the product to the database
                 EventDAO dao = new EventDAO();
