@@ -68,7 +68,7 @@ public class monthlySellerServlet extends HttpServlet {
             EventSellerDAO dao = new EventSellerDAO();
             dao.loadTop5AmountByMonth(month, year, id);
             ArrayList<EventSellerRevenueDTO> list = dao.getListEventRevenue();
-            if (list != null && !list.isEmpty()) {
+            if (id != null && !id.isEmpty()) {
             request.setAttribute("pro1", list.get(0));
             request.setAttribute("pro2", list.get(1));
             request.setAttribute("pro3", list.get(2));
@@ -78,9 +78,8 @@ public class monthlySellerServlet extends HttpServlet {
             request.setAttribute("curMonth", month);
             }
             else{
-//                url = (String) siteMap.get(MyAppConstants.ManageAccountFeatures.ERROR_PAGE);
-                String alert = "Không có sản phẩm trong tháng này được bán";
-                request.setAttribute("alertMes", alert);
+               url = (String) siteMap.get(MyAppConstants.ManageAccountFeatures.ERROR_PAGE);
+
             }
         } catch (SQLException ex) {
             String msg = ex.getMessage();

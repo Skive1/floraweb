@@ -344,10 +344,12 @@
                                                 </form>
                                             </div>
                                         </c:forEach>
+                                        <a href="<c:url value='eventCategory'><c:param name='eventId' value='${requestScope.EVENT_ID}'/></c:url>">Add More Product</a>
                                     </c:if>
                                     <c:if test="${empty products}">
                                         Sản phẩm của Event này đang không tồn tại!!!
                                     </c:if>
+
                                     <div class="col-12">
                                         <nav aria-label="Page navigation">
                                             <ul class="pagination d-flex justify-content-center mt-5">

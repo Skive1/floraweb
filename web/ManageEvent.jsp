@@ -14,11 +14,8 @@
         <link rel="stylesheet" href="css/css/_all-skins.min.css">
         <link rel="stylesheet" href="css/css/jquery-ui.css">
         <link rel="stylesheet" href="css/style.css" />
-        <link rel="stylesheet" href="css/css/admincss.css" />
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <link rel="icon" href="img/flora-favicon.png"/>
+        <link rel="stylesheet" href="css/css/admincss.css"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">       
         <title>Manage Event</title>
     </head>
     <body>
@@ -30,26 +27,25 @@
                     </div>
                     <div class="admin-sidebar-content">
                         <ul>
+                            <div class="logout-admin"><a href="logoutAction" class="logout-btn">Logout</a></div>
+                            <p class="admin-p">Admin</p>
+                            <div class="admin-under-p">Flora Store Admin</div>
                             <li>
-                                <a href="" style="color: #131EAD"><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
-
+                                <a href="">
+                                    <i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i>
+                                </a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="dashBoard" style="color: #131EAD">Theo tuần</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard" style="color: #131EAD">Theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event theo tuần</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Sản phẩm theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyProductBoard">Sản phẩm theo tuần</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" style="color: #131EAD"><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
+                                <a href=""><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="manageAccount" style="color: #131EAD">Account</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="viewEvent" style="color: #131EAD">Event</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="" style="color: #131EAD"><i class="ri-file-list-line"></i>Order<i class="ri-add-circle-line"></i></a>
-                                <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="productList.html" style="color: #131EAD">Danh sách đơn hàng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="" style="color: #131EAD">Delivery</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="manageAccount">Account</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewEvent">Event</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -59,7 +55,7 @@
                     <div class="admin-content-top">
                         <div class="admin-content-top-left">
                             <ul class="flex-box">
-
+                                <a style="padding-left:20px" href="home"/><button type="button" class="btn btn-primary">BACK TO STORE</button></a>
                             </ul>          
                         </div>
                         <div class="admin-content-top-right">
@@ -223,7 +219,7 @@
                                     var totalFlower = ${requestScope.Total_Flower};
                                     function toggleDetails(index) {
                                         var detailsRow = document.getElementById("details-" + index);
-                                        var customSidebar = "105%";
+                                        var customSidebar = 105%;
                                         var customSidebar2 = "100vh";
                                         if (detailsRow.style.display === "none" || detailsRow.style.display === "") {
                                             detailsRow.style.display = "table-row"; // Hiện hàng chi tiết
@@ -428,6 +424,8 @@
         </div>
     </div> 
 </section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="alerJs.js"></script>
 <script src="js/javascript.js"></script>
 </body>

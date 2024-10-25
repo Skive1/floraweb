@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : shopDetail
     Created on : Sep 14, 2024, 1:25:17 PM
@@ -474,5 +475,4 @@
         <script src="js/newProduct.js"></script>
         <script src="js/main.js"></script>
     </body>
-
 </html>
