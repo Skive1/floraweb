@@ -513,9 +513,8 @@ public class EventDAO implements Serializable {
         return events;
     }
 
-
     public List<EventDTO> getNewForNotification(Timestamp currentTime)
-              throws SQLException, NamingException {
+            throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -548,9 +547,23 @@ public class EventDAO implements Serializable {
                     String eventImg = rs.getString("EventImg");
                     EventDTO event = new EventDTO(eventOwner, eventId, eventName, eventLocation, eventCity, startDate, endDate, eventImg);
                     events.add(event);
-              
+
                 }//process each record in resultset  
             }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return events;
+    }
+
     public boolean addEvent(EventDTO dto)
             throws SQLException, NamingException {
 
@@ -985,31 +998,38 @@ public class EventDAO implements Serializable {
     }
 
     public List<EventDTO> getEventByAccount(String accountUsername)
-                String sql = "SELECT EventId, EventName, EventLocation, EventCity, StartDate, EndDate, EventImg, EventStatus "
-                        + "FROM Event "
-                        + "Where AccountUsername Like ?";
-                //3. Create Statement Object
-                stm = con.prepareStatement(sql);
-                stm.setString(1, accountUsername);
-                //4. Execute Query
-                rs = stm.executeQuery();
-                //5. process result
-                while (rs.next()) {
-                    //. map
-                    //get data from Result Set
-                    int eventId = rs.getInt("EventId");
-                    String eventName = rs.getString("EventName");
-                    String eventLocation = rs.getString("EventLocation");
-                    String eventCity = rs.getString("EventCity");
-                    Timestamp startDate = rs.getTimestamp("StartDate");
-                    Timestamp endDate = rs.getTimestamp("EndDate");
-                    String eventImg = rs.getString("EventImg");
-                    boolean eventStatus = rs.getBoolean("EventStatus");
-                    EventDTO event
-                            = new EventDTO(accountUsername, eventId, eventName, eventLocation, eventCity, startDate, endDate, eventImg, eventStatus);
-                    events.add(event);
-                }//process each record in resultset  
-            }//connection has been available 
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<EventDTO> events = new ArrayList<>();
+        try {
+            // 1. Connect to DB
+            con = DBHelper.getConnection();
+            String sql = "SELECT EventId, EventName, EventLocation, EventCity, StartDate, EndDate, EventImg, EventStatus "
+                    + "FROM Event "
+                    + "Where AccountUsername Like ?";
+            //3. Create Statement Object
+            stm = con.prepareStatement(sql);
+            stm.setString(1, accountUsername);
+            //4. Execute Query
+            rs = stm.executeQuery();
+            //5. process result
+            while (rs.next()) {
+                //. map
+                //get data from Result Set
+                int eventId = rs.getInt("EventId");
+                String eventName = rs.getString("EventName");
+                String eventLocation = rs.getString("EventLocation");
+                String eventCity = rs.getString("EventCity");
+                Timestamp startDate = rs.getTimestamp("StartDate");
+                Timestamp endDate = rs.getTimestamp("EndDate");
+                String eventImg = rs.getString("EventImg");
+                boolean eventStatus = rs.getBoolean("EventStatus");
+                EventDTO event
+                        = new EventDTO(accountUsername, eventId, eventName, eventLocation, eventCity, startDate, endDate, eventImg, eventStatus);
+                events.add(event);
+            }//process each record in resultset  
         } finally {
             if (rs != null) {
                 rs.close();
