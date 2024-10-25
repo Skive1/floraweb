@@ -6,8 +6,10 @@
 package florastore.servlet;
 
 import florastore.account.AccountDTO;
-import florastore.revenue.EventSellerDAO;
-import florastore.revenue.EventSellerRevenueDTO;
+import florastore.revenue.DeliveryRevenueDAO;
+import florastore.revenue.DeliveryRevenueDTO;
+import florastore.revenue.RatesDeliveryPersonDAO;
+import florastore.revenue.RatesDeliveryPersonDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,13 +27,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 /**
  *
  * @author acer
  */
-@WebServlet(name = "monthlySellerServlet", urlPatterns = {"/monthlySellerServlet"})
-public class monthlySellerServlet extends HttpServlet {
+@WebServlet(name = "deliveryIncomeServlet", urlPatterns = {"/deliveryIncomeServlet"})
+public class deliveryIncomeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,47 +48,54 @@ public class monthlySellerServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.SELLER_DASHBOARD_PAGE);
-        String id = request.getParameter("eventInfo");
-        String monthStr = request.getParameter("month");
+        String url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.DELIVERY_DASHBOARD_PAGE);
         String yearStr = request.getParameter("year");
-        int month;
         int year;
-        if (monthStr == null || monthStr.isEmpty()) {
-            month = 10;
-        } else {
-            month = Integer.parseInt(monthStr);
-        }
-
         if (yearStr == null || yearStr.isEmpty()) {
             year = 2024;
         } else {
             year = Integer.parseInt(yearStr);
         }
-        HttpSession session = request.getSession(false);      
         try {
+            HttpSession session = request.getSession(false);
+            AccountDTO dto = (AccountDTO) session.getAttribute("USER");
+            String username = dto.getUsername();
+            if (dto != null) {
+                DeliveryRevenueDAO dao = new DeliveryRevenueDAO();
+                String id = dao.loadIdByUserName(username);
 
-            EventSellerDAO dao = new EventSellerDAO();
-            dao.loadTop5AmountByMonth(month, year, id);
-            ArrayList<EventSellerRevenueDTO> list = dao.getListEventRevenue();
-            if (session.getAttribute("ListEventId") != null) {
-            request.setAttribute("pro1", list.get(0));
-            request.setAttribute("pro2", list.get(1));
-            request.setAttribute("pro3", list.get(2));
-            request.setAttribute("pro4", list.get(3));
-            request.setAttribute("pro5", list.get(4));
-            request.setAttribute("MonthList", list);
-            request.setAttribute("curMonth", month);
-            }
-            else{
-               url = (String) siteMap.get(MyAppConstants.ManageAccountFeatures.ERROR_PAGE);
+                dao.loadTotalRevenueByYear(id, year);
+                ArrayList<DeliveryRevenueDTO> listYear = dao.getlistTotal();
+                request.setAttribute("month1", listYear.get(0));
+                request.setAttribute("month2", listYear.get(1));
+                request.setAttribute("month3", listYear.get(2));
+                request.setAttribute("month4", listYear.get(3));
+                request.setAttribute("month5", listYear.get(4));
+                request.setAttribute("month6", listYear.get(5));
+                request.setAttribute("month7", listYear.get(6));
+                request.setAttribute("month8", listYear.get(7));
+                request.setAttribute("month9", listYear.get(8));
+                request.setAttribute("month10", listYear.get(9));
+                request.setAttribute("month11", listYear.get(10));
+                request.setAttribute("month12", listYear.get(11));
+                request.setAttribute("allMonth", listYear);
+                
+                dao.loadTotalOrderByYear(id, year);
+                ArrayList<DeliveryRevenueDTO> listOrder = dao.getlistOrder();
+                request.setAttribute("listOrder", listOrder);
+                request.setAttribute("curYear",year);        
+                
+                RatesDeliveryPersonDAO rateDao = new RatesDeliveryPersonDAO();
+//                rateDao.rateStarById(id);
+                ArrayList<RatesDeliveryPersonDTO> listRate = rateDao.getRateSummaryByStaffId(id);
+                request.setAttribute("listRating", listRate);           
             }
         } catch (SQLException ex) {
             String msg = ex.getMessage();
-            log("MonthlySellerServlet _ SQL: " + msg);
+            log("deliveryIncomeServlet _ SQL: " + msg);
         } catch (NamingException ex) {
             String msg = ex.getMessage();
-            log("MonthlySellerServlet _ SQL: " + msg);
+            log("deliveryIncomeServlet _ Naming: " + msg);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

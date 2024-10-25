@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
@@ -12,20 +13,21 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/GitHubSWP/floraweb/web/WEB-INF/siteMap.properties</file>
             <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/revenueDAO.java</file>
             <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/EventSellerRevenueDTO.java</file>
+            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/EventRevenueDAO.java</file>
             <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/EventSellerDTO.java</file>
             <file>file:/D:/GitHubSWP/floraweb/web/sellerDBEvent.jsp</file>
             <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/EventSellerDAO.java</file>
             <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/servlet/monthlySellerServlet.java</file>
-            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/servlet/ShowEventIdServlet.java</file>
             <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/servlet/MonthlyRevenueServlet.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/AdminManageAccount.jsp</file>
         </group>
         <group>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/HomePageJSP.jsp</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/src/java/florastore/ajax/event/servlet/NewEventProductNotificationServlet.java</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/deliveryRevenue.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/MonthlyDB.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/ManageEvent.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/servlet/monthlySellerServlet.java</file>
+            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/servlet/ShowEventIdServlet.java</file>
         </group>
     </open-files>
 </project-private>
