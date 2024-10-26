@@ -16,6 +16,8 @@
         <link rel="stylesheet" href="css/_all-skins.min.css">
         <link rel="stylesheet" href="css/jquery-ui.css">
         <link rel="stylesheet" href="css/style.css" />
+        <!-- FavIcon -->
+        <link rel="icon" href="img/flora-favicon.png"/>
         <title>Seller Order</title>
     </head>
     <body>

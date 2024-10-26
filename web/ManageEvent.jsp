@@ -13,9 +13,13 @@
         <!-- <link rel="stylesheet" href="css/AdminLTE.css"> -->
         <link rel="stylesheet" href="css/css/_all-skins.min.css">
         <link rel="stylesheet" href="css/css/jquery-ui.css">
-        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/css/admincss.css"/>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">       
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- FavIcon -->
+        <link rel="icon" href="img/flora-favicon.png"/>
         <title>Manage Event</title>
     </head>
     <body>
@@ -219,8 +223,9 @@
                                     var totalFlower = ${requestScope.Total_Flower};
                                     function toggleDetails(index) {
                                         var detailsRow = document.getElementById("details-" + index);
-                                        var customSidebar = 105%;
-                                        var customSidebar2 = "100vh";
+                                        var customSidebar = 105
+                                        % ;
+                                                var customSidebar2 = "100vh";
                                         if (detailsRow.style.display === "none" || detailsRow.style.display === "") {
                                             detailsRow.style.display = "table-row"; // Hiện hàng chi tiết
                                             infoCounter++; // Tăng biến đếm khi hiển thị chi tiết

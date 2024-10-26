@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
@@ -13,11 +12,24 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/eventProductList.jsp</file>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/WEB-INF/siteMap.properties</file>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/EventDetail.jsp</file>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/addEventProduct.jsp</file>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/web/deliveredList.jsp</file>
+        </group>
+        <group>
+            <file>file:/D:/GitHubSWP/floraweb/web/WEB-INF/siteMap.properties</file>
             <file>file:/D:/GitHubSWP/floraweb/web/deliveryRevenue.jsp</file>
-            <file>file:/D:/GitHubSWP/floraweb/web/MonthlyDB.jsp</file>
-            <file>file:/D:/GitHubSWP/floraweb/web/ManageEvent.jsp</file>
-            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/servlet/monthlySellerServlet.java</file>
-            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/servlet/ShowEventIdServlet.java</file>
+            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/RatesDeliveryPersonDAO.java</file>
+            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/DeliveryRevenueDAO.java</file>
+            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/servlet/deliveryIncomeServlet.java</file>
+            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/RatesDeliveryPersonDTO.java</file>
+        </group>
+        <group>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/src/java/florastore/servlet/PlaceOrderServlet.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/src/java/florastore/shop/vnpay/VNPayShopConfig.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/src/java/florastore/shop/vnpay/VNPayServlet.java</file>
         </group>
         <group>
             <file>file:/D:/GitHubSWP/floraweb/web/WEB-INF/siteMap.properties</file>

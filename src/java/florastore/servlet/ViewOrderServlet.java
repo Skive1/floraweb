@@ -106,8 +106,10 @@ public class ViewOrderServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("ViewOrderServlet_Naming_" + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            if (!response.isCommitted()) {
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            }
         }
     }
 

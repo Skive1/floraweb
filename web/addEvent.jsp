@@ -36,6 +36,8 @@
         <link rel="stylesheet" href="ckeditor5-builder-43.2.0/style.css">
         <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css">
         <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+        <!-- FavIcon -->
+        <link rel="icon" href="img/flora-favicon.png"/>
         <title>Admin</title>
     </head>
     <body>
