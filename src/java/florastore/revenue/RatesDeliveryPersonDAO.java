@@ -85,7 +85,6 @@ public class RatesDeliveryPersonDAO implements Serializable {
             while (rs.next()) {
                 int totalRateStar = rs.getInt("TotalRateStar");
                 int totalRecords = rs.getInt("TotalRecords");
-
                 RatesDeliveryPersonDTO rateSummary = new RatesDeliveryPersonDTO(totalRateStar, totalRecords);
                 rateSummaryList.add(rateSummary);
             }
