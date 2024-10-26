@@ -2,13 +2,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/css/style.css">
-        <link rel="stylesheet" href="css/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/css/font-awesome.min.css">
         <!-- <link rel="stylesheet" href="css/AdminLTE.css"> -->
         <link rel="stylesheet" href="css/css/_all-skins.min.css">
@@ -17,6 +18,9 @@
         <link rel="stylesheet" href="css/css/admincss.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="icon" href="img/flora-favicon.png"/>
         <title>Manage Event</title>
     </head>
@@ -74,8 +78,8 @@
                         <div class="admin-content-main-title">
                             <h1>Event List</h1>
                         </div> 
-<!--                        style="display: flex; padding-left: 0; margin: 20px 0; border-radius: 4px; justify-content: center"-->
-<!--style="display: flex; padding-left: 0; list-style: none"-->
+                        <!--                        style="display: flex; padding-left: 0; margin: 20px 0; border-radius: 4px; justify-content: center"-->
+                        <!--style="display: flex; padding-left: 0; list-style: none"-->
                         <div class="admin-content-main-content">
                             <!-- N?i dung ? ?ây -->
                             <div class="admin-content-main-content-product-list">
@@ -279,7 +283,7 @@
                                                            onclick="document.getElementById('pageNo').value = '${i}';
                                                                    document.getElementById('paginationForm').submit();
                                                                    return false;" 
-                                                                   style="margin: 1px; background-color: #000066; border-color: black; color: white; padding: 9px 15px 9px 15px;
+                                                           style="margin: 1px; background-color: #000066; border-color: black; color: white; padding: 9px 15px 9px 15px;
                                                            font-weight: bold">${i}</a>
                                                     </c:if>
                                                     <c:if test="${sessionScope.currentPage != i}">
