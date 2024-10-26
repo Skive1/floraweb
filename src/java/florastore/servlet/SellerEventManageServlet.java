@@ -5,6 +5,7 @@
  */
 package florastore.servlet;
 
+import florastore.account.AccountDTO;
 import florastore.event.EventDAO;
 import florastore.event.EventDTO;
 import florastore.event.EventOrderDTO;
@@ -45,42 +46,52 @@ public class SellerEventManageServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.EVENT_LIST);
+        String url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.RESTRICT);
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         String account = null;
-        if (session != null) {
-            account = (String) session.getAttribute("USERNAME");
-        }
+        AccountDTO dto = null;
 
         try {
-            EventDAO dao = new EventDAO();
-            List<EventDTO> events = dao.getEventByAccount(account);
+            if (session != null) {
+                account = (String) session.getAttribute("USERNAME");
+                dto = (AccountDTO) session.getAttribute("USER");
+                if ("Seller".equals(dto.getRole())) {
+                    url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.EVENT_LIST);
+                    EventDAO dao = new EventDAO();
+                    List<EventDTO> events = dao.getEventByAccount(account);
 
-            // Paging
-            int pageSize = 5; // Number of orders per page
-            String pageParam = request.getParameter("page"); // Get the current page number from the request
-            int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
-            int totalEvents = events.size();
-            int totalPages = (int) Math.ceil((double) totalEvents / pageSize);
+                    // Paging
+                    int pageSize = 5; // Number of orders per page
+                    String pageParam = request.getParameter("page"); // Get the current page number from the request
+                    int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
+                    int totalEvents = events.size();
+                    int totalPages = (int) Math.ceil((double) totalEvents / pageSize);
 
-            // Calculate the starting and ending indexes for the sublist of products to display
-            int start = (currentPage - 1) * pageSize;
-            int end = Math.min(start + pageSize, totalEvents);
+                    // Calculate the starting and ending indexes for the sublist of products to display
+                    int start = (currentPage - 1) * pageSize;
+                    int end = Math.min(start + pageSize, totalEvents);
 
-            // Get the products for the current page
-            List<EventDTO> eventsForPage = events.subList(start, end);
+                    // Get the products for the current page
+                    List<EventDTO> eventsForPage = events.subList(start, end);
 
-            session.setAttribute("EVENTS", eventsForPage);
-            request.setAttribute("currentPage", currentPage);
-            request.setAttribute("totalPages", totalPages);
+                    session.setAttribute("EVENTS", eventsForPage);
+                    request.setAttribute("currentPage", currentPage);
+                    request.setAttribute("totalPages", totalPages);
+                }
+            } else if (session == null) {
+                url = MyAppConstants.SellerManagementFeatures.SESSION_PAGE;
+                response.sendRedirect(url);
+            }
         } catch (SQLException ex) {
             log("SellerEventManageServlet _SQL_" + ex.getMessage());
         } catch (NamingException ex) {
             log("SellerEventManageServlet _Naming_" + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            if (!response.isCommitted()) {
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            }
         }
     }
 

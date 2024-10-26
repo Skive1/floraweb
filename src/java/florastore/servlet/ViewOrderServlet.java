@@ -6,6 +6,7 @@
 package florastore.servlet;
 
 import com.google.gson.Gson;
+import florastore.account.AccountDTO;
 import florastore.event.EventDAO;
 import florastore.event.EventOrderDTO;
 import florastore.event.EventOrderDetailDTO;
@@ -49,49 +50,57 @@ public class ViewOrderServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.ViewEventOrderFeatures.ORDER_LIST_PAGE);
+        String url = (String) siteMap.get(MyAppConstants.ViewEventOrderFeatures.RESTRICT);
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
+        AccountDTO dto = null;
         String username = null;
-        if(session != null){
-            username = (String) session.getAttribute("USERNAME");
-        }
 
         try {
-            //call method of order list
-            EventDAO dao = new EventDAO();
-            List<EventOrderDTO> orders = dao.getOrders(username);
+            if (session != null) {
+                username = (String) session.getAttribute("USERNAME");
+                dto = (AccountDTO) session.getAttribute("USER");
+                if ("Seller".equals(dto.getRole())) {
+                    url = (String) siteMap.get(MyAppConstants.ViewEventOrderFeatures.ORDER_LIST_PAGE);
+                    //call method of order list
+                    EventDAO dao = new EventDAO();
+                    List<EventOrderDTO> orders = dao.getOrders(username);
 
-            // Paging
-            int pageSize = 5; // Number of orders per page
-            String pageParam = request.getParameter("page"); // Get the current page number from the request
-            int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
-            int totalOrders = orders.size();
-            int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
+                    // Paging
+                    int pageSize = 5; // Number of orders per page
+                    String pageParam = request.getParameter("page"); // Get the current page number from the request
+                    int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
+                    int totalOrders = orders.size();
+                    int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
 
-            // Calculate the starting and ending indexes for the sublist of products to display
-            int start = (currentPage - 1) * pageSize;
-            int end = Math.min(start + pageSize, totalOrders);
+                    // Calculate the starting and ending indexes for the sublist of products to display
+                    int start = (currentPage - 1) * pageSize;
+                    int end = Math.min(start + pageSize, totalOrders);
 
-            // Get the products for the current page
-            List<EventOrderDTO> ordersForPage = orders.subList(start, end);
+                    // Get the products for the current page
+                    List<EventOrderDTO> ordersForPage = orders.subList(start, end);
 
-            //call method of order detail
-            // Map to store order details for each order
-            Map<Integer, List<EventOrderDetailDTO>> allOrderDetails = new HashMap<>();
+                    //call method of order detail
+                    // Map to store order details for each order
+                    Map<Integer, List<EventOrderDetailDTO>> allOrderDetails = new HashMap<>();
 
-            for (EventOrderDTO order : orders) {
-                // Call method to get the details for each order
-                List<EventOrderDetailDTO> details = dao.getOrderDetails(order.getEventOrderId());
+                    for (EventOrderDTO order : orders) {
+                        // Call method to get the details for each order
+                        List<EventOrderDetailDTO> details = dao.getOrderDetails(order.getEventOrderId());
 
-                // Store the details in the map with the eventOrderId as the key
-                allOrderDetails.put(order.getEventOrderId(), details);
+                        // Store the details in the map with the eventOrderId as the key
+                        allOrderDetails.put(order.getEventOrderId(), details);
+                    }
+
+                    session.setAttribute("DETAILS", allOrderDetails);
+                    session.setAttribute("orderList", ordersForPage);
+                    request.setAttribute("currentPage", currentPage);
+                    request.setAttribute("totalPages", totalPages);
+                }
+            } else if (session == null) {
+                url = MyAppConstants.ViewEventOrderFeatures.SESSION_PAGE;
+                response.sendRedirect(url);
             }
-
-            session.setAttribute("DETAILS", allOrderDetails);
-            session.setAttribute("orderList", ordersForPage);
-            request.setAttribute("currentPage", currentPage);
-            request.setAttribute("totalPages", totalPages);
         } catch (SQLException ex) {
             log("ViewOrderServlet_SQL_" + ex.getMessage());
         } catch (NamingException ex) {
