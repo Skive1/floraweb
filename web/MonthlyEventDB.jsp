@@ -22,7 +22,8 @@
         <link rel="stylesheet" href="css/css/admincss.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+        <!-- FavIcon -->
+        <link rel="icon" href="img/flora-favicon.png"/>
         <title>Monthly Event DashBoard</title>
     </head>
     <style>

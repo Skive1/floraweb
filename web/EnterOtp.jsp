@@ -15,7 +15,8 @@
 
         <link rel="stylesheet"
               href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
+        <!-- FavIcon -->
+        <link rel="icon" href="img/flora-favicon.png"/>
         <style type="text/css">
             .form-gap {
                 padding-top: 70px;
