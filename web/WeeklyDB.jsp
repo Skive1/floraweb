@@ -22,7 +22,9 @@
         <link rel="stylesheet" href="css/css/admincss.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>       
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>     
+        <!-- FavIcon -->
+        <link rel="icon" href="img/flora-favicon.png"/>
         <title>Weekly Event DashBoard</title>
         <style>
             .form-container {

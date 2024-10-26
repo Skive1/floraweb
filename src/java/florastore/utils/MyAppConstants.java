@@ -65,6 +65,7 @@ public class MyAppConstants {
 
         public static final String DETAIL_PAGE = "productDetailPage";
         public static final String ERROR_PAGE = "error404";
+        public static final String VIEW_CART_PAGE = "cartPage";
     }
 
     public class ShopFeatures {
@@ -85,6 +86,7 @@ public class MyAppConstants {
 
     public class ShowProductManager {
 
+        public static final String SESSION_PAGE = "sessionExpired";
         public static final String INVALID_PAGE = "homePage";
         public static final String STORE_PAGE = "managerPage";
         public static final String ERROR_PAGE = "error404";
@@ -150,6 +152,8 @@ public class MyAppConstants {
     }
 
     public class DashBoardFeatures {
+
+        public static final String SESSION_PAGE = "sessionExpired";
         public static final String DASHBOARD_PAGE = "dashBoard";
         public static final String ERROR_PAGE = "error404";
         public static final String MONTHLY_PAGE = "monthlyBoard";
@@ -157,13 +161,46 @@ public class MyAppConstants {
         public static final String MONTHLY_EVENT_PAGE = "monthlyEvent";
         public static final String WEEKLY_PRODUCT_PAGE = "weeklyProductBoard";
         public static final String SELLER_DASHBOARD_PAGE = "sellerDashboard";
+        public static final String DELIVERY_DASHBOARD_PAGE = "deliveryBoard";
     }
 
     public class CartAddItemFeatures {
 
         public static final String SHOP_VIEW = "shoppingAction";
         public static final String VIEW_CART_PAGE = "cartPage";
+        public static final String ERROR_PAGE = "insufficient.html";
+    }
+
+    public class AddEventFeatures {
+
+        public static final String ADD_EVENT_PAGE = "addEventPage";
+        public static final String HOME_PAGE = "home";
+    }
+
+    public class AddEventProductFeatures {
+
+        public static final String ADD_EVENT_PRODUCT_PAGE = "addEventProductPage";
+        public static final String ERROR_PAGE = "error404";
+    }
+
+    public class ViewEventOrderFeatures {
+
+        public static final String ORDER_LIST_PAGE = "orderList";
+        public static final String DELIVERED_LIST_PAGE = "deliveredList";
+        public static final String VIEW_ORDER_LIST = "viewOrderAction";
+        public static final String SESSION_PAGE = "sessionExpired";
+        public static final String RESTRICT = "error404";
+    }
+
+    public class SellerManagementFeatures {
+
+        public static final String EVENT_LIST = "sellerManageEventPage";
+        public static final String VIEW_EVENT_LIST = "viewSellerEvent";
+        public static final String PRODUCT_LIST = "sellerManageEventProductPage";
+        public static final String VIEW_EVENT_PRODUCT = "viewSellerEventProduct";
         public static final String ERROR_PAGE = "productDetail";
+        public static final String SESSION_PAGE = "sessionExpired";
+        public static final String RESTRICT = "error404";
     }
 
     public class CartFeatures {
@@ -223,5 +260,12 @@ public class MyAppConstants {
     public class PurchasedOrderFeatures {
 
         public static final String PURCHASED_ORDER = "purchasedOrderPage";
+    }
+
+    public class SellerViewEventFeedbackFeatures {
+
+        public static final String VIEW_FEEDBACK = "viewFeebackPage";
+        public static final String ERROR_PAGE = "error404";
+        public static final String SESSION_PAGE = "sessionExpired";
     }
 }

@@ -23,7 +23,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -46,7 +46,7 @@ public class monthlySellerServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.SELLER_DASHBOARD_PAGE);
+        String url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.ERROR_PAGE);
         String id = request.getParameter("eventInfo");
         String monthStr = request.getParameter("month");
         String yearStr = request.getParameter("year");
@@ -63,34 +63,43 @@ public class monthlySellerServlet extends HttpServlet {
         } else {
             year = Integer.parseInt(yearStr);
         }
+        HttpSession session = request.getSession(false);
+        AccountDTO dto = null;
         try {
-
-            EventSellerDAO dao = new EventSellerDAO();
-            dao.loadTop5AmountByMonth(month, year, id);
-            ArrayList<EventSellerRevenueDTO> list = dao.getListEventRevenue();
-            if (list != null && !list.isEmpty()) {
-            request.setAttribute("pro1", list.get(0));
-            request.setAttribute("pro2", list.get(1));
-            request.setAttribute("pro3", list.get(2));
-            request.setAttribute("pro4", list.get(3));
-            request.setAttribute("pro5", list.get(4));
-            request.setAttribute("MonthList", list);
-            request.setAttribute("curMonth", month);
-            }
-            else{
-//                url = (String) siteMap.get(MyAppConstants.ManageAccountFeatures.ERROR_PAGE);
-                String alert = "Không có sản phẩm trong tháng này được bán";
-                request.setAttribute("alertMes", alert);
+            if (session != null) {
+                dto = (AccountDTO) session.getAttribute("USER");
+                if ("Seller".equals(dto.getRole())) {
+                    EventSellerDAO dao = new EventSellerDAO();
+                    dao.loadTop5AmountByMonth(month, year, id);
+                    ArrayList<EventSellerRevenueDTO> list = dao.getListEventRevenue();
+                    if (session.getAttribute("ListEventId") != null) {
+                        url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.SELLER_DASHBOARD_PAGE);
+                        request.setAttribute("pro1", list.get(0));
+                        request.setAttribute("pro2", list.get(1));
+                        request.setAttribute("pro3", list.get(2));
+                        request.setAttribute("pro4", list.get(3));
+                        request.setAttribute("pro5", list.get(4));
+                        request.setAttribute("MonthList", list);
+                        request.setAttribute("curMonth", month);
+                    } else {
+                        url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.ERROR_PAGE);
+                    }
+                }
+            } else if (session == null) {
+                url = MyAppConstants.DashBoardFeatures.SESSION_PAGE;
+                response.sendRedirect(url);
             }
         } catch (SQLException ex) {
             String msg = ex.getMessage();
             log("MonthlySellerServlet _ SQL: " + msg);
         } catch (NamingException ex) {
             String msg = ex.getMessage();
-            log("MonthlySellerServlet _ SQL: " + msg);
+            log("MonthlySellerServlet _ Naming: " + msg);
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            if (!response.isCommitted()) {
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            }
         }
     }
 
