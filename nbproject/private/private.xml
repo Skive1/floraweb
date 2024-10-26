@@ -31,5 +31,13 @@
             <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/src/java/florastore/shop/vnpay/VNPayShopConfig.java</file>
             <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/SWP391/src/java/florastore/shop/vnpay/VNPayServlet.java</file>
         </group>
+        <group>
+            <file>file:/D:/GitHubSWP/floraweb/web/WEB-INF/siteMap.properties</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/deliveryRevenue.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/RatesDeliveryPersonDAO.java</file>
+            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/DeliveryRevenueDAO.java</file>
+            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/servlet/deliveryIncomeServlet.java</file>
+            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/RatesDeliveryPersonDTO.java</file>
+        </group>
     </open-files>
 </project-private>
