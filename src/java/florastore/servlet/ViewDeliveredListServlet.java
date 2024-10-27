@@ -102,7 +102,6 @@ public class ViewDeliveredListServlet extends HttpServlet {
                     //call method of order detail
                     // Map to store order details for each order
                     Map<Integer, List<EventOrderDetailDTO>> allOrderDetails = new HashMap<>();
-                    Map<Integer, String> mapPrice = new HashMap<>();
                     for (int i = 0; i < delivered.size(); i++) {
                         List<EventOrderDetailDTO> details = dao.getOrderDetails(delivered.get(i).getEventOrderId());
                         allOrderDetails.put(delivered.get(i).getEventOrderId(), details);
@@ -113,9 +112,10 @@ public class ViewDeliveredListServlet extends HttpServlet {
                             total += flowerPrice.getUnitPrice() * flowerPrice.getQuantity();
                         }
                         totalOut = df.format(total);
-                        mapPrice.put(delivered.get(i).getEventOrderId(), totalOut);
+                        TotalPriceDTO result = new TotalPriceDTO(delivered.get(i).getEventOrderId(), totalOut);
+                        totalPrint.add(result);
                     }
-                    request.setAttribute("TOTAL", mapPrice);
+                    request.setAttribute("TOTAL", totalPrint);
                     session.setAttribute("DETAILS", allOrderDetails);
                     session.setAttribute("DELIVERED", ordersForPage);
 
