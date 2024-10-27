@@ -7,6 +7,7 @@ package florastore.searchProduct;
 
 import florastore.DeliveryOrder.DeliverDTO;
 import florastore.event.EventDTO;
+import florastore.event.EventOrderDTO;
 import florastore.searchProduct.ProductDTO;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -175,6 +176,18 @@ public class ServiceLayer {
         return result;
     }
 
+    public List<EventOrderDTO> getSevenSellerOrder(List<EventOrderDTO> list, int[] range) {        //get X product in page N
+        List<EventOrderDTO> result = new ArrayList<>();
+        int addCounter = 1;
+        for (EventOrderDTO inPage : list) {
+            if (range[0] <= addCounter && addCounter <= range[1]) {
+                result.add(inPage);
+            }
+            addCounter++;
+        }
+        return result;
+    }
+    
     public int getPage(String pageIsActive, String goBack, String goForward) {
         int page = 0;
         //nếu chuyển qua trang 2, 3, ... thì pageNumber đã ko còn là null

@@ -50,28 +50,28 @@
                             <p class="admin-p">Seller</p>
                             <div class="admin-under-p" style="margin: 1px 5px 5px 5px">Flora Store Seller</div>
                             <li>
-                                <a href="" style="color: #131EAD"><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #337AB7"><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell" style="color: #131EAD">Sản phẩm theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell" style="color: #337AB7">Sản phẩm theo tháng</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" style="color: #131EAD"><i class="ri-file-list-line"></i>Quản lý sự kiện<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Quản lý sự kiện<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent" style="color: #131EAD">Event</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent" style="color: #337AB7">Event</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" style="color: #131EAD"><i class="ri-file-list-line"></i>Quản lý đơn hàng<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Quản lý đơn hàng<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction" style="color: #131EAD">Đơn hàng chờ giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction" style="color: #131EAD">Đơn hàng đã giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction" style="color: #337AB7">Đơn hàng chờ giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction" style="color: #337AB7">Đơn hàng đã giao</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" style="color: #131EAD"><i class="ri-file-list-line"></i>Feedback<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Feedback<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks" style="color: #131EAD">Xem feedback</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks" style="color: #337AB7">Xem feedback</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -114,9 +114,6 @@
                                             <th>Địa chỉ</th>
                                             <th>Ghi chú</th>
                                             <th>Chi tiết</th>
-                                            <th>Ngày đặt</th>
-                                            <th>Phương thức giao hàng</th>
-                                            <th>Thanh toán</th>
                                             <th>Trạng thái</th>
                                             <th>Tùy chỉnh</th>
                                         </tr>
@@ -128,14 +125,16 @@
                                                 <td>${order.fullname}</td>
                                                 <td>${order.phone}</td>
                                                 <td>${order.street}</td>
-                                                <td>
-                                                    <c:if test="${not empty order.note}">
+                                                <c:if test="${not empty order.note}">
+                                                    <td style="color: #9f191f">
                                                         ${order.note}
-                                                    </c:if>
-                                                    <c:if test="${empty order.note}">
+                                                    </td>
+                                                </c:if>
+                                                <c:if test="${empty order.note}">
+                                                    <td>
                                                         -
-                                                    </c:if>
-                                                </td>
+                                                    </td>
+                                                </c:if>
                                                 <td>
                                                     <button type="button" class="btn btn-primary" data-toggle="modal" 
                                                             data-target="#view${counter.count}" style="color: white">
@@ -149,10 +148,12 @@
                                                                     <thead>
                                                                         <tr>
                                                                             <th style="background-color: #007bff; color: white">STT</th>
-                                                                            <th style="background-color: #007bff; color: white">EPName</th>
-                                                                            <th style="background-color: #007bff; color: white">Quantity</th>
-                                                                            <th style="background-color: #007bff; color: white">UnitPrice</th>
-                                                                            <th style="background-color: #007bff; color: white">Discount</th>
+                                                                            <th style="background-color: #007bff; color: white">Tên sản phẩm</th>
+                                                                            <th style="background-color: #007bff; color: white">Ngày đặt</th>
+                                                                            <th style="background-color: #007bff; color: white">Phương thức vận chuyển</th>
+                                                                            <th style="background-color: #007bff; color: white">Số lượng</th>
+                                                                            <th style="background-color: #007bff; color: white">Đơn giá</th>
+                                                                            <th style="background-color: #007bff; color: white">Giảm giá</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -160,23 +161,40 @@
                                                                             <tr>
                                                                                 <td>${counter.count}</td>
                                                                                 <td>${detail.eventProductName}</td>
+                                                                                <td><fmt:formatDate value="${order.orderDate}" pattern="dd-MM-yyyy" /></td>
+                                                                                <td>
+                                                                                    <c:if test="${order.deliveryOption == 'Delivery'}">
+                                                                                        <a style="color: #28a745">
+                                                                                            Giao hàng tận nơi
+                                                                                        </a>
+                                                                                    </c:if>
+                                                                                    <c:if test="${order.deliveryOption == 'Pick Up'}">
+                                                                                        <a style="color: red">
+                                                                                            Nhận tại cửa hàng
+                                                                                        </a>
+                                                                                    </c:if>
+                                                                                </td>
                                                                                 <td>${detail.quantity}</td>
                                                                                 <td>${detail.unitPrice}</td>
-                                                                                <td>${detail.discount}</td>
+                                                                                <td>
+                                                                                    <fmt:formatNumber value="${detail.discount}" pattern="#,##%"/>
+                                                                                </td>
                                                                             </tr>
                                                                         </c:forEach>
-                                                                        <c:forEach var="detail" items="${sessionScope.DETAILS[order.eventOrderId]}" varStatus="counter">
-                                                                            <tr>
-                                                                                <c:if test="${order.isPaid == true}">
-                                                                                    <td colspan="5"></td>
-                                                                                    <td style="font-weight: 700; color: green">Đơn hàng đã được thanh toán</td>
-                                                                                </c:if>
-                                                                                <c:if test="${order.isPaid == false}">
-                                                                                    <td colspan="6"></td>
-                                                                                </c:if>
-                                                                                <td style="font-weight: 700;">Tổng giá:</td>
-                                                                                <td style="font-weight: 700;" >${detail.total}</td> 
-                                                                            </tr>
+                                                                        <c:forEach var="total" items="${requestScope.TOTAL}" varStatus="counter3">
+                                                                            <c:if test="${order.eventOrderId == total.eventId}">
+                                                                                <tr>
+                                                                                    <c:if test="${order.isPaid == true}">
+                                                                                        <td colspan="4"></td>
+                                                                                        <td style="font-weight: 700; color: green">Đơn hàng đã được thanh toán</td>
+                                                                                    </c:if>
+                                                                                    <c:if test="${order.isPaid == false}">
+                                                                                        <td colspan="5"></td>
+                                                                                    </c:if>
+                                                                                    <td style="font-weight: 700;">Tổng giá:</td>
+                                                                                    <td style="font-weight: 700;" >${total.total}</td> 
+                                                                                </tr>
+                                                                            </c:if>
                                                                         </c:forEach>
                                                                     </tbody>
                                                                 </table>
@@ -184,90 +202,286 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><fmt:formatDate value="${order.orderDate}" pattern="yyyy-MM-dd" /></td>
-                                                <td>${order.deliveryOption}</td>
-                                                <td>
-                                                    <c:if test="${order.isPaid == true}">
-                                                        <a style="color: green">
-                                                            Đã thanh toán
-                                                        </a>
-                                                    </c:if>
-                                                    <c:if test="${order.isPaid == false}">
-                                                        <a style="color: red">
-                                                            Chưa thanh toán
-                                                        </a>
-                                                    </c:if>
-                                                </td>
                                                 <td style="color: #9f191f">
                                                     ${order.status}
                                                 </td>
                                                 <td>
-                                                    <form action="updateOrder?eventOrderId=${order.eventOrderId}&accountUsername=${sessionScope.USER.username}&deliveryOpt=${order.deliveryOption}&page=${currentPage}" method="post" style="display:inline;">
-                                                        <button type="submit" name="action" value="confirm" class="btn btn-primary" 
-                                                                style="background-color: green">Xác nhận</button>
-                                                        <button type="submit" name="action" value="cancel" class="btn btn-primary"
-                                                                style="background-color: red">Hủy</button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                            <tr id="details-${counter.count}" style="display:none;">
-                                                <td colspan="9">
-                                                    <div>
-                                                        <strong>Order Details:</strong>
-                                                        <table>
-                                                            <thead>
-                                                                <tr>
-                                                                    <th style="background-color:#00c0ef">STT</th>
-                                                                    <th style="background-color:#00c0ef">EPName</th>
-                                                                    <th style="background-color:#00c0ef">Quantity</th>
-                                                                    <th style="background-color:#00c0ef">UnitPrice</th>
-                                                                    <th style="background-color:#00c0ef">Discount</th>
-                                                                    <th style="background-color:#00c0ef">Total</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <c:forEach var="detail" items="${sessionScope.DETAILS[order.eventOrderId]}" varStatus="counter">
-                                                                    <tr>
-                                                                        <td>${counter.count}</td>
-                                                                        <td>${detail.eventProductName}</td>
-                                                                        <td>${detail.quantity}</td>
-                                                                        <td>${detail.unitPrice}</td>
-                                                                        <td>${detail.discount}</td>
-                                                                        <td>${detail.total}</td>
-                                                                    </tr>
-                                                                </c:forEach>
-                                                            </tbody>
-                                                        </table>
+                                                    <button type="submit" class="btn btn-primary" data-toggle="modal" value="confirm"
+                                                            data-target="#exampleModal${counter.count}" style="background-color: green">
+                                                        Xác nhận
+                                                    </button>
+                                                    <div class="modal fade" id="exampleModal${counter.count}" tabindex="-1" role="dialog" 
+                                                         aria-labelledby="exampleModalLabel${counter.count}" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel${counter.count}">Xác nhận nhận đơn hàng</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    Bạn có chắc chắn muốn chuyển đơn cho đơn vị giao hàng?
+                                                                    <br/>
+                                                                    <a style="color: red; font-weight: bold">
+                                                                        Bạn không thể hoàn tác sau khi xác nhận
+                                                                    </a>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <form id="getOrder${counter.count}" action="updateOrder" method="POST">
+                                                                        <input type="hidden" id="eventOrderId" name="eventOrderId" value="${order.eventOrderId}"/>
+                                                                        <input type="hidden" id="accountUsername" name="accountUsername" value="${sessionScope.USER.username}"/>
+                                                                        <input type="hidden" id="deliveryOpt" name="deliveryOpt" value="${order.deliveryOption}"/>
+                                                                        <input type="hidden" id="infoBack" name="infoBack" value="1"/>
+                                                                        <input type="hidden" id="page" name="page" value="${currentPage}"/>
+                                                                        <input type="hidden" id="action" name="action" value="confirm"/>
+                                                                        <a href="#" class="btn btn-secondary" style="background-color: green;"
+                                                                           onclick="
+                                                                                   document.getElementById('eventOrderId');
+                                                                                   document.getElementById('accountUsername');
+                                                                                   document.getElementById('infoBack');
+                                                                                   document.getElementById('page');
+                                                                                   document.getElementById('action');
+                                                                                   document.getElementById('deliveryOpt');
+                                                                                   document.getElementById('getOrder${counter.count}').submit();">
+                                                                            Có
+                                                                        </a>
+                                                                    </form>
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>          
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary" data-toggle="modal" value="cancel"
+                                                            data-target="#modal${counter.count}" style="background-color: red">
+                                                        Hủy
+                                                    </button>
+                                                    <div class="modal fade" id="modal${counter.count}" tabindex="-1" role="dialog" 
+                                                         aria-labelledby="modalLabel${counter.count}" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="modalLabel${counter.count}">Xác nhận nhận đơn hàng</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    Bạn có chắc chắn muốn hủy đơn?
+                                                                    <br/>
+                                                                    <a style="color: red; font-weight: bold">
+                                                                        Bạn không thể hoàn tác sau khi xác nhận
+                                                                    </a>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <form id="cancelOrder${counter.count}" action="updateOrder" method="POST">
+                                                                        <input type="hidden" id="eventOrderId" name="eventOrderId" value="${order.eventOrderId}"/>
+                                                                        <input type="hidden" id="accountUsername" name="accountUsername" value="${sessionScope.USER.username}"/>
+                                                                        <input type="hidden" id="deliveryOpt" name="deliveryOpt" value="${order.deliveryOption}"/>
+                                                                        <input type="hidden" id="infoBack" name="infoBack" value="1"/>
+                                                                        <input type="hidden" id="page" name="page" value="${currentPage}"/>
+                                                                        <input type="hidden" id="action" name="action" value="cancel"/>
+                                                                        <a href="#" class="btn btn-secondary" style="background-color: green;"
+                                                                           onclick="
+                                                                                   document.getElementById('eventOrderId');
+                                                                                   document.getElementById('accountUsername');
+                                                                                   document.getElementById('infoBack');
+                                                                                   document.getElementById('page');
+                                                                                   document.getElementById('action');
+                                                                                   document.getElementById('deliveryOpt');
+                                                                                   document.getElementById('cancelOrder${counter.count}').submit();">
+                                                                            Có
+                                                                        </a>
+                                                                    </form>
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>          
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                <div class="col-12">
-                                    <nav aria-label="Page navigation">
-                                        <ul class="pagination d-flex justify-content-center mt-5">
-                                            <c:if test="${currentPage > 1}">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="viewOrderAction?accountUsername=${sessionScope.USER.username}&page=${currentPage - 1}" aria-label="Previous">
-                                                        <span aria-hidden="true">&laquo;</span>
-                                                    </a>
-                                                </li>
+                                <div class="col-12" >
+                                    <div class="d-flex justify-content-center mt-5">
+                                        <%--phần code laquo (<<) --%>
+                                        <c:if test="${sessionScope.currentPage == 1}"> 
+                                            <a href="#" class="btn btn-secondary" style="margin: 2px; 
+                                               background-color: gray; color: white; pointer-events: none; opacity: 0.6;
+                                               border-color: black; padding: 9px 15px 9px 15px; font-weight: bold;">
+                                                &laquo;
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${sessionScope.currentPage != 1}"> 
+                                            <form id="backForm" action="viewOrderAction" method="POST">
+                                                <input type="hidden" id="pageBack" name="pageBack"/>
+                                                <a href="#" class="btn btn-secondary" style="margin: 2px; background-color: white; border-color: black; padding: 9px 15px 9px 15px; color: black; font-weight: bold"
+                                                   onclick="document.getElementById('pageBack').value = '${(sessionScope.currentPage - 1)}';
+                                                           document.getElementById('backForm').submit();">
+                                                    &laquo;
+                                                </a>
+                                            </form>
+                                        </c:if>
+                                        <%--phần code laquo (<<) --%>
+                                        <form id="paginationForm" action="viewOrderAction" method="POST">
+                                            <input type="hidden" id="pageNo" name="pageNo">
+                                            <%--Nếu chỉ có 5 trang thì show << 1 2 3 4 5 >>--%>
+                                            <c:if test="${sessionScope.pageSize <= 5}">
+                                                <c:forEach var="i" begin="1" end="${sessionScope.pageSize}">
+                                                    <c:if test="${sessionScope.currentPage == i}">
+                                                        <a href="#" class="btn btn-secondary" 
+                                                           onclick="document.getElementById('pageNo').value = '${i}';
+                                                                   document.getElementById('paginationForm').submit();
+                                                                   return false;" style="margin: 2px; background-color: #000066; border-color: black; padding: 9px 15px 9px 15px; color: white;
+                                                           font-weight: bold; margin-right: -2px">${i}</a>
+                                                    </c:if>
+                                                    <c:if test="${sessionScope.currentPage != i}">
+                                                        <a href="#" class="btn btn-secondary" 
+                                                           onclick="document.getElementById('pageNo').value = '${i}';
+                                                                   document.getElementById('paginationForm').submit();
+                                                                   return false;" style="margin: 2px; background-color: white; border-color: black; padding: 9px 15px 9px 15px; color: black; 
+                                                           font-weight: bold; margin-right: -2px">${i}</a>
+                                                    </c:if>
+                                                </c:forEach>
                                             </c:if>
-                                            <c:forEach var="i" begin="1" end="${totalPages}">
-                                                <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                                    <a class="page-link" href="viewOrderAction?&page=${i}">${i}</a>
-                                                </li>
-                                            </c:forEach>
-                                            <c:if test="${currentPage < totalPages}">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="viewOrderAction?&page=${currentPage + 1}" aria-label="Next">
-                                                        <span aria-hidden="true">&raquo;</span>
+                                            <%--Nếu chỉ có 5 trang thì show << 1 2 3 4 5 >>--%>
+                                            <%--Nếu nhiều hơn 5 trang thì show << 1 2 3 4 5 ... >> << 1 2 ... 5 6 7 ... >> << 1 2 ... 7 8 9 >>--%>
+                                            <c:if test="${sessionScope.pageSize > 5}">
+                                                <c:if test="${sessionScope.currentPage == 1 || sessionScope.currentPage == 2 ||
+                                                              sessionScope.currentPage == 3}">
+                                                    <c:forEach var="i" begin="1" end="5">
+                                                        <c:if test="${sessionScope.currentPage == i}">
+                                                            <a href="#" class="active btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: #000066; border-color: black; padding: 9px 15px 9px 15px; color: white;
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.currentPage != i}">
+                                                            <a href="#" class="btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: white; border-color: black; padding: 9px 15px 9px 15px; color: black; 
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <a href="#" class="btn btn-secondary" style="margin: 2px; border-color: black; padding: 9px 15px 9px 15px; 
+                                                       font-weight: bold; margin-right: -2px;
+                                                       background-color: white; color: black; pointer-events: none; opacity: 0.6;">
+                                                        ...
                                                     </a>
-                                                </li>
+                                                </c:if>
+                                                <c:if test="${sessionScope.currentPage != 1 && sessionScope.currentPage != 2 &&
+                                                              sessionScope.currentPage != 3 &&
+                                                              sessionScope.currentPage != (sessionScope.pageSize - 2) &&
+                                                              sessionScope.currentPage != (sessionScope.pageSize - 1) &&
+                                                              sessionScope.currentPage != sessionScope.pageSize}">
+                                                    <c:forEach var="i" begin="1" end="2">
+                                                        <c:if test="${sessionScope.currentPage == i}">
+                                                            <a href="#" class="active btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: #000066; border-color: black; padding: 9px 15px 9px 15px; color: white;
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.currentPage != i}">
+                                                            <a href="#" class="btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: white; border-color: black; padding: 9px 15px 9px 15px; color: black; 
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <a href="#" class="btn btn-secondary" style="margin: 2px; border-color: black; padding: 9px 15px 9px 15px; font-weight: bold;
+                                                       background-color: white; color: black; pointer-events: none; opacity: 0.6; margin-right: -2px">
+                                                        ...
+                                                    </a>
+                                                    <c:forEach var="i" begin="${sessionScope.currentPage}" end="${(sessionScope.currentPage + 2)}">
+                                                        <c:if test="${sessionScope.currentPage == i}">
+                                                            <a href="#" class="active btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: #000066; border-color: black; padding: 9px 15px 9px 15px; color: white;
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.currentPage != i}">
+                                                            <a href="#" class="btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: white; border-color: black; padding: 9px 15px 9px 15px; color: black; 
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <a href="#" class="btn btn-secondary" style="margin: 2px; border-color: black; padding: 9px 15px 9px 15px; font-weight: bold;
+                                                       background-color: white; color: black; pointer-events: none; opacity: 0.6; margin-right: -2px">
+                                                        ...
+                                                    </a>
+                                                </c:if>
+                                                <c:if test="${sessionScope.currentPage == (sessionScope.pageSize - 2) ||
+                                                              sessionScope.currentPage == (sessionScope.pageSize - 1) ||
+                                                              sessionScope.currentPage == sessionScope.pageSize}">
+                                                    <c:forEach var="i" begin="1" end="2">
+                                                        <c:if test="${sessionScope.currentPage == i}">
+                                                            <a href="#" class="active btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: #000066; border-color: black; padding: 9px 15px 9px 15px; color: white;
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.currentPage != i}">
+                                                            <a href="#" class="btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: white; border-color: black; padding: 9px 15px 9px 15px; color: black; 
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <a href="#" class="btn btn-secondary" style="margin: 2px; border-color: black; padding: 9px 15px 9px 15px; font-weight: bold;
+                                                       background-color: white; color: black; pointer-events: none; opacity: 0.6; margin-right: -2px">
+                                                        ...
+                                                    </a>
+                                                    <c:forEach var="i" begin="${(sessionScope.pageSize - 2)}" end="${sessionScope.pageSize}">
+                                                        <c:if test="${sessionScope.currentPage == i}">
+                                                            <a href="#" class="active btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: #000066; border-color: black; padding: 9px 15px 9px 15px; color: white;
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.currentPage != i}">
+                                                            <a href="#" class="btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: white; border-color: black; padding: 9px 15px 9px 15px; color: black; 
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </c:if>
                                             </c:if>
-                                        </ul>
-                                    </nav>
+                                            <%--Nếu nhiều hơn 5 trang thì show << 1 2 3 4 5 ... >> << 1 2 ... 5 6 7 ... >> << 1 2 ... 7 8 9 >>--%>
+                                        </form>
+                                        <%--phần code raquo (>>) --%>
+                                        <c:if test="${sessionScope.currentPage != sessionScope.pageSize}"> 
+                                            <form id="forwardForm" action="viewOrderAction" method="POST">
+                                                <input type="hidden" id="pageForward" name="pageForward"/>
+                                                <a href="#" class="btn btn-secondary" style="margin: 2px; background-color: white; border-color: black; 
+                                                   padding: 9px 15px 9px 15px; color: black; font-weight: bold; margin-left: 6px"
+                                                   onclick="document.getElementById('pageForward').value = '${(sessionScope.currentPage + 1)}';
+                                                           document.getElementById('forwardForm').submit();">
+                                                    &raquo;
+                                                </a>
+                                            </form>
+                                        </c:if>
+                                        <c:if test="${sessionScope.currentPage == sessionScope.pageSize}"> 
+                                            <a href="#" class="btn btn-secondary" style="margin: 2px; border-color: black; 
+                                               padding: 9px 15px 9px 15px; font-weight: bold; margin-left: 6px;
+                                               background-color: gray; color: white; pointer-events: none; opacity: 0.6;">
+                                                &raquo;
+                                            </a>
+                                        </c:if> 
+                                        <%--phần code raquo (>>) --%>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -279,17 +493,5 @@
 </section>
 
 <script src="js/javascript.js"></script>
-<script>
-    function toggleDetails(index) {
-        var detailsRow = document.getElementById("details-" + index);
-        if (detailsRow.style.display === "none") {
-            detailsRow.style.display = "table-row"; // Show the details row
-        } else {
-            detailsRow.style.display = "none"; // Hide the details row
-        }
-    }
-</script>
-
-
 </body>
 </html>
