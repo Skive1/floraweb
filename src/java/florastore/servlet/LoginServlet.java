@@ -102,6 +102,7 @@ public class LoginServlet extends HttpServlet {
                         session.setAttribute("USERNAME", authUser.getUsername());
                         session.setAttribute("PENDING_EITEMS", 0);
                         session.setAttribute("PENDING_ITEMS", 0);
+                        session.setAttribute("LOGIN_SUCCESS", true);
                     } else {
                         url = (String) siteMap.get(MyAppConstants.LoginFeatures.INVALID_PAGE);
                         foundErr = true;
@@ -133,6 +134,7 @@ public class LoginServlet extends HttpServlet {
                             session.setAttribute("PASSWORD", password);
                             session.setAttribute("PENDING_EITEMS", 0);
                             session.setAttribute("PENDING_ITEMS", 0);
+                            session.setAttribute("LOGIN_SUCCESS", true);
                             response.sendRedirect(url);
                         }//end if validAccount is not null
                         if (validUser != null && validUser.getIsBanned() == 1) {

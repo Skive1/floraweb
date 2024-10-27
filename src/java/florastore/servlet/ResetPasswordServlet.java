@@ -5,6 +5,7 @@
  */
 package florastore.servlet;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import florastore.account.AccountDAO;
 import florastore.account.AccountResetPasswordError;
 import florastore.utils.MyAppConstants;
@@ -73,6 +74,7 @@ public class ResetPasswordServlet extends HttpServlet {
             else {//no error
                 //3. call method of DAO/Model
                 AccountDAO dao = new AccountDAO();
+                newPassword = BCrypt.withDefaults().hashToString(12, newPassword.toCharArray());
                 boolean result = dao.resetPassword(newPassword, email);
                 //4. process result
                 if (result) {
