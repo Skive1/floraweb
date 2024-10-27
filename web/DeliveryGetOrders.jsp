@@ -125,12 +125,12 @@
                                                     <td>${eventOrder.fullname}</td>
                                                     <td>${eventOrder.phone}</td>
                                                     <td>${eventOrder.street}, ${eventOrder.city}</td>
-                                                    <c:if test="${eventOrder.note != null}">
+                                                    <c:if test="${not empty eventOrder.note}">
                                                         <td style="color: #9f191f">
                                                             ${eventOrder.note}
                                                         </td>
                                                     </c:if>
-                                                    <c:if test="${eventOrder.note == null}">
+                                                    <c:if test="${empty eventOrder.note}">
                                                         <td>
                                                             -
                                                         </td>
