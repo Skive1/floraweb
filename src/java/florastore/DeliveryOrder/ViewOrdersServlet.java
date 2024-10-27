@@ -59,7 +59,6 @@ public class ViewOrdersServlet extends HttpServlet {
             session.removeAttribute("pageIsActive");
             session.setAttribute("pageIsActive", pageIsActive);
             ServiceLayer service = new ServiceLayer();
-            pageIsActive = service.checkPagination(pageIsActive, goBack, goForward); //kiểm tra user có nhấn thanh chuyển trang ko
             page = service.getPage(pageIsActive, goBack, goForward);            //trả về 1 ở lần đầu chạy, trả về n khi chạy lần 2
             range = service.getPageRange(page, 7);                                 //lấy phạm vi sản phẩm để show
             session.removeAttribute("currentPage");
@@ -82,11 +81,11 @@ public class ViewOrdersServlet extends HttpServlet {
             List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName, staffID);       //lấy danh sách các đơn hàng để đi giao
             request.setAttribute("Total_Order", orderToDelivery.size());
             if (!orderList.isEmpty()) {
-                List<DeliverDTO> deliveryList = service.getSeven(orderList, range);               //đã lấy được n sản phẩm để show trang chính
+                List<DeliverDTO> deliveryList = orderList.subList(range[0], range[1]);               //đã lấy được n sản phẩm để show trang chính
                 if (deliveryList.isEmpty()) {                                     //trường hợp delivery lấy order ở trang cuối mà trang đó chỉ có 1 order
                     range = service.getPageRange(1, 7);                         //trả về trang 1
                     session.setAttribute("currentPage", 1);
-                    deliveryList = service.getSeven(orderList, range);
+                    deliveryList = orderList.subList(range[0], range[1]);
                 }
                 request.setAttribute("DELIVERY_LIST", deliveryList);
                 request.setAttribute("Total_Order_On_Page", deliveryList.size());

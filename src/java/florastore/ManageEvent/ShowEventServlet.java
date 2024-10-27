@@ -78,11 +78,11 @@ public class ShowEventServlet extends HttpServlet {
             List<EventDTO> events = dao.getAllEventExcept();
             //Process result
             if (!events.isEmpty()) {
-                List<EventDTO> eventList = service.getSevenEvent(events, range);
+                List<EventDTO> eventList = events.subList(range[0], range[1]);
                 if (eventList.isEmpty()) {                                      //trường hợp close event cuối cùng ở trang cuối
                     range = service.getPageRange(1, 7);                         //trả về trang 1
                     session.setAttribute("currentPage", 1);
-                    eventList = service.getSevenEvent(events, range);
+                    eventList = events.subList(range[0], range[1]);
                 }
                 request.setAttribute("Event_List", eventList);
                 request.setAttribute("Total_Event", eventList.size());
