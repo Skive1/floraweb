@@ -5,6 +5,7 @@
  */
 package florastore.servlet;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import florastore.googleAccount.GoogleLogin;
 import florastore.account.AccountLoginError;
 import florastore.account.AccountDAO;
@@ -14,6 +15,7 @@ import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.UUID;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -43,6 +45,8 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
@@ -50,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 
         String code = request.getParameter("code");
         String authError = request.getParameter("error");
-
+        int validAccount = 0;
         //1. Get user's information
         String username = request.getParameter("txtUsername");
         String password = request.getParameter("txtPassword");
@@ -82,20 +86,30 @@ public class LoginServlet extends HttpServlet {
                     AccountDTO authUser = dao.getAccountByGoogleAccount(email);
                     if (authUser == null) {
                         log("User not found. Creating new user.");
-                        authUser = new AccountDTO(newUsername, "GOOGLE_AUTH", newUsername, "Customer", email, "Hidden", "", "", "", saleId);
+                        String virtualPassword = UUID.randomUUID().toString().replace("-", "").substring(0, 10);
+                        String hashPassword = BCrypt.withDefaults().hashToString(12, virtualPassword.toCharArray());
+                        authUser = new AccountDTO(newUsername, hashPassword, newUsername, "Customer", email, "Hidden", "", "", "", saleId);
                         dao.createAccount(authUser); // Add user to the database
                     } else {
+                        validAccount = authUser.getIsBanned();
                         log("User found: " + authUser.getUsername());
                         log("User found: " + authUser.getEmail());
                     }
-
-                    url = (String) siteMap.get(MyAppConstants.LoginFeatures.HOME_PAGE);
-                    HttpSession session = request.getSession(true);
-                    session.setAttribute("USER", authUser);
-                    session.setAttribute("USERNAME", authUser.getUsername());
-                    session.setAttribute("PENDING_EITEMS", 0);
-                    session.setAttribute("PENDING_ITEMS", 0);
-
+                    if (validAccount == 0) {
+                        url = (String) siteMap.get(MyAppConstants.LoginFeatures.HOME_PAGE);
+                        HttpSession session = request.getSession(true);
+                        session.setAttribute("USER", authUser);
+                        session.setAttribute("USERNAME", authUser.getUsername());
+                        session.setAttribute("PENDING_EITEMS", 0);
+                        session.setAttribute("PENDING_ITEMS", 0);
+                    } else {
+                        url = (String) siteMap.get(MyAppConstants.LoginFeatures.INVALID_PAGE);
+                        foundErr = true;
+                        error.setLoginErr("Tài khoản của bạn đã bị hạn chế");
+                    }
+                    if (foundErr) {
+                        request.setAttribute("LOGIN_ERROR", error);
+                    }
                 } else {
                     log("OAuth Error: " + authError);
                     url = (String) siteMap.get(MyAppConstants.LoginFeatures.INVALID_PAGE);
@@ -105,19 +119,30 @@ public class LoginServlet extends HttpServlet {
                 AccountDAO dao = new AccountDAO();
                 AccountDTO validUser = null;
                 if (username.equals(username.trim()) && password.equals(password.trim())) {
-                    validUser = dao.getAccountByLogin(username, password);
-                    //3. process result
-                    if (validUser != null) {//user login successful
-                        url = MyAppConstants.LoginFeatures.HOME_PAGE;
-                        //3.1 Create new session
-                        HttpSession session = request.getSession(true);
-                        session.setAttribute("USER", validUser);
-                        session.setAttribute("USERNAME", username);
-                        session.setAttribute("PASSWORD", password);
-                        session.setAttribute("PENDING_EITEMS", 0);
-                        session.setAttribute("PENDING_ITEMS", 0);
-                        response.sendRedirect(url);
-                    }//end if validAccount is not null
+                    String hashPassword = dao.getHashPassword(username);
+                    BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), hashPassword);
+                    if (result.verified) {
+                        validUser = dao.getAccountByLogin(username, hashPassword);
+                        //3. process result
+                        if (validUser != null && validUser.getIsBanned() == 0) {//user login successful
+                            url = MyAppConstants.LoginFeatures.HOME_PAGE;
+                            //3.1 Create new session
+                            HttpSession session = request.getSession(true);
+                            session.setAttribute("USER", validUser);
+                            session.setAttribute("USERNAME", username);
+                            session.setAttribute("PASSWORD", password);
+                            session.setAttribute("PENDING_EITEMS", 0);
+                            session.setAttribute("PENDING_ITEMS", 0);
+                            response.sendRedirect(url);
+                        }//end if validAccount is not null
+                        if (validUser != null && validUser.getIsBanned() == 1) {
+                            foundErr = true;
+                            error.setLoginErr("Tài khoản của bạn đã bị hạn chế");
+                        }
+                    } else {
+                        foundErr = true;
+                        error.setLoginErr("Invalid username or password");
+                    }
                 }
                 if (validUser == null) {//user login failed
                     foundErr = true;
@@ -132,10 +157,10 @@ public class LoginServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("LoginServlet _ Naming _ " + ex.getMessage());
         } finally {
-            if(!response.isCommitted()){
+            if (!response.isCommitted()) {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
-            }   
+                rd.forward(request, response);
+            }
         }
     }
 

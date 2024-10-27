@@ -43,7 +43,7 @@ public class UpdateServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-
+        response.setCharacterEncoding("UTF-8");
         //1. Get user information
         String username = request.getParameter("txtUsername");
         String gender = request.getParameter("txtGender");
@@ -53,7 +53,7 @@ public class UpdateServlet extends HttpServlet {
 
         //1.1 Regex Pattern
         String phoneRegex = "^(0[35789][0-9]{8})?$"; //phone
-        String streetRegex = "^(?!.*  )[a-zA-Z,/\\d ]*$"; //street
+        String streetRegex = "^(?!.*  )[a-zA-ZÀÁẢÃẠÂẤẦẨẪẬĂẰẮẲẴẶÈÉẺẪẸÊẾỀỂỄỆÌÍỈĨỊÒÓỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÙÚỦŨỤƯỨỪỬỮỰÝỲỶỸàáảãạâấầẩẫậăằắẳẵặèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựýỳỷỹ,/\\d ]*$"; //street
         //1.2 Regex Process
         //1.2.1 Phone
         Pattern phonePattern = Pattern.compile(phoneRegex);

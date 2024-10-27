@@ -105,6 +105,7 @@
                                     <th>Sđt</th>
                                     <th>Địa chỉ</th>
                                     <th>Thành phố</th>
+                                    <th>Trạng thái</th>
                                     <th colspan="2">Tùy chỉnh</th>
                                     </thead>
                                     <c:if test="${not empty result}">
@@ -156,6 +157,18 @@
                                                         ${dto.city}
                                                     </td>
                                                     <td>
+                                                        <c:if test="${dto.isBanned == 0}">
+                                                            <div style="color: #30a24b; font-weight: bold">
+                                                                Active
+                                                            </div>
+                                                        </c:if>
+                                                        <c:if test="${dto.isBanned == 1}">
+                                                            <div style="color: red; font-weight: bold">
+                                                                Banned
+                                                            </div>
+                                                        </c:if>
+                                                    </td>
+                                                    <td>
                                                         <input type="hidden" name="currentPage" value="${currentPage}"/>
                                                         <button type="submit" class="edit edit-button" title="Edit">
                                                             <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
@@ -166,7 +179,12 @@
                                                             <c:param name="txtUsername" value="${dto.username}"/>
                                                             <c:param name="page" value="${currentPage}"/>
                                                         </c:url>
-                                                        <a href="#deleteAccountServlet" class="delete" data-toggle="modal" data-url="${urlRewriting}"><i class="material-icons" style="color: red" data-toggle="tooltip" title="Ban">&#xE872;</i></a>
+                                                        <c:if test="${dto.isBanned == 1}">
+                                                            <i class="material-icons" style="color: red; cursor: pointer" data-toggle="tooltip" title="Already ban">&#xE872;</i>
+                                                        </c:if>
+                                                        <c:if test="${dto.isBanned == 0}">
+                                                            <a href="#deleteAccountServlet" class="delete" data-toggle="modal" data-url="${urlRewriting}"><i class="material-icons" style="color: red" data-toggle="tooltip" title="Ban">&#xE872;</i></a>
+                                                        </c:if>
                                                     </td>
                                                 </tr>
                                             </form>

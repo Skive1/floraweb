@@ -11,7 +11,7 @@ function checkNotifications() {
             url: 'checkNotifications',
             method: 'GET',
             success: function (data) {
-                console.log('Dữ liệu trả về:', data); // In ra dữ liệu trả về
+                console.log('Dữ liệu trả về:', data);
                 if (Array.isArray(data) && data.length > 0) {
                     data.forEach(function (notification, index) {
                         setTimeout(function () {
@@ -19,8 +19,8 @@ function checkNotifications() {
                             $('#snackbar').addClass('show');
                             setTimeout(function () {
                                 $('#snackbar').removeClass('show');
-                            }, 3000); // Hiển thị trong 3 giây
-                        }, index * 3500); // Đảm bảo mỗi thông báo hiển thị cách nhau 3.5 giây (3000ms hiển thị + 500ms cho hiệu ứng)
+                            }, 3000);
+                        }, index * 3500);
                     });
                 } else {
                     console.log('Không có thông báo chưa đọc.');
@@ -30,10 +30,9 @@ function checkNotifications() {
                 console.error('Lỗi khi gọi AJAX:', textStatus, errorThrown);
             }
         });
-    }, 5000); // 5000ms = 5 giây
+    }, 5000);
 }
 
-// Gọi hàm khi tài liệu đã sẵn sàng
 $(document).ready(function () {
     checkNotifications();
 });

@@ -21,6 +21,45 @@ import javax.naming.NamingException;
  */
 public class AccountDAO implements Serializable {
 
+    public String getHashPassword(String username)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String password = null;
+        try {
+            //1. connect database
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2.Create SQL String
+                String sql = "SELECT Password "
+                        + "FROM Account "
+                        + "WHERE Username = ? "
+                        + "COLLATE Latin1_General_BIN ";
+                //3.Create statement
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                //4.Query Data 
+                rs = stm.executeQuery();
+                //5.Process Data
+                if (rs.next()) {
+                    password = rs.getString("Password");
+                }//username and password are verified
+            }//connection has been available
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return password;
+    }
+
     public AccountDTO getAccountByLogin(String username, String password)
             throws SQLException, NamingException {
         Connection con = null;
@@ -32,7 +71,7 @@ public class AccountDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2.Create SQL String
-                String sql = "SELECT Fullname, Role, Email, Gender, Phone, Street, City, Img "
+                String sql = "SELECT Fullname, Role, Email, Gender, Phone, Street, City, Img, isBanned "
                         + "FROM Account "
                         + "WHERE Username = ? "
                         + "COLLATE Latin1_General_BIN "
@@ -54,7 +93,8 @@ public class AccountDAO implements Serializable {
                     String street = rs.getString("Street");
                     String city = rs.getString("City");
                     String img = rs.getString("Img");
-                    dto = new AccountDTO(username, password, fullName, role, email, gender, phone, street, city, img);
+                    int isBanned = rs.getInt("isBanned");
+                    dto = new AccountDTO(username, password, fullName, role, email, gender, phone, street, city, img, isBanned);
                 }//username and password are verified
             }//connection has been available
         } finally {
@@ -131,7 +171,7 @@ public class AccountDAO implements Serializable {
             conn = DBHelper.getConnection();
             if (conn != null) {
                 // Prepare SQL statement for querying the Account table by email
-                String sql = "SELECT Email, Username, Fullname, Role, Gender, Phone, Street, City, Img "
+                String sql = "SELECT Email, Username, Fullname, Role, Gender, Phone, Street, City, Img, isBanned "
                         + "FROM Account "
                         + "WHERE Email = ?";
 
@@ -152,7 +192,8 @@ public class AccountDAO implements Serializable {
                     String street = rs.getString("Street");
                     String city = rs.getString("City");
                     String img = rs.getString("Img");
-                    user = new AccountDTO(username, "", fullname, role, email, gender, phone, street, city, img);
+                    int isBanned = rs.getInt("isBanned");
+                    user = new AccountDTO(username, "", fullname, role, email, gender, phone, street, city, img, isBanned);
                 }
             }
         } finally {
@@ -406,9 +447,8 @@ public class AccountDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String
-                String sql = "SELECT Username, Fullname, Gender, Role, Email, Phone, Street, City, Img "
+                String sql = "SELECT Username, Fullname, Gender, Role, Email, Phone, Street, City, Img, isBanned "
                         + "FROM Account "
-                        + "WHERE isBanned = 0 "
                         + "ORDER BY Username "
                         + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
                 //3. Create Statement Object
@@ -429,8 +469,9 @@ public class AccountDAO implements Serializable {
                     String Street = rs.getString("Street");
                     String City = rs.getString("City");
                     String Img = rs.getString("Img");
+                    int isBanned = rs.getInt("isBanned");
                     AccountDTO account
-                            = new AccountDTO(Username, "", Fullname, Role, Email, Gender, Phone, Street, City, Img);
+                            = new AccountDTO(Username, "", Fullname, Role, Email, Gender, Phone, Street, City, Img, isBanned);
                     list.add(account);
                 }//process each record in resultset  
             }//connection has been available 

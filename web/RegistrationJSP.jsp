@@ -116,70 +116,71 @@
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
                                         <select class="form-control" name="txtCity" id="city">
-                                            <option value="unknown" selected>Select city</option>
+                                            <option value="unknown" selected>Chọn thành phố</option>
                                             <option value="An Giang">An Giang</option>
-                                            <option value="Ba Ria Vung Tau">Ba Ria - Vung Tau</option>
-                                            <option value="Bac Giang">Bac Giang</option>
-                                            <option value="Bac Kan">Bac Kan</option>
-                                            <option value="Bac Lieu">Bac Lieu</option>
-                                            <option value="Bac Ninh">Bac Ninh</option>
-                                            <option value="Ben Tre">Ben Tre</option>
-                                            <option value="Binh Dinh">Binh Dinh</option>
-                                            <option value="Binh Duong">Binh Duong</option>
-                                            <option value="Binh Phuoc">Binh Phuoc</option>
-                                            <option value="Binh Thuan">Binh Thuan</option>
-                                            <option value="Ca Mau">Ca Mau</option>
-                                            <option value="Can Tho">Can Tho</option>
-                                            <option value="Cao Bang">Cao Bang</option>
-                                            <option value="Da Nang">Da Nang</option>
-                                            <option value="Dak Lak">Dak Lak</option>
-                                            <option value="Dak Nong">Dak Nong</option>
-                                            <option value="Dien Bien">Dien Bien</option>
-                                            <option value="Dong Nai">Dong Nai</option>
-                                            <option value="Dong Thap">Dong Thap</option>
+                                            <option value="Bà Rịa Vũng Tàu">Bà Rịa Vũng Tàu</option>
+                                            <option value="Bắc Giang">Bắc Giang</option>
+                                            <option value="Bắc Kạn">Bắc Kạn</option>
+                                            <option value="Bạc Liêu">Bạc Liêu</option>
+                                            <option value="Bắc Ninh">Bắc Ninh</option>
+                                            <option value="Bến Tre">Bến Tre</option>
+                                            <option value="Bình Định">Bình Định</option>
+                                            <option value="Bình Dương">Bình Dương</option>
+                                            <option value="Bình Phước">Bình Phước</option>
+                                            <option value="Bình Thuận">Bình Thuận</option>
+                                            <option value="Cà Mau">Cà Mau</option>
+                                            <option value="Cần Thơ">Cần Thơ</option>
+                                            <option value="Cao Bằng">Cao Bằng</option>
+                                            <option value="Đà Nẵng">Đà Nẵng</option>
+                                            <option value="Đắk Lắk">Đắk Lắk</option>
+                                            <option value="Đắk Nông">Đắk Nông</option>
+                                            <option value="Điện Biên">Điện Biên</option>
+                                            <option value="Đồng Nai">Đồng Nai</option>
+                                            <option value="Đồng Tháp">Đồng Tháp</option>
                                             <option value="Gia Lai">Gia Lai</option>
-                                            <option value="Ha Giang">Ha Giang</option>
-                                            <option value="Ha Nam">Ha Nam</option>
-                                            <option value="Ha Noi">Ha Noi</option>
-                                            <option value="Ha Tinh">Ha Tinh</option>
-                                            <option value="Hai Duong">Hai Duong</option>
-                                            <option value="Hai Phong">Hai Phong</option>
-                                            <option value="Hau Giang">Hau Giang</option>
-                                            <option value="Ho Chi Minh">Ho Chi Minh</option>
-                                            <option value="Hoa Binh">Hoa Binh</option>
-                                            <option value="Hung Yen">Hung Yen</option>
-                                            <option value="Khanh Hoa">Khanh Hoa</option>
-                                            <option value="Kien Giang">Kien Giang</option>
+                                            <option value="Hà Giang">Hà Giang</option>
+                                            <option value="Hà Nam">Hà Nam</option>
+                                            <option value="Hà Nội">Hà Nội</option>
+                                            <option value="Hà Tĩnh">Hà Tĩnh</option>
+                                            <option value="Hải Dương">Hải Dương</option>
+                                            <option value="Hải Phòng">Hải Phòng</option>
+                                            <option value="Hậu Giang">Hậu Giang</option>
+                                            <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                                            <option value="Hòa Bình">Hòa Bình</option>
+                                            <option value="Hưng Yên">Hưng Yên</option>
+                                            <option value="Khánh Hòa">Khánh Hòa</option>
+                                            <option value="Kiên Giang">Kiên Giang</option>
                                             <option value="Kon Tum">Kon Tum</option>
-                                            <option value="Lai Chau">Lai Chau</option>
-                                            <option value="Lam Dong">Lam Dong</option>
-                                            <option value="Lang Son">Lang Son</option>
-                                            <option value="Lao Cai">Lao Cai</option>
+                                            <option value="Lai Châu">Lai Châu</option>
+                                            <option value="Lâm Đồng">Lâm Đồng</option>
+                                            <option value="Lạng Sơn">Lạng Sơn</option>
+                                            <option value="Lào Cai">Lào Cai</option>
                                             <option value="Long An">Long An</option>
-                                            <option value="Nam Dinh">Nam Dinh</option>
-                                            <option value="Nghe An">Nghe An</option>
-                                            <option value="Ninh Binh">Ninh Binh</option>
-                                            <option value="Ninh Thuan">Ninh Thuan</option>
-                                            <option value="Phu Tho">Phu Tho</option>
-                                            <option value="Phu Yen">Phu Yen</option>
-                                            <option value="Quang Binh">Quang Binh</option>
-                                            <option value="Quang Nam">Quang Nam</option>
-                                            <option value="Quang Ngai">Quang Ngai</option>
-                                            <option value="Quang Ninh">Quang Ninh</option>
-                                            <option value="Quang Tri">Quang Tri</option>
-                                            <option value="Soc Trang">Soc Trang</option>
-                                            <option value="Son La">Son La</option>
-                                            <option value="Tay Ninh">Tay Ninh</option>
-                                            <option value="Thai Binh">Thai Binh</option>
-                                            <option value="Thai Nguyen">Thai Nguyen</option>
-                                            <option value="Thanh Hoa">Thanh Hoa</option>
-                                            <option value="Thua Thien Hue">Thua Thien - Hue</option>
-                                            <option value="Tien Giang">Tien Giang</option>
-                                            <option value="Tra Vinh">Tra Vinh</option>
-                                            <option value="Tuyen Quang">Tuyen Quang</option>
-                                            <option value="Vinh Long">Vinh Long</option>
-                                            <option value="Vinh Phuc">Vinh Phuc</option>
-                                            <option value="Yen Bai">Yen Bai</option>
+                                            <option value="Nam Định">Nam Định</option>
+                                            <option value="Nghệ An">Nghệ An</option>
+                                            <option value="Ninh Bình">Ninh Bình</option>
+                                            <option value="Ninh Thuận">Ninh Thuận</option>
+                                            <option value="Phú Thọ">Phú Thọ</option>
+                                            <option value="Phú Yên">Phú Yên</option>
+                                            <option value="Quảng Bình">Quảng Bình</option>
+                                            <option value="Quảng Nam">Quảng Nam</option>
+                                            <option value="Quảng Ngãi">Quảng Ngãi</option>
+                                            <option value="Quảng Ninh">Quảng Ninh</option>
+                                            <option value="Quảng Trị">Quảng Trị</option>
+                                            <option value="Sóc Trăng">Sóc Trăng</option>
+                                            <option value="Sơn La">Sơn La</option>
+                                            <option value="Tây Ninh">Tây Ninh</option>
+                                            <option value="Thái Bình">Thái Bình</option>
+                                            <option value="Thái Nguyên">Thái Nguyên</option>
+                                            <option value="Thanh Hóa">Thanh Hóa</option>
+                                            <option value="Thừa Thiên Huế">Thừa Thiên Huế</option>
+                                            <option value="Tiền Giang">Tiền Giang</option>
+                                            <option value="Trà Vinh">Trà Vinh</option>
+                                            <option value="Tuyên Quang">Tuyên Quang</option>
+                                            <option value="Vĩnh Long">Vĩnh Long</option>
+                                            <option value="Vĩnh Phúc">Vĩnh Phúc</option>
+                                            <option value="Yên Bái">Yên Bái</option>
+
                                         </select>
                                         <label for="city" class="form-label">City</label>
                                     </div>
@@ -187,21 +188,21 @@
                                 <div class="col-12">
                                     <label class="form-label text-secondary">Gender:</label>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" value="Male" name="txtGender" id="male" required checked>
+                                        <input class="form-check-input" type="radio" value="Nam" name="txtGender" id="male" required checked>
                                         <label class="form-check-label text-secondary" for="male">
-                                            Male
+                                            Nam
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" value="Female" name="txtGender" id="female" required>
+                                        <input class="form-check-input" type="radio" value="Nữ" name="txtGender" id="female" required>
                                         <label class="form-check-label text-secondary" for="female">
-                                            Female
+                                            Nữ
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" value="Hidden" name="txtGender" id="hidden" required>
+                                        <input class="form-check-input" type="radio" value="Ẩn" name="txtGender" id="hidden" required>
                                         <label class="form-check-label text-secondary" for="hidden">
-                                            Hidden
+                                            Ẩn
                                         </label>
                                     </div>
                                 </div>
