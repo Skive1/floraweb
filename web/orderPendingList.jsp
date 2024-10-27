@@ -175,7 +175,9 @@
                                                                                     </c:if>
                                                                                 </td>
                                                                                 <td>${detail.quantity}</td>
-                                                                                <td>${detail.unitPrice}</td>
+                                                                                <td>
+                                                                                    <fmt:formatNumber value="${detail.unitPrice}" pattern="#,###"/>
+                                                                                </td>
                                                                                 <td>
                                                                                     <fmt:formatNumber value="${detail.discount}" pattern="#,##%"/>
                                                                                 </td>
