@@ -151,6 +151,30 @@ public class ServiceLayer {
         return result;
     }
 
+    public List<DeliverDTO> getSeven(List<DeliverDTO> list, int[] range) {        //get X product in page N
+        List<DeliverDTO> result = new ArrayList<>();
+        int addCounter = 1;
+        for (DeliverDTO inPage : list) {
+            if (range[0] <= addCounter && addCounter <= range[1]) {
+                result.add(inPage);
+            }
+            addCounter++;
+        }
+        return result;
+    }
+
+    public List<EventDTO> getSevenEvent(List<EventDTO> list, int[] range) {        //get X product in page N
+        List<EventDTO> result = new ArrayList<>();
+        int addCounter = 1;
+        for (EventDTO inPage : list) {
+            if (range[0] <= addCounter && addCounter <= range[1]) {
+                result.add(inPage);
+            }
+            addCounter++;
+        }
+        return result;
+    }
+
     public int getPage(String pageIsActive, String goBack, String goForward) {
         int page = 0;
         //nếu chuyển qua trang 2, 3, ... thì pageNumber đã ko còn là null

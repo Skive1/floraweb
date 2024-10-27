@@ -81,11 +81,11 @@ public class ViewOrdersServlet extends HttpServlet {
             List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName, staffID);       //lấy danh sách các đơn hàng để đi giao
             request.setAttribute("Total_Order", orderToDelivery.size());
             if (!orderList.isEmpty()) {
-                List<DeliverDTO> deliveryList = orderList.subList(range[0], range[1]);               //đã lấy được n sản phẩm để show trang chính
+                List<DeliverDTO> deliveryList = service.getSeven(orderList, range);               //đã lấy được n sản phẩm để show trang chính
                 if (deliveryList.isEmpty()) {                                     //trường hợp delivery lấy order ở trang cuối mà trang đó chỉ có 1 order
                     range = service.getPageRange(1, 7);                         //trả về trang 1
                     session.setAttribute("currentPage", 1);
-                    deliveryList = orderList.subList(range[0], range[1]);
+                    deliveryList = service.getSeven(orderList, range);
                 }
                 request.setAttribute("DELIVERY_LIST", deliveryList);
             }
