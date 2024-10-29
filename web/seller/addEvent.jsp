@@ -38,7 +38,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
-        <title>Admin</title>
+        <title>Seller</title>
     </head>
     <body>
         <section class="admin">
