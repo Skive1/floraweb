@@ -208,12 +208,12 @@
                                                     ${order.status}
                                                 </td>
                                                 <td>
-                                                    <button type="submit" class="btn btn-primary" data-toggle="modal" value="confirm"
-                                                            data-target="#exampleModal${counter.count}" style="background-color: green">
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" 
+                                                            data-target="#exampleModal${order.eventOrderId}" style="background-color: green">
                                                         Xác nhận
                                                     </button>
-                                                    <div class="modal fade" id="exampleModal${counter.count}" tabindex="-1" role="dialog" 
-                                                         aria-labelledby="exampleModalLabel${counter.count}" aria-hidden="true">
+                                                    <div class="modal fade" id="exampleModal${order.eventOrderId}" tabindex="-1" role="dialog" 
+                                                         aria-labelledby="exampleModalLabel${order.eventOrderId}" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -225,45 +225,36 @@
                                                                 <div class="modal-body">
                                                                     Bạn có chắc chắn muốn chuyển đơn cho đơn vị giao hàng?
                                                                     <br/>
-                                                                    <a style="color: red; font-weight: bold">
-                                                                        Bạn không thể hoàn tác sau khi xác nhận
-                                                                    </a>
+                                                                    <span style="color: red; font-weight: bold">Bạn không thể hoàn tác sau khi xác nhận</span>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <form id="getOrder${counter.count}" action="updateOrder" method="POST">
-                                                                        <input type="hidden" id="eventOrderId" name="eventOrderId" value="${order.eventOrderId}"/>
-                                                                        <input type="hidden" id="accountUsername" name="accountUsername" value="${sessionScope.USER.username}"/>
-                                                                        <input type="hidden" id="deliveryOpt" name="deliveryOpt" value="${order.deliveryOption}"/>
-                                                                        <input type="hidden" id="infoBack" name="infoBack" value="1"/>
-                                                                        <input type="hidden" id="page" name="page" value="${currentPage}"/>
-                                                                        <input type="hidden" id="action" name="action" value="confirm"/>
-                                                                        <a href="#" class="btn btn-secondary" style="background-color: green;"
-                                                                           onclick="
-                                                                                   document.getElementById('eventOrderId');
-                                                                                   document.getElementById('accountUsername');
-                                                                                   document.getElementById('infoBack');
-                                                                                   document.getElementById('page');
-                                                                                   document.getElementById('action');
-                                                                                   document.getElementById('deliveryOpt');
-                                                                                   document.getElementById('getOrder${counter.count}').submit();">
+                                                                    <form id="getOrder${order.eventOrderId}" action="updateOrder" method="POST">
+                                                                        <input type="hidden" name="eventOrderId" value="${order.eventOrderId}"/>
+                                                                        <input type="hidden" name="accountUsername" value="${sessionScope.USER.username}"/>
+                                                                        <input type="hidden" name="deliveryOpt" value="${order.deliveryOption}"/>
+                                                                        <input type="hidden" name="infoBack" value="1"/>
+                                                                        <input type="hidden" name="page" value="${currentPage}"/>
+                                                                        <input type="hidden" name="action" value="confirm"/>
+                                                                        <!-- Thay thế <a> bằng <button> để submit form -->
+                                                                        <button type="submit" class="btn btn-secondary" style="background-color: green;">
                                                                             Có
-                                                                        </a>
+                                                                        </button>
                                                                     </form>
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>          
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> 
                                                     <button type="submit" class="btn btn-primary" data-toggle="modal" value="cancel"
-                                                            data-target="#modal${counter.count}" style="background-color: red">
+                                                            data-target="#modal${order.eventOrderId}" style="background-color: red">
                                                         Hủy
                                                     </button>
-                                                    <div class="modal fade" id="modal${counter.count}" tabindex="-1" role="dialog" 
-                                                         aria-labelledby="modalLabel${counter.count}" aria-hidden="true">
+                                                    <div class="modal fade" id="modal${order.eventOrderId}" tabindex="-1" role="dialog" 
+                                                         aria-labelledby="modalLabel${order.eventOrderId}" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="modalLabel${counter.count}">Xác nhận nhận đơn hàng</h5>
+                                                                    <h5 class="modal-title" id="modalLabel${order.eventOrderId}">Xác nhận nhận đơn hàng</h5>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
