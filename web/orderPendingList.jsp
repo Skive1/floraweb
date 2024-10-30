@@ -121,7 +121,7 @@
                                     <tbody>
                                         <c:forEach var="order" items="${sessionScope.orderList}" varStatus="counter">
                                             <tr>
-                                                <td>${order.eventOrderId}</td>
+                                                <td style="font-weight: bold">#ORD-${order.eventOrderId}</td>
                                                 <td>${order.fullname}</td>
                                                 <td>${order.phone}</td>
                                                 <td>${order.street}</td>

@@ -106,7 +106,7 @@
                                 <table id="orderTable">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
+                                            <th>Mã đơn hàng</th>
                                             <th>Tên người mua</th>
                                             <th>Điện thoại</th>
                                             <th>Địa chỉ</th>
@@ -118,7 +118,7 @@
                                     <tbody>
                                         <c:forEach var="delivered" items="${sessionScope.DELIVERED}" varStatus="counter">
                                             <tr>
-                                                <td>${counter.count}</td>
+                                                <td style="font-weight: bold">#ORD-${delivered.eventOrderId}</td>
                                                 <td>${delivered.fullname}</td>
                                                 <td>${delivered.phone}</td>
                                                 <td>${delivered.street}</td>
