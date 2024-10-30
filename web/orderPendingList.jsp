@@ -235,7 +235,6 @@
                                                                         <input type="hidden" name="infoBack" value="1"/>
                                                                         <input type="hidden" name="page" value="${currentPage}"/>
                                                                         <input type="hidden" name="action" value="confirm"/>
-                                                                        <!-- Thay thế <a> bằng <button> để submit form -->
                                                                         <button type="submit" class="btn btn-secondary" style="background-color: green;">
                                                                             Có
                                                                         </button>
@@ -267,7 +266,7 @@
                                                                     </a>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <form id="cancelOrder${counter.count}" action="updateOrder" method="POST">
+                                                                    <form id="cancelOrder${order.eventOrderId}" action="updateOrder" method="POST">
                                                                         <input type="hidden" id="eventOrderId" name="eventOrderId" value="${order.eventOrderId}"/>
                                                                         <input type="hidden" id="accountUsername" name="accountUsername" value="${sessionScope.USER.username}"/>
                                                                         <input type="hidden" id="deliveryOpt" name="deliveryOpt" value="${order.deliveryOption}"/>
@@ -282,7 +281,7 @@
                                                                                    document.getElementById('page');
                                                                                    document.getElementById('action');
                                                                                    document.getElementById('deliveryOpt');
-                                                                                   document.getElementById('cancelOrder${counter.count}').submit();">
+                                                                                   document.getElementById('cancelOrder${order.eventOrderId}').submit();">
                                                                             Có
                                                                         </a>
                                                                     </form>
