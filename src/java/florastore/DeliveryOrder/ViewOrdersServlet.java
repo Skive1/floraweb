@@ -1,5 +1,7 @@
 package florastore.DeliveryOrder;
 
+import florastore.deliveryBalance.DeliveryBalanceDAO;
+import florastore.deliveryBalance.DeliveryBalanceDTO;
 import florastore.searchProduct.ServiceLayer;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
@@ -74,6 +76,13 @@ public class ViewOrdersServlet extends HttpServlet {
                 session.setAttribute("Staff_ID", staffID);
             } else {
                 staffID = (int) session.getAttribute("Staff_ID");
+            }
+            DeliveryBalanceDAO walletDAO = new DeliveryBalanceDAO();
+            DeliveryBalanceDTO eWallet = walletDAO.getWalletInfo(staffID);
+            if (eWallet != null) {
+                session.setAttribute("EWALLET_ACTIVE", true);
+            } else {
+                session.setAttribute("EWALLET_ACTIVE", false);
             }
             staffBalance = dao.getDeliveryStaffBalance(getFullName);
             session.setAttribute("Staff_Balance", staffBalance);

@@ -20,6 +20,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="icon" href="img/flora-favicon.png"/>
         <title>Delivery</title>
@@ -44,6 +45,23 @@
                                     <li><a class="ri-arrow-right-s-fill" style="color: #131EAD"
                                            href="viewOrdersForDelivery">Đơn hàng cần giao</a></li>
                                 </ul>
+                            </li>
+                            <li>
+                                <a href="" style="color: #131EAD"><i class="bi bi-credit-card-fill"></i>Ví điện tử Flora<i class="ri-add-circle-line"></i></a>
+                                <ul class="sub-menu">
+                                    <c:if test="${sessionScope.EWALLET_ACTIVE != true}">
+                                        <li>
+                                            <a class="ri-arrow-right-s-fill" style="color: #131EAD"
+                                               href="myWallet">Tạo tài khoản</a>
+                                        </li>
+                                    </c:if>
+                                    <c:if  test="${sessionScope.EWALLET_ACTIVE == true}">
+                                        <li>
+                                            <a class="ri-arrow-right-s-fill" style="color: #131EAD"
+                                               href="eWallet">Tài khoản</a>
+                                        </li>
+                                        </c:if>
+                                </ul>  
                             </li>
                         </ul>
                     </div>
@@ -95,7 +113,7 @@
                                 <c:if test="${not empty event}">
                                     <table >
                                         <thead>
-                                        <th>No</th>
+                                        <th>Mã đơn hàng</th>
                                         <th>Tên người mua</th>
                                         <th>Điện thoại</th>
                                         <th>Địa chỉ</th> 
@@ -107,7 +125,7 @@
                                         <tbody style="height: 100px;">
                                             <c:forEach var="eventOrder" items="${requestScope.DELIVERY_LIST}" varStatus="counter">
                                                 <tr>
-                                                    <td>${counter.count}</td>
+                                                    <td style="font-weight: bold">#ORD-${eventOrder.eventOrderId}</td>
                                                     <td>${eventOrder.fullname}</td>
                                                     <td>${eventOrder.phone}</td>
                                                     <td>${eventOrder.street}, ${eventOrder.city}</td>

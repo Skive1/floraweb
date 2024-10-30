@@ -47,18 +47,18 @@
                                 </ul>   
                             </li>
                             <li>
-                                <a href="" style="color: #131EAD"><i class="bi bi-credit-card-fill"></i>Ví điện tử FLora<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #131EAD"><i class="bi bi-credit-card-fill"></i>Ví điện tử Flora<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <c:if test="${empty sessionScope.Staff_Ballance}">
+                                    <c:if test="${sessionScope.EWALLET_ACTIVE != true}">
                                         <li>
                                             <a class="ri-arrow-right-s-fill" style="color: #131EAD"
                                                href="myWallet">Tạo tài khoản</a>
                                         </li>
                                     </c:if>
-                                    <c:if  test="${not empty sessionScope.Staff_Ballance}">
+                                    <c:if  test="${sessionScope.EWALLET_ACTIVE == true}">
                                         <li>
                                             <a class="ri-arrow-right-s-fill" style="color: #131EAD"
-                                               href="#">Tài khoản</a>
+                                               href="eWallet">Tài khoản</a>
                                         </li>
                                         </c:if>
                                 </ul>  
@@ -127,7 +127,7 @@
                                             <a style="color: red">&#8194;&#8201;${requestScope.FoundError2}</a>
                                         </c:if>  
                                         <thead>
-                                        <th>No</th>
+                                        <th>Mã đơn hàng</th>
                                         <th>Tên người mua</th>
                                         <th>Điện thoại</th>
                                         <th>Địa chỉ</th> 
@@ -139,7 +139,7 @@
                                         <tbody>
                                             <c:forEach var="eventOrder" items="${requestScope.DELIVERY_LIST}" varStatus="counter">
                                                 <tr>
-                                                    <td>${counter.count}</td>
+                                                    <td style="font-weight: bold">#ORD-${eventOrder.eventOrderId}</td>
                                                     <td>${eventOrder.fullname}</td>
                                                     <td>${eventOrder.phone}</td>
                                                     <td>${eventOrder.street}, ${eventOrder.city}</td>

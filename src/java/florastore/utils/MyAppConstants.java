@@ -268,4 +268,20 @@ public class MyAppConstants {
         public static final String ERROR_PAGE = "error404";
         public static final String SESSION_PAGE = "sessionExpired";
     }
+
+    public class EWalletSimulationFeatures {
+
+        public static final String ERROR = "error404";
+        public static final String SUCCESS = "delivererOrders";
+    }
+
+    public class WithDrawFeatures {
+
+        public static final String ERROR = "error404";
+    }
+
+    public class DepositFeatures {
+
+        public static final String ERROR = "error404";
+    }
 }

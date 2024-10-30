@@ -55,4 +55,38 @@ public class DeliveryDAO implements Serializable {
         }
         return result;
     }
+
+    public int getStaffId(String username)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int staffId = 0;
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                String sql = "Select StaffId "
+                        + "From Delivery "
+                        + "Where AccountUsername = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    staffId = rs.getInt("StaffId");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return staffId;
+    }
 }

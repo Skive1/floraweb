@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.servlet;
+package florastore.ajax.event.servlet;
 
-import florastore.delivery.DeliveryDAO;
+import florastore.DeliveryOrder.DeliverDAO;
+import florastore.account.AccountDTO;
 import florastore.deliveryBalance.DeliveryBalanceDAO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
@@ -23,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author ADMIN
  */
-@WebServlet(name = "CreateEWalletServlet", urlPatterns = {"/CreateEWalletServlet"})
-public class CreateEWalletServlet extends HttpServlet {
+@WebServlet(name = "depositMoney", urlPatterns = {"/depositMoney"})
+public class DepositMoneyServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,26 +40,51 @@ public class CreateEWalletServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String url = MyAppConstants.EWalletSimulationFeatures.ERROR;
+        String amountStr = (request.getParameter("amount") != null) ? request.getParameter("amount") : null;
+        double amount = (amountStr != null) ? Double.parseDouble(amountStr) : 0;
+        double currentBalance = 0;
         try {
             HttpSession session = request.getSession(false);
             if (session != null) {
-                String username = (session.getAttribute("USERNAME") != null) ? (String) session.getAttribute("USERNAME") : null;
-                DeliveryBalanceDAO dao = new DeliveryBalanceDAO();
-                DeliveryDAO DeliveryDAO = new DeliveryDAO();
-                int staffId = DeliveryDAO.getStaffId(username);
-                boolean result = dao.createEWallet(staffId);
-                if (result) {
-                    url = MyAppConstants.EWalletSimulationFeatures.SUCCESS;
-                    session.setAttribute("EWALLET_ACTIVE", true);
+                AccountDTO user = (session.getAttribute("USER") != null) ? (AccountDTO) session.getAttribute("USER") : null;
+                String role = (user != null) ? user.getRole() : null;
+                if ("Delivery".equals(role) && amountStr != null) {
+                    String username = (String) session.getAttribute("USERNAME");
+                    DeliverDAO dao = new DeliverDAO();
+                    int staffId = dao.getDeliveryStaffId(username);
+                    DeliveryBalanceDAO eWallet = new DeliveryBalanceDAO();
+                    currentBalance = eWallet.getCurrentBalance(staffId);
+                    boolean result = eWallet.depositMoney(staffId, amount);
+                    if (result) {
+                        session.setAttribute("Staff_Balance", currentBalance + amount);
+                        response.setContentType("application/json");
+                        PrintWriter out = response.getWriter();
+                        out.print("{\"success\": true, \"message\": \"Nạp tiền thành công!\", \"newBalance\": " + (currentBalance + amount) + "}");
+                        out.flush();
+                    } else {
+                        // Nếu không cập nhật được số dư
+                        response.setContentType("application/json");
+                        PrintWriter out = response.getWriter();
+                        out.print("{\"success\": false, \"message\": \"Nạp tiền thất bại.\"}");
+                        out.flush();
+                    }
+                } else {
+                    response.sendRedirect(MyAppConstants.DepositFeatures.ERROR);
                 }
             }
         } catch (SQLException ex) {
-            log("CreateEWalletServlet _SQL_ " + ex.getMessage());
+            log("depositMoney _SQL_ " + ex.getMessage());
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            out.print("{\"success\": false, \"message\": \"Có lỗi xảy ra: " + ex.getMessage() + "\"}");
+            out.flush();
         } catch (NamingException ex) {
-            log("CreateEWalletServlet _Naming_ " + ex.getMessage());
+            log("depositMoney _Naming_ " + ex.getMessage());
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            out.print("{\"success\": false, \"message\": \"Có lỗi xảy ra: " + ex.getMessage() + "\"}");
+            out.flush();
         } finally {
-            response.sendRedirect(url);
         }
     }
 
