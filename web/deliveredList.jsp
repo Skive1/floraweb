@@ -157,10 +157,9 @@
                                                                             <tr>
                                                                                 <td>${counter.count}</td>
                                                                                 <td>${detail.eventProductName}</td>
+                                                                                <td><fmt:formatDate value="${delivered.orderDate}" pattern="dd-MM-yyyy" /></td>
                                                                                 <td><fmt:formatDate value="${delivered.deliveryDate}" pattern="dd-MM-yyyy" /></td>
-                                                                                <td><fmt:formatDate value="${delivered.deliveryDate}" pattern="yyyy-MM-dd ê" /></td>
                                                                                 <td>
-                                                                                    ê
                                                                                     <c:if test="${delivered.deliveryOption == 'Delivery'}">
                                                                                         <a style="color: #28a745">
                                                                                             Giao hàng tận nơi

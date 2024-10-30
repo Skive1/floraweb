@@ -728,7 +728,7 @@ public class EventDAO implements Serializable {
                 rs = stm.executeQuery(); // Execute the query
                 while (rs.next()) {
                     String fullName = rs.getString("Fullname");
-                    int eventOrderId = rs.getInt("eventOrderId");
+                    int eventOrderId = rs.getInt("EventOrderId");
                     String phone = rs.getString("Phone");
                     String street = rs.getString("Street");
                     String note = rs.getString("Note");
@@ -908,7 +908,7 @@ public class EventDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 // 2. Create SQL String to get the next 5 orders with pagination
-                String sql = "select eo.Fullname, eo.EventOrderId, eo.Phone,eo.Street, eo.Note, eo.Status, eo.OrderDate, eo.isPaid "
+                String sql = "select eo.Fullname, eo.EventOrderId, eo.Phone,eo.Street, eo.Note, eo.Status, eo.OrderDate, eo.DeliveryDate, eo.isPaid, eo.DeliveryOption "
                         + "from EventOrder eo "
                         + "join Event e on eo.EventId = e.EventId "
                         + "where e.AccountUsername = ?";
@@ -926,12 +926,14 @@ public class EventDAO implements Serializable {
                     String status = rs.getString("Status");
                     boolean isPaid = rs.getBoolean("isPaid");
                     Timestamp orderDate = rs.getTimestamp("OrderDate");
+                    Timestamp deliveryDate = rs.getTimestamp("DeliveryDate");
+                    String deliveryOpt = rs.getString("DeliveryOption");
                     if ("Đã giao".equals(status)) {
                         EventOrderDTO dto
                                 = new EventOrderDTO(0, eventOrderId,
                                         fullName, phone, street, "",
-                                        orderDate, "", status,
-                                        0, 0, isPaid, "", note);
+                                        deliveryDate, deliveryOpt, status,
+                                        0, 0, isPaid, "", note, orderDate);
                         delivered.add(dto);
                     }
                 }
