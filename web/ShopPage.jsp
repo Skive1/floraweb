@@ -183,7 +183,7 @@
                             <div class="col-7"></div>
                             <div class="col-xl-2">
                                 <div class="bg-light ps-3 py-3 rounded d-flex justify-content-center mb-4">
-                                    <label for="fruits" >Sort price:</label>
+                                    <label for="fruits" >Sắp xếp theo giá:</label>
                                     <form id="orderByForm" action="orderBy" method="POST">
                                         <input type="hidden" id="txtOrderBy" name="txtOrderBy"/>
                                         <c:if test="${sessionScope.txtOrderBy == 'default'}">
@@ -218,7 +218,7 @@
                                         <div class="mb-3">
                                             <h4>Categories</h4>
                                             <ul class="list-unstyled fruite-categorie">
-                                                <form id="categoriesForm" action="SearchForTypeServlet" method="POST">
+                                                <form id="categoriesForm" action="SearchForTypeServlet" method="GET">
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name">
                                                             <input type="hidden" id="categories" name="categories"/>
@@ -281,7 +281,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <form id="searchRangeAndColor" action="searchFindError" method="POST">
+                                    <form id="searchRangeAndColor" action="searchFindError" method="GET">
                                         <div class="col-lg-12">
                                             <c:if test="${sessionScope.PriceFromSave == null && sessionScope.PriceToSave == null}">
                                                 <h4 class="mb-2">Price: </h4>
@@ -444,7 +444,7 @@
                                                 </form>
                                             </c:if>
                                             <c:if test="${sessionScope.currentPage != 1}"> 
-                                                <form id="backForm" action="searchPageChange" method="POST">
+                                                <form id="backForm" action="searchPageChange" method="GET">
                                                     <input type="hidden" id="pageBack" name="pageBack"/>
                                                     <a href="#" class="rounded" style="margin: 1;"
                                                        onclick="document.getElementById('pageBack').value = '${(sessionScope.currentPage - 1)}';
