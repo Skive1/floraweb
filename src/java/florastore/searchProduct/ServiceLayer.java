@@ -7,6 +7,7 @@ package florastore.searchProduct;
 
 import florastore.DeliveryOrder.DeliverDTO;
 import florastore.event.EventDTO;
+import florastore.event.EventOrderDTO;
 import florastore.searchProduct.ProductDTO;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -174,20 +175,32 @@ public class ServiceLayer {
         }
         return result;
     }
+
+    public List<EventOrderDTO> getSevenSellerOrder(List<EventOrderDTO> list, int[] range) {        //get X product in page N
+        List<EventOrderDTO> result = new ArrayList<>();
+        int addCounter = 1;
+        for (EventOrderDTO inPage : list) {
+            if (range[0] <= addCounter && addCounter <= range[1]) {
+                result.add(inPage);
+            }
+            addCounter++;
+        }
+        return result;
+    }
     
     public int getPage(String pageIsActive, String goBack, String goForward) {
         int page = 0;
-        if (pageIsActive == null) {
+        //nếu chuyển qua trang 2, 3, ... thì pageNumber đã ko còn là null
+        if (goBack != null) {
+            page = Integer.parseInt(goBack);
+        } else if (goForward != null) {
+            page = Integer.parseInt(goForward);
+        } else if (pageIsActive != null) {
+            page = Integer.parseInt(pageIsActive);
+        } else if (pageIsActive == null) {
             page = 1;                                                       //lần đầu in ra sản phẩm pageNumber mặc định luôn là 1
-        } else {                                                            //nếu chuyển qua trang 2, 3, ... thì pageNumber đã ko còn là null
-            if (goBack != null) {
-                page = Integer.parseInt(goBack);
-            } else if (goForward != null) {
-                page = Integer.parseInt(goForward);
-            } else {
-                page = Integer.parseInt(pageIsActive);
-            }
         }
+
         return page;
     }
 

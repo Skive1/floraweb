@@ -59,7 +59,6 @@ public class ViewOrdersServlet extends HttpServlet {
             session.removeAttribute("pageIsActive");
             session.setAttribute("pageIsActive", pageIsActive);
             ServiceLayer service = new ServiceLayer();
-            pageIsActive = service.checkPagination(pageIsActive, goBack, goForward); //kiểm tra user có nhấn thanh chuyển trang ko
             page = service.getPage(pageIsActive, goBack, goForward);            //trả về 1 ở lần đầu chạy, trả về n khi chạy lần 2
             range = service.getPageRange(page, 7);                                 //lấy phạm vi sản phẩm để show
             session.removeAttribute("currentPage");
@@ -89,7 +88,6 @@ public class ViewOrdersServlet extends HttpServlet {
                     deliveryList = service.getSeven(orderList, range);
                 }
                 request.setAttribute("DELIVERY_LIST", deliveryList);
-                request.setAttribute("Total_Order_On_Page", deliveryList.size());
             }
             pageSize = service.getPage(orderList.size(), 7);                                   //thanh chuyển trang << 1 2 3 4 >>
 

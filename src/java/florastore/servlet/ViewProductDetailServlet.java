@@ -10,6 +10,8 @@ import florastore.cart.CartItem;
 import florastore.flowerProducts.FlowerProductsCategoryDTO;
 import florastore.flowerProducts.FlowerProductsDAO;
 import florastore.flowerProducts.FlowerProductsDTO;
+import florastore.searchProduct.ProductDAO;
+import florastore.searchProduct.ServiceLayer;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -33,15 +35,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ViewProductDetailServlet", urlPatterns = {"/ViewProductDetailServlet"})
 public class ViewProductDetailServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -66,8 +59,10 @@ public class ViewProductDetailServlet extends HttpServlet {
                     session.removeAttribute("INSUFFICIENTSHOP");
                 }
             }
+            ServiceLayer service = new ServiceLayer();
             //2. Call DAO/Model
             FlowerProductsDAO dao = new FlowerProductsDAO();
+            ProductDAO productDao = new ProductDAO();
             //2.1 Get flower detail
             FlowerProductsDTO flowerDetail = dao.getFlowerDetail(productId);
             //2.2 Get top categories
@@ -85,6 +80,7 @@ public class ViewProductDetailServlet extends HttpServlet {
                 request.setAttribute("RELATED_PRODUCTS", relatedProducts);
                 request.setAttribute("ITEM_QUANTITY", itemQuantity);
             }//check flower in detail is available
+            request.setAttribute("requestNewProduct", service.getNewProduct(productDao.searchAllProduct()));
         } catch (SQLException ex) {
             log("ViewProductDetailServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {

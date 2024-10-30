@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ADMIN
+ * @author ASUS
  */
 @WebServlet(name = "ShowEventServlet", urlPatterns = {"/ShowEventServlet"})
 public class ShowEventServlet extends HttpServlet {
@@ -78,12 +78,15 @@ public class ShowEventServlet extends HttpServlet {
             List<EventDTO> events = dao.getAllEventExcept();
             //Process result
             if (!events.isEmpty()) {
-                List<EventDTO> eventList = service.getSevenEvent(events, range);
-                if (!eventList.isEmpty()) {
-                    request.setAttribute("Event_List", eventList);
-                    request.setAttribute("Total_Event", eventList.size());
-                    url = (String) siteMap.get(MyAppConstants.ManageEvent.VIEW_EVENT_DETAIL);
+                List<EventDTO> eventList = events.subList(range[0], range[1]);
+                if (eventList.isEmpty()) {                                      //trường hợp close event cuối cùng ở trang cuối
+                    range = service.getPageRange(1, 7);                         //trả về trang 1
+                    session.setAttribute("currentPage", 1);
+                    eventList = events.subList(range[0], range[1]);
                 }
+                request.setAttribute("Event_List", eventList);
+                request.setAttribute("Total_Event", eventList.size());
+                url = (String) siteMap.get(MyAppConstants.ManageEvent.VIEW_EVENT_DETAIL);
             }
 
             pageSize = service.getPage(events.size(), 7);                                   //thanh chuyển trang << 1 2 3 4 >>
