@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="css/css/style.css" />
         <link rel="stylesheet" href="css/css/admincss.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>main
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -47,7 +47,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href=""><i class="ri-file-list-line"></i>Manage<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #131EAD"><i class="ri-file-list-line" ></i>Manage<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="manageAccount" style="color: #131EAD">Account</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="viewEvent" style="color: #131EAD">Event</a></li>
