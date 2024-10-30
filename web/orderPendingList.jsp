@@ -108,7 +108,7 @@
                                 <table id="orderTable">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
+                                            <th>Mã Đơn Hàng</th>
                                             <th>Tên người mua</th>
                                             <th>Điện thoại</th>
                                             <th>Địa chỉ</th>
@@ -121,7 +121,7 @@
                                     <tbody>
                                         <c:forEach var="order" items="${sessionScope.orderList}" varStatus="counter">
                                             <tr>
-                                                <td>${counter.count}</td>
+                                                <td>${order.eventOrderId}</td>
                                                 <td>${order.fullname}</td>
                                                 <td>${order.phone}</td>
                                                 <td>${order.street}</td>
@@ -267,7 +267,7 @@
                                                                     </a>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <form id="cancelOrder${counter.count}" action="updateOrder" method="POST">
+                                                                    <form id="cancelOrder${order.eventOrderId}" action="updateOrder" method="POST">
                                                                         <input type="hidden" id="eventOrderId" name="eventOrderId" value="${order.eventOrderId}"/>
                                                                         <input type="hidden" id="accountUsername" name="accountUsername" value="${sessionScope.USER.username}"/>
                                                                         <input type="hidden" id="deliveryOpt" name="deliveryOpt" value="${order.deliveryOption}"/>
@@ -282,7 +282,7 @@
                                                                                    document.getElementById('page');
                                                                                    document.getElementById('action');
                                                                                    document.getElementById('deliveryOpt');
-                                                                                   document.getElementById('cancelOrder${counter.count}').submit();">
+                                                                                   document.getElementById('cancelOrder${order.eventOrderId}').submit();">
                                                                             Có
                                                                         </a>
                                                                     </form>
