@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="icon" href="img/flora-favicon.png"/>
@@ -43,7 +44,24 @@
                                            href="delivererOrders">Nhận đơn hàng mới</a></li>
                                     <li><a class="ri-arrow-right-s-fill" style="color: #131EAD"
                                            href="viewOrdersForDelivery">Đơn hàng cần giao</a></li>
-                                </ul>
+                                </ul>   
+                            </li>
+                            <li>
+                                <a href="" style="color: #131EAD"><i class="bi bi-credit-card-fill"></i>Ví điện tử FLora<i class="ri-add-circle-line"></i></a>
+                                <ul class="sub-menu">
+                                    <c:if test="${empty sessionScope.Staff_Ballance}">
+                                        <li>
+                                            <a class="ri-arrow-right-s-fill" style="color: #131EAD"
+                                               href="myWallet">Tạo tài khoản</a>
+                                        </li>
+                                    </c:if>
+                                    <c:if  test="${not empty sessionScope.Staff_Ballance}">
+                                        <li>
+                                            <a class="ri-arrow-right-s-fill" style="color: #131EAD"
+                                               href="#">Tài khoản</a>
+                                        </li>
+                                        </c:if>
+                                </ul>  
                             </li>
                         </ul>
                     </div>
