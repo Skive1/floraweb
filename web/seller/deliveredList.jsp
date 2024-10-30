@@ -106,7 +106,7 @@
                                 <table id="orderTable">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
+                                            <th>Mã đơn hàng</th>
                                             <th>Tên người mua</th>
                                             <th>Điện thoại</th>
                                             <th>Địa chỉ</th>
@@ -118,7 +118,7 @@
                                     <tbody>
                                         <c:forEach var="delivered" items="${sessionScope.DELIVERED}" varStatus="counter">
                                             <tr>
-                                                <td>${counter.count}</td>
+                                                <td style="font-weight: bold">#ORD-${delivered.eventOrderId}</td>
                                                 <td>${delivered.fullname}</td>
                                                 <td>${delivered.phone}</td>
                                                 <td>${delivered.street}</td>
@@ -157,10 +157,9 @@
                                                                             <tr>
                                                                                 <td>${counter.count}</td>
                                                                                 <td>${detail.eventProductName}</td>
+                                                                                <td><fmt:formatDate value="${delivered.orderDate}" pattern="dd-MM-yyyy" /></td>
                                                                                 <td><fmt:formatDate value="${delivered.deliveryDate}" pattern="dd-MM-yyyy" /></td>
-                                                                                <td><fmt:formatDate value="${delivered.deliveryDate}" pattern="yyyy-MM-dd ê" /></td>
                                                                                 <td>
-                                                                                    ê
                                                                                     <c:if test="${delivered.deliveryOption == 'Delivery'}">
                                                                                         <a style="color: #28a745">
                                                                                             Giao hàng tận nơi
