@@ -31,14 +31,14 @@ import javax.servlet.http.HttpSession;
  */
 @WebFilter(filterName = "DispatcherFilter", urlPatterns = {"/*"})
 public class DispatcherFilter implements Filter {
-    
+
     private static final boolean DEBUG = true;
     private FilterConfig filterConfig = null;
-    
+
     private final List<String> admin;
     private final List<String> seller;
     private final List<String> delivery;
-    
+
     public DispatcherFilter() {
         //Admin
         admin = new ArrayList<>();
@@ -74,6 +74,8 @@ public class DispatcherFilter implements Filter {
         seller.add("updateEventProduct");
         seller.add("eventCategory");
         seller.add("addEventProductAction");
+        seller.add("sellerUpdateEventPage");
+        seller.add("sellerUpdateEvent");
         //Delivery
         delivery = new ArrayList<>();
         delivery.add("deliveryIncome");
@@ -105,7 +107,7 @@ public class DispatcherFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-        
+
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
@@ -221,7 +223,7 @@ public class DispatcherFilter implements Filter {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
         filterConfig.getServletContext().log(msg);
     }
