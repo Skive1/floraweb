@@ -30,7 +30,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <title>Seller | Manage Event</title>
+        <title>Seller | Add Event</title>
         <link rel="icon" href="img/flora-favicon.png"/>
     </head>
     <body>
@@ -142,7 +142,12 @@
                                                 <td>
                                                     <a href="viewSellerEventProduct?eventId=${event.eventId}" class="show-class">Xem</a>
                                                 </td>
-                                                <td>
+                                                <td style="display: flex">
+                                                    <form action="sellerUpdateEventServlet" method="POST" id="updateEvent${event.eventId}">
+                                                        <input type="hidden" name="eventID" value="${event.eventId}" />
+                                                        <input type="submit" value="Chỉnh sửa" class="btn btn-secondary" 
+                                                               style="background-color: green; color: white"/>
+                                                    </form>
                                                     <form action="updateEvent?eventId=${event.eventId}&accountUsername=${sessionScope.USER.username}&page=${currentPage}" method="post" style="display:inline;">                                                        
                                                         <button type="submit" name="action" value="cancel" class="delete-class">Hủy</button>
                                                     </form>

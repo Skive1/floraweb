@@ -235,7 +235,6 @@
                                                                         <input type="hidden" name="infoBack" value="1"/>
                                                                         <input type="hidden" name="page" value="${currentPage}"/>
                                                                         <input type="hidden" name="action" value="confirm"/>
-                                                                        <!-- Thay thế <a> bằng <button> để submit form -->
                                                                         <button type="submit" class="btn btn-secondary" style="background-color: green;">
                                                                             Có
                                                                         </button>
