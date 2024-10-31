@@ -88,14 +88,16 @@ public class AddEventServlet extends HttpServlet {
         String errorMessage = null;
         HttpSession session = request.getSession();
 
-        String update = request.getParameter("update");
+        String update = request.getParameter("update") != null ? request.getParameter("update") : null;
         String eventDescriptionParam = request.getParameter("eventDescription");
-        String[] eventDescription = eventDescriptionParam.split("\\s*,\\s*");
-        String eventLocation = eventDescription[0].replaceAll("<.*?>", "");
-        String city = eventDescription[eventDescription.length - 1].replaceAll("<.*?>", "");
+        int lastCommaIndex = eventDescriptionParam.lastIndexOf(",");
+//        String[] eventDescription = eventDescriptionParam.split("\\s*,\\s*");
+        String eventLocation = eventDescriptionParam.substring(0, lastCommaIndex).trim().replaceAll("<.*?>", "");
+//        String eventLocation = eventDescription[0].replaceAll("<.*?>", "");
+//        String city = eventDescription[eventDescription.length - 1].replaceAll("<.*?>", "");
+        String city = eventDescriptionParam.substring(lastCommaIndex + 1).trim().replaceAll("<.*?>", "");
         String startDateStr = request.getParameter("startDate");
         String endDateStr = request.getParameter("endDate");
-        int eventID = (int) session.getAttribute("eventID");
 
         try {
             if (filePart.getSize() > 0 && filePart.getContentType().startsWith("image")) {
@@ -132,8 +134,8 @@ public class AddEventServlet extends HttpServlet {
                 Timestamp startDate = Timestamp.valueOf(startDateStr.replace("T", " ") + ":00");
                 Timestamp endDate = Timestamp.valueOf(endDateStr.replace("T", " ") + ":00");
                 EventDAO dao = new EventDAO();
-                
-                if (update.isEmpty()) {
+
+                if (update == null) {
                     EventDTO eDTO = new EventDTO(accountUsername, 0, eventName, eventLocation, city, startDate, endDate, fileName, true);
                     boolean result = dao.addEvent(eDTO);
                     if (result) {
@@ -141,6 +143,7 @@ public class AddEventServlet extends HttpServlet {
                         request.setAttribute("SUCCESS_MESSAGE", success);
                     }
                 } else {
+                    int eventID = (int) session.getAttribute("eventID");
                     EventDTO eDTO = null;
                     if (fileName.trim().isEmpty()) {//user không chọn ảnh mới khi update
                         update = update.substring(update.lastIndexOf("/") + 1);

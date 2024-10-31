@@ -156,7 +156,7 @@
                                                 </font>
                                             </c:if>
                                         </div>   
-                                        <a href="event">Go back</a>
+                                        <a href="viewSellerEvent">Go back</a>
                                     </div>
                                     <c:if test="${not empty success.eventAddSuccess}">
                                         <font color="green">

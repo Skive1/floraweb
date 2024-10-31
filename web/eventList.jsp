@@ -143,7 +143,7 @@
                                                     <a href="viewSellerEventProduct?eventId=${event.eventId}" class="show-class">Xem</a>
                                                 </td>
                                                 <td style="display: flex">
-                                                    <form action="sellerUpdateEventServlet" method="POST" id="updateEvent${event.eventId}">
+                                                    <form action="sellerUpdateEvent" method="POST" id="updateEvent${event.eventId}">
                                                         <input type="hidden" name="eventID" value="${event.eventId}" />
                                                         <input type="submit" value="Chỉnh sửa" class="btn btn-secondary" 
                                                                style="background-color: green; color: white"/>
