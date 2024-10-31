@@ -290,9 +290,9 @@
                                                 <h4 class="mb-2">Price: (${sessionScope.PriceFromSave} - ${sessionScope.PriceToSave})</h4>
                                             </c:if>
                                             <div class="d-flex align-items-center justify-content-between mb-3">
-                                                <input type="number" name="txtPriceFrom" value="" 
+                                                <input type="number" name="txtPriceFrom" value="" maxlength="8"
                                                        class="form-control p-3" placeholder="From" style="width: 125px">
-                                                <input type="number" name="txtPriceTo" value="" 
+                                                <input type="number" name="txtPriceTo" value="" maxlength="8"
                                                        class="form-control p-3" placeholder="To" style="width: 125px">
                                             </div>
                                             <c:set var="errors" value="${requestScope.PRICE_ERROR}"/>
