@@ -611,6 +611,52 @@ public class EventDAO implements Serializable {
         return result;
     }
 
+    public boolean updateEvent(EventDTO dto, int eventID)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean result = false;
+
+        try {
+            // 1. Connect to DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                // 2. Create SQL String with RETURN_GENERATED_KEYS to get eventId
+                String sql = "UPDATE Event SET EventName = ?, EventLocation = ?, EventCity = ?, StartDate = ?, EndDate = ?, EventImg = ? "
+                        + "WHERE EventId = ?";
+                // 3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, dto.getEventName());
+                stm.setString(2, dto.getEventLocation());
+                stm.setString(3, dto.getEventCity());
+                stm.setTimestamp(4, dto.getStartDate());
+                stm.setTimestamp(5, dto.getEndDate());
+                stm.setString(6, "imageEvent/" + dto.getEventImg());
+                stm.setInt(7, eventID);
+                // 4. Execute the update
+                int affectedRows = stm.executeUpdate();
+
+                // 5. Process result and retrieve generated eventId
+                if (affectedRows > 0) {
+                    result = true;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+    
     public List<EventCategoryDTO> getCategories()
             throws SQLException, NamingException {
 
@@ -1065,6 +1111,7 @@ public class EventDAO implements Serializable {
             while (rs.next()) {
                 //. map
                 //get data from Result Set
+                int eventId = eventID;
                 String eventName = rs.getString("EventName");
                 String eventLocation = rs.getString("EventLocation");
                 String eventCity = rs.getString("EventCity");
@@ -1072,7 +1119,7 @@ public class EventDAO implements Serializable {
                 Timestamp endDate = rs.getTimestamp("EndDate");
                 String eventImg = rs.getString("EventImg");
                 boolean eventStatus = rs.getBoolean("EventStatus");
-                events = new EventDTO("", eventID, eventName, eventLocation, eventCity, startDate, endDate, eventImg, eventStatus);
+                events = new EventDTO("", eventId, eventName, eventLocation, eventCity, startDate, endDate, eventImg, eventStatus);
             }//process each record in resultset  
         } finally {
             if (rs != null) {

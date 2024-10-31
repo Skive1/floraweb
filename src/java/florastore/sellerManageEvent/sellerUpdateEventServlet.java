@@ -35,21 +35,26 @@ public class sellerUpdateEventServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String eventIdStr = request.getParameter("eventID");
-        int eventId = Integer.parseInt(eventIdStr);
+        int eventId = 0;
 
         HttpSession session = request.getSession();
         
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
+        String url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.ERROR_PAGE2);
 
         try {
+            if (eventIdStr != null) {//user nhấn button chỉnh sửa một sự kiện trong danh sách sự kiện
+                eventId = Integer.parseInt(eventIdStr);
+            } else {//user nhấn button chỉnh sửa
+                eventId = (int) session.getAttribute("eventID");
+            }
             EventDAO dao = new EventDAO();
-
             EventDTO events = dao.getEventByID(eventId);
             if (events != null) {
-                request.setAttribute("eventToManage", events);
-                url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.MANAGE_EVENT);
+                session.setAttribute("eventID", eventId);
+                session.setAttribute("eventToManage", events);
+                url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.MANAGE_EVENT_PAGE);
             }
         } catch (SQLException ex) {
             log("UpdateEventServlet _SQL_" + ex.getMessage());

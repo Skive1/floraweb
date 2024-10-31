@@ -111,42 +111,58 @@
                                     <div class="admin-content-main-content-left">
                                         <input type="hidden" name="accountUsername" value="${sessionScope.USER.username}" />
                                         <div class="admin-content-main-content-two-input">
-                                            <input name="eventName" type="text" maxlength="20" placeholder="Tên sự kiện" required value="${requestScope.eventToManage.eventName}">
+                                            <input name="eventName" type="text" maxlength="20" placeholder="Tên sự kiện" 
+                                                   required value="${sessionScope.eventToManage.eventName}">
                                             <c:if test="${not empty error.eventNameError}">
                                                 <font color="red">
                                                 ${error.eventNameError}
                                                 </font>
                                             </c:if>
-                                        </div> ${requestScope.eventToManage}
+                                        </div>
                                         <div class="admin-content-main-content-textarea1">
-                                            <textarea class="" name="eventDescription" maxlength="30" id="editor1" placeholder="Mô tả sự kiện theo thứ tự địa điểm, thành phố"></textarea>
+                                            <textarea class="" name="eventDescription" maxlength="30" id="editor1"
+                                                      placeholder="Mô tả sự kiện theo thứ tự địa điểm, thành phố">
+                                                ${sessionScope.eventToManage.eventLocation}, ${sessionScope.eventToManage.eventCity}
+                                            </textarea>
                                         </div>
                                         <div class="admin-content-main-content-two-input">
                                             <label for="startDate">Ngày bắt đầu sự kiện:</label> 
-                                            <input name="startDate" id="startDate" type="datetime-local" placeholder="Ngày bắt đầu">
+                                            <input name="startDate" id="startDate" type="datetime-local" 
+                                                   placeholder="Ngày bắt đầu" value="${sessionScope.eventToManage.startDate}">
                                         </div>
                                         <div class="admin-content-main-content-two-input">
                                             <label for="endDate">Ngày kết thúc sự kiện:</label>
-                                            <input name="endDate" id="endDate" type="datetime-local" placeholder="Ngày kết thúc">
+                                            <input name="endDate" id="endDate" type="datetime-local" 
+                                                   placeholder="Ngày kết thúc" value="${sessionScope.eventToManage.endDate}">
                                         </div>
-
-                                        <button type="submit" class="main-btn">Thêm sự kiện</button>
+                                        <c:if test="${requestScope.Error != null}">
+                                            <br>
+                                            <a style="color: red">
+                                                ${requestScope.Error}
+                                            </a>
+                                            <br>
+                                        </c:if>
+                                        <button type="submit" class="main-btn">Sửa sự kiện</button>
                                     </div>
 
                                     <div class="admin-content-main-content-right">
                                         <div class="admin-content-main-content-right-img">
                                             <label for="file">Ảnh sự kiện</label>
-                                            <input id="file" name="eventImg" type="file" class="hidden" accept="image/*" onchange="previewEventImage(event, 'image-show')">
+
+                                            <input id="file" name="eventImg" type="file" class="hidden" accept="image/*"
+                                                   onchange="previewEventImage(event)">
                                             <div class="image-show">
-                                                <img id="event-image-preview" src="" alt="Preview" style="max-width: 100%; display: none;">
+                                                <img id="event-image-preview" src="${sessionScope.eventToManage.eventImg}" alt="Xem trước ảnh sự kiện" 
+                                                     style="max-width: 100%; display: block;">
                                             </div>
+
                                             <c:if test="${not empty error.uploadImgError}">
                                                 <font color="red">
                                                 ${error.uploadImgError}
                                                 </font>
                                             </c:if>
                                         </div>   
-                                        <a href="event">Go back</a>
+                                        <a href="viewSellerEvent">Go back</a>
                                     </div>
                                     <c:if test="${not empty success.eventAddSuccess}">
                                         <font color="green">
@@ -154,13 +170,28 @@
                                         </font>
                                     </c:if>
                                 </div>
+                                <input type="hidden" name="update" value="${sessionScope.eventToManage.eventImg}" />
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
+        <script>
+            function previewEventImage(event) {
+                const input = event.target;
+                const file = input.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const previewElement = document.getElementById('event-image-preview');
+                        previewElement.src = e.target.result; // Set image source to file
+                        previewElement.style.display = 'block'; // Show the image
+                    };
+                    reader.readAsDataURL(file); // Read the file
+                }
+            }
+        </script>
         <script src="js/javascript.js"></script>
         <script type="importmap">
             {
@@ -223,19 +254,19 @@
         </script>
 
         <script>
-                                                function previewEventImage(event) {
-                                                    const input = event.target;
-                                                    const file = input.files[0];
-                                                    if (file) {
-                                                        const reader = new FileReader();
-                                                        reader.onload = function (e) {
-                                                            const previewElement = document.getElementById('event-image-preview');
-                                                            previewElement.src = e.target.result; // Set image source to file
-                                                            previewElement.style.display = 'block'; // Show the image
-                                                        };
-                                                        reader.readAsDataURL(file); // Read the file
-                                                    }
-                                                }
+            function previewEventImage(event) {
+                const input = event.target;
+                const file = input.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const previewElement = document.getElementById('event-image-preview');
+                        previewElement.src = e.target.result; // Set image source to file
+                        previewElement.style.display = 'block'; // Show the image
+                    };
+                    reader.readAsDataURL(file); // Read the file
+                }
+            }
 
         </script>
 

@@ -193,7 +193,9 @@ public class MyAppConstants {
     }
 
     public class SellerManagementFeatures {
-        public static final String MANAGE_EVENT = "sellerUpdateEventPage";
+        public static final String ERROR_PAGE2 = "error404";
+        public static final String UPDATE_EVENT = "sellerUpdateEvent";
+        public static final String MANAGE_EVENT_PAGE = "sellerUpdateEventPage";
         public static final String EVENT_LIST = "sellerManageEventPage";
         public static final String VIEW_EVENT_LIST = "viewSellerEvent";
         public static final String PRODUCT_LIST = "sellerManageEventProductPage";
