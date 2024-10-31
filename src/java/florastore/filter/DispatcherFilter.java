@@ -5,9 +5,12 @@
  */
 package florastore.filter;
 
+import florastore.account.AccountDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -19,6 +22,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -28,13 +33,65 @@ import javax.servlet.http.HttpServletRequest;
 public class DispatcherFilter implements Filter {
 
     private static final boolean DEBUG = true;
-
-    // The filter configuration object we are associated with.  If
-    // this value is null, this filter instance is not currently
-    // configured. 
     private FilterConfig filterConfig = null;
 
+    private final List<String> admin;
+    private final List<String> seller;
+    private final List<String> delivery;
+
     public DispatcherFilter() {
+        //Admin
+        admin = new ArrayList<>();
+        admin.add("monthlyBoard");
+        admin.add("monthlyRevenue");
+        admin.add("monthlyEvent");
+        admin.add("weeklyBoard");
+        admin.add("weeklyRevenue");
+        admin.add("monthlyEventRevenue");
+        admin.add("weeklyProductBoard");
+        admin.add("weeklyProduct");
+        admin.add("manageAccount");
+        admin.add("update");
+        admin.add("delete");
+        admin.add("viewEvent");
+        //Seller
+        seller = new ArrayList<>();
+        seller.add("showEventId");
+        seller.add("monthlyEventSell");
+        seller.add("viewSellerEvent");
+        seller.add("viewOrderAction");
+        seller.add("viewDeliveredAction");
+        seller.add("viewFeedbacks");
+        seller.add("sellerDashboard");
+        seller.add("sellerManageEventPage");
+        seller.add("deliveredList");
+        seller.add("orderList");
+        seller.add("addEventPage");
+        seller.add("addEventProductPage");
+        seller.add("ViewOrderServlet");
+        seller.add("addEventAction");
+        seller.add("viewSellerEventProduct");
+        seller.add("updateEventProduct");
+        seller.add("eventCategory");
+        seller.add("addEventProductAction");
+        seller.add("sellerUpdateEventPage");
+        seller.add("sellerUpdateEvent");
+        //Delivery
+        delivery = new ArrayList<>();
+        delivery.add("deliveryIncome");
+        delivery.add("delivererOrders");
+        delivery.add("delivererGetOrder");
+        delivery.add("viewOrdersForDelivery");
+        delivery.add("markAsDone");
+        delivery.add("deliveryBoard");
+        delivery.add("delivererOrdersPage");
+        delivery.add("viewOrdersForDeliveryPage");
+        delivery.add("deliveryInformationPage");
+        delivery.add("eWallet");
+        delivery.add("depositMoney");
+        delivery.add("withDrawMoney");
+        delivery.add("myWallet");
+        delivery.add("taotaikhoan");
     }
 
     /**
@@ -52,6 +109,7 @@ public class DispatcherFilter implements Filter {
             throws IOException, ServletException {
 
         HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
         String url;
         try {
@@ -60,13 +118,31 @@ public class DispatcherFilter implements Filter {
             Properties siteMap
                     = (Properties) context.getAttribute("SITE_MAP");
             //get resource name
-            int lastIndex = uri.lastIndexOf("/");
-            String resource = uri.substring(lastIndex + 1);
+//            int lastIndex = uri.lastIndexOf("/");
+            String resource = uri.replace("/FloraRewind/", "");
             //get site mapping
             url = siteMap.getProperty(resource);
+            HttpSession session = req.getSession(false);
+            AccountDTO user = (session != null) ? (AccountDTO) session.getAttribute("USER") : null;
+            String role = (user != null) ? user.getRole() : null;
             if (url != null) {
-                RequestDispatcher rd = req.getRequestDispatcher(url);
-                rd.forward(request, response);
+                if (role != null) {
+                    if (admin.contains(resource) && !"Admin".equals(role)) {
+                        res.sendRedirect("error404");
+                    } else if (seller.contains(resource) && !"Seller".equals(role)) {
+                        res.sendRedirect("error404");
+                    } else if (delivery.contains(resource) && !"Delivery".equals(role)) {
+                        res.sendRedirect("error404");
+                    } else {
+                        RequestDispatcher rd = req.getRequestDispatcher("/" + url);
+                        rd.forward(request, response);
+                    }
+                } else if (!admin.contains(resource) && !seller.contains(resource) && !delivery.contains(resource)) {
+                    RequestDispatcher rd = req.getRequestDispatcher("/" + url);
+                    rd.forward(request, response);
+                } else {
+                    res.sendRedirect("error404");
+                }
             } else {
                 chain.doFilter(request, response);
             }

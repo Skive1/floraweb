@@ -5,6 +5,7 @@
  */
 package florastore.servlet;
 
+import florastore.account.AccountDTO;
 import florastore.event.EventDAO;
 import florastore.event.EventProductAddNotification;
 import florastore.eventProduct.EventProductDTO;
@@ -23,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 /**
@@ -66,17 +68,6 @@ public class AddEventProductServlet extends HttpServlet {
             uploadDir.mkdirs();  // Tạo thư mục nếu không tồn tại
         }
 
-        // Lấy file từ form
-        Part filePart = request.getPart("flowerImg");
-        if (filePart == null) {
-            return;
-        }
-
-        String fileName = filePart.getSubmittedFileName();
-
-        // Đường dẫn lưu file trong project
-        String filePath = uploadPath + File.separator + fileName;
-
         // Getting form parameters
         String productName = request.getParameter("name");
         String quantityStr = request.getParameter("quantity");
@@ -103,37 +94,56 @@ public class AddEventProductServlet extends HttpServlet {
         EventProductAddNotification success = new EventProductAddNotification();
         EventProductAddNotification error = new EventProductAddNotification();
         boolean bErr = false;
+        HttpSession session = request.getSession(false);
 
         try {
-            if (filePart.getSize() > 0 && filePart.getContentType().startsWith("image")) {
-                filePart.write(filePath);
-            }
+            if (session != null) {
+                AccountDTO user = (session.getAttribute("USER") != null) ? (AccountDTO) session.getAttribute("USER") : null;
+                String role = (user != null) ? user.getRole() : null;
+                if ("Seller".equals(role)) {
+                    // Lấy file từ form
+                    Part filePart = request.getPart("flowerImg");
+                    if (filePart == null) {
+                        return;
+                    }
 
-            if (discount == price || discount > price) {
-                error.setDiscountError("Discount must be lower than price");
-                bErr = true;
-            } else if (!fileName.endsWith(".png") || !"image/png".equals(filePart.getContentType())) {
-                error.setUploadImgError("Wrong file format. Please upload a PNG image.");
-                bErr = true;
-            } else if (fileName.contains("..")) {
-                error.setUploadImgError("File name must not have scpecial charaters");
-                bErr = true;
-            }
+                    String fileName = filePart.getSubmittedFileName();
 
-            if (!bErr) {
-                request.setAttribute("ERROR", error);
+                    // Đường dẫn lưu file trong project
+                    String filePath = uploadPath + File.separator + fileName;
+                    if (filePart.getSize() > 0 && filePart.getContentType().startsWith("image")) {
+                        filePart.write(filePath);
+                    }
+                    if (discount == price || discount > price) {
+                        error.setDiscountError("Discount must be lower than price");
+                        bErr = true;
+                    } else if (!fileName.endsWith(".png") || !"image/png".equals(filePart.getContentType())) {
+                        error.setUploadImgError("Wrong file format. Please upload a PNG image.");
+                        bErr = true;
+                    } else if (fileName.contains("..")) {
+                        error.setUploadImgError("File name must not have scpecial charaters");
+                        bErr = true;
+                    }
 
-                // Create a new EventProduct object and save to the database (pseudo code)
-                EventProductDTO newProduct = new EventProductDTO(0, eventId, productName, type, condition, detail, fileName, quantity, price - discount);
+                    if (!bErr) {
+                        request.setAttribute("ERROR", error);
 
-                // Assuming you have a DAO or service to add the product to the database
-                EventDAO dao = new EventDAO();
-                boolean isProductAdded = dao.addEventProduct(newProduct, categoryId, eventId);
+                        // Create a new EventProduct object and save to the database (pseudo code)
+                        EventProductDTO newProduct = new EventProductDTO(0, eventId, productName, type, condition, detail, fileName, quantity, price - discount);
 
-                if (isProductAdded) {
-                    success.setEventProductAddSuccess("Product added successfully!!!");
-                    request.setAttribute("SUCCESS", success);
-                    request.setAttribute("EVENT_ID", eventId);
+                        // Assuming you have a DAO or service to add the product to the database
+                        EventDAO dao = new EventDAO();
+                        boolean isProductAdded = dao.addEventProduct(newProduct, categoryId, eventId);
+
+                        if (isProductAdded) {
+                            success.setEventProductAddSuccess("Product added successfully!!!");
+                            request.setAttribute("SUCCESS", success);
+                            request.setAttribute("EVENT_ID", eventId);
+                        }
+                    }
+                } else {
+                    url = MyAppConstants.AddEventProductFeatures.ERROR_PAGE;
+                    response.sendRedirect(url);
                 }
             }
         } catch (IOException ex) {
@@ -150,8 +160,10 @@ public class AddEventProductServlet extends HttpServlet {
             if (bErr) {
                 request.setAttribute("ERROR", error);
             }
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            if (!response.isCommitted()) {
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            }
         }
     }
 

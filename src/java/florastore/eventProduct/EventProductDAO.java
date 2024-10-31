@@ -37,7 +37,7 @@ public class EventProductDAO implements Serializable {
                 String sql = "Select ep.EPId, ep.EPName, ep.EPType, ep.EPCondition, ep.EPDetail, ep.Img, ep.EPQuantity, ep.EPPrice "
                         + "From EventProduct ep "
                         + "Join Event e on ep.EventEventId = e.EventId "
-                        + "Where ep.EventEventId = ?";
+                        + "Where ep.EventEventId = ? AND isDel = 0";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, eventId);

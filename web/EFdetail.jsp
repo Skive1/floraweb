@@ -474,7 +474,9 @@
                 }
             });
         </script>
-        <script src="js/notification.js"></script>
+        <c:if test="${not empty sessionScope.USER}">
+            <script src="js/notification.js"></script>
+        </c:if>
         <script src="alertPackage/alertJs.js"></script>
         <script src="js/main.js"></script>
         <script src="js/newProduct.js"></script>

@@ -37,7 +37,7 @@
         <!-- Template Stylesheet -->
         <link href="css/indicator.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/snackbar.css">S
+        <link rel="stylesheet" href="css/snackbar.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
     </head>
