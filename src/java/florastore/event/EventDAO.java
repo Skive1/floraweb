@@ -1044,6 +1044,50 @@ public class EventDAO implements Serializable {
         return events;
     }
 
+    public EventDTO getEventByID(int eventID)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        EventDTO events = null;
+        try {
+            // 1. Connect to DB
+            con = DBHelper.getConnection();
+            String sql = "SELECT EventName, EventLocation, EventCity, StartDate, EndDate, EventImg, EventStatus "
+                    + "FROM Event "
+                    + "Where EventId = ?";
+            //3. Create Statement Object
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, eventID);
+            //4. Execute Query
+            rs = stm.executeQuery();
+            //5. process result
+            while (rs.next()) {
+                //. map
+                //get data from Result Set
+                String eventName = rs.getString("EventName");
+                String eventLocation = rs.getString("EventLocation");
+                String eventCity = rs.getString("EventCity");
+                Timestamp startDate = rs.getTimestamp("StartDate");
+                Timestamp endDate = rs.getTimestamp("EndDate");
+                String eventImg = rs.getString("EventImg");
+                boolean eventStatus = rs.getBoolean("EventStatus");
+                events = new EventDTO("", eventID, eventName, eventLocation, eventCity, startDate, endDate, eventImg, eventStatus);
+            }//process each record in resultset  
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return events;
+    }
+    
     public void cancelEvent(int eventId) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;

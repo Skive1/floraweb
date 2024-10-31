@@ -193,7 +193,7 @@ public class MyAppConstants {
     }
 
     public class SellerManagementFeatures {
-
+        public static final String MANAGE_EVENT = "sellerUpdateEventPage";
         public static final String EVENT_LIST = "sellerManageEventPage";
         public static final String VIEW_EVENT_LIST = "viewSellerEvent";
         public static final String PRODUCT_LIST = "sellerManageEventProductPage";
