@@ -151,6 +151,7 @@
                                                                 <table>
                                                                     <thead>
                                                                         <tr>
+                                                                            <th style="background-color: #007bff; color: white">ID</th>
                                                                             <th style="background-color: #007bff; color: white">Ảnh</th>
                                                                             <th style="background-color: #007bff; color: white">Tên sản phẩm</th>
                                                                             <th style="background-color: #007bff; color: white">Loại</th>
@@ -164,6 +165,7 @@
                                                                     <tbody>
                                                                         <c:forEach var="product" items="${sessionScope.PRODUCTS[event.eventId]}" varStatus="counter">
                                                                             <tr id="productRow${product.eventProductId}">
+                                                                                <td style="font-weight: bold;padding-right: 14px;padding-left: 20px">${product.eventProductId}</td>
                                                                                 <td><img src="${product.eventProductImg}" style="width: 100px; height: auto;"></td>
                                                                                 <td>${product.eventProductName}</td>
                                                                                 <td>${product.eventProductType}</td>

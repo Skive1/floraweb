@@ -10,10 +10,35 @@
 <link rel="icon" href="img/flora-favicon.png"/>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.0/css/all.css">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<style>
+    section {
+        background-image: url(img/ThousandFlower.jpg); /* Đường dẫn đến hình ảnh background */
+        background-size: cover; /* Để hình ảnh bao phủ toàn bộ phần main */
+        background-position: center; /* Để căn giữa hình ảnh */
+    }
+    .styled-link {
+        text-decoration: none;
+        color: #fff;
+        background-color: #4CAF50;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 1.2em;
+        transition: all 0.3s ease;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .styled-link:hover {
+        background-color: #45a049;
+        color: #ffffff;
+        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
+        transform: scale(1.05);
+    }
+</style>
 <!-- Registration 7 - Bootstrap Brain Component -->
 <section class="bg-light p-3 p-md-4 p-xl-5">
     <div class="container">
-        <a href="home">Go back to Home</a>
+        <a href="home" class="styled-link">Go back to Home</a>
         <div class="row justify-content-center">
             <div class="col-12 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
                 <div class="card border border-light-subtle rounded-4">
