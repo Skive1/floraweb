@@ -65,6 +65,7 @@
                                 <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Quản lý đơn hàng<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="viewOrderAction" style="color: #337AB7">Đơn hàng chờ giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders" style="color: #337AB7">Đơn hàng đang giao</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction" style="color: #337AB7">Đơn hàng đã giao</a></li>
                                 </ul>
                             </li>

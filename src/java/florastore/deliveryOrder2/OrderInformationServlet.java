@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.sellerManageEvent;
+package florastore.deliveryOrder2;
 
-import florastore.event.EventDAO;
-import florastore.event.EventDTO;
+import florastore.manageEvent2.TotalPriceDTO;
+import florastore.searchProduct.ServiceLayer;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -21,43 +24,56 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author ASUS
- */
-@WebServlet(name = "sellerUpdateEventServlet", urlPatterns = {"/sellerUpdateEventServlet"})
-public class sellerUpdateEventServlet extends HttpServlet {
+@WebServlet(name = "OrderInformationServlet", urlPatterns = {"/OrderInformationServlet"})
+public class OrderInformationServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String eventIdStr = request.getParameter("eventID");
-        int eventId = 0;
-
-        HttpSession session = request.getSession();
-        
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.ERROR_PAGE2);
+        String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
 
+        HttpSession session = request.getSession();
+
+        DecimalFormat df = new DecimalFormat("#,###.##");
+        List<DeliverDTO> deliveryList = (List<DeliverDTO>) request.getAttribute("DELIVERY_LIST");
+        List<DeliverDTO> productList = new ArrayList<>();
+        List<TotalPriceDTO> totalPrint = new ArrayList<>();
         try {
-            if (eventIdStr != null) {//user nhấn button chỉnh sửa một sự kiện trong danh sách sự kiện
-                eventId = Integer.parseInt(eventIdStr);
-            } else {//user nhấn button chỉnh sửa
-                eventId = (int) session.getAttribute("eventID");
+
+            DeliverDAO dao = new DeliverDAO();
+
+            if (deliveryList != null) {
+                request.setAttribute("DELIVERY_LIST", deliveryList);
+                for (int i = 0; i < deliveryList.size(); i++) {
+                    List<DeliverDTO> flowerList = dao.getOrderInfo(deliveryList.get(i).getEventOrderId());
+                    if (flowerList != null && !flowerList.isEmpty()) {
+                        productList.addAll(flowerList);
+                        double total = 0;
+                        String totalOut;
+                        for (DeliverDTO flowerPrice : flowerList) {
+                            total += flowerPrice.getUnitPrice() * flowerPrice.getQuantity();
+                        }
+                        totalOut = df.format(total);
+                        TotalPriceDTO result = new TotalPriceDTO(deliveryList.get(i).getEventOrderId(), totalOut);
+                        totalPrint.add(result);
+                    }
+                }
+                request.setAttribute("DELIVERY_INFO_LIST", productList);
+                request.setAttribute("Total_Info_On_Page", productList.size());
+                request.setAttribute("TOTAL", totalPrint);
             }
-            EventDAO dao = new EventDAO();
-            EventDTO events = dao.getEventByID(eventId);
-            if (events != null) {
-                session.setAttribute("eventID", eventId);
-                session.setAttribute("eventToManage", events);
-                url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.MANAGE_EVENT_PAGE);
+            if (session.getAttribute("viewOrders") != null) {
+                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
+            } else if (session.getAttribute("viewOrdersForDelivery") != null) {
+                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING_PAGE);
             }
         } catch (SQLException ex) {
-            log("UpdateEventServlet _SQL_" + ex.getMessage());
+            log("ViewOrderServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
-            log("UpdateEventServlet _Naming_" + ex.getMessage());
+            log("ViewOrderServlet _Naming_ " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.DeliveryOrder;
+package florastore.sellerManageOrder;
 
-import florastore.ManageEvent.TotalPriceDTO;
-import florastore.searchProduct.ServiceLayer;
+import florastore.deliveryOrder2.*;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
@@ -24,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "OrderInformationServlet", urlPatterns = {"/OrderInformationServlet"})
-public class OrderInformationServlet extends HttpServlet {
+@WebServlet(name = "MarkAsCancelServlet", urlPatterns = {"/MarkAsCancelServlet"})
+public class MarkAsCancelServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,47 +30,21 @@ public class OrderInformationServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
-
-        HttpSession session = request.getSession();
-
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        List<DeliverDTO> deliveryList = (List<DeliverDTO>) request.getAttribute("DELIVERY_LIST");
-        List<DeliverDTO> productList = new ArrayList<>();
-        List<TotalPriceDTO> totalPrint = new ArrayList<>();
+        String url = (String) siteMap.get(MyAppConstants.SellerManageOrder.ERROR);
+        String getEventOrderID = request.getParameter("getEventOrderID").trim();
+        int eventOrderID = Integer.parseInt(getEventOrderID);
         try {
-
             DeliverDAO dao = new DeliverDAO();
-
-            if (deliveryList != null) {
-                request.setAttribute("DELIVERY_LIST", deliveryList);
-                for (int i = 0; i < deliveryList.size(); i++) {
-                    List<DeliverDTO> flowerList = dao.getOrderInfo(deliveryList.get(i).getEventOrderId());
-                    if (flowerList != null && !flowerList.isEmpty()) {
-                        productList.addAll(flowerList);
-                        double total = 0;
-                        String totalOut;
-                        for (DeliverDTO flowerPrice : flowerList) {
-                            total += flowerPrice.getUnitPrice() * flowerPrice.getQuantity();
-                        }
-                        totalOut = df.format(total);
-                        TotalPriceDTO result = new TotalPriceDTO(deliveryList.get(i).getEventOrderId(), totalOut);
-                        totalPrint.add(result);
-                    }
-                }
-                request.setAttribute("DELIVERY_INFO_LIST", productList);
-                request.setAttribute("Total_Info_On_Page", productList.size());
-                request.setAttribute("TOTAL", totalPrint);
-            }
-            if (session.getAttribute("viewOrders") != null) {
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_ORDER_PAGE);
-            } else if (session.getAttribute("viewOrdersForDelivery") != null) {
-                url = (String) siteMap.get(MyAppConstants.Delivery.SHIPPER_DELIVERING_PAGE);
+            boolean result = dao.sellerMarkAsCancel(eventOrderID);
+            if (result) {
+                url = (String) siteMap.get(MyAppConstants.SellerManageOrder.ORDER_DELIVERING);
             }
         } catch (SQLException ex) {
-            log("ViewOrderServlet _SQL_ " + ex.getMessage());
+            log("EventServlet _SQL_ " + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            log("EventServlet Class Not Found " + ex.getMessage());
         } catch (NamingException ex) {
-            log("ViewOrderServlet _Naming_ " + ex.getMessage());
+            log("EventServlet _Naming_ " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
