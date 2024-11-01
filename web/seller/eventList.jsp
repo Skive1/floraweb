@@ -182,6 +182,9 @@
                                                                         </c:forEach>
                                                                     </tbody>
                                                                 </table>
+                                                                <a href="addEventProductPage" style="text-decoration: none;">
+                                                                    <button class="btn btn-primary" style="padding: 10px 20px; font-size: 16px;">+</button>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
