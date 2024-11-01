@@ -112,7 +112,7 @@
                     </div> 
                     <div class="admin-content-main">
                         <div class="admin-content-main-title">
-                            <h1 style="font-size: 36px">Danh sách đơn hàng:</h1>
+                            <h1 style="font-size: 36px">Danh sách đơn hàng chưa nhận:</h1>
                         </div>
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->

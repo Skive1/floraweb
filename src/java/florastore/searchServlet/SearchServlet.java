@@ -77,7 +77,8 @@ public class SearchServlet extends HttpServlet {
         try {
             ProductDAO dao = new ProductDAO();
             ServiceLayer service = new ServiceLayer();
-            pageIsActive = service.checkPagination(pageIsActive, goBack, goForward); //kiểm tra user có nhấn thanh chuyển trang ko
+            //kiểm tra user có nhấn thanh chuyển trang ko
+            pageIsActive = service.checkPagination(pageIsActive, goBack, goForward); 
             //3 hàm giúp định vị đúng trang cũ để trả về khi user nhập lỗi
             if (checkPageActive != null && searchErrorExist != null) {
                 pageIsActive = checkPageActive;

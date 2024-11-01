@@ -5,7 +5,7 @@
  */
 package florastore.servlet;
 
-import florastore.ManageEvent.TotalPriceDTO;
+import florastore.manageEvent2.TotalPriceDTO;
 import florastore.account.AccountDTO;
 import florastore.event.EventDAO;
 import florastore.event.EventOrderDTO;

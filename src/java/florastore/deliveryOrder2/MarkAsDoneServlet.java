@@ -1,4 +1,4 @@
-package florastore.DeliveryOrder;
+package florastore.deliveryOrder2;
 
 import florastore.utils.MyAppConstants;
 import java.io.IOException;

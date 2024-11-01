@@ -5,7 +5,7 @@
  */
 package florastore.searchProduct;
 
-import florastore.DeliveryOrder.DeliverDTO;
+import florastore.deliveryOrder2.DeliverDTO;
 import florastore.event.EventDTO;
 import florastore.event.EventOrderDTO;
 import florastore.searchProduct.ProductDTO;
@@ -198,7 +198,8 @@ public class ServiceLayer {
         } else if (pageIsActive != null) {
             page = Integer.parseInt(pageIsActive);
         } else if (pageIsActive == null) {
-            page = 1;                                                       //lần đầu in ra sản phẩm pageNumber mặc định luôn là 1
+            //lần đầu in ra sản phẩm pageNumber mặc định luôn là 1
+            page = 1;                                                       
         }
 
         return page;

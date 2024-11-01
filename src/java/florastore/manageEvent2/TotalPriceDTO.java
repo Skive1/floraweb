@@ -1,5 +1,5 @@
 
-package florastore.ManageEvent;
+package florastore.manageEvent2;
 
 public class TotalPriceDTO {
     private int eventId;
