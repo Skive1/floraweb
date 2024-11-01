@@ -792,7 +792,14 @@
                                                                     });
                                                                     return;
                                                                 }
-
+                                                                if (feedbackText === "") {
+                                                                    Swal.fire({
+                                                                        icon: 'warning',
+                                                                        title: 'Chưa đánh giá',
+                                                                        text: 'Vui lòng hãy nhập vào ô đánh giá!'
+                                                                    });
+                                                                    return;
+                                                                }
                                                                 $.ajax({
                                                                     url: 'submitFeedback',
                                                                     type: 'POST',
@@ -837,6 +844,8 @@
                                                         });
                                                         $('.close, .btn-secondary').click(function () {
                                                             $('#feedbackModal').modal('hide');
+                                                            $('#feedbackText').val('');
+                                                            $('input[name="star"]').prop('checked', false);
                                                         });
         </script>
         <script>

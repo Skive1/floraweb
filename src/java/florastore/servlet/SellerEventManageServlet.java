@@ -5,14 +5,22 @@
  */
 package florastore.servlet;
 
+import florastore.ManageEvent.TotalPriceDTO;
 import florastore.account.AccountDTO;
 import florastore.event.EventDAO;
 import florastore.event.EventDTO;
 import florastore.event.EventOrderDTO;
+import florastore.event.EventOrderDetailDTO;
+import florastore.eventProduct.EventProductDTO;
+import florastore.searchProduct.ServiceLayer;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -51,6 +59,16 @@ public class SellerEventManageServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         String account = null;
         AccountDTO dto = null;
+        
+        String pageIsActive = request.getParameter("pageNo");
+        String goBack = request.getParameter("pageBack");
+        String goForward = request.getParameter("pageForward");
+        String infoBack = request.getParameter("infoBack");
+        List<TotalPriceDTO> totalPrint = new ArrayList<>();
+        String checkPageActive = (String) session.getAttribute("pageIsActive");
+        int[] range = null;
+        int page = 0, pageSize = 0;
+        DecimalFormat df = new DecimalFormat("#,###.##");
 
         try {
             if (session != null) {
@@ -58,26 +76,61 @@ public class SellerEventManageServlet extends HttpServlet {
                 dto = (AccountDTO) session.getAttribute("USER");
                 if ("Seller".equals(dto.getRole())) {
                     url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.EVENT_LIST);
+                    
+                    if (pageIsActive != null) {
+                        pageIsActive = pageIsActive.trim();
+                    }
+                    if (goBack != null) {
+                        goBack = goBack.trim();
+                    }
+                    if (goForward != null) {
+                        goForward = goForward.trim();
+                    }
+                    if (checkPageActive != null && infoBack != null) {                  //về trang cũ sau khi delivery xem thông tin
+                        pageIsActive = checkPageActive;
+                        session.removeAttribute("pageIsActive");
+                    }
+                    session.removeAttribute("pageIsActive");
+                    session.setAttribute("pageIsActive", pageIsActive);
+                    ServiceLayer service = new ServiceLayer();
+                    pageIsActive = service.checkPagination(pageIsActive, goBack, goForward); //kiểm tra user có nhấn thanh chuyển trang ko
+                    page = service.getPage(pageIsActive, goBack, goForward);            //trả về 1 ở lần đầu chạy, trả về n khi chạy lần 2
+                    range = service.getPageRange(page, 7);                                 //lấy phạm vi sản phẩm để show
+                    session.removeAttribute("currentPage");
+                    if (pageIsActive == null) {
+                        session.setAttribute("currentPage", 1);                   //mặc định button 1
+                    } else {
+                        session.setAttribute("currentPage", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
+                    }
+                    
                     EventDAO dao = new EventDAO();
                     List<EventDTO> events = dao.getEventByAccount(account);
 
-                    // Paging
-                    int pageSize = 5; // Number of orders per page
-                    String pageParam = request.getParameter("page"); // Get the current page number from the request
-                    int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
-                    int totalEvents = events.size();
-                    int totalPages = (int) Math.ceil((double) totalEvents / pageSize);
-
-                    // Calculate the starting and ending indexes for the sublist of products to display
-                    int start = (currentPage - 1) * pageSize;
-                    int end = Math.min(start + pageSize, totalEvents);
-
                     // Get the products for the current page
-                    List<EventDTO> eventsForPage = events.subList(start, end);
-
+                    List<EventDTO> eventsForPage = service.getSevenEvent(events, range);
+                    if (eventsForPage.isEmpty()) {                                     //trường hợp delivery lấy order ở trang cuối mà trang đó chỉ có 1 order
+                        range = service.getPageRange(1, 7);                         //trả về trang 1
+                        session.setAttribute("currentPage", 1);
+                        eventsForPage = service.getSevenEvent(events, range);
+                    }
+                    
+                    // Map to store order details for each order
+                    Map<Integer, List<EventProductDTO>> allEventProducts = new HashMap<>();
+                    for (int i = 0; i < events.size(); i++) {
+                        List<EventProductDTO> products = dao.getAvailableEventFlower(events.get(i).getEventId());
+                        allEventProducts.put(events.get(i).getEventId(), products);
+                    }
+                    
+                    session.setAttribute("PRODUCTS", allEventProducts);
                     session.setAttribute("EVENTS", eventsForPage);
-                    request.setAttribute("currentPage", currentPage);
-                    request.setAttribute("totalPages", totalPages);
+
+                    pageSize = service.getPage(events.size(), 7);                                   //thanh chuyển trang << 1 2 3 4 >>
+
+                    if (pageSize == 0) {
+                        pageSize = 1;
+                    }
+                    session.removeAttribute("pageSize");
+                    session.setAttribute("pageSize", pageSize);    
                 }
             } else if (session == null) {
                 url = MyAppConstants.SellerManagementFeatures.SESSION_PAGE;
