@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package florastore.ManageEvent;
+package florastore.deliveryOrder2;
 
 import florastore.account.AccountDTO;
-import florastore.event.EventDAO;
-import florastore.event.EventDTO;
+import florastore.deliveryBalance.DeliveryBalanceDAO;
+import florastore.deliveryBalance.DeliveryBalanceDTO;
 import florastore.searchProduct.ServiceLayer;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
@@ -28,8 +23,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author ASUS
  */
-@WebServlet(name = "ShowEventServlet", urlPatterns = {"/ShowEventServlet"})
-public class ShowEventServlet extends HttpServlet {
+@WebServlet(name = "ViewOrdersServlet", urlPatterns = {"/ViewOrdersServlet"})
+public class ViewOrdersServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -38,8 +33,7 @@ public class ShowEventServlet extends HttpServlet {
         AccountDTO dto = null;
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.ManageEvent.ERROR_PAGE);
-
+        String url = (String) siteMap.get(MyAppConstants.Delivery.ERROR_PAGE);
         String pageIsActive = request.getParameter("pageNo");
         String goBack = request.getParameter("pageBack");
         String goForward = request.getParameter("pageForward");
@@ -47,11 +41,13 @@ public class ShowEventServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         String checkPageActive = (String) session.getAttribute("pageIsActive");
+        String getFullName = (String) session.getAttribute("USERNAME");
         int[] range = null;
-        int page = 0, pageSize = 0;
+        int staffID = 0, page = 0, pageSize = 0;
+        double staffBalance = 0;
         try {
             dto = (AccountDTO) session.getAttribute("USER");
-            if ("Admin".equals(dto.getRole())) {
+            if ("Delivery".equals(dto.getRole())) {
                 if (pageIsActive != null) {
                     pageIsActive = pageIsActive.trim();
                 }
@@ -61,50 +57,66 @@ public class ShowEventServlet extends HttpServlet {
                 if (goForward != null) {
                     goForward = goForward.trim();
                 }
-                if (checkPageActive != null && infoBack != null) {                  //về trang cũ sau khi delivery xem thông tin
+                //về lại trang N sau khi delivery nhận đơn tại trang N
+                if (checkPageActive != null && infoBack != null) {
                     pageIsActive = checkPageActive;
                     session.removeAttribute("pageIsActive");
                 }
                 session.removeAttribute("pageIsActive");
                 session.setAttribute("pageIsActive", pageIsActive);
                 ServiceLayer service = new ServiceLayer();
-                pageIsActive = service.checkPagination(pageIsActive, goBack, goForward); //kiểm tra user có nhấn thanh chuyển trang ko
                 page = service.getPage(pageIsActive, goBack, goForward);            //trả về 1 ở lần đầu chạy, trả về n khi chạy lần 2
                 range = service.getPageRange(page, 7);                                 //lấy phạm vi sản phẩm để show
+                pageIsActive = service.checkPagination(pageIsActive, goBack, goForward);
                 session.removeAttribute("currentPage");
                 if (pageIsActive == null) {
                     session.setAttribute("currentPage", 1);                   //mặc định button 1
                 } else {
                     session.setAttribute("currentPage", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
                 }
-                //Call DAO/Model
-                EventDAO dao = new EventDAO();
-                List<EventDTO> events = dao.getAllEventExcept();
-                //Process result
-                if (!events.isEmpty()) {
-                    List<EventDTO> eventList = service.getSevenEvent(events, range);
-                    if (eventList.isEmpty()) {                                      //trường hợp close event cuối cùng ở trang cuối
+                DeliverDAO dao = new DeliverDAO();
+                if (session.getAttribute("Staff_ID") == null && session.getAttribute("Staff_Balance") == null) {
+                    staffID = dao.getDeliveryStaffId(getFullName);                  //staffID không có thì tạo session cho nó, những lần sau chỉ gần getAttribute
+                    session.setAttribute("Staff_ID", staffID);
+                } else {
+                    staffID = (int) session.getAttribute("Staff_ID");
+                }
+                DeliveryBalanceDAO walletDAO = new DeliveryBalanceDAO();
+                DeliveryBalanceDTO eWallet = walletDAO.getWalletInfo(staffID);
+                if (eWallet != null) {
+                    session.setAttribute("EWALLET_ACTIVE", true);
+                } else {
+                    session.setAttribute("EWALLET_ACTIVE", false);
+                }
+                staffBalance = dao.getDeliveryStaffBalance(getFullName);
+                session.setAttribute("Staff_Balance", staffBalance);
+                List<DeliverDTO> orderList = dao.getDeliveryOrder();                //lấy danh sách các đơn hàng để nhận giao
+                List<DeliverDTO> orderToDelivery = dao.getOrder(getFullName, staffID);       //lấy danh sách các đơn hàng để đi giao
+                request.setAttribute("Total_Order", orderToDelivery.size());
+                if (!orderList.isEmpty()) {
+                    List<DeliverDTO> deliveryList = service.getSeven(orderList, range);               //đã lấy được n sản phẩm để show trang chính
+                    if (deliveryList.isEmpty()) {                                     //trường hợp delivery lấy order ở trang cuối mà trang đó chỉ có 1 order
                         range = service.getPageRange(1, 7);                         //trả về trang 1
                         session.setAttribute("currentPage", 1);
-                        eventList = events.subList(range[0], range[1]);
+                        deliveryList = service.getSeven(orderList, range);
                     }
-                    request.setAttribute("Event_List", eventList);
-                    request.setAttribute("Total_Event", eventList.size());
-                    url = (String) siteMap.get(MyAppConstants.ManageEvent.VIEW_EVENT_DETAIL);
+                    request.setAttribute("DELIVERY_LIST", deliveryList);
                 }
-
-                pageSize = service.getPage(events.size(), 7);                                   //thanh chuyển trang << 1 2 3 4 >>
-
+                pageSize = service.getPage(orderList.size(), 7);                                   //thanh chuyển trang << 1 2 3 4 >>
                 if (pageSize == 0) {
                     pageSize = 1;
                 }
                 session.removeAttribute("pageSize");
                 session.setAttribute("pageSize", pageSize);                 //gán size để làm button trang 1 → n
+
+                session.removeAttribute("viewOrdersForDelivery");
+                session.setAttribute("viewOrders", "active");
+                url = (String) siteMap.get(MyAppConstants.Delivery.DELIVERY_INFO);
             }
         } catch (SQLException ex) {
-            log("EventServlet _SQL_ " + ex.getMessage());
+            log("ViewOrderServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
-            log("EventServlet _Naming_ " + ex.getMessage());
+            log("ViewOrderServlet _Naming_ " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

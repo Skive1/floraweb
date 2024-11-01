@@ -5,7 +5,7 @@
  */
 package florastore.ajax.event.servlet;
 
-import florastore.DeliveryOrder.DeliverDAO;
+import florastore.deliveryOrder2.DeliverDAO;
 import florastore.account.AccountDTO;
 import florastore.deliveryBalance.DeliveryBalanceDAO;
 import florastore.utils.MyAppConstants;

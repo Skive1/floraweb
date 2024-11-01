@@ -1,12 +1,23 @@
-package florastore.ManageEvent;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package florastore.manageEvent2;
 
-import florastore.account.AccountDTO;
 import florastore.event.EventDAO;
+import florastore.event.EventDTO;
+import florastore.eventProduct.EventProductDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,37 +30,51 @@ import javax.servlet.http.HttpSession;
  *
  * @author ASUS
  */
-@WebServlet(name = "CloseEventServlet", urlPatterns = {"/CloseEventServlet"})
-public class CloseEventServlet extends HttpServlet {
+@WebServlet(name = "ShowEventDetailServlet", urlPatterns = {"/ShowEventDetailServlet"})
+public class ShowEventDetailServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        AccountDTO dto = null;
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ManageEvent.ERROR_PAGE);
-        HttpSession session = request.getSession();
-        String EventID = request.getParameter("getEventID");
-
+        
+        DecimalFormat df = new DecimalFormat("#,###.##");
+        List<EventDTO> events = (List<EventDTO>) request.getAttribute("Event_List");
+        List<EventProductDTO> productList = new ArrayList<>();
+        List<TotalPriceDTO> totalPrint = new ArrayList<>();
         try {
-            dto = (AccountDTO) session.getAttribute("USER");
-            if ("Admin".equals(dto.getRole())) {
-                EventDAO dao = new EventDAO();
-                boolean result = dao.closeEvent(EventID);
-                if (result) {
-                    url = (String) siteMap.get(MyAppConstants.ManageEvent.VIEW_EVENT);
+            EventDAO dao = new EventDAO();
+            if (events != null) {
+                request.setAttribute("Event_List", events);
+                for (int i = 0; i < events.size(); i++) {
+                    List<EventProductDTO> flowerList = dao.getEventFlower2(events.get(i).getEventId());
+                    if (flowerList != null && !flowerList.isEmpty()) {
+                        productList.addAll(flowerList);
+                        double total = 0;
+                        String totalOut;
+                        for (EventProductDTO flowerPrice : flowerList) {
+                            total += flowerPrice.getEventProductPrice() * flowerPrice.getEventProductQuantity();
+                        }
+                        totalOut = df.format(total);
+                        TotalPriceDTO result = new TotalPriceDTO(events.get(i).getEventId(), totalOut);
+                        totalPrint.add(result);
+                    }
                 }
+                request.setAttribute("Flower_List", productList);
+                request.setAttribute("Total", totalPrint);
+                request.setAttribute("Total_Flower", productList.size());
+                url = (String) siteMap.get(MyAppConstants.ManageEvent.MANAGE_EVENT_PAGE);
             }
         } catch (SQLException ex) {
-            log("EventServlet _SQL_ " + ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-            log("EventServlet Class Not Found " + ex.getMessage());
+            log("EventDetailServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
-            log("EventServlet _Naming_ " + ex.getMessage());
+            log("EventDetailServlet _Naming_ " + ex.getMessage());
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

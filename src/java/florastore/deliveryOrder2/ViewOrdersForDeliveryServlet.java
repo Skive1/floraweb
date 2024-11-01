@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.DeliveryOrder;
+package florastore.deliveryOrder2;
 
 import florastore.account.AccountDTO;
 import florastore.searchProduct.ServiceLayer;

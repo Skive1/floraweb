@@ -5,7 +5,7 @@
  */
 package florastore.searchProduct;
 
-import florastore.DeliveryOrder.DeliverDTO;
+import florastore.deliveryOrder2.DeliverDTO;
 import florastore.event.EventDTO;
 import florastore.event.EventOrderDTO;
 import florastore.searchProduct.ProductDTO;
