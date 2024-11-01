@@ -78,7 +78,7 @@ public class DeliveryBalanceDAO implements Serializable {
                 if (rs.next()) {
                     int balanceId = rs.getInt("BalanceId");
                     double balance = rs.getDouble("Balance");
-                    wallet = new DeliveryBalanceDTO(staffId, balanceId, balance);
+                    wallet = new DeliveryBalanceDTO(balanceId, balance);
                 }
             }
         } finally {
@@ -165,7 +165,7 @@ public class DeliveryBalanceDAO implements Serializable {
         }
         return result;
     }
-    
+
     public boolean withDrawMoney(int staffId, double amount)
             throws SQLException, NamingException {
         Connection con = null;
@@ -186,6 +186,43 @@ public class DeliveryBalanceDAO implements Serializable {
                 int affectedRows = stm.executeUpdate();
                 if (affectedRows > 0) {
                     result = true;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+
+    public String checkEWalletExisted(int staffId)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String result = null;
+        try {
+            //1. connect db
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "SELECT CASE "
+                        + "WHEN EXISTS (SELECT 1 FROM DeliveryBalance WHERE DeliveryStaffId = ?) "
+                        + "THEN 'TRUE' "
+                        + "ELSE 'FALSE' "
+                        + "END AS CheckResult ";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, staffId);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    result = rs.getString("CheckResult");
                 }
             }
         } finally {
