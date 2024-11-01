@@ -76,6 +76,7 @@ public class DispatcherFilter implements Filter {
         seller.add("addEventProductAction");
         seller.add("sellerUpdateEventPage");
         seller.add("sellerUpdateEvent");
+        seller.add("sellerManageEventProductPage");
         //Delivery
         delivery = new ArrayList<>();
         delivery.add("deliveryIncome");

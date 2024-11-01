@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ViewOrdersServlet", urlPatterns = {"/ViewOrdersServlet"})
 public class ViewOrdersServlet extends HttpServlet {
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -37,7 +37,7 @@ public class ViewOrdersServlet extends HttpServlet {
         String goBack = request.getParameter("pageBack");
         String goForward = request.getParameter("pageForward");
         String infoBack = request.getParameter("infoBack");
-
+        
         HttpSession session = request.getSession();
         String checkPageActive = (String) session.getAttribute("pageIsActive");
         String getFullName = (String) session.getAttribute("USERNAME");
@@ -69,7 +69,7 @@ public class ViewOrdersServlet extends HttpServlet {
             } else {
                 session.setAttribute("currentPage", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
             }
-
+            
             DeliverDAO dao = new DeliverDAO();
             if (session.getAttribute("Staff_ID") == null && session.getAttribute("Staff_Balance") == null) {
                 staffID = dao.getDeliveryStaffId(getFullName);                  //staffID không có thì tạo session cho nó, những lần sau chỉ gần getAttribute
@@ -78,8 +78,8 @@ public class ViewOrdersServlet extends HttpServlet {
                 staffID = (int) session.getAttribute("Staff_ID");
             }
             DeliveryBalanceDAO walletDAO = new DeliveryBalanceDAO();
-            DeliveryBalanceDTO eWallet = walletDAO.getWalletInfo(staffID);
-            if (eWallet != null) {
+            String eWallet = walletDAO.checkEWalletExisted(staffID);
+            if ("TRUE".equals(eWallet)) {
                 session.setAttribute("EWALLET_ACTIVE", true);
             } else {
                 session.setAttribute("EWALLET_ACTIVE", false);
