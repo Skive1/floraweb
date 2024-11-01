@@ -30,52 +30,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <title>Admin</title>
-        <style>
-                    body {
-            font-family: Arial, sans-serif;
-        }
-        .button-container {
-            display: flex;
-            justify-content: center; 
-            gap: 10px; 
-        }
-        .confirm-class, .delete-class {
-            padding: 10px 20px;
-            border: none; 
-            border-radius: 5px; 
-            cursor: pointer; 
-            font-size: 16px; 
-            transition: background-color 0.3s;
-        }
-        .confirm-class {
-            background-color: #28a745; 
-            color: white; 
-        }
-        .confirm-class:hover {
-            background-color: #218838; 
-        }
-        .delete-class {
-            background-color: #dc3545;
-            color: white; 
-        }
-        .delete-class:hover {
-            background-color: #c82333; 
-        }
-                .button-link {
-            display: inline-block; 
-            padding: 10px 20px; 
-            background-color: #007bff; 
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background-color 0.3s, transform 0.2s; 
-            text-align: center; 
-        }
-        .button-link:hover {
-            background-color: #0056b3; 
-            transform: scale(1.05); 
-        }
-        </style>
     </head>
     <body>
         <section class="admin">
@@ -175,7 +129,7 @@
                                                     </c:if>
                                                 </td>
                                                 <td>
-                                                    <a href="javascript:void(0);" class="button-link" onclick="toggleDetails(${counter.count});">Xem</a>
+                                                    <a href="javascript:void(0);" class="show-class" onclick="toggleDetails(${counter.count});">Xem</a>
                                                 </td>
                                                 <td><fmt:formatDate value="${order.orderDate}" pattern="yyyy-MM-dd" /></td>
                                                 <td>${order.deliveryOption}</td>
