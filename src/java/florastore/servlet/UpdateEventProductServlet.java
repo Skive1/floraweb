@@ -42,44 +42,32 @@ public class UpdateEventProductServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json");
 
-
-        String url = MyAppConstants.SellerManagementFeatures.VIEW_EVENT_PRODUCT;
-
-        String epIdStr = request.getParameter("eventProductId");
         String action = request.getParameter("action");
-
+        String epIdStr = request.getParameter("eventProductId");
         int epId = Integer.parseInt(epIdStr);
-
-        String eventIdStr = request.getParameter("eventId");
-        int eId = Integer.parseInt(eventIdStr);
-        
-        String pageParam = request.getParameter("page"); // Get the current page number from the request  
-        int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
+        PrintWriter out = response.getWriter();
+        boolean deleted = false;
 
         try {
             EventDAO dao = new EventDAO();
             if (action != null) {
-                dao.updateEPStatus(epId);
+                dao.updateEPStatus(epId); // Assuming this method marks the product as deleted
+                deleted = true;
             }
-            
-            // Get total number of remaining orders for the current page after the update
-            List<EventProductDTO> products = dao.getAvailableEventFlower(eId);
-            int totalProducts = products.size();
-            int pageSize = 5; // Same as in your ViewOrderServlet
 
-            // If no orders left on the current page, go to the previous page
-            if (currentPage > 1 && (currentPage - 1) * pageSize >= totalProducts) {
-                currentPage--; // Go to previous page if current page is now empty
+            if (deleted) {
+                out.print("{\"success\": true}");
+            } else {
+                out.print("{\"success\": false}");
             }
-            
-            url = url + "?eventId=" + eId + "&page=" + currentPage;
         } catch (SQLException ex) {
             log("UpdateEventProductServlet _SQL_" + ex.getMessage());
         } catch (NamingException ex) {
             log("UpdateEventProductServlet _Naming_" + ex.getMessage());
-        } finally {
-            response.sendRedirect(url);
+        } catch (NumberFormatException ex) {
+            log("UpdateEventProductServlet _NumberFormat_" + ex.getMessage());
         }
     }
 
