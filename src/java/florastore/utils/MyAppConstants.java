@@ -193,7 +193,9 @@ public class MyAppConstants {
     }
 
     public class SellerManagementFeatures {
-
+        public static final String ERROR_PAGE2 = "error404";
+        public static final String UPDATE_EVENT = "sellerUpdateEvent";
+        public static final String MANAGE_EVENT_PAGE = "sellerUpdateEventPage";
         public static final String EVENT_LIST = "sellerManageEventPage";
         public static final String VIEW_EVENT_LIST = "viewSellerEvent";
         public static final String PRODUCT_LIST = "sellerManageEventProductPage";
@@ -267,5 +269,28 @@ public class MyAppConstants {
         public static final String VIEW_FEEDBACK = "viewFeebackPage";
         public static final String ERROR_PAGE = "error404";
         public static final String SESSION_PAGE = "sessionExpired";
+    }
+
+    public class EWalletSimulationFeatures {
+
+        public static final String ERROR = "error404";
+        public static final String SUCCESS = "delivererOrders";
+    }
+
+    public class WithDrawFeatures {
+
+        public static final String ERROR = "error404";
+    }
+
+    public class DepositFeatures {
+
+        public static final String ERROR = "error404";
+    }
+    
+    public class SellerManageOrder {
+        public static final String ERROR = "error404";
+        public static final String ORDER_DELIVERING_INFO = "sellerOrderInformation";
+        public static final String ORDER_DELIVERING_PAGE = "orderDeliveringPage";
+        public static final String ORDER_DELIVERING = "sellerViewOrders";
     }
 }

@@ -8,8 +8,6 @@ package florastore.servlet;
 import florastore.eventOrder.EventOrderDAO;
 import florastore.eventProduct.EventProductDAO;
 import florastore.eventProduct.EventProductDTO;
-import florastore.flowerProducts.FlowerProductsDAO;
-import florastore.flowerProducts.FlowerProductsDTO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -48,6 +46,8 @@ public class HomeServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.HomeFeatures.ERROR_PAGE);
+
+        boolean loginSuccess = false;
         try {
             //1. Call DAO/Models
             EventProductDAO dao = new EventProductDAO();
@@ -63,6 +63,11 @@ public class HomeServlet extends HttpServlet {
                 String username = (String) session.getAttribute("USERNAME");
                 int numberofOrder = eDao.countNumberOrder(username);
                 session.setAttribute("NUMBER_ORDER", numberofOrder);
+                if (session.getAttribute("LOGIN_SUCCESS") != null) {
+                    loginSuccess = (boolean) session.getAttribute("LOGIN_SUCCESS");
+                    session.removeAttribute("LOGIN_SUCCESS");
+                }
+                request.setAttribute("LOGIN_SUCCESS_ALERT", loginSuccess);
             }
             if (bestSeller != null && newArrival != null) {//check flower list is available
                 //3. To Home Page

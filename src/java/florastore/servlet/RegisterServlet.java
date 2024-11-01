@@ -5,6 +5,7 @@
  */
 package florastore.servlet;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import florastore.account.AccountDAO;
 import florastore.account.AccountDTO;
 import florastore.account.AccountRegisterError;
@@ -43,6 +44,7 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         //1. get all user's information
         String username = request.getParameter("txtUsername");
         String password = request.getParameter("txtPassword");
@@ -56,10 +58,10 @@ public class RegisterServlet extends HttpServlet {
         //1.1 Regex Pattern
         String emailRegex = "^(?!.*\\s)[A-Za-z0-9_+-]+(\\.[A-Za-z0-9_+-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"; //email
         String passwordRegex = "^(?=.*\\d)(?=.*[A-Z])(?=.*[\\W_])(?!.*\\s)^\\S.*\\S$"; //password
-        String fullnameRegex = "^[a-zA-Z\\s]+$"; //full name
+        String fullnameRegex = "^[a-zA-ZÀÁẢÃẠÂẤẦẨẪẬĂẰẮẲẴẶÈÉẺẪẸÊẾỀỂỄỆÌÍỈĨỊÒÓỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÙÚỦŨỤƯỨỪỬỮỰÝỲỶỸàáảãạâấầẩẫậăằắẳẵặèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựýỳỷỹ\\s]+$"; //full name
         String usernameRegex = "^[a-zA-Z][a-zA-Z0-9._-]+$"; //username
         String phoneRegex = "^(0[35789][0-9]{8})?$"; //phone
-        String streetRegex = "^(?!.*  )[a-zA-Z,/\\d ]*$"; //street
+        String streetRegex = "^(?!.*  )[a-zA-ZÀÁẢÃẠÂẤẦẨẪẬĂẰẮẲẴẶÈÉẺẪẸÊẾỀỂỄỆÌÍỈĨỊÒÓỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÙÚỦŨỤƯỨỪỬỮỰÝỲỶỸàáảãạâấầẩẫậăằắẳẵặèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựýỳỷỹ,/\\d ]*$"; //street
         //1.2 Regex Process
         //1.2.1 Email
         Pattern emailPattern = Pattern.compile(emailRegex);
@@ -127,7 +129,8 @@ public class RegisterServlet extends HttpServlet {
             } else {//no error
                 //3. call method of DAO/Model
                 AccountDAO dao = new AccountDAO();
-                AccountDTO dto = new AccountDTO(username, password, fullname, "Customer", email, gender, phone, street, city, null);
+                String hashPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
+                AccountDTO dto = new AccountDTO(username, hashPassword, fullname, "Customer", email, gender, phone, street, city, null);
                 boolean result = dao.createAccount(dto);
                 //4. process result
                 if (result) {

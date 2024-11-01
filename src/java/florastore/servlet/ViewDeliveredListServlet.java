@@ -5,14 +5,18 @@
  */
 package florastore.servlet;
 
+import florastore.manageEvent2.TotalPriceDTO;
 import florastore.account.AccountDTO;
 import florastore.event.EventDAO;
 import florastore.event.EventOrderDTO;
 import florastore.event.EventOrderDetailDTO;
+import florastore.searchProduct.ServiceLayer;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,15 +38,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ViewDeliveredListServlet", urlPatterns = {"/ViewDeliveredListServlet"})
 public class ViewDeliveredListServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -56,45 +51,81 @@ public class ViewDeliveredListServlet extends HttpServlet {
         AccountDTO dto = null;
         String username = null;
 
+        String pageIsActive = request.getParameter("pageNo");
+        String goBack = request.getParameter("pageBack");
+        String goForward = request.getParameter("pageForward");
+        String infoBack = request.getParameter("infoBack");
+        List<TotalPriceDTO> totalPrint = new ArrayList<>();
+        String checkPageActive = (String) session.getAttribute("pageIsActive");
+        int[] range = null;
+        int page = 0, pageSize = 0;
+        DecimalFormat df = new DecimalFormat("#,###.##");
         try {
             if (session != null) {
                 username = (String) session.getAttribute("USERNAME");
                 dto = (AccountDTO) session.getAttribute("USER");
                 if ("Seller".equals(dto.getRole())) {
                     url = (String) siteMap.get(MyAppConstants.ViewEventOrderFeatures.DELIVERED_LIST_PAGE);
+
+                    if (pageIsActive != null) {
+                        pageIsActive = pageIsActive.trim();
+                    }
+                    if (goBack != null) {
+                        goBack = goBack.trim();
+                    }
+                    if (goForward != null) {
+                        goForward = goForward.trim();
+                    }
+                    if (checkPageActive != null && infoBack != null) {                  //về trang cũ sau khi delivery xem thông tin
+                        pageIsActive = checkPageActive;
+                        session.removeAttribute("pageIsActive");
+                    }
+                    session.removeAttribute("pageIsActive");
+                    session.setAttribute("pageIsActive", pageIsActive);
+                    ServiceLayer service = new ServiceLayer();
+                    pageIsActive = service.checkPagination(pageIsActive, goBack, goForward); //kiểm tra user có nhấn thanh chuyển trang ko
+                    page = service.getPage(pageIsActive, goBack, goForward);            //trả về 1 ở lần đầu chạy, trả về n khi chạy lần 2
+                    range = service.getPageRange(page, 7);                                 //lấy phạm vi sản phẩm để show
+                    session.removeAttribute("currentPage");
+                    if (pageIsActive == null) {
+                        session.setAttribute("currentPage", 1);                   //mặc định button 1
+                    } else {
+                        session.setAttribute("currentPage", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
+                    }
+
                     EventDAO dao = new EventDAO();
                     List<EventOrderDTO> delivered = dao.getDeliveredOrder(username);
 
-                    // Paging
-                    int pageSize = 10; // Number of orders per page
-                    String pageParam = request.getParameter("page"); // Get the current page number from the request
-                    int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1; // Default to page 1 if not provided
-                    int totalOrders = delivered.size();
-                    int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
-
-                    // Calculate the starting and ending indexes for the sublist of products to display
-                    int start = (currentPage - 1) * pageSize;
-                    int end = Math.min(start + pageSize, totalOrders);
-
                     // Get the products for the current page
-                    List<EventOrderDTO> ordersForPage = delivered.subList(start, end);
+                    List<EventOrderDTO> ordersForPage = service.getSevenSellerOrder(delivered, range);
 
                     //call method of order detail
                     // Map to store order details for each order
                     Map<Integer, List<EventOrderDetailDTO>> allOrderDetails = new HashMap<>();
+                    for (int i = 0; i < delivered.size(); i++) {
+                        List<EventOrderDetailDTO> details = dao.getOrderDetails(delivered.get(i).getEventOrderId());
+                        allOrderDetails.put(delivered.get(i).getEventOrderId(), details);
 
-                    for (EventOrderDTO order : delivered) {
-                        // Call method to get the details for each order
-                        List<EventOrderDetailDTO> details = dao.getOrderDetails(order.getEventOrderId());
-
-                        // Store the details in the map with the eventOrderId as the key
-                        allOrderDetails.put(order.getEventOrderId(), details);
+                        double total = 0;
+                        String totalOut;
+                        for (EventOrderDetailDTO flowerPrice : details) {
+                            total += flowerPrice.getUnitPrice() * flowerPrice.getQuantity();
+                        }
+                        totalOut = df.format(total);
+                        TotalPriceDTO result = new TotalPriceDTO(delivered.get(i).getEventOrderId(), totalOut);
+                        totalPrint.add(result);
                     }
-
+                    request.setAttribute("TOTAL", totalPrint);
                     session.setAttribute("DETAILS", allOrderDetails);
                     session.setAttribute("DELIVERED", ordersForPage);
-                    request.setAttribute("currentPage", currentPage);
-                    request.setAttribute("totalPages", totalPages);
+
+                    pageSize = service.getPage(delivered.size(), 7);                                   //thanh chuyển trang << 1 2 3 4 >>
+
+                    if (pageSize == 0) {
+                        pageSize = 1;
+                    }
+                    session.removeAttribute("pageSize");
+                    session.setAttribute("pageSize", pageSize);                 //gán size để làm button trang 1 → n
                 }
             } else if (session == null) {
                 url = MyAppConstants.ViewEventOrderFeatures.SESSION_PAGE;

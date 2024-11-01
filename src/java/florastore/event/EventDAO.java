@@ -611,6 +611,52 @@ public class EventDAO implements Serializable {
         return result;
     }
 
+    public boolean updateEvent(EventDTO dto, int eventID)
+            throws SQLException, NamingException {
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean result = false;
+
+        try {
+            // 1. Connect to DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                // 2. Create SQL String with RETURN_GENERATED_KEYS to get eventId
+                String sql = "UPDATE Event SET EventName = ?, EventLocation = ?, EventCity = ?, StartDate = ?, EndDate = ?, EventImg = ? "
+                        + "WHERE EventId = ?";
+                // 3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, dto.getEventName());
+                stm.setString(2, dto.getEventLocation());
+                stm.setString(3, dto.getEventCity());
+                stm.setTimestamp(4, dto.getStartDate());
+                stm.setTimestamp(5, dto.getEndDate());
+                stm.setString(6, "imageEvent/" + dto.getEventImg());
+                stm.setInt(7, eventID);
+                // 4. Execute the update
+                int affectedRows = stm.executeUpdate();
+
+                // 5. Process result and retrieve generated eventId
+                if (affectedRows > 0) {
+                    result = true;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+    
     public List<EventCategoryDTO> getCategories()
             throws SQLException, NamingException {
 
@@ -728,7 +774,7 @@ public class EventDAO implements Serializable {
                 rs = stm.executeQuery(); // Execute the query
                 while (rs.next()) {
                     String fullName = rs.getString("Fullname");
-                    int eventOrderId = rs.getInt("eventOrderId");
+                    int eventOrderId = rs.getInt("EventOrderId");
                     String phone = rs.getString("Phone");
                     String street = rs.getString("Street");
                     String note = rs.getString("Note");
@@ -908,7 +954,7 @@ public class EventDAO implements Serializable {
             con = DBHelper.getConnection();
             if (con != null) {
                 // 2. Create SQL String to get the next 5 orders with pagination
-                String sql = "select eo.Fullname, eo.EventOrderId, eo.Phone,eo.Street, eo.Note, eo.Status, eo.OrderDate, eo.isPaid "
+                String sql = "select eo.Fullname, eo.EventOrderId, eo.Phone,eo.Street, eo.Note, eo.Status, eo.OrderDate, eo.DeliveryDate, eo.isPaid, eo.DeliveryOption "
                         + "from EventOrder eo "
                         + "join Event e on eo.EventId = e.EventId "
                         + "where e.AccountUsername = ?";
@@ -926,12 +972,14 @@ public class EventDAO implements Serializable {
                     String status = rs.getString("Status");
                     boolean isPaid = rs.getBoolean("isPaid");
                     Timestamp orderDate = rs.getTimestamp("OrderDate");
+                    Timestamp deliveryDate = rs.getTimestamp("DeliveryDate");
+                    String deliveryOpt = rs.getString("DeliveryOption");
                     if ("Đã giao".equals(status)) {
                         EventOrderDTO dto
                                 = new EventOrderDTO(0, eventOrderId,
                                         fullName, phone, street, "",
-                                        orderDate, "", status,
-                                        0, 0, isPaid, "", note);
+                                        deliveryDate, deliveryOpt, status,
+                                        0, 0, isPaid, "", note, orderDate);
                         delivered.add(dto);
                     }
                 }
@@ -1044,6 +1092,51 @@ public class EventDAO implements Serializable {
         return events;
     }
 
+    public EventDTO getEventByID(int eventID)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        EventDTO events = null;
+        try {
+            // 1. Connect to DB
+            con = DBHelper.getConnection();
+            String sql = "SELECT EventName, EventLocation, EventCity, StartDate, EndDate, EventImg, EventStatus "
+                    + "FROM Event "
+                    + "Where EventId = ?";
+            //3. Create Statement Object
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, eventID);
+            //4. Execute Query
+            rs = stm.executeQuery();
+            //5. process result
+            while (rs.next()) {
+                //. map
+                //get data from Result Set
+                int eventId = eventID;
+                String eventName = rs.getString("EventName");
+                String eventLocation = rs.getString("EventLocation");
+                String eventCity = rs.getString("EventCity");
+                Timestamp startDate = rs.getTimestamp("StartDate");
+                Timestamp endDate = rs.getTimestamp("EndDate");
+                String eventImg = rs.getString("EventImg");
+                boolean eventStatus = rs.getBoolean("EventStatus");
+                events = new EventDTO("", eventId, eventName, eventLocation, eventCity, startDate, endDate, eventImg, eventStatus);
+            }//process each record in resultset  
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return events;
+    }
+    
     public void cancelEvent(int eventId) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;

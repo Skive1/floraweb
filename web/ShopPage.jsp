@@ -183,7 +183,7 @@
                             <div class="col-7"></div>
                             <div class="col-xl-2">
                                 <div class="bg-light ps-3 py-3 rounded d-flex justify-content-center mb-4">
-                                    <label for="fruits" >Sort price:</label>
+                                    <label for="fruits" >Sắp xếp theo giá:</label>
                                     <form id="orderByForm" action="orderBy" method="POST">
                                         <input type="hidden" id="txtOrderBy" name="txtOrderBy"/>
                                         <c:if test="${sessionScope.txtOrderBy == 'default'}">
@@ -218,7 +218,7 @@
                                         <div class="mb-3">
                                             <h4>Categories</h4>
                                             <ul class="list-unstyled fruite-categorie">
-                                                <form id="categoriesForm" action="SearchForTypeServlet" method="POST">
+                                                <form id="categoriesForm" action="SearchForTypeServlet" method="GET">
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name">
                                                             <input type="hidden" id="categories" name="categories"/>
@@ -281,7 +281,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <form id="searchRangeAndColor" action="searchFindError" method="POST">
+                                    <form id="searchRangeAndColor" action="searchFindError" method="GET">
                                         <div class="col-lg-12">
                                             <c:if test="${sessionScope.PriceFromSave == null && sessionScope.PriceToSave == null}">
                                                 <h4 class="mb-2">Price: </h4>
@@ -290,9 +290,9 @@
                                                 <h4 class="mb-2">Price: (${sessionScope.PriceFromSave} - ${sessionScope.PriceToSave})</h4>
                                             </c:if>
                                             <div class="d-flex align-items-center justify-content-between mb-3">
-                                                <input type="number" name="txtPriceFrom" value="" 
+                                                <input type="number" name="txtPriceFrom" value="" maxlength="8"
                                                        class="form-control p-3" placeholder="From" style="width: 125px">
-                                                <input type="number" name="txtPriceTo" value="" 
+                                                <input type="number" name="txtPriceTo" value="" maxlength="8"
                                                        class="form-control p-3" placeholder="To" style="width: 125px">
                                             </div>
                                             <c:set var="errors" value="${requestScope.PRICE_ERROR}"/>
@@ -444,7 +444,7 @@
                                                 </form>
                                             </c:if>
                                             <c:if test="${sessionScope.currentPage != 1}"> 
-                                                <form id="backForm" action="searchPageChange" method="POST">
+                                                <form id="backForm" action="searchPageChange" method="GET">
                                                     <input type="hidden" id="pageBack" name="pageBack"/>
                                                     <a href="#" class="rounded" style="margin: 1;"
                                                        onclick="document.getElementById('pageBack').value = '${(sessionScope.currentPage - 1)}';
@@ -656,6 +656,9 @@
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
         <!-- Template Javascript -->
+        <c:if test="${not empty sessionScope.USER}">
+            <script src="js/notification.js"></script>
+        </c:if>
         <script src="alertPackage/alertJs.js"></script>
         <script src="js/main.js"></script>
         <script src="js/newProduct.js"></script>

@@ -67,5 +67,5 @@ function updateNotificationIndicator(hasNewProducts) {
         indicator.style.display = "none";
     }
 }
-// Gọi hàm fetchNewEvents mỗi 5 giây (5000 milliseconds)
+
 setInterval(fetchNewEvents, 1000);

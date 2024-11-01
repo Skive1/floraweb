@@ -23,6 +23,7 @@ public class AccountDTO implements Serializable {
     private String street;
     private String city;
     private String img;
+    private int isBanned;
     
     public AccountDTO() {
     }
@@ -39,6 +40,21 @@ public class AccountDTO implements Serializable {
         this.city = city;
         this.img = img;
     }
+
+    public AccountDTO(String username, String password, String fullName, String role, String email, String gender, String phone, String street, String city, String img, int isBanned) {
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.role = role;
+        this.email = email;
+        this.gender = gender;
+        this.phone = phone;
+        this.street = street;
+        this.city = city;
+        this.img = img;
+        this.isBanned = isBanned;
+    }
+    
 
     /**
      * @return the username
@@ -179,4 +195,19 @@ public class AccountDTO implements Serializable {
     public String getImg() {
         return img;
     }
+
+    /**
+     * @return the isBanned
+     */
+    public int getIsBanned() {
+        return isBanned;
+    }
+
+    /**
+     * @param isBanned the isBanned to set
+     */
+    public void setIsBanned(int isBanned) {
+        this.isBanned = isBanned;
+    }
+    
 }
