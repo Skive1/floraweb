@@ -15,7 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/css/style.css">
-        <link rel="stylesheet" href="css/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/css/font-awesome.min.css">
         <!-- <link rel="stylesheet" href="css/AdminLTE.css"> -->
         <link rel="stylesheet" href="css/css/_all-skins.min.css">
@@ -140,13 +140,55 @@
                                                     </c:if>
                                                 </td>
                                                 <td>
-                                                    <a href="viewSellerEventProduct?eventId=${event.eventId}" class="show-class">Xem</a>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" 
+                                                            data-target="#view${counter.count}" style="color: white">
+                                                        Xem
+                                                    </button>
+                                                    <div class="modal fade" id="view${counter.count}" tabindex="-1" role="dialog" 
+                                                         aria-labelledby="view${counter.count}" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document" style="max-width: 90%; width: 90%">
+                                                            <div class="modal-content">
+                                                                <table>
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="background-color: #007bff; color: white">Ảnh</th>
+                                                                            <th style="background-color: #007bff; color: white">Tên sản phẩm</th>
+                                                                            <th style="background-color: #007bff; color: white">Loại</th>
+                                                                            <th style="background-color: #007bff; color: white">Tình trạng</th>
+                                                                            <th style="background-color: #007bff; color: white">Chi tiết</th>
+                                                                            <th style="background-color: #007bff; color: white">Đơn giá</th>
+                                                                            <th style="background-color: #007bff; color: white">Số lượng</th>
+                                                                            <th style="background-color: #007bff; color: white">Tùy chỉnh</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <c:forEach var="product" items="${sessionScope.PRODUCTS[event.eventId]}" varStatus="counter">
+                                                                            <tr id="productRow${product.eventProductId}">
+                                                                                <td><img src="${product.eventProductImg}" style="width: 100px; height: auto;"></td>
+                                                                                <td>${product.eventProductName}</td>
+                                                                                <td>${product.eventProductType}</td>
+                                                                                <td>${product.eventProductCondition}</td>
+                                                                                <td>${product.eventProductDetail}</td>
+                                                                                <td>${product.eventProductPrice}</td>
+                                                                                <td>${product.eventProductQuantity}</td>
+                                                                                <td>
+                                                                                    <form class="delete-product-form" data-product-id="${product.eventProductId}" data-event-id="${product.eventEventId}" style="display:inline;">
+                                                                                        <button type="button" class="delete-class">Xóa</button>
+                                                                                    </form>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </c:forEach>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td style="display: flex">
                                                     <form action="sellerUpdateEvent" method="POST" id="updateEvent${event.eventId}">
                                                         <input type="hidden" name="eventID" value="${event.eventId}" />
-                                                        <input type="submit" value="Chỉnh sửa" class="btn btn-secondary" 
-                                                               style="background-color: green; color: white"/>
+                                                        <button type="submit" value="Chỉnh sửa" class="confirm-class" 
+                                                                style="background-color: green; color: white">Chỉnh sửa</button>
                                                     </form>
                                                     <form action="updateEvent?eventId=${event.eventId}&accountUsername=${sessionScope.USER.username}&page=${currentPage}" method="post" style="display:inline;">                                                        
                                                         <button type="submit" name="action" value="cancel" class="delete-class">Hủy</button>
@@ -156,30 +198,185 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                <div class="col-12">
-                                    <nav aria-label="Page navigation">
-                                        <ul class="pagination d-flex justify-content-center mt-5">
-                                            <c:if test="${currentPage > 1}">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="viewSellerEvent?username=${sessionScope.USER.username}&page=${currentPage - 1}" aria-label="Previous">
-                                                        <span aria-hidden="true">&laquo;</span>
-                                                    </a>
-                                                </li>
+                                <div class="col-12" >
+                                    <div class="d-flex justify-content-center mt-5">
+                                        <%--phần code laquo (<<) --%>
+                                        <c:if test="${sessionScope.currentPage == 1}"> 
+                                            <a href="#" class="btn btn-secondary" style="margin: 2px; 
+                                               background-color: gray; color: white; pointer-events: none; opacity: 0.6;
+                                               border-color: black; padding: 9px 15px 9px 15px; font-weight: bold;">
+                                                &laquo;
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${sessionScope.currentPage != 1}"> 
+                                            <form id="backForm" action="viewOrderAction" method="POST">
+                                                <input type="hidden" id="pageBack" name="pageBack"/>
+                                                <a href="#" class="btn btn-secondary" style="margin: 2px; background-color: white; border-color: black; padding: 9px 15px 9px 15px; color: black; font-weight: bold"
+                                                   onclick="document.getElementById('pageBack').value = '${(sessionScope.currentPage - 1)}';
+                                                           document.getElementById('backForm').submit();">
+                                                    &laquo;
+                                                </a>
+                                            </form>
+                                        </c:if>
+                                        <%--phần code laquo (<<) --%>
+                                        <form id="paginationForm" action="viewOrderAction" method="POST">
+                                            <input type="hidden" id="pageNo" name="pageNo">
+                                            <%--Nếu chỉ có 5 trang thì show << 1 2 3 4 5 >>--%>
+                                            <c:if test="${sessionScope.pageSize <= 5}">
+                                                <c:forEach var="i" begin="1" end="${sessionScope.pageSize}">
+                                                    <c:if test="${sessionScope.currentPage == i}">
+                                                        <a href="#" class="btn btn-secondary" 
+                                                           onclick="document.getElementById('pageNo').value = '${i}';
+                                                                   document.getElementById('paginationForm').submit();
+                                                                   return false;" style="margin: 2px; background-color: #000066; border-color: black; padding: 9px 15px 9px 15px; color: white;
+                                                           font-weight: bold; margin-right: -2px">${i}</a>
+                                                    </c:if>
+                                                    <c:if test="${sessionScope.currentPage != i}">
+                                                        <a href="#" class="btn btn-secondary" 
+                                                           onclick="document.getElementById('pageNo').value = '${i}';
+                                                                   document.getElementById('paginationForm').submit();
+                                                                   return false;" style="margin: 2px; background-color: white; border-color: black; padding: 9px 15px 9px 15px; color: black; 
+                                                           font-weight: bold; margin-right: -2px">${i}</a>
+                                                    </c:if>
+                                                </c:forEach>
                                             </c:if>
-                                            <c:forEach var="i" begin="1" end="${totalPages}">
-                                                <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                                    <a class="page-link" href="viewSellerEvent?username=${sessionScope.USER.username}&page=${i}">${i}</a>
-                                                </li>
-                                            </c:forEach>
-                                            <c:if test="${currentPage < totalPages}">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="viewSellerEvent?username=${sessionScope.USER.username}&page=${currentPage + 1}" aria-label="Next">
-                                                        <span aria-hidden="true">&raquo;</span>
+                                            <%--Nếu chỉ có 5 trang thì show << 1 2 3 4 5 >>--%>
+                                            <%--Nếu nhiều hơn 5 trang thì show << 1 2 3 4 5 ... >> << 1 2 ... 5 6 7 ... >> << 1 2 ... 7 8 9 >>--%>
+                                            <c:if test="${sessionScope.pageSize > 5}">
+                                                <c:if test="${sessionScope.currentPage == 1 || sessionScope.currentPage == 2 ||
+                                                              sessionScope.currentPage == 3}">
+                                                    <c:forEach var="i" begin="1" end="5">
+                                                        <c:if test="${sessionScope.currentPage == i}">
+                                                            <a href="#" class="active btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: #000066; border-color: black; padding: 9px 15px 9px 15px; color: white;
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.currentPage != i}">
+                                                            <a href="#" class="btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: white; border-color: black; padding: 9px 15px 9px 15px; color: black; 
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <a href="#" class="btn btn-secondary" style="margin: 2px; border-color: black; padding: 9px 15px 9px 15px; 
+                                                       font-weight: bold; margin-right: -2px;
+                                                       background-color: white; color: black; pointer-events: none; opacity: 0.6;">
+                                                        ...
                                                     </a>
-                                                </li>
+                                                </c:if>
+                                                <c:if test="${sessionScope.currentPage != 1 && sessionScope.currentPage != 2 &&
+                                                              sessionScope.currentPage != 3 &&
+                                                              sessionScope.currentPage != (sessionScope.pageSize - 2) &&
+                                                              sessionScope.currentPage != (sessionScope.pageSize - 1) &&
+                                                              sessionScope.currentPage != sessionScope.pageSize}">
+                                                    <c:forEach var="i" begin="1" end="2">
+                                                        <c:if test="${sessionScope.currentPage == i}">
+                                                            <a href="#" class="active btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: #000066; border-color: black; padding: 9px 15px 9px 15px; color: white;
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.currentPage != i}">
+                                                            <a href="#" class="btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: white; border-color: black; padding: 9px 15px 9px 15px; color: black; 
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <a href="#" class="btn btn-secondary" style="margin: 2px; border-color: black; padding: 9px 15px 9px 15px; font-weight: bold;
+                                                       background-color: white; color: black; pointer-events: none; opacity: 0.6; margin-right: -2px">
+                                                        ...
+                                                    </a>
+                                                    <c:forEach var="i" begin="${sessionScope.currentPage}" end="${(sessionScope.currentPage + 2)}">
+                                                        <c:if test="${sessionScope.currentPage == i}">
+                                                            <a href="#" class="active btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: #000066; border-color: black; padding: 9px 15px 9px 15px; color: white;
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.currentPage != i}">
+                                                            <a href="#" class="btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: white; border-color: black; padding: 9px 15px 9px 15px; color: black; 
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <a href="#" class="btn btn-secondary" style="margin: 2px; border-color: black; padding: 9px 15px 9px 15px; font-weight: bold;
+                                                       background-color: white; color: black; pointer-events: none; opacity: 0.6; margin-right: -2px">
+                                                        ...
+                                                    </a>
+                                                </c:if>
+                                                <c:if test="${sessionScope.currentPage == (sessionScope.pageSize - 2) ||
+                                                              sessionScope.currentPage == (sessionScope.pageSize - 1) ||
+                                                              sessionScope.currentPage == sessionScope.pageSize}">
+                                                    <c:forEach var="i" begin="1" end="2">
+                                                        <c:if test="${sessionScope.currentPage == i}">
+                                                            <a href="#" class="active btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: #000066; border-color: black; padding: 9px 15px 9px 15px; color: white;
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.currentPage != i}">
+                                                            <a href="#" class="btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: white; border-color: black; padding: 9px 15px 9px 15px; color: black; 
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <a href="#" class="btn btn-secondary" style="margin: 2px; border-color: black; padding: 9px 15px 9px 15px; font-weight: bold;
+                                                       background-color: white; color: black; pointer-events: none; opacity: 0.6; margin-right: -2px">
+                                                        ...
+                                                    </a>
+                                                    <c:forEach var="i" begin="${(sessionScope.pageSize - 2)}" end="${sessionScope.pageSize}">
+                                                        <c:if test="${sessionScope.currentPage == i}">
+                                                            <a href="#" class="active btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: #000066; border-color: black; padding: 9px 15px 9px 15px; color: white;
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.currentPage != i}">
+                                                            <a href="#" class="btn btn-secondary" 
+                                                               onclick="document.getElementById('pageNo').value = '${i}';
+                                                                       document.getElementById('paginationForm').submit();
+                                                                       return false;" style="margin: 2px; background-color: white; border-color: black; padding: 9px 15px 9px 15px; color: black; 
+                                                               font-weight: bold; margin-right: -2px">${i}</a>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </c:if>
                                             </c:if>
-                                        </ul>
-                                    </nav>
+                                            <%--Nếu nhiều hơn 5 trang thì show << 1 2 3 4 5 ... >> << 1 2 ... 5 6 7 ... >> << 1 2 ... 7 8 9 >>--%>
+                                        </form>
+                                        <%--phần code raquo (>>) --%>
+                                        <c:if test="${sessionScope.currentPage != sessionScope.pageSize}"> 
+                                            <form id="forwardForm" action="viewOrderAction" method="POST">
+                                                <input type="hidden" id="pageForward" name="pageForward"/>
+                                                <a href="#" class="btn btn-secondary" style="margin: 2px; background-color: white; border-color: black; 
+                                                   padding: 9px 15px 9px 15px; color: black; font-weight: bold; margin-left: 6px"
+                                                   onclick="document.getElementById('pageForward').value = '${(sessionScope.currentPage + 1)}';
+                                                           document.getElementById('forwardForm').submit();">
+                                                    &raquo;
+                                                </a>
+                                            </form>
+                                        </c:if>
+                                        <c:if test="${sessionScope.currentPage == sessionScope.pageSize}"> 
+                                            <a href="#" class="btn btn-secondary" style="margin: 2px; border-color: black; 
+                                               padding: 9px 15px 9px 15px; font-weight: bold; margin-left: 6px;
+                                               background-color: gray; color: white; pointer-events: none; opacity: 0.6;">
+                                                &raquo;
+                                            </a>
+                                        </c:if> 
+                                        <%--phần code raquo (>>) --%>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -191,6 +388,36 @@
 </section>
 
 <script src="js/javascript.js"></script>
+<script>
+                                                       $(document).on('click', '.delete-class', function (e) {
+                                                           e.preventDefault(); // Prevent the default form submission
+
+                                                           var form = $(this).closest('form');
+                                                           var productId = form.data('product-id');
+                                                           var row = $('#productRow' + productId);
+
+                                                           // Perform AJAX request to delete the product
+                                                           $.ajax({
+                                                               url: 'updateEventProduct',
+                                                               type: 'POST',
+                                                               data: {
+                                                                   eventProductId: productId,
+                                                                   action: 'delete'
+                                                               },
+                                                               success: function (response) {
+                                                                   // Check response status or success
+                                                                   if (response.success) {
+                                                                       row.remove(); // Remove the product row from the modal
+                                                                   } else {
+                                                                       alert('Error deleting product'); // Handle error accordingly
+                                                                   }
+                                                               },
+                                                               error: function () {
+                                                                   alert('An error occurred. Please try again.');
+                                                               }
+                                                           });
+                                                       });
+</script>
 </body>
 </html>
 
