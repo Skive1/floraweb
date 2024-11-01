@@ -60,7 +60,7 @@
                                             <a class="ri-arrow-right-s-fill" style="color: #131EAD"
                                                href="eWallet">Tài khoản</a>
                                         </li>
-                                        </c:if>
+                                    </c:if>
                                 </ul>  
                             </li>
                         </ul>
@@ -104,7 +104,7 @@
                     </div> 
                     <div class="admin-content-main">
                         <div class="admin-content-main-title">
-                            <h1>Danh sách đơn hàng đã nhận:</h1>
+                            <h1>Danh sách đơn hàng bạn đã nhận:</h1>
                         </div>
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->

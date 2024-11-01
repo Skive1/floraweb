@@ -1,6 +1,6 @@
-
 package florastore.ManageEvent;
 
+import florastore.account.AccountDTO;
 import florastore.event.EventDAO;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -25,18 +26,22 @@ public class CloseEventServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        AccountDTO dto = null;
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
         String url = (String) siteMap.get(MyAppConstants.ManageEvent.ERROR_PAGE);
-
+        HttpSession session = request.getSession();
         String EventID = request.getParameter("getEventID");
 
         try {
-            EventDAO dao = new EventDAO();
-            boolean result = dao.closeEvent(EventID);
-            if (result) {
-                url = (String) siteMap.get(MyAppConstants.ManageEvent.VIEW_EVENT);
-            } 
+            dto = (AccountDTO) session.getAttribute("USER");
+            if ("Admin".equals(dto.getRole())) {
+                EventDAO dao = new EventDAO();
+                boolean result = dao.closeEvent(EventID);
+                if (result) {
+                    url = (String) siteMap.get(MyAppConstants.ManageEvent.VIEW_EVENT);
+                }
+            }
         } catch (SQLException ex) {
             log("EventServlet _SQL_ " + ex.getMessage());
         } catch (ClassNotFoundException ex) {
