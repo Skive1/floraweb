@@ -524,7 +524,7 @@
                             <hr>
                             <label class="form-label my-3">Ghi chú</label>
                             <div class="form-item">
-                                <textarea name="note" rows="4" cols="50" class="form-control"></textarea>
+                                <textarea name="note" rows="4" cols="50" class="form-control" maxlength="255"></textarea>
                             </div>
                         </div>
                         <c:set var="ecart" value="${sessionScope.ECART}"/>

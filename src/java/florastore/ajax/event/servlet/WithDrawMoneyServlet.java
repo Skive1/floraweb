@@ -54,7 +54,10 @@ public class WithDrawMoneyServlet extends HttpServlet {
                     int staffId = dao.getDeliveryStaffId(username);
                     DeliveryBalanceDAO eWallet = new DeliveryBalanceDAO();
                     currentBalance = eWallet.getCurrentBalance(staffId);
-                    boolean result = eWallet.withDrawMoney(staffId, amount);
+                    boolean result = false;
+                    if (currentBalance >= amount) {
+                        result = eWallet.withDrawMoney(staffId, amount);
+                    }
                     if (result) {
                         session.setAttribute("Staff_Balance", currentBalance - amount);
                         response.setContentType("application/json");

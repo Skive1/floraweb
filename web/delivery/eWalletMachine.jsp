@@ -275,7 +275,7 @@
                                                         Swal.fire({
                                                             title: 'Lỗi!',
                                                             text: 'Vui lòng nhập số tiền hợp lệ.',
-                                                            icon: 'error',
+                                                            icon: 'warning',
                                                             confirmButtonText: 'OK'
                                                         });
                                                         return;
@@ -301,7 +301,7 @@
                                                                     Swal.fire({
                                                                         title: 'Thông báo!',
                                                                         text: response.message || 'Không có thông tin chi tiết.',
-                                                                        icon: 'info',
+                                                                        icon: 'error',
                                                                         confirmButtonText: 'OK'
                                                                     });
                                                                 }
@@ -310,7 +310,7 @@
                                                                 Swal.fire({
                                                                     title: 'Lỗi!',
                                                                     text: 'Có lỗi xảy ra khi nạp tiền.',
-                                                                    icon: 'error',
+                                                                    icon: 'warning',
                                                                     confirmButtonText: 'OK'
                                                                 });
                                                             }
@@ -336,16 +336,17 @@
                                                                     Swal.fire({
                                                                         title: 'Thông báo!',
                                                                         text: response.message || 'Không có thông tin chi tiết.',
-                                                                        icon: 'info',
+                                                                        icon: 'error',
                                                                         confirmButtonText: 'OK'
                                                                     });
+                                                                    document.getElementById('amountInput').value = '';
                                                                 }
                                                             },
                                                             error: function () {
                                                                 Swal.fire({
                                                                     title: 'Lỗi!',
                                                                     text: 'Có lỗi xảy ra khi nạp tiền.',
-                                                                    icon: 'error',
+                                                                    icon: 'warning',
                                                                     confirmButtonText: 'OK'
                                                                 });
                                                             }
