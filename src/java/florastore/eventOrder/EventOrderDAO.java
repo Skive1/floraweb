@@ -479,4 +479,42 @@ public class EventOrderDAO implements Serializable {
         }
         return result;
     }
+
+    public boolean userCancelOrder(int orderId)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean result = false;
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "Update EventOrder "
+                        + "Set Status = N'Hủy' "
+                        + "Where EventOrderId = ? ";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, orderId);
+                //4. Execute Query
+                int affectedRows = stm.executeUpdate();
+                //5. process result
+                if (affectedRows > 0) {
+                    result = true;
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
 }

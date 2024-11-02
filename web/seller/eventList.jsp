@@ -183,7 +183,8 @@
                                                                         </c:forEach>
                                                                     </tbody>
                                                                 </table>
-                                                                <a href="addEventProductPage" style="text-decoration: none;">
+                                                                <c:url var="urlRewriting" value='eventCategory'><c:param name='eventId' value='${event.eventId}'/></c:url>
+                                                                <a href="${urlRewriting}" style="text-decoration: none;">
                                                                     <button class="btn btn-primary" style="padding: 10px 20px; font-size: 16px;">+</button>
                                                                 </a>
                                                             </div>
