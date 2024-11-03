@@ -42,9 +42,9 @@ public class sellerUpdateEventServlet extends HttpServlet {
         String url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.ERROR_PAGE2);
 
         try {
-            if (eventIdStr != null) {//user nhấn button chỉnh sửa một sự kiện trong danh sách sự kiện
+            if (eventIdStr != null) {//seller nhấn button chỉnh sửa một sự kiện trong danh sách sự kiện
                 eventId = Integer.parseInt(eventIdStr);
-            } else {//user nhấn button chỉnh sửa
+            } else {//seller nhấn button chỉnh sửa
                 eventId = (int) session.getAttribute("eventID");
             }
             EventDAO dao = new EventDAO();
