@@ -19,7 +19,7 @@ import javax.naming.NamingException;
 
 public class DeliverDAO {
 
-    public List<DeliverDTO> sellerGetDeliveryOrder()
+    public List<DeliverDTO> sellerGetDeliveryOrder(String username)
             throws SQLException, NamingException {                              //lấy đơn hàng để nhận
         Connection con = null;
         PreparedStatement stm = null;
@@ -30,10 +30,13 @@ public class DeliverDAO {
             con = DBHelper.getConnection();
             if (con != null) {
                 //2. Create SQL String
-                String sql = "Select EventOrderId, Fullname, Phone, Street, City, DeliveryDate, DeliveryStaffId, Status, Amount, isPaid, Note, DeliveryOption "
-                        + "From EventOrder Order By EventOrderId";
+                String sql = "Select eo.EventOrderId, eo.Fullname, eo.Phone, eo.Street, eo.City, "
+                        + "eo.DeliveryDate, eo.DeliveryStaffId, eo.Status, eo.Amount, eo.isPaid, eo.Note, eo.DeliveryOption "
+                        + "From EventOrder eo Join Event e On eo.EventId = e.EventId "
+                        + "Where e.AccountUsername = ?";
                 //3. create statement
                 stm = con.prepareStatement(sql);
+                stm.setString(1, username);
                 //4. Execute Query
                 rs = stm.executeQuery();
                 //5. process result
