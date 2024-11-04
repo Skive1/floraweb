@@ -160,9 +160,20 @@
                     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                     datasets: [{
                             label: 'Biểu đồ doanh thu tổng của cả năm',
-                            data: [${requestScope.month1.total}, ${requestScope.month2.total}, ${requestScope.month3.total}, ${requestScope.month4.total}, ${requestScope.month5.total}
-                                , ${requestScope.month6.total}, ${requestScope.month7.total}, ${requestScope.month8.total}, ${requestScope.month9.total}, ${requestScope.month10.total}
-                                , ${requestScope.month11.total}, ${requestScope.month12.total}],
+                            data: [
+            ${requestScope.month1.total != null ? requestScope.month1.total : 0},
+            ${requestScope.month2.total != null ? requestScope.month2.total : 0},
+            ${requestScope.month3.total != null ? requestScope.month3.total : 0},
+            ${requestScope.month4.total != null ? requestScope.month4.total : 0},
+            ${requestScope.month5.total != null ? requestScope.month5.total : 0},
+            ${requestScope.month6.total != null ? requestScope.month6.total : 0},
+            ${requestScope.month7.total != null ? requestScope.month7.total : 0},
+            ${requestScope.month8.total != null ? requestScope.month8.total : 0},
+            ${requestScope.month9.total != null ? requestScope.month9.total : 0},
+            ${requestScope.month10.total != null ? requestScope.month10.total : 0},
+            ${requestScope.month11.total != null ? requestScope.month11.total : 0},
+            ${requestScope.month12.total != null ? requestScope.month12.total : 0}
+                            ],
                             fill: false,
                             borderColor: 'rgb(75, 192, 192)',
                             tension: 0.1

@@ -143,9 +143,20 @@
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             datasets: [{
                     label: 'Biểu đồ doanh thu tổng của cả năm',
-                    data: [${requestScope.month1.total}, ${requestScope.month2.total}, ${requestScope.month3.total}, ${requestScope.month4.total}, ${requestScope.month5.total}
-                        , ${requestScope.month6.total}, ${requestScope.month7.total}, ${requestScope.month8.total}, ${requestScope.month9.total}, ${requestScope.month10.total}
-                        , ${requestScope.month11.total}, ${requestScope.month12.total}],
+                    data: [
+    ${requestScope.month1.total != null ? requestScope.month1.total : 0},
+    ${requestScope.month2.total != null ? requestScope.month2.total : 0},
+    ${requestScope.month3.total != null ? requestScope.month3.total : 0},
+    ${requestScope.month4.total != null ? requestScope.month4.total : 0},
+    ${requestScope.month5.total != null ? requestScope.month5.total : 0},
+    ${requestScope.month6.total != null ? requestScope.month6.total : 0},
+    ${requestScope.month7.total != null ? requestScope.month7.total : 0},
+    ${requestScope.month8.total != null ? requestScope.month8.total : 0},
+    ${requestScope.month9.total != null ? requestScope.month9.total : 0},
+    ${requestScope.month10.total != null ? requestScope.month10.total : 0},
+    ${requestScope.month11.total != null ? requestScope.month11.total : 0},
+    ${requestScope.month12.total != null ? requestScope.month12.total : 0}
+                    ],
                     fill: false,
                     borderColor: 'rgb(75, 192, 192)',
                     tension: 0.1
@@ -156,9 +167,20 @@
 </script>
 
 <script>
-    var xValues = ["${requestScope.pro1.productName}", "${requestScope.pro2.productName}", "${requestScope.pro3.productName}", "${requestScope.pro4.productName}", "${requestScope.pro5.productName}"];
-//    var xValues = [1, 2, 3, 4, 5];
-    var yValues = [${requestScope.pro1.total}, ${requestScope.pro2.total}, ${requestScope.pro3.total}, ${requestScope.pro4.total}, ${requestScope.pro5.total}];
+    var xValues = [
+        "${requestScope.pro1.productName != null ? requestScope.pro1.productName : ''}",
+        "${requestScope.pro2.productName != null ? requestScope.pro2.productName : ''}",
+        "${requestScope.pro3.productName != null ? requestScope.pro3.productName : ''}",
+        "${requestScope.pro4.productName != null ? requestScope.pro4.productName : ''}",
+        "${requestScope.pro5.productName != null ? requestScope.pro5.productName : ''}"
+    ];
+    var yValues = [
+    ${requestScope.pro1.total != null ? requestScope.pro1.total : 0},
+    ${requestScope.pro2.total != null ? requestScope.pro2.total : 0},
+    ${requestScope.pro3.total != null ? requestScope.pro3.total : 0},
+    ${requestScope.pro4.total != null ? requestScope.pro4.total : 0},
+    ${requestScope.pro5.total != null ? requestScope.pro5.total : 0}
+    ];
     var barColors = ["red", "green", "blue", "orange", "brown"];
 
     new Chart("myBarChart", {
