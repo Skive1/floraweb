@@ -41,6 +41,68 @@
         <link href="css/style.css" rel="stylesheet">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
+        <style>
+            .custom-text {
+                color: #ffffff; 
+                background-color: #6c757d; 
+                padding: 10px 15px; 
+                border-radius: 5px; 
+                font-size: 1.2rem; 
+                font-weight: 600; 
+                text-align: center; 
+            }
+
+            .fruite-item {
+                display: flex; 
+                flex-direction: column; 
+                height: auto; 
+                border: 1px solid #ced4da; 
+            }
+
+            .fruite-img {
+                height: 300px; 
+                overflow: hidden; 
+            }
+
+            .fruite-img img {
+                width: 100%; 
+                height: 100%; 
+                object-fit: cover; 
+            }
+
+            .product-description {
+                flex-grow: 1; 
+                display: flex; 
+                flex-direction: column;
+                justify-content: space-between;  
+            }
+
+            .product-description h4 {
+                margin: 0;
+            }
+
+            .product-description p {
+                margin: 0; 
+                flex-grow: 1; 
+                display: flex; 
+                align-items: center; 
+                justify-content: flex-start; 
+                min-height: 60px; 
+            }
+
+            
+            .product-description p {
+                flex-grow: 1; 
+                max-height: 100px; 
+                overflow: hidden; 
+                text-overflow: ellipsis; 
+                white-space: nowrap; 
+            }           
+            .custom-orange-border {
+                border: 2px solid orange; 
+            }
+
+        </style>
     </head>
 
     <body>
@@ -308,15 +370,16 @@
                                                             <img src="${flower.eventProductImg}" class="img-fluid w-100 rounded-top" alt="">
                                                         </div>
                                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${flower.eventProductType}</div>
-                                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                        <!--<div class="p-4 border border-secondary border-top-0 rounded-bottom">-->
+                                                        <div class="p-4 custom-orange-border p-3 border-top-0 rounded-bottom">
                                                             <c:url var="urlRewriting" value="flowerDetail">
                                                                 <c:param name="productId" value="${flower.eventProductId}"/>
                                                                 <c:param name="eventId" value="${flower.eventEventId}"/>
                                                             </c:url>
                                                             <a href="${urlRewriting}">
-                                                                <h4>${flower.eventProductName}</h4>
+                                                                <h4 style="height: 50px">${flower.eventProductName}</h4>
                                                             </a>
-                                                            <p>${flower.eventProductDetail}</p>
+                                                            <p style="height: 80px">${flower.eventProductDetail}</p>
                                                             <!-- Hidden inputs to pass product details to the servlet -->
                                                             <input type="hidden" name="productId" value="${flower.eventProductId}">
                                                             <input type="hidden" name="eventId" value="${flower.eventEventId}">
@@ -357,9 +420,7 @@
                         <div class="service-item bg-secondary rounded border border-secondary">
                             <img src="img/eventwaste.png" class="img-fluid rounded-top w-100" alt="">
                             <div class="px-5 rounded-bottom">
-                                <div class=" bg-primary text-center p-4 rounded">
-                                    <h5 class="text-white">Lãng phí</h5>
-                                </div>
+
                             </div>
                         </div>
 
@@ -369,10 +430,7 @@
                         <div class="service-item bg-dark rounded border border-dark">
                             <img src="img/surplusFlower.png" class="img-fluid rounded-top w-100" alt="">
                             <div class="px-4 rounded-bottom">
-                                <div class="service-content bg-light text-center p-4 rounded">
-                                    <h5 class="text-third">Giảm Lãng Phí</h5>
-                                    <h3 class="mb-0">Hoa thừa</h3>
-                                </div>
+
                             </div>
                         </div>
 
@@ -382,9 +440,7 @@
                         <div class="service-item bg-secondary rounded border border-secondary">
                             <img src="img/trader.png" class="img-fluid rounded-top w-100" alt="">
                             <div class="px-5 rounded-bottom">
-                                <div class=" bg-primary text-center p-4 rounded">
-                                    <h5 class="text-white">Buôn bán</h5>
-                                </div>
+
                             </div>
                         </div>
 
@@ -416,7 +472,7 @@
                                     <a href="${urlRewriting}">
                                         <h4>${flower.eventProductName}</h4>
                                     </a>
-                                    <p>${flower.eventProductDetail}</p>
+                                    <p style="height: 50px">${flower.eventProductDetail}</p>
                                     <!-- Hidden inputs to pass product details to the servlet -->
                                     <input type="hidden" name="productId" value="${flower.eventProductId}">
                                     <input type="hidden" name="eventId" value="${flower.eventEventId}">
@@ -525,7 +581,7 @@
                         <div class="position-relative">
                             <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
                             <div class="mb-4 pb-4 border-bottom border-secondary">
-                                <p class="mb-0">Lorem Ipsum is simply dummy text of the printing Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                <p class="mb-0 custom-text">Back-End Developer
                                 </p>
                             </div>
                             <div class="d-flex align-items-center flex-nowrap">
@@ -550,7 +606,7 @@
                         <div class="position-relative">
                             <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
                             <div class="mb-4 pb-4 border-bottom border-secondary">
-                                <p class="mb-0">Lorem Ipsum is simply dummy text of the printing Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                <p class="mb-0 custom-text">Leader
                                 </p>
                             </div>
                             <div class="d-flex align-items-center flex-nowrap">
@@ -575,7 +631,7 @@
                         <div class="position-relative">
                             <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
                             <div class="mb-4 pb-4 border-bottom border-secondary">
-                                <p class="mb-0">Lorem Ipsum is simply dummy text of the printing Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                <p class="mb-0 custom-text">Back-End Developer
                                 </p>
                             </div>
                             <div class="d-flex align-items-center flex-nowrap">
@@ -600,7 +656,7 @@
                         <div class="position-relative">
                             <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
                             <div class="mb-4 pb-4 border-bottom border-secondary">
-                                <p class="mb-0">Lorem Ipsum is simply dummy text of the printing Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                <p class="mb-0 custom-text">Back-End Developer
                                 </p>
                             </div>
                             <div class="d-flex align-items-center flex-nowrap">
