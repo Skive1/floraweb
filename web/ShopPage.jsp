@@ -34,6 +34,68 @@
         <link href="css/style.css" rel="stylesheet">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
+                <style>
+            .custom-text {
+                color: #ffffff; 
+                background-color: #6c757d; 
+                padding: 10px 15px; 
+                border-radius: 5px; 
+                font-size: 1.2rem; 
+                font-weight: 600; 
+                text-align: center; 
+            }
+
+            .fruite-item {
+                display: flex; 
+                flex-direction: column; 
+                height: auto; 
+                border: 1px solid #ced4da; 
+            }
+
+            .fruite-img {
+                height: 300px; 
+                overflow: hidden; 
+            }
+
+            .fruite-img img {
+                width: 100%; 
+                height: 100%; 
+                object-fit: cover; 
+            }
+
+            .product-description {
+                flex-grow: 1; 
+                display: flex; 
+                flex-direction: column;
+                justify-content: space-between;  
+            }
+
+            .product-description h4 {
+                margin: 0;
+            }
+
+            .product-description p {
+                margin: 0; 
+                flex-grow: 1; 
+                display: flex; 
+                align-items: center; 
+                justify-content: flex-start; 
+                min-height: 60px; 
+            }
+
+            
+            .product-description p {
+                flex-grow: 1; 
+                max-height: 100px; 
+                overflow: hidden; 
+                text-overflow: ellipsis; 
+                white-space: nowrap; 
+            }           
+            .custom-orange-border {
+                border: 2px solid orange; 
+            }
+
+        </style>
     </head>
 
     <body>
@@ -54,7 +116,7 @@
                         <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
-                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
+                        <a href="PrivacyPolicy.jsp" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
                         <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
@@ -155,7 +217,7 @@
         </div>
         <!-- Navbar End -->
 
-        <!-- Modal Search End -->
+ 
 
         <!-- Single Page Header start -->
         <div class="container-fluid py-5 mb-5 hero-header">
@@ -382,15 +444,15 @@
                                                     <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
                                                         ${product.productType} 
                                                     </div>
-                                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                    <div class="p-4 custom-orange-border p-3 border-top-0 rounded-bottom">
                                                         <c:url var="urlRewriting" value="productDetail">
                                                             <c:param name="productId" value="${product.productID}"/>
                                                             <c:param name="productType" value="${product.productType}"/>
                                                         </c:url>
                                                         <a href="${urlRewriting}">
-                                                            <h4>${product.productName}</h4>
+                                                            <h4 style="height:50px">${product.productName}</h4>
                                                         </a>
-                                                        <p>${product.productDetail}</p>
+                                                        <p style="height:50px">${product.productDetail}</p>
                                                         <div class="d-flex justify-content-between flex-lg-wrap">
                                                             <p class="text-dark fs-5 fw-bold mb-0">
                                                                 <fmt:formatNumber value="${product.productPrice}" type="number" groupingUsed="true"/>đ

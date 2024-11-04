@@ -40,6 +40,72 @@
         <link href="css/indicator.css" rel="stylesheet">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.8;
+                margin: 0;
+                padding: 0;
+                background-color: #f8f9fa;
+                color: #333;
+            }
+
+            .Privacy-Content {
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            h2 {
+                color: #007bff;
+                border-bottom: 2px solid #007bff;
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+            }
+
+            h3 {
+                color: #0056b3;
+                margin-top: 20px;
+                margin-bottom: 10px;
+            }
+
+            p {
+                margin: 15px 0;
+                text-align: justify;
+            }
+
+            ul {
+                margin-left: 20px;
+                margin-bottom: 15px;
+            }
+
+            footer {
+                text-align: center;
+                padding: 10px;
+                background-color: #007bff;
+                color: white;
+                position: relative;
+                bottom: 0;
+                width: 100%;
+            }
+
+            .copyright {
+                background-color: #343a40;
+                padding: 20px 0;
+            }
+
+            .copyright a {
+                color: white;
+                text-decoration: none;
+            }
+
+            .copyright a:hover {
+                text-decoration: underline;
+            }
+        </style>
     </head>
 
     <body>
@@ -185,68 +251,54 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Contact</h1>
+            <h1 class="text-center text-white display-6">Privacy Policy</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
-                <li class="breadcrumb-item active text-white">Contact</li>
+               
             </ol>
         </div>
         <!-- Single Page Header End -->
 
 
-        <!-- Contact Start -->
-        <div class="container-fluid contact py-5">
-            <div class="container py-5">
-                <div class="p-5 bg-light rounded">
-                    <div class="row g-4">
-                        <div class="col-12">
-                            <div class="text-center mx-auto" style="max-width: 700px;">
-                                <h1 class="text-third">Get in touch</h1>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="h-100 rounded">
-                                <iframe class="rounded w-100" 
-                                        style="height: 400px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.609941531086!2d106.8073027107938!3d10.841132857951939!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752731176b07b1%3A0xb752b24b379bae5e!2sFPT%20University%20HCMC!5e0!3m2!1sen!2s!4v1728456284808!5m2!1sen!2s" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" 
-                                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                            </div>
-                        </div>
-                        <div class="col-lg-7">
-                            <form action="" class="">
-                                <input type="text" class="w-100 form-control border-0 py-3 mb-4" placeholder="Your Name">
-                                <input type="email" class="w-100 form-control border-0 py-3 mb-4" placeholder="Enter Your Email">
-                                <textarea class="w-100 form-control border-0 mb-4" rows="5" cols="10" placeholder="Your Message"></textarea>
-                                <button class="w-100 btn form-control border-secondary py-3 bg-white text-third " type="submit">Submit</button>
-                            </form>
-                        </div>
-                        <div class="col-lg-5">
-                            <div class="d-flex p-4 rounded mb-4 bg-white">
-                                <i class="fas fa-map-marker-alt fa-2x text-third me-4"></i>
-                                <div>
-                                    <h4>Địa chỉ</h4>
-                                    <p class="mb-2">Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh</p>
-                                </div>
-                            </div>
-                            <div class="d-flex p-4 rounded mb-4 bg-white">
-                                <i class="fas fa-envelope fa-2x text-third me-4"></i>
-                                <div>
-                                    <h4>Mail Us</h4>
-                                    <p class="mb-2">flora.flower.platform@gmail.com</p>
-                                </div>
-                            </div>
-                            <div class="d-flex p-4 rounded bg-white">
-                                <i class="fa fa-phone-alt fa-2x text-third me-4"></i>
-                                <div>
-                                    <h4>Telephone</h4>
-                                    <p class="mb-2">(+84) 123 456 789</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Content Start -->
+        <div class="Privacy-Content">
+            <section>
+                <h2 style="text-align:center">Chính Sách Bảo Mật</h2>
+                <p>Với Flora Store, bảo mật thông tin cá nhân của bạn là ưu tiên hàng đầu của chúng tôi. Chính sách này mô tả cách chúng tôi thu thập, sử dụng, và bảo vệ thông tin cá nhân của bạn.</p>
+
+                <h3>1. Thông Tin Chúng Tôi Thu Thập</h3>
+                <p>Chúng tôi có thể thu thập thông tin cá nhân như:</p>
+                <ul>
+                    <li>Tên</li>
+                    <li>Địa chỉ email</li>
+                    <li>Số điện thoại</li>
+                    <li>Thông tin thanh toán</li>
+                    <li>Thông tin đặt hàng</li>
+                </ul>
+
+                <h3>2. Cách Chúng Tôi Sử Dụng Thông Tin</h3>
+                <p>Thông tin cá nhân của bạn có thể được sử dụng để:</p>
+                <ul>
+                    <li>Xử lý đơn hàng và cung cấp dịch vụ</li>
+                    <li>Gửi thông tin cập nhật về đơn hàng</li>
+                    <li>Gửi bản tin qua email và thông báo khuyến mãi</li>
+                    <li>Cải thiện dịch vụ và trải nghiệm khách hàng</li>
+                </ul>
+
+                <h3>3. Bảo Mật Thông Tin</h3>
+                <p>Chúng tôi sử dụng các biện pháp bảo mật thích hợp để bảo vệ thông tin cá nhân của bạn khỏi việc truy cập, sử dụng hoặc tiết lộ trái phép. Thông tin của bạn được lưu trữ trên hệ thống bảo mật và chỉ có nhân viên được ủy quyền mới có quyền truy cập.</p>
+
+                <h3>4. Chia Sẻ Thông Tin</h3>
+                <p>Chúng tôi không bán, trao đổi hay cho thuê thông tin cá nhân của bạn cho bên thứ ba. Thông tin của bạn chỉ được chia sẻ với các bên liên quan cần thiết để xử lý đơn hàng hoặc cung cấp dịch vụ mà bạn đã yêu cầu.</p>
+
+                <h3>5. Quyền Của Bạn</h3>
+                <p>Bạn có quyền yêu cầu truy cập, chỉnh sửa hoặc xóa thông tin cá nhân của mình. Nếu bạn muốn thực hiện quyền này, vui lòng liên hệ với chúng tôi qua thông tin liên hệ dưới đây.</p>
+
+                <h3>6. Liên Hệ</h3>
+                <p>Nếu bạn có bất kỳ câu hỏi nào về chính sách bảo mật này, xin vui lòng liên hệ với chúng tôi qua email: <a href="mailto:flora.flower.platform@gmail.com">flora.flower.platform@gmail.com</a>.</p>
+            </section>
         </div>
-        <!-- Contact End -->
+        <!-- Content End -->
 
 
         <!-- Footer Start -->
@@ -258,7 +310,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Store</a>, All right reserved.</span>
                         </div>
                     </div>
                 </div>

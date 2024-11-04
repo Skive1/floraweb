@@ -140,7 +140,15 @@
         data: {
             labels: ["Sunday", "Saturday", "Friday", "Thursday", "Wednesday", "Tuesday", "Monday"],
             datasets: [{
-                    data: [${totalMoney1}, ${totalMoney7}, ${totalMoney6}, ${totalMoney5}, ${totalMoney4}, ${totalMoney3}, ${totalMoney2}],
+                    data: [
+    ${totalMoney1 != null ? totalMoney1 : 0},
+    ${totalMoney7 != null ? totalMoney7 : 0},
+    ${totalMoney6 != null ? totalMoney6 : 0},
+    ${totalMoney5 != null ? totalMoney5 : 0},
+    ${totalMoney4 != null ? totalMoney4 : 0},
+    ${totalMoney3 != null ? totalMoney3 : 0},
+    ${totalMoney2 != null ? totalMoney2 : 0}
+                    ],
                     backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360", "#1874CD", "#CDB5CD"],
                     hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774", "#1E90FF", "#FFE1FF"]
                 }]

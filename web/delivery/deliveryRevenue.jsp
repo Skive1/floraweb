@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page import="java.lang.Math" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -109,13 +110,12 @@
         <div class="container">
             <form id="f1" method="get" action="deliveryIncome">
                 <div style="padding-left: 20px">
-                    <select name="year" class="form-control" id="dropdownYear" style="width: 120px;" onchange="getYear(this)">
-                        <c:set var="currentYear" value="2024"/>
-                        <c:set var="endYear" value="2018"/>
-                        <c:forEach var="year" begin="0" end="${currentYear - endYear}">
-                            <option  value="${currentYear - year}">${currentYear - year}</option>
+                    <select name="year" class="form-control" id="yearSelect" required>
+                        <option value="" disabled ${empty requestScope.curYear ? 'selected' : ''}>-- Chọn năm --</option>
+                        <c:forEach var="year" begin="2022" end="2024">
+                            <option value="${year}" ${year == requestScope.curYear ? 'selected' : ''}>${year}</option>
                         </c:forEach>
-                    </select>              
+                    </select>         
                     <button style="width: 100px; padding: 0" class="form-control" type="submit">Submit</button>
                 </div>
             </form>
@@ -146,7 +146,7 @@
                 </tbody>
             </table>
 
-                <div style="margin-top: 20px" class="rating">
+            <div style="margin-top: 20px" class="rating">
                 <h2>Star Rating từ Khách hàng</h2>
                 <c:if test="${not empty requestScope.listRating}">
                     <c:forEach var="rating" items="${requestScope.listRating}">
@@ -156,7 +156,7 @@
                         <c:set var="halfStar" value="${rate - fullStars}" />
                         <c:set var="emptyStars" value="${5 - fullStars - (halfStar >= 0.5 ? 1 : 0)}" />
                         <p>
-                            Đánh giá trung bình (${rate}/5):
+                            Đánh giá trung bình (<fmt:formatNumber value="${rate}" pattern="#0.00"/>/5):
                             <span class="stars">
                                 <c:forEach var="i" begin="1" end="${fullStars}">
                                     ★
@@ -179,31 +179,42 @@
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-                        const ctx = document.getElementById('revenueChart').getContext('2d');
-                        const revenueChart = new Chart(ctx, {
-                            type: 'line',
-                            data: {
-                                labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-                                datasets: [{
-                                        label: 'Doanh thu (VNĐ)',
-                                        data: [${requestScope.month1.total}, ${requestScope.month2.total}, ${requestScope.month3.total}, ${requestScope.month4.total}, ${requestScope.month5.total}
-                                            , ${requestScope.month6.total}, ${requestScope.month7.total}, ${requestScope.month8.total}, ${requestScope.month9.total}, ${requestScope.month10.total}
-                                            , ${requestScope.month11.total}, ${requestScope.month12.total}],
-                                        borderColor: 'rgba(75, 192, 192, 1)',
-                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                        borderWidth: 2,
-                                        fill: true
-                                    }]
-                            },
-                            options: {
-                                responsive: true,
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                    }
-                                }
-                            }
-                        });
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                    datasets: [{
+                            label: 'Doanh thu (VNĐ)',
+                            data: [
+            ${requestScope.month1.total != null ? requestScope.month1.total : 0},
+            ${requestScope.month2.total != null ? requestScope.month2.total : 0},
+            ${requestScope.month3.total != null ? requestScope.month3.total : 0},
+            ${requestScope.month4.total != null ? requestScope.month4.total : 0},
+            ${requestScope.month5.total != null ? requestScope.month5.total : 0},
+            ${requestScope.month6.total != null ? requestScope.month6.total : 0},
+            ${requestScope.month7.total != null ? requestScope.month7.total : 0},
+            ${requestScope.month8.total != null ? requestScope.month8.total : 0},
+            ${requestScope.month9.total != null ? requestScope.month9.total : 0},
+            ${requestScope.month10.total != null ? requestScope.month10.total : 0},
+            ${requestScope.month11.total != null ? requestScope.month11.total : 0},
+            ${requestScope.month12.total != null ? requestScope.month12.total : 0}
+                            ],
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         </script>
     </body>
 </html>

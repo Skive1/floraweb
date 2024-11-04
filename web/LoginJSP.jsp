@@ -10,31 +10,31 @@
 <html lang="en">
     <style>
         header {
-            height: 200px; /* Chiều cao của header */
-            display: flex; /* Để dễ dàng căn giữa hình ảnh */
-            align-items: center; /* Căn giữa theo chiều dọc */
-            justify-content: center; /* Căn giữa theo chiều ngang */
+            height: 200px; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
         }
         .logo-header {
-            background-color: rgba(255, 255, 255, 0.5); /* Màu nền cho container với độ trong suốt */
-            border-radius: 10px; /* Bo góc cho container nếu muốn */
+            background-color: rgba(255, 255, 255, 0.5); 
+            border-radius: 10px; 
         }
         main {
-            padding: 20px; /* Thêm padding nếu cần */
-            height: 100vh; /* Đảm bảo chiều cao của main bằng chiều cao của viewport */
+            padding: 20px; 
+            height: 100vh; 
         }
         .container {
-            background-color: rgba(255, 255, 255, 0.9); /* Màu nền cho container với độ trong suốt */
-            border-radius: 10px; /* Bo góc cho container nếu muốn */
-            padding: 20px; /* Thêm padding cho container */
-            position: relative; /* Để có thể điều chỉnh vị trí */
-            z-index: 1; /* Đảm bảo container nằm trên background */
+            background-color: rgba(255, 255, 255, 0.9); 
+            border-radius: 10px; 
+            padding: 20px; 
+            position: relative; 
+            z-index: 1; 
         }
         #notification {
-            position: absolute; /* Định vị cố định */
+            position: absolute; 
             top: 25%;
             left: 50%;
-            transform: translate(-50%, -50%); /* Di chuyển về giữa */
+            transform: translate(-50%, -50%);
             background-color: #ffffff;
             padding: 8px;
             padding-top: 18px;
@@ -49,6 +49,38 @@
             background-repeat: no-repeat; /* Không lặp lại hình ảnh */
             margin: 0; /* Để loại bỏ margin mặc định */
             padding: 0; /* Để loại bỏ padding mặc định */
+        }
+        .btn-class {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-class:hover {
+            background-color: #0056b3; 
+            transform: scale(1.05); 
+        }
+
+        input[type="submit"].btn-class {
+            background-color: #007bff; 
+        }
+
+        a.btn-class {
+            background-color: #28a745;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 600px) {
+            .btn-class {
+                width: 100%; 
+            }
         }
     </style>
     <head>
@@ -115,12 +147,7 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="row justify-content-between">
-                                                    <div class="col-6">
-                                                        <div class="form-check">
-                                                            <input type="checkbox" name="checkbox" class="form-check-input" id="checkbox">
-                                                            <label class="form-check-label" for="checkbox">Remember Me</label>
-                                                        </div>
-                                                    </div>
+
                                                     <div class="col-6">
                                                         <div class="text-end">
                                                             <a href="forgotPassword" class="link-secondary text-decoration-none">Forgot password?</a>
