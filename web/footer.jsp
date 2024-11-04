@@ -42,7 +42,7 @@
                     <h4 class="text-light mb-3">Shop Info</h4>
                     <a class="btn-link" href="">About Us</a>
                     <a class="btn-link" href="">Contact Us</a>
-                    <a class="btn-link" href="">Privacy Policy</a>
+                    <a class="btn-link" href="PrivacyPolicy.jsp">Privacy Policy</a>
                     <a class="btn-link" href="">Terms & Condition</a> 
                     <a class="btn-link" href="">FAQs & Help</a>
                 </div>

@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page import="java.lang.Math" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -146,7 +147,7 @@
                 </tbody>
             </table>
 
-                <div style="margin-top: 20px" class="rating">
+            <div style="margin-top: 20px" class="rating">
                 <h2>Star Rating từ Khách hàng</h2>
                 <c:if test="${not empty requestScope.listRating}">
                     <c:forEach var="rating" items="${requestScope.listRating}">
@@ -156,7 +157,8 @@
                         <c:set var="halfStar" value="${rate - fullStars}" />
                         <c:set var="emptyStars" value="${5 - fullStars - (halfStar >= 0.5 ? 1 : 0)}" />
                         <p>
-                            Đánh giá trung bình (${rate}/5):
+<!--                            Đánh giá trung bình (${rate}/5):-->
+                            Đánh giá trung bình (<fmt:formatNumber value="${rate}" pattern="#0.00"/>/5):
                             <span class="stars">
                                 <c:forEach var="i" begin="1" end="${fullStars}">
                                     ★
