@@ -147,8 +147,7 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="row justify-content-between">
-
-                                                    <div class="col-6">
+                                                    <div class="col-12">
                                                         <div class="text-end">
                                                             <a href="forgotPassword" class="link-secondary text-decoration-none">Forgot password?</a>
                                                         </div>
@@ -157,9 +156,9 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="d-grid">          
-                                                    <input type="submit" class="btn btn-class" value="Login" name="btAction" />
+                                                    <input type="submit" class="btn btn-class" style="color: #ffffff; font-weight: bold" value="Login" name="btAction" />
                                                     <br/>
-                                                    <a class="btn btn-class" href="registerPage">Or Sign Up</a>                                           
+                                                    <a class="btn btn-class" style="color: #ffffff; font-weight: bold; background-color: #28a745" href="registerPage">Or Sign Up</a>                                           
                                                 </div>
                                             </div>
                                         </div>
