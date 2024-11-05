@@ -85,6 +85,21 @@
                 justify-content: center;
                 align-items: center;
             }
+            .close {
+            background-color: #dc3545; 
+            color: white; 
+            border: none;
+            border-radius: 15%; 
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .close:hover {
+            background-color: #c82333;
+            transform: scale(1.1); 
+        }
         </style>
     </head>
 

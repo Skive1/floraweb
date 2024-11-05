@@ -33,7 +33,68 @@
         <link rel="stylesheet" href="css/snackbar.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
+                        <style>
+            .custom-text {
+                color: #ffffff; 
+                background-color: #6c757d; 
+                padding: 10px 15px; 
+                border-radius: 5px; 
+                font-size: 1.2rem; 
+                font-weight: 600; 
+                text-align: center; 
+            }
 
+            .fruite-item {
+                display: flex; 
+                flex-direction: column; 
+                height: auto; 
+                border: 1px solid #ced4da; 
+            }
+
+            .fruite-img {
+                height: 300px; 
+                overflow: hidden; 
+            }
+
+            .fruite-img img {
+                width: 100%; 
+                height: 100%; 
+                object-fit: cover; 
+            }
+
+            .product-description {
+                flex-grow: 1; 
+                display: flex; 
+                flex-direction: column;
+                justify-content: space-between;  
+            }
+
+            .product-description h4 {
+                margin: 0;
+            }
+
+            .product-description p {
+                margin: 0; 
+                flex-grow: 1; 
+                display: flex; 
+                align-items: center; 
+                justify-content: flex-start; 
+                min-height: 60px; 
+            }
+
+            
+            .product-description p {
+                flex-grow: 1; 
+                max-height: 100px; 
+                overflow: hidden; 
+                text-overflow: ellipsis; 
+                white-space: nowrap; 
+            }           
+            .custom-orange-border {
+                border: 2px solid orange; 
+            }
+
+        </style>
     </head>
 
     <body>
@@ -291,7 +352,7 @@
                                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
                                                             ${flower.eventProductType} 
                                                         </div>
-                                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                        <div class="p-4 custom-orange-border p-3 border-top-0 rounded-bottom">
                                                             <c:url var="urlRewriting" value="flowerDetail">
                                                                 <c:param name="productId" value="${flower.eventProductId}"/>
                                                                 <c:param name="eventId" value="${requestScope.EVENT_ID}"/>
@@ -299,7 +360,7 @@
                                                             <a href="${urlRewriting}">
                                                                 <h4>${flower.eventProductName}</h4>
                                                             </a>
-                                                            <p>${flower.eventProductDetail}</p>
+                                                                <p style="height: 50px">${flower.eventProductDetail}</p>
                                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                                 <p class="text-dark fs-5 fw-bold mb-0">
                                                                     <fmt:formatNumber value="${flower.eventProductPrice}" type="number" groupingUsed="true"/>đ

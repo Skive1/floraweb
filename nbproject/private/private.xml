@@ -8,9 +8,13 @@
             <file>file:/D:/GitHubSWP/floraweb/web/Animation/index.html</file>
         </group>
         <group>
-            <file>file:/D:/GitHubSWP/floraweb/web/Animation/buttonAni1.html</file>
-            <file>file:/D:/GitHubSWP/floraweb/web/Animation/aniStyle.css</file>
-            <file>file:/D:/GitHubSWP/floraweb/web/Animation/index.html</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/admin/WeeklyDB.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/admin/MonthlyEventDB.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/admin/WeeklyProductDB.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/delivery/deliveryRevenue.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/admin/MonthlyDB.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/admin/ViewEvent.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/servlet/MonthlyRevenueServlet.java</file>
         </group>
     </open-files>
 </project-private>

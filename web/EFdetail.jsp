@@ -44,21 +44,21 @@
         <link rel="icon" href="img/flora-favicon.png"/>
 
         <style>
-            /* Đảm bảo ghi đè toàn bộ kiểu mặc định của input readonly */
+     
             input[readonly] {
-                background-color: white !important;  /* Nền trắng */
-                pointer-events: none;                /* Ngăn thay đổi */
+                background-color: white !important; 
+                pointer-events: none;               
                 cursor: none;
             }
             .disabled-link {
-                pointer-events: none;  /* Disable click */
-                color: gray;           /* Change appearance */
-                text-decoration: none; /* Remove underline */
-                cursor: default;       /* Change cursor to default */
+                pointer-events: none;  
+                color: gray;          
+                text-decoration: none; 
+                cursor: default;       
             }
             #commentSection {
-                max-height: 300px; /* Chiều cao tối đa */
-                overflow-y: auto; /* Kích hoạt thanh cuộn theo chiều dọc */
+                max-height: 300px;
+                overflow-y: auto; 
             }
         </style>
     </head>
