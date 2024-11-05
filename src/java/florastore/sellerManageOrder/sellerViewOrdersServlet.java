@@ -39,12 +39,14 @@ public class sellerViewOrdersServlet extends HttpServlet {
         String goBack = request.getParameter("pageBack");
         String goForward = request.getParameter("pageForward");
         String infoBack = request.getParameter("infoBack");
-
+        String username = null;
+        
         HttpSession session = request.getSession();
         String checkPageActive = (String) session.getAttribute("pageIsActive");
         int[] range = null;
         int page = 0, pageSize = 0;
         try {
+            username = (String) session.getAttribute("USERNAME");
             dto = (AccountDTO) session.getAttribute("USER");
             if ("Seller".equals(dto.getRole())) {
                 if (pageIsActive != null) {
@@ -75,7 +77,7 @@ public class sellerViewOrdersServlet extends HttpServlet {
                 }
                 
                 DeliverDAO dao = new DeliverDAO();
-                List<DeliverDTO> orderList = dao.sellerGetDeliveryOrder();                //lấy danh sách các đơn hàng để nhận giao
+                List<DeliverDTO> orderList = dao.sellerGetDeliveryOrder(username);                //lấy danh sách các đơn hàng để nhận giao
                 if (!orderList.isEmpty()) {
                     List<DeliverDTO> deliveryList = service.getSeven(orderList, range);               //đã lấy được n sản phẩm để show trang chính
                     if (deliveryList.isEmpty()) {                                     //trường hợp delivery lấy order ở trang cuối mà trang đó chỉ có 1 order

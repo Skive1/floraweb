@@ -120,31 +120,36 @@ public class LoginServlet extends HttpServlet {
                 AccountDAO dao = new AccountDAO();
                 AccountDTO validUser = null;
                 if (username.equals(username.trim()) && password.equals(password.trim())) {
-                    String hashPassword = dao.getHashPassword(username);
-                    BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), hashPassword);
-                    if (result.verified) {
-                        validUser = dao.getAccountByLogin(username, hashPassword);
-                        //3. process result
-                        if (validUser != null && validUser.getIsBanned() == 0) {//user login successful
-                            url = MyAppConstants.LoginFeatures.HOME_PAGE;
-                            //3.1 Create new session
-                            HttpSession session = request.getSession(true);
-                            session.setAttribute("USER", validUser);
-                            session.setAttribute("USERNAME", username);
-                            session.setAttribute("PASSWORD", password);
-                            session.setAttribute("PENDING_EITEMS", 0);
-                            session.setAttribute("PENDING_ITEMS", 0);
-                            session.setAttribute("LOGIN_SUCCESS", true);
-                            response.sendRedirect(url);
-                        }//end if validAccount is not null
-                        if (validUser != null && validUser.getIsBanned() == 1) {
+                    String hashPassword = dao.getHashPassword(username) != null ? dao.getHashPassword(username) : null;
+                    if (hashPassword != null) {
+                        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), hashPassword);
+                        if (result.verified) {
+                            validUser = dao.getAccountByLogin(username, hashPassword);
+                            //3. process result
+                            if (validUser != null && validUser.getIsBanned() == 0) {//user login successful
+                                url = MyAppConstants.LoginFeatures.HOME_PAGE;
+                                //3.1 Create new session
+                                HttpSession session = request.getSession(true);
+                                session.setAttribute("USER", validUser);
+                                session.setAttribute("USERNAME", username);
+                                session.setAttribute("PASSWORD", password);
+                                session.setAttribute("PENDING_EITEMS", 0);
+                                session.setAttribute("PENDING_ITEMS", 0);
+                                session.setAttribute("LOGIN_SUCCESS", true);
+                                response.sendRedirect(url);
+                            }//end if validAccount is not null
+                            if (validUser != null && validUser.getIsBanned() == 1) {
+                                foundErr = true;
+                                error.setLoginErr("Tài khoản của bạn đã bị hạn chế");
+                            }
+                        } else {//Invalid at password
                             foundErr = true;
-                            error.setLoginErr("Tài khoản của bạn đã bị hạn chế");
-                        }
-                    } else {
+                            error.setLoginErr("Invalid username or password");
+                        }//Invalid at password
+                    } else {//Invalid at username
                         foundErr = true;
                         error.setLoginErr("Invalid username or password");
-                    }
+                    }//Invalid at username
                 }
                 if (validUser == null) {//user login failed
                     foundErr = true;
