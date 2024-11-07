@@ -68,6 +68,11 @@ public class MonthlyEventRevenueServlet extends HttpServlet {
             year = Integer.parseInt(yearStr);
         }
         try {
+            AccountDTO dto = (AccountDTO) session.getAttribute("USER");
+            String name = dto.getFullName();
+            request.setAttribute("curYear", year);
+            request.setAttribute("curMonth",month);
+            if (dto != null) {
             //1. Lấy id từ session Scope
             EventRevenueDAO eventDao = new EventRevenueDAO();
             //2. Call method
@@ -99,7 +104,8 @@ public class MonthlyEventRevenueServlet extends HttpServlet {
             request.setAttribute("month11", listYear.get(10));
             request.setAttribute("month12", listYear.get(11));
             request.setAttribute("allMonth", listYear);
-            request.setAttribute("curMonth",month);
+            
+            }
         } catch (SQLException ex) {
             String msg = ex.getMessage();
             log("MonthlyEventRevenueServlet _ SQL: " + msg);

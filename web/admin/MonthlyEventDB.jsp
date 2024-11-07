@@ -77,8 +77,8 @@
                         </div>
                         <div class="admin-content-top-right">
                             <ul class="flex-box">
-                                <li><i class="ri-notification-4-line" number="3"></i></li>
-                                <li><i class="ri-message-2-line" number="5"></i></li>
+                                <li><i class="ri-notification-4-line" number="0"></i></li>
+                                <li><i class="ri-message-2-line" number="0"></i></li>
                                 <li class="flex-box">
                                     <img style="width: 50px;" src="" alt="">
                                     <p>${sessionScope.USER.fullName}<i class="ri-arrow-down-s-fill"></i></p>
@@ -94,28 +94,28 @@
 
                         <h1 style="text-align: center;">Dashboard</h1>                    
                         <h3 class="mb-0 text-center">
-                            <strong>Revenue event flower(s) by month</strong>                     
+                            <strong>Doanh thu của Hoa sự kiện ${requestScope.curMonth} ${requestScope.curYear}</strong>                     
                             <form id="f1" method="get" action="monthlyEventRevenue">
                                 <div style="padding-left: 20px">
-                                    <select name="year" class="form-control" id="dropdownYear" style="width: 120px;" onchange="getYear(this)">
-                                        <c:set var="currentYear" value="2024"/>
-                                        <c:set var="endYear" value="2018"/>
-                                        <c:forEach var="year" begin="0" end="${currentYear - endYear}">
-                                            <option  value="${currentYear - year}">${currentYear - year}</option>
+                                    <select name="year" class="form-control" id="dropdownYear" style="width: 120px;" required>
+                                        <option value="" disabled ${empty requestScope.curYear ? 'selected' : ''}>-- Chọn năm --</option>
+                                        <c:forEach var="year" begin="2023" end="2024">
+                                            <option value="${year}" ${year == requestScope.curYear ? 'selected' : ''}>${year}</option>
                                         </c:forEach>
-                                    </select>
+                                    </select> 
+
                                     <select name="month" class="form-control" id="dropdownMonth" style="width: 120px;">
                                         <c:choose>
                                             <c:when test="${not empty requestScope.curMonth}">
                                                 <option selected="" disabled="">${requestScope.curMonth}</option>
                                             </c:when>
                                             <c:otherwise>
-                                                <option selected="" disabled="">Select Month</option>
+                                                <option selected="" disabled="">-- Chọn tháng --</option>
                                             </c:otherwise>
-                                        </c:choose>                                 
+                                        </c:choose>
                                         <c:forEach var="month" begin="1" end="12">
-                                            <option  value="${month}">${month}</option>                                           
-                                        </c:forEach>                                        
+                                            <option  value="${month}">${month}</option>
+                                        </c:forEach>
                                     </select>                               
                                     <button style="width: 100px; padding: 0" class="form-control" type="submit">Submit</button>
                                 </div>

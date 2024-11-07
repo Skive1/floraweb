@@ -93,13 +93,12 @@
                             <strong>Revenue flower(s) by month</strong>
                             <form id="f1" method="get" action="monthlyRevenue">
                                 <div style="padding-left: 20px">
-                                    <select name="year" class="form-control" id="dropdownYear" style="width: 120px;" onchange="getYear(this)">
-                                        <c:set var="currentYear" value="2024"/>
-                                        <c:set var="endYear" value="2018"/>
-                                        <c:forEach var="year" begin="0" end="${currentYear - endYear}">
-                                            <option  value="${currentYear - year}">${currentYear - year}</option>
+                                    <select name="year" class="form-control" id="dropdownYear" style="width: 120px;" required>
+                                        <option value="" disabled ${empty requestScope.curYear ? 'selected' : ''}>-- Chọn năm --</option>
+                                        <c:forEach var="year" begin="2023" end="2024">
+                                            <option value="${year}" ${year == requestScope.curYear ? 'selected' : ''}>${year}</option>
                                         </c:forEach>
-                                    </select>
+                                    </select> 
 
                                     <select name="month" class="form-control" id="dropdownMonth" style="width: 120px;">
                                         <c:choose>
@@ -107,7 +106,7 @@
                                                 <option selected="" disabled="">${requestScope.curMonth}</option>
                                             </c:when>
                                             <c:otherwise>
-                                                <option selected="" disabled="">Select Month</option>
+                                                <option selected="" disabled="">-- Chọn tháng --</option>
                                             </c:otherwise>
                                         </c:choose>
                                         <c:forEach var="month" begin="1" end="12">
