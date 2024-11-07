@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.ManageEvent;
+package florastore.sellerManageOrder;
 
-import florastore.event.EventDAO;
-import florastore.event.EventDTO;
-import florastore.eventProduct.EventProductDTO;
+import florastore.deliveryOrder2.*;
+import florastore.manageEvent2.TotalPriceDTO;
+import florastore.searchProduct.ServiceLayer;
 import florastore.utils.MyAppConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -26,12 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author ASUS
- */
-@WebServlet(name = "ShowEventDetailServlet", urlPatterns = {"/ShowEventDetailServlet"})
-public class ShowEventDetailServlet extends HttpServlet {
+@WebServlet(name = "sellerOrderInformationServlet", urlPatterns = {"/sellerOrderInformationServlet"})
+public class sellerOrderInformationServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,39 +34,41 @@ public class ShowEventDetailServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         Properties siteMap = (Properties) context.getAttribute("SITE_MAP");
-        String url = (String) siteMap.get(MyAppConstants.ManageEvent.ERROR_PAGE);
-        
+        String url = (String) siteMap.get(MyAppConstants.SellerManageOrder.ERROR);
+
         DecimalFormat df = new DecimalFormat("#,###.##");
-        List<EventDTO> events = (List<EventDTO>) request.getAttribute("Event_List");
-        List<EventProductDTO> productList = new ArrayList<>();
+        List<DeliverDTO> deliveryList = (List<DeliverDTO>) request.getAttribute("DELIVERY_LIST");
+        List<DeliverDTO> productList = new ArrayList<>();
         List<TotalPriceDTO> totalPrint = new ArrayList<>();
         try {
-            EventDAO dao = new EventDAO();
-            if (events != null) {
-                request.setAttribute("Event_List", events);
-                for (int i = 0; i < events.size(); i++) {
-                    List<EventProductDTO> flowerList = dao.getEventFlower2(events.get(i).getEventId());
+
+            DeliverDAO dao = new DeliverDAO();
+
+            if (deliveryList != null) {
+                request.setAttribute("DELIVERY_LIST", deliveryList);
+                for (int i = 0; i < deliveryList.size(); i++) {
+                    List<DeliverDTO> flowerList = dao.getOrderInfo(deliveryList.get(i).getEventOrderId());
                     if (flowerList != null && !flowerList.isEmpty()) {
                         productList.addAll(flowerList);
                         double total = 0;
                         String totalOut;
-                        for (EventProductDTO flowerPrice : flowerList) {
-                            total += flowerPrice.getEventProductPrice() * flowerPrice.getEventProductQuantity();
+                        for (DeliverDTO flowerPrice : flowerList) {
+                            total += flowerPrice.getUnitPrice() * flowerPrice.getQuantity();
                         }
                         totalOut = df.format(total);
-                        TotalPriceDTO result = new TotalPriceDTO(events.get(i).getEventId(), totalOut);
+                        TotalPriceDTO result = new TotalPriceDTO(deliveryList.get(i).getEventOrderId(), totalOut);
                         totalPrint.add(result);
                     }
                 }
-                request.setAttribute("Flower_List", productList);
-                request.setAttribute("Total", totalPrint);
-                request.setAttribute("Total_Flower", productList.size());
-                url = (String) siteMap.get(MyAppConstants.ManageEvent.MANAGE_EVENT_PAGE);
+                request.setAttribute("DELIVERY_INFO_LIST", productList);
+                request.setAttribute("Total_Info_On_Page", productList.size());
+                request.setAttribute("TOTAL", totalPrint);
             }
+            url = (String) siteMap.get(MyAppConstants.SellerManageOrder.ORDER_DELIVERING_PAGE);
         } catch (SQLException ex) {
-            log("EventDetailServlet _SQL_ " + ex.getMessage());
+            log("ViewOrderServlet _SQL_ " + ex.getMessage());
         } catch (NamingException ex) {
-            log("EventDetailServlet _Naming_ " + ex.getMessage());
+            log("ViewOrderServlet _Naming_ " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

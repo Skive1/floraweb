@@ -62,6 +62,7 @@
                                 <a href=""><i class="ri-file-list-line"></i>Quản lý đơn hàng<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="viewOrderAction">Đơn hàng chờ giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders">Đơn hàng đang giao</a></li>
                                     <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction">Đơn hàng đã giao</a></li>
                                 </ul>
                             </li>
@@ -151,6 +152,7 @@
                                                                 <table>
                                                                     <thead>
                                                                         <tr>
+                                                                            <th style="background-color: #007bff; color: white">ID</th>
                                                                             <th style="background-color: #007bff; color: white">Ảnh</th>
                                                                             <th style="background-color: #007bff; color: white">Tên sản phẩm</th>
                                                                             <th style="background-color: #007bff; color: white">Loại</th>
@@ -164,6 +166,7 @@
                                                                     <tbody>
                                                                         <c:forEach var="product" items="${sessionScope.PRODUCTS[event.eventId]}" varStatus="counter">
                                                                             <tr id="productRow${product.eventProductId}">
+                                                                                <td style="font-weight: bold;padding-right: 14px;padding-left: 20px">${product.eventProductId}</td>
                                                                                 <td><img src="${product.eventProductImg}" style="width: 100px; height: auto;"></td>
                                                                                 <td>${product.eventProductName}</td>
                                                                                 <td>${product.eventProductType}</td>

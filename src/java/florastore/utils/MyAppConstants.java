@@ -286,4 +286,11 @@ public class MyAppConstants {
 
         public static final String ERROR = "error404";
     }
+    
+    public class SellerManageOrder {
+        public static final String ERROR = "error404";
+        public static final String ORDER_DELIVERING_INFO = "sellerOrderInformation";
+        public static final String ORDER_DELIVERING_PAGE = "orderDeliveringPage";
+        public static final String ORDER_DELIVERING = "sellerViewOrders";
+    }
 }

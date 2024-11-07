@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package florastore.DeliveryOrder;
+package florastore.deliveryOrder2;
 
 import florastore.utils.DBHelper;
 import java.sql.Connection;
@@ -18,7 +18,61 @@ import java.util.List;
 import javax.naming.NamingException;
 
 public class DeliverDAO {
-    
+
+    public List<DeliverDTO> sellerGetDeliveryOrder()
+            throws SQLException, NamingException {                              //lấy đơn hàng để nhận
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<DeliverDTO> products = new ArrayList<>();
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "Select EventOrderId, Fullname, Phone, Street, City, DeliveryDate, DeliveryStaffId, Status, Amount, isPaid, Note, DeliveryOption "
+                        + "From EventOrder Order By EventOrderId";
+                //3. create statement
+                stm = con.prepareStatement(sql);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. process result
+                while (rs.next()) {
+                    //. map
+                    //get data from Result Set
+                    int eventOrderId = rs.getInt("EventOrderId");
+                    String fullname = rs.getString("Fullname");
+                    String phone = rs.getString("Phone");
+                    String street = rs.getString("Street");
+                    String city = rs.getString("City");
+                    Timestamp deliveryDate = rs.getTimestamp("DeliveryDate");
+                    int deliveryStaffId = rs.getInt("DeliveryStaffId");
+                    String status = rs.getString("Status");
+                    double amount = rs.getDouble("Amount");
+                    boolean isPaid = rs.getBoolean("isPaid");
+                    String note = rs.getString("Note");
+                    String deliveryOption = rs.getString("DeliveryOption");
+                    if ("Chưa nhận".equals(status) && "Delivery".equals(deliveryOption)) {
+                        DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street,
+                                city, deliveryDate, status, deliveryStaffId, amount, isPaid, note, deliveryOption);
+                        products.add(product);
+                    }
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return products;
+    }
+
     public List<DeliverDTO> getDeliveryOrder()
             throws SQLException, NamingException {                              //lấy đơn hàng để nhận
         Connection con = null;
@@ -164,8 +218,8 @@ public class DeliverDAO {
                     double unitPrice = rs.getDouble("UnitPrice");
                     int quantity = rs.getInt("Quantity");
                     String productName = rs.getString("EPName");
-                    DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street, city, 
-                            orderDate, paymentOptions, deliveryDate, status, deliveryStaffId, isPaid, note, unitPrice, 
+                    DeliverDTO product = new DeliverDTO(eventOrderId, fullname, phone, street, city,
+                            orderDate, paymentOptions, deliveryDate, status, deliveryStaffId, isPaid, note, unitPrice,
                             amount, quantity, productName, productType, productCondition);
                     products.add(product);
                 }
@@ -217,6 +271,37 @@ public class DeliverDAO {
                         }
                     }
                     //nếu deliveryStaffId != 0 và ko phải do A nhận → có nhân viên khác nhận rồi → hiển thị lỗi và ko cho nhận nữa
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
+
+    public boolean sellerMarkAsCancel(int eventOrderID) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //nếu null thì nhận đơn, không thì đã có người khác nhận
+                String sqlUpdate = "Update EventOrder Set Status = ? Where EventOrderId = ?";
+                stm = con.prepareStatement(sqlUpdate);
+                stm.setString(1, "Hủy");
+                stm.setInt(2, eventOrderID);
+                int affectedRow = stm.executeUpdate();
+                if (affectedRow > 0) {
+                    return true;
                 }
             }
         } finally {

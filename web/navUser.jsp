@@ -217,7 +217,7 @@
     </style>
 </head>
 <body>
-    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+    <div class="dropdown-menu m-0 bg-secondary rounded-0" style="left: 40px">
         <a href="viewProfileAction" class="dropdown-item"><span class="button-text">Hồ sơ của tôi</span></a>
         <a href="purchasedOrder" class="dropdown-item"><span class="button-text">Đơn hàng</span>
             <c:if test="${not empty sessionScope.NUMBER_ORDER}">
