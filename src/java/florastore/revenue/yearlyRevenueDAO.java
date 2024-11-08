@@ -35,10 +35,10 @@ public class yearlyRevenueDAO implements Serializable {
             //1. Get connection
             con = DBHelper.getConnection();
             if (con != null) {
-                String sql = "SELECT MONTH(OrderDate) AS Month, SUM(TotalAmount) AS TotalAmountPerMonth "
+                String sql = "SELECT MONTH(DeliveryDate) AS Month, SUM(TotalAmount) AS TotalAmountPerMonth "
                         + "FROM ( "
                         + "SELECT "
-                        + "o.OrderDate, "
+                        + "o.DeliveryDate, "
                         + "fp.ProductId, "
                         + "fp.ProductName, "
                         + "od.UnitPrice, "
@@ -47,11 +47,11 @@ public class yearlyRevenueDAO implements Serializable {
                         + "FROM FlowerProducts fp "
                         + "INNER JOIN OrderDetail od ON fp.ProductId = od.FlowerProductsID "
                         + "INNER JOIN [Order] o ON od.OrderOrderId = o.OrderId "
-                        + " WHERE YEAR(OrderDate) = ? "
-                        + "GROUP BY fp.ProductId, fp.ProductName, od.UnitPrice, o.OrderDate "
+                        + " WHERE YEAR(DeliveryDate) = ? "
+                        + "GROUP BY fp.ProductId, fp.ProductName, od.UnitPrice, o.DeliveryDate "
                         + ") AS Subquery "
-                        + "GROUP BY MONTH(OrderDate) "
-                        + "ORDER BY MONTH(OrderDate) ASC";
+                        + "GROUP BY MONTH(DeliveryDate) "
+                        + "ORDER BY MONTH(DeliveryDate) ASC";
                 //2. Create stm obj
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, year);

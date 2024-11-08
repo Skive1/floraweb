@@ -36,13 +36,13 @@ public class revenueDAO implements Serializable {
             //1. Get connection
             con = DBHelper.getConnection();
             if (con != null) {
-                String sql = "SELECT Top 5 Cast(o.OrderDate as DATE) as OrderDate,fp.ProductId, fp.ProductName, od.UnitPrice, SUM(od.Quantity) as Sold, SUM(od.Total) as TotalAmount "
+                String sql = "SELECT Top 5 Cast(o.DeliveryDate as DATE) as DeliveryDate,fp.ProductId, fp.ProductName, od.UnitPrice, SUM(od.Quantity) as Sold, SUM(od.Total) as TotalAmount "
                         + "FROM FlowerProducts fp "
                         + "JOIN OrderDetail od ON fp.ProductId = od.FlowerProductsID "
                         + "JOIN [Order] o ON od.OrderOrderId = o.OrderId "
-                        + "WHERE Month(OrderDate) = ? and year(OrderDate)= ? "
-                        + "GROUP BY fp.ProductName, fp.ProductId, od.UnitPrice, OrderDate "
-                        + "ORDER BY OrderDate asc";
+                        + "WHERE Month(DeliveryDate) = ? and year(DeliveryDate)= ? "
+                        + "GROUP BY fp.ProductName, fp.ProductId, od.UnitPrice, DeliveryDate "
+                        + "ORDER BY DeliveryDate asc";
                 //2. Create stm obj
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, month);
@@ -50,7 +50,7 @@ public class revenueDAO implements Serializable {
                 //3. Excute Query
                 rs = stm.executeQuery();
                 while (rs.next()) {
-                    Date orderDate = rs.getDate("OrderDate");
+                    Date orderDate = rs.getDate("DeliveryDate");
                     int productId = rs.getInt("ProductId");
                     String productName = rs.getString("ProductName");
                     double unitPrice = rs.getDouble("UnitPrice");
