@@ -65,9 +65,12 @@ public class monthlySellerServlet extends HttpServlet {
         }
         HttpSession session = request.getSession(false);
         AccountDTO dto = null;
+        request.setAttribute("curYear", year);
+        request.setAttribute("curMonth", month);
         try {
             if (session != null) {
                 dto = (AccountDTO) session.getAttribute("USER");
+
                 if ("Seller".equals(dto.getRole())) {
                     EventSellerDAO dao = new EventSellerDAO();
                     dao.loadTop5AmountByMonth(month, year, id);
@@ -80,7 +83,7 @@ public class monthlySellerServlet extends HttpServlet {
                         request.setAttribute("pro4", list.get(3));
                         request.setAttribute("pro5", list.get(4));
                         request.setAttribute("MonthList", list);
-                        request.setAttribute("curMonth", month);
+
                     } else {
                         url = (String) siteMap.get(MyAppConstants.DashBoardFeatures.ERROR_PAGE);
                     }
