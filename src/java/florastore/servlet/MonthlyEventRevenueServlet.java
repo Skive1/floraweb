@@ -111,7 +111,7 @@ public class MonthlyEventRevenueServlet extends HttpServlet {
             log("MonthlyEventRevenueServlet _ SQL: " + msg);
         } catch (NamingException ex) {
             String msg = ex.getMessage();
-            log("MonthlyEventRevenueServlet _ SQL: " + msg);
+            log("MonthlyEventRevenueServlet _ Naming: " + msg);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
