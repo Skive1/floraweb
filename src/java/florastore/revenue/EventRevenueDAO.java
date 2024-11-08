@@ -304,7 +304,7 @@ public class EventRevenueDAO implements Serializable {
 //            }
 //        }
 //
-//        return listWeeklyEvent;  // Return populated list
+//        return listWeeklyEvent;  
 //    }
     public ArrayList<EventRevenueDTO> loadTotalAmount(int year, int month, int from, int to, int day) throws SQLException, NamingException {
         ArrayList<EventRevenueDTO> listWeeklyRevenueEvent = new ArrayList<>();
