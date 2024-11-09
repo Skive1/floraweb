@@ -18,6 +18,7 @@
 <br>
 <h2 align="center">🔥 GitHub Stats 🔥</h2>
 <br>
+<br>
 <div align=center>
 <a href="#" title="Skive1">
     <img align="center" width="280" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Skive1&layout=compact&theme=monokai"/>
@@ -28,11 +29,6 @@
   </a>
 </div>
 <br>
-<br>
-<br>
-<br>
-<br>
-
 <h2 align="center">🌐 Soical Media 🌐</h2>
 <br>
 <div align="center">
