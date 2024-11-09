@@ -100,7 +100,7 @@
                                         </c:forEach>
                                     </select> 
 
-                                    <select name="month" class="form-control" id="dropdownMonth" style="width: 120px;">
+                                    <select name="month" class="form-control" id="dropdownMonth" style="width: 136px;">
                                         <c:choose>
                                             <c:when test="${not empty requestScope.curMonth}">
                                                 <option selected="" disabled="">${requestScope.curMonth}</option>

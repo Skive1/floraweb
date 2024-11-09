@@ -22,7 +22,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -78,7 +77,8 @@ public class ResetPasswordServlet extends HttpServlet {
                 boolean result = dao.resetPassword(newPassword, email);
                 //4. process result
                 if (result) {
-                    url = (String) siteMap.get(MyAppConstants.ForgotPasswordFeatures.LOGIN_PAGE);
+                    url = MyAppConstants.ForgotPasswordFeatures.LOGIN_PAGE + "?recoveryStatus=success";
+                    response.sendRedirect(url);
                 }//creating account is successfully
             }//no error
         } catch (SQLException ex) {
@@ -86,8 +86,10 @@ public class ResetPasswordServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("ResetPasswordServlet _ Naming _" + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            if (!response.isCommitted()) {
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            }
         }
     }
 

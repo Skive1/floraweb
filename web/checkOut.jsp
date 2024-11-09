@@ -38,6 +38,7 @@
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
         <link href="Animation/orderstyle.css" rel="stylesheet">
+        <link href="loading/loadingStyle.css" rel="stylesheet">
         <!-- Template Stylesheet -->
         <link href="css/editbutton.css" rel="stylesheet">
         <link href="css/indicator.css" rel="stylesheet">
@@ -662,7 +663,20 @@
             </div>
         </div>
         <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; text-align:center;">
-            <p style="color:white; margin-top:20%;">Đang xử lý...</p>
+            <div class="load-6" style="margin-top: 20%; margin-left: 45%">
+                <div class="letter-holder">
+                    <div class="l-1 letter">L</div>
+                    <div class="l-2 letter">o</div>
+                    <div class="l-3 letter">a</div>
+                    <div class="l-4 letter">d</div>
+                    <div class="l-5 letter">i</div>
+                    <div class="l-6 letter">n</div>
+                    <div class="l-7 letter">g</div>
+                    <div class="l-8 letter">.</div>
+                    <div class="l-9 letter">.</div>
+                    <div class="l-10 letter">.</div>
+                </div>
+            </div>
         </div>
         <!-- Checkout Page End -->
 
