@@ -680,7 +680,6 @@
                                 </tr>
                             </thead>
                             <tbody id="modalProductList">
-                                <!-- Dữ liệu sản phẩm sẽ được thêm vào đây -->
                             </tbody>
                         </table>
                     </div>

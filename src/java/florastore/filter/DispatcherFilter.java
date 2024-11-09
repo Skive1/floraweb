@@ -31,14 +31,15 @@ import javax.servlet.http.HttpSession;
  */
 @WebFilter(filterName = "DispatcherFilter", urlPatterns = {"/*"})
 public class DispatcherFilter implements Filter {
-
+    
     private static final boolean DEBUG = true;
     private FilterConfig filterConfig = null;
-
+    
     private final List<String> admin;
     private final List<String> seller;
     private final List<String> delivery;
-
+    private final List<String> postLogin;
+    
     public DispatcherFilter() {
         //Admin
         admin = new ArrayList<>();
@@ -97,6 +98,28 @@ public class DispatcherFilter implements Filter {
         delivery.add("withDrawMoney");
         delivery.add("myWallet");
         delivery.add("taotaikhoan");
+        //After login
+        postLogin = new ArrayList<>();
+        postLogin.add("cartAddEventItem");
+        postLogin.add("purchasedOrder");
+        postLogin.add("viewProfileAction");
+        postLogin.add("updateAction");
+        postLogin.add("eventCart");
+        postLogin.add("cartPage");
+        postLogin.add("eventCartView");
+        postLogin.add("checkout");
+        postLogin.add("checkouts");
+        postLogin.add("order");
+        postLogin.add("checkoutPage");
+        postLogin.add("confirmCheckoutPage");
+        postLogin.add("vnpayCheckout");
+        postLogin.add("vnpayReturn");
+        postLogin.add("shopCheckout");
+        postLogin.add("shopCheckouts");
+        postLogin.add("shopCheckoutPage");
+        postLogin.add("vnpayShopCheckout");
+        postLogin.add("vnpayShopReturn");
+        postLogin.add("orderShop");
     }
 
     /**
@@ -112,7 +135,7 @@ public class DispatcherFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-
+        
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
@@ -142,7 +165,7 @@ public class DispatcherFilter implements Filter {
                         RequestDispatcher rd = req.getRequestDispatcher("/" + url);
                         rd.forward(request, response);
                     }
-                } else if (!admin.contains(resource) && !seller.contains(resource) && !delivery.contains(resource)) {
+                } else if (!admin.contains(resource) && !seller.contains(resource) && !delivery.contains(resource) && !postLogin.contains(resource)) {
                     RequestDispatcher rd = req.getRequestDispatcher("/" + url);
                     rd.forward(request, response);
                 } else {
@@ -228,7 +251,7 @@ public class DispatcherFilter implements Filter {
         }
         return stackTrace;
     }
-
+    
     public void log(String msg) {
         filterConfig.getServletContext().log(msg);
     }

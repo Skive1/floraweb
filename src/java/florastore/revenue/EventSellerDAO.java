@@ -45,7 +45,7 @@ public class EventSellerDAO implements Serializable {
                         + "From EventProduct ep "
                         + "join EventOrderDetail eod on ep.EPId = eod.EventProductID "
                         + "join EventOrder eo on eod.EventOrderId = eo.EventOrderId "
-                        + "WHERE eo.Status = 'Đã giao' And Month(DeliveryDate) = ? And Year(DeliveryDate) = ? And EventEventId = ? "
+                        + "WHERE eo.Status = N'Đã giao' And Month(DeliveryDate) = ? And Year(DeliveryDate) = ? And EventEventId = ? "
                         + "GROUP BY ep.EPName, ep.EPId, eod.UnitPrice, Month(Cast(eo.DeliveryDate as DATE)) "
                         + "ORDER BY Sold desc";
                 //2. Create stm obj
