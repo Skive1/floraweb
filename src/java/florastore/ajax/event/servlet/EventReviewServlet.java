@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.text.StringEscapeUtils;
 
 /**
  *
@@ -43,12 +44,12 @@ public class EventReviewServlet extends HttpServlet {
         int productId = Integer.parseInt(request.getParameter("productId"));
         HttpSession session = request.getSession(false);
         String user = (String) session.getAttribute("USERNAME");
-
+        String safeUser = StringEscapeUtils.escapeHtml4(user);
+        String safeComment = StringEscapeUtils.escapeHtml4(comment);
         try {
             ReviewEventDAO dao = new ReviewEventDAO();
             boolean result = dao.saveComment(user, productId, comment);
             if (result) {
-                // Trả về bình luận mới dưới dạng HTML
                 PrintWriter out = response.getWriter();
                 out.println("<div class='d-flex'>");
                 out.println("<img src='img/avatar.jpg' class='img-fluid rounded-circle p-3' style='width: 100px; height: 100px;' alt=''>");
@@ -57,9 +58,9 @@ public class EventReviewServlet extends HttpServlet {
                 out.println(new java.text.SimpleDateFormat("dd/MM/yyyy - HH:mm").format(new java.util.Date()));
                 out.println("</p>");
                 out.println("<div class='d-flex justify-content-between'>");
-                out.println("<h5>" + user + "</h5>");
+                out.println("<h5>" + safeUser + "</h5>");
                 out.println("</div>");
-                out.println("<p>" + comment + "</p>");
+                out.println("<p>" + safeComment + "</p>");
                 out.println("</div>");
                 out.println("</div>");
             }

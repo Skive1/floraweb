@@ -225,7 +225,7 @@ public class EventProductDAO implements Serializable {
                 //2. Create SQL String 
                 String sql = "Select EPCondition "
                         + "FROM EventProduct "
-                        + "WHERE EventEventId = ? "
+                        + "WHERE EventEventId = ? AND isDel = 0 "
                         + "GROUP BY EPCondition";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
@@ -270,7 +270,7 @@ public class EventProductDAO implements Serializable {
                 //2. Create SQL String
                 String sql = "Select EPId, EPName, EPType, EPCondition, EPDetail, Img, EPQuantity, EPPrice "
                         + "From EventProduct ep "
-                        + "Where EventEventId = ? AND EPCondition = ?";
+                        + "Where EventEventId = ? AND EPCondition = ? AND isDel = 0";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, eventId);
