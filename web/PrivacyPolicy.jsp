@@ -215,7 +215,7 @@
 
                                 <div class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
-                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60"><c:out value ="${sessionScope.USER.fullName}"/>
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
                                     </div>                         
@@ -251,7 +251,7 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Privacy Policy</h1>
+            <h1 class="text-center text-white display-6">Chính sách bảo mật</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
                
