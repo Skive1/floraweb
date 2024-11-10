@@ -44,7 +44,7 @@
         <link rel="icon" href="img/flora-favicon.png"/>
 
         <style>
-     
+
             input[readonly] {
                 background-color: white !important; 
                 pointer-events: none;               
@@ -170,7 +170,7 @@
 
                                 <div class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
-                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60"><c:out value ="${sessionScope.USER.fullName}"/>
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
                                     </div>                         
@@ -205,12 +205,12 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Event Product Detail</h1>
+            <h1 class="text-center text-white display-6">Thông tin sản phẩm</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
                 <li class="breadcrumb-item"><a href="event">Event</a></li>
-                <li class="breadcrumb-item"><a href="eventDetail?eventId=${requestScope.EVENT_ID}">Event Detail</a></li>
-                <li class="breadcrumb-item active text-white">Event Product Detail</li>
+                <li class="breadcrumb-item"><a href="eventDetail?eventId=${requestScope.EVENT_ID}">Chi tiết sự kiện</a></li>
+                <li class="breadcrumb-item active text-white">Chi tiết sản phẩm</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -231,9 +231,9 @@
                             <div class="col-lg-6">
                                 <form action="cartAddEventItem">
                                     <input type="hidden" name="page" value="EProduct_detail">
-                                    <h4 class="fw-bold mb-3">${detail.eventProductName}</h4>
-                                    <p class="mb-3">Flower Type: ${detail.eventProductType}</p>
-                                    <p class="mb-3">Flower Condition: ${detail.eventProductCondition}</p>
+                                    <h4 class="fw-bold mb-3"><c:out value ="${detail.eventProductName}"/></h4>
+                                    <p class="mb-3">Flower Type: <c:out value ="${detail.eventProductType}"/></p>
+                                    <p class="mb-3">Flower Condition: <c:out value ="${detail.eventProductCondition}"/></p>
                                     <h5 class="fw-bold mb-3"><fmt:formatNumber value="${detail.eventProductPrice}" type="number" groupingUsed="true"/>đ</h5>
                                     <div class="d-flex mb-4">
                                         <i class="fa fa-star text-secondary"></i>
@@ -242,12 +242,12 @@
                                         <i class="fa fa-star text-secondary"></i>
                                         <i class="fa fa-star"></i>
                                     </div>
-                                    <p class="mb-4">${detail.eventProductDetail}</p>
+                                    <p class="mb-4"><c:out value ="${detail.eventProductDetail}"/></p>
                                     <c:if test="${detail.eventProductQuantity == 0}">
                                         <p class="mb-4">Số lượng: Hết hàng</p>
                                     </c:if>
                                     <c:if test="${detail.eventProductQuantity > 0}">
-                                        <p class="mb-4">Số lượng: ${detail.eventProductQuantity}</p>
+                                        <p class="mb-4">Số lượng: <c:out value ="${detail.eventProductQuantity}"/></p>
                                     </c:if>
                                     <div class="input-group quantity mb-5" style="width: 100px;">
                                         <div class="input-group-btn">
@@ -307,7 +307,6 @@
                                 <div class="tab-content mb-5">
                                     <div id="commentSection">
                                     </div>
-                                    <!-- Nút tải thêm bình luận (Load More) -->
                                     <button id="loadMoreBtn" class="btn btn-secondary">Tải thêm bình luận</button>
                                     <input type="hidden" id="currentPage" value="1">
                                     <input type="hidden" id="productId" value="${detail.eventProductId}">
@@ -402,21 +401,21 @@
                 btnMinus.addEventListener("click", function () {
                     var currentValue = parseInt(quantityInput.value, 10);
                     if (currentValue <= 1) {
-                        quantityInput.value = 1; // Ensures it doesn't go below 1
+                        quantityInput.value = 1;
                     }
                 });
 
                 btnPlus.addEventListener("click", function () {
                     var currentValue = parseInt(quantityInput.value, 10);
                     if (currentValue >= ${detail.eventProductQuantity}) {
-                        quantityInput.value = ${detail.eventProductQuantity}; // Ensures it doesn't go below 1
+                        quantityInput.value = ${detail.eventProductQuantity};
                     }
                 });
             });
 
             $(document).ready(function () {
                 $('#commentForm').on('submit', function (event) {
-                    event.preventDefault(); // Ngăn chặn hành vi submit mặc định
+                    event.preventDefault();
 
                     var comment = $('#comment').val();
                     var productId = $('#productId').val();
@@ -431,9 +430,7 @@
                             eventId: eventId
                         },
                         success: function (response) {
-                            // Thêm bình luận mới vào khu vực hiển thị comment
                             $('#commentSection').prepend(response);
-                            // Xóa nội dung trong textarea sau khi post
                             $('#comment').val('');
                         },
                         error: function () {
@@ -443,7 +440,6 @@
                 });
             });
             $(document).ready(function () {
-                // Khi trang load lần đầu, gọi AJAX để tải 5 bình luận đầu tiên
                 loadComments(1);
 
                 $('#loadMoreBtn').click(function () {

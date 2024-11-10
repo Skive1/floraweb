@@ -251,7 +251,7 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Terms Of Use</h1>
+            <h1 class="text-center text-white display-6">Điều khoản sử dụng</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
                

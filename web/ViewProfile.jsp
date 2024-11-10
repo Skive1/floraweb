@@ -215,7 +215,7 @@
                                         <label for="phone" class="form-label">Số điện thoại</label>
                                         <div style="color: red">
                                             <c:if test="${not empty errors.phoneError}">
-                                                ${errors.phoneError}
+                                                <c:out value ="${errors.phoneError}"/>
                                             </c:if>
                                         </div> 
                                     </div>
@@ -226,7 +226,7 @@
                                         <label for="street" class="form-label">Địa chỉ</label>
                                         <div style="color: red">
                                             <c:if test="${not empty errors.streetError}">
-                                                ${errors.streetError}
+                                                <c:out value ="${errors.streetError}"/>
                                             </c:if>
                                         </div>                                        
                                     </div>
