@@ -61,7 +61,7 @@
                     </div>
                     <div class="top-link pe-2">
                         <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+                        <a href="termsOfUse" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
                 </div>
@@ -149,7 +149,7 @@
 
                                 <div class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
-                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60"><c:out value ="${sessionScope.USER.fullName}"/>
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
                                     </div>                         
@@ -279,14 +279,14 @@
                                                 <div class="col-md-12 col-lg-6 col-xl-12">
                                                     <div class="rounded position-relative fruite-item">
                                                         <div class="fruite-img">
-                                                            <img src="${eventList.eventImg}" class="img-fluid w-100 rounded-top" alt="${eventList.eventName}">
+                                                            <img src="${eventList.eventImg}" class="img-fluid w-100 rounded-top" alt="<c:out value ="${eventList.eventName}"/>">
                                                         </div>
                                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-                                                            Owner: ${eventList.eventOwner}
+                                                            Owner: <c:out value ="${eventList.eventOwner}"/>
                                                         </div>
                                                         <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                            <h4>${eventList.eventName}</h4>
-                                                            <p>Địa điểm: ${eventList.eventLocation}, ${eventList.eventCity}</p>
+                                                            <h4><c:out value ="${eventList.eventName}"/></h4>
+                                                            <p>Địa điểm: <c:out value ="${eventList.eventLocation}"/>, <c:out value ="${eventList.eventCity}"/></p>
                                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                                 <p class="text-dark fs-5 fw-bold mb-0">
                                                                     Thời gian: <fmt:formatDate value="${eventList.startDate}" pattern="dd/MM/yyyy HH:mm" /> - <fmt:formatDate value="${eventList.endDate}" pattern="dd/MM/yyyy HH:mm" />

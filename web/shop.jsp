@@ -83,7 +83,7 @@
                     </div>
                     <div class="top-link pe-2">
                         <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+                        <a href="termsOfUse" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
                 </div>
@@ -207,10 +207,10 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Shop</h1>
+            <h1 class="text-center text-white display-6">Sản phẩm</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
-                <li class="breadcrumb-item active text-white">Shop</li>
+                <li class="breadcrumb-item active text-white">Sản phẩm</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -219,7 +219,7 @@
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
-                <h1 class="mb-4">ALL FRESH FLOWERS</h1>
+                <h1 class="mb-4">Danh sách các loài hoa từ shop:</h1>
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
@@ -255,18 +255,6 @@
                                                         <span>(${requestScope.allProducts})</span>
                                                     </div>
                                                 </li>
-                                                <c:forEach var="category" items="${categories}">
-                                                    <li>
-                                                        <div class="d-flex justify-content-between fruite-name"> 
-                                                            <c:url var="urlRewriting" value="category">
-                                                                <c:param name="type" value="${category.key}"/>
-                                                                <c:param name="page" value="1"/>
-                                                            </c:url>
-                                                            <a href="${urlRewriting}"><i class="fas fa-apple-alt me-2"></i>${category.key}</a>
-                                                            <span>(${category.value})</span>
-                                                        </div>
-                                                    </li>
-                                                </c:forEach>
                                             </ul>
                                         </div>
                                     </div>

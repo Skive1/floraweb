@@ -116,7 +116,7 @@
                     </div>
                     <div class="top-link pe-2">
                         <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+                        <a href="termsOfUse" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
                 </div>
@@ -204,7 +204,7 @@
 
                                 <div class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
-                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60"><c:out value ="${sessionScope.USER.fullName}"/>
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
                                     </div>                         
@@ -239,11 +239,11 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Event Detail</h1>
+            <h1 class="text-center text-white display-6">Danh sách các loài hoa</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
                 <li class="breadcrumb-item"><a href="event">Event</a></li>
-                <li class="breadcrumb-item active text-white">Event Detail</li>
+                <li class="breadcrumb-item active text-white">Chi tiết sự kiện</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -298,7 +298,7 @@
 
                                                             </c:url>
                                                             <a href="${urlRewriting}" 
-                                                               <c:if test="${requestScope.CATEGORIES == category.eventProductCondition}">style="color: var(--bs-secondary)"</c:if>><i class="bi bi-flower3 me-2"></i>${category.eventProductCondition}</a>
+                                                               <c:if test="${requestScope.CATEGORIES == category.eventProductCondition}">style="color: var(--bs-secondary)"</c:if>><i class="bi bi-flower3 me-2"></i><c:out value ="${category.eventProductCondition}"/></a>
                                                             </div>
                                                         </li>
                                                 </c:forEach>
@@ -347,7 +347,7 @@
                                                     <input type="hidden" name="pageIndex" value="${currentPage}"/>
                                                     <div class="rounded position-relative fruite-item">
                                                         <div class="fruite-img">
-                                                            <img src="${flower.eventProductImg}" class="img-fluid w-100 rounded-top" alt="${flower.eventProductName}">
+                                                            <img src="${flower.eventProductImg}" class="img-fluid w-100 rounded-top" alt="<c:out value ="${flower.eventProductName}"/>">
                                                         </div>
                                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
                                                             ${flower.eventProductType} 
@@ -358,9 +358,9 @@
                                                                 <c:param name="eventId" value="${requestScope.EVENT_ID}"/>
                                                             </c:url>
                                                             <a href="${urlRewriting}">
-                                                                <h4>${flower.eventProductName}</h4>
+                                                                <h4><c:out value ="${flower.eventProductName}"/></h4>
                                                             </a>
-                                                                <p style="height: 50px">${flower.eventProductDetail}</p>
+                                                                <p style="height: 50px"><c:out value ="${flower.eventProductDetail}"/></p>
                                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                                 <p class="text-dark fs-5 fw-bold mb-0">
                                                                     <fmt:formatNumber value="${flower.eventProductPrice}" type="number" groupingUsed="true"/>đ

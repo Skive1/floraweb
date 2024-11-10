@@ -123,7 +123,7 @@
                                                         ${dto.fullname}
                                                     </td>
                                                     <td> 
-                                                        ${dto.feedback}
+                                                        <c:out value ="${dto.feedback}"/>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

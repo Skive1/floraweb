@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.text.StringEscapeUtils;
 
 /**
  *
@@ -43,6 +44,8 @@ public class ShopReviewServlet extends HttpServlet {
         int productId = Integer.parseInt(request.getParameter("productId"));
         HttpSession session = request.getSession(false);
         String user = (String) session.getAttribute("USERNAME");
+        String safeUser = StringEscapeUtils.escapeHtml4(user);
+        String safeComment = StringEscapeUtils.escapeHtml4(comment);
 
         try {
             ReviewShopProductDAO dao = new ReviewShopProductDAO();
@@ -57,9 +60,9 @@ public class ShopReviewServlet extends HttpServlet {
                 out.println(new java.text.SimpleDateFormat("dd/MM/yyyy - HH:mm").format(new java.util.Date()));
                 out.println("</p>");
                 out.println("<div class='d-flex justify-content-between'>");
-                out.println("<h5>" + user + "</h5>");
+                out.println("<h5>" + safeUser + "</h5>");
                 out.println("</div>");
-                out.println("<p>" + comment + "</p>");
+                out.println("<p>" + safeComment + "</p>");
                 out.println("</div>");
                 out.println("</div>");
             }

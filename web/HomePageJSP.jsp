@@ -124,7 +124,7 @@
                     </div>
                     <div class="top-link pe-2">
                         <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+                        <a href="termsOfUse" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
                 </div>
@@ -213,7 +213,7 @@
 
                                 <div class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
-                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60"><c:out value ="${sessionScope.USER.fullName}"/>
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
                                     </div>                         
@@ -257,7 +257,7 @@
                             <h1 class="mb-5 display-3 text-primary text-shadow">Welcome to Flora</h1>
                         </c:if>   
                         <c:if test="${not empty user}">
-                            <h1 class="mb-5 display-3 text-primary text-shadow">Hi, ${sessionScope.USER.fullName}</h1>
+                            <h1 class="mb-5 display-3 text-primary text-shadow">Hi, <c:out value ="${sessionScope.USER.fullName}"/></h1>
                             <h1 class="mb-5 display-3 text-primary text-shadow">Welcome to Flora</h1>
                         </c:if>                     
                         <div class="position-relative mx-auto">
@@ -351,9 +351,9 @@
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
                 <div class="tab-class text-center">
-                    <div class="row g-4">
+                    <div class="row g-4" style="margin-bottom: 35px">
                         <div class="col-lg-4 text-start">
-                            <h1>Best Seller Flowers</h1>
+                            <h1>Sản phẩm bán chạy:</h1>
                         </div>
                     </div>
                     <div class="tab-content">
@@ -369,7 +369,7 @@
                                                         <div class="fruite-img">
                                                             <img src="${flower.eventProductImg}" class="img-fluid w-100 rounded-top" alt="">
                                                         </div>
-                                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${flower.eventProductType}</div>
+                                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;"><c:out value ="${flower.eventProductType}"/></div>
                                                         <!--<div class="p-4 border border-secondary border-top-0 rounded-bottom">-->
                                                         <div class="p-4 custom-orange-border p-3 border-top-0 rounded-bottom">
                                                             <c:url var="urlRewriting" value="flowerDetail">
@@ -377,7 +377,7 @@
                                                                 <c:param name="eventId" value="${flower.eventEventId}"/>
                                                             </c:url>
                                                             <a href="${urlRewriting}">
-                                                                <h4 style="height: 50px">${flower.eventProductName}</h4>
+                                                                <h4 style="height: 50px"><c:out value ="${flower.eventProductName}"/></h4>
                                                             </a>
                                                             <p style="height: 80px">${flower.eventProductDetail}</p>
                                                             <!-- Hidden inputs to pass product details to the servlet -->
@@ -454,7 +454,7 @@
         <!-- Vesitable Shop Start-->
         <div class="container-fluid vesitable py-5">
             <div class="container py-5">
-                <h1 class="mb-0">New Arrival Flowers</h1>
+                <h1 class="mb-0">Sản phẩm mới:</h1>
                 <div class="owl-carousel vegetable-carousel justify-content-center">
                     <c:forEach items="${requestScope.NEW_ARRIVAL}" var="flower">
                         <form action="cartAddItem">
@@ -463,14 +463,14 @@
                                 <div class="fruite-img">
                                     <img src="${flower.eventProductImg}" class="img-fluid w-100 rounded-top" alt="">
                                 </div>
-                                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">${flower.eventProductType}</div>
+                                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;"><c:out value ="${flower.eventProductType}"/></div>
                                 <div class="p-4 rounded-bottom">
                                     <c:url var="urlRewriting" value="flowerDetail">
                                         <c:param name="productId" value="${flower.eventProductId}"/>
                                         <c:param name="eventId" value="${flower.eventEventId}"/>
                                     </c:url>
                                     <a href="${urlRewriting}">
-                                        <h4>${flower.eventProductName}</h4>
+                                        <h4><c:out value ="${flower.eventProductName}"/></h4>
                                     </a>
                                     <p style="height: 50px">${flower.eventProductDetail}</p>
                                     <!-- Hidden inputs to pass product details to the servlet -->
@@ -506,14 +506,14 @@
                     <c:set var="flower" value="${requestScope.CHEAPEST_FLOWER}"/>
                     <div class="col-lg-6">
                         <div class="py-4">
-                            <h1 class="display-2 text-white">Cheapest Flower</h1>
-                            <p class="fw-normal display-3 text-dark mb-4">${flower.eventProductName}</p>
-                            <p class="mb-4 text-dark display-6">Type: ${flower.eventProductType}</p>
+                            <h1 class="display-2 text-white">Hoa rẻ nhất</h1>
+                            <p class="fw-normal display-3 text-dark mb-4"><c:out value ="${flower.eventProductName}"/></p>
+                            <p class="mb-4 text-dark display-6">Type: <c:out value ="${flower.eventProductType}"/></p>
                             <c:url var="urlRewriting" value="flowerDetail">
                                 <c:param name="productId" value="${flower.eventProductId}"/>
                                 <c:param name="eventId" value="${flower.eventEventId}"/>
                             </c:url>
-                            <a href="${urlRewriting}" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">View</a>
+                            <a href="${urlRewriting}" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">Xem</a>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -558,7 +558,7 @@
                         <div class="col-md-6 col-lg-6 col-xl-3">
                             <div class="counter bg-white rounded p-5">
                                 <i class="fa fa-users text-secondary"></i>
-                                <h4>Available Products</h4>
+                                <h4>Available Flowers</h4>
                                 <h1>789</h1>
                             </div>
                         </div>
@@ -573,8 +573,8 @@
         <div class="container-fluid testimonial py-5">
             <div class="container py-5">
                 <div class="testimonial-header text-center">
-                    <h4 class="text-third">Our Team</h4>
-                    <h1 class="display-5 mb-5 text-dark">Our Client Saying!</h1>
+                    <h4 class="text-third">Thông tin</h4>
+                    <h1 class="display-5 mb-5 text-dark">Đội ngũ phát triển</h1>
                 </div>
                 <div class="owl-carousel testimonial-carousel">
                     <div class="testimonial-item img-border-radius bg-light rounded p-4">
