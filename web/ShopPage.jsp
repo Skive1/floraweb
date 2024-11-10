@@ -222,7 +222,10 @@
         <!-- Single Page Header start -->
         <div class="container-fluid py-5 mb-5 hero-header">
             <h1 class="text-center text-white display-6">Shop</h1>
-
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="home" style="color: black">Home</a></li>
+                <li class="breadcrumb-item active text-white">Shop</li>
+            </ol>
         </div>
         <!-- Single Page Header End -->
 
@@ -684,7 +687,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Store</a>, All right reserved.</span>
                         </div>
                     </div>
                 </div>
