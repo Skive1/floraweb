@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.text.StringEscapeUtils;
 
 /**
  *
@@ -51,6 +52,7 @@ public class ShopLoadMoreServlet extends HttpServlet {
             List<ReviewShopProductDTO> commentList = reviewDAO.getCommentByProductId(productId, commentsPerPage, offset);
             PrintWriter out = response.getWriter();
             for (ReviewShopProductDTO comment : commentList) {
+                String safeComment = StringEscapeUtils.escapeHtml4(comment.getStatus());
                 out.println("<div class='d-flex'>");
                 out.println("<img src='img/avatar.jpg' class='img-fluid rounded-circle p-3' style='width: 100px; height: 100px;' alt=''>");
                 out.println("<div>");
@@ -60,7 +62,7 @@ public class ShopLoadMoreServlet extends HttpServlet {
                 out.println("<div class='d-flex justify-content-between'>");
                 out.println("<h5>" + comment.getUsername() + "</h5>");
                 out.println("</div>");
-                out.println("<p>" + comment.getStatus() + "</p>");
+                out.println("<p>" + safeComment + "</p>");
                 out.println("</div>");
                 out.println("</div>");
             }
