@@ -59,6 +59,7 @@ public class ViewPurchasedOrderServlet extends HttpServlet {
         try {
             //2. Call DAO/Models
             EventOrderDAO dao = new EventOrderDAO();
+            int numberofOrder = dao.countNumberOrder(username);
             EventFeedbackDAO feedback = new EventFeedbackDAO();
             List<EventOrderDTO> listPending = dao.getPendingOrder(username);
             List<EventOrderDTO> listConfirmed = dao.getConfirmedOrder(username);
@@ -67,6 +68,7 @@ public class ViewPurchasedOrderServlet extends HttpServlet {
             List<EventOrderDTO> listCancelled = dao.getCancelledOrder(username);
             List<EventFeedbackDTO> listFeedback = feedback.checkList(username);
             //3. set list purchased order with each status
+            session.setAttribute("NUMBER_ORDER", numberofOrder);
             request.setAttribute("LIST_CHECK_FEEDBACK", listFeedback);
             request.setAttribute("LIST_PENDING", listPending);
             request.setAttribute("LIST_CONFIRM", listConfirmed);
