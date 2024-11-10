@@ -31,10 +31,10 @@
         <link rel="stylesheet" href="alertPackage/alertCss.css">
         <link href="css/indicator.css" rel="stylesheet">
         <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/style.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
-                <style>
+        <style>
             .custom-text {
                 color: #ffffff; 
                 background-color: #6c757d; 
@@ -44,7 +44,6 @@
                 font-weight: 600; 
                 text-align: center; 
             }
-
             .fruite-item {
                 display: flex; 
                 flex-direction: column; 
@@ -83,7 +82,7 @@
                 min-height: 60px; 
             }
 
-            
+
             .product-description p {
                 flex-grow: 1; 
                 max-height: 100px; 
@@ -217,13 +216,13 @@
         </div>
         <!-- Navbar End -->
 
- 
+
 
         <!-- Single Page Header start -->
-        <div class="container-fluid py-5 mb-5 hero-header">
+        <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">Shop</h1>
             <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="home" style="color: black">Home</a></li>
+                <li class="breadcrumb-item"><a href="home">Home</a></li>
                 <li class="breadcrumb-item active text-white">Shop</li>
             </ol>
         </div>
