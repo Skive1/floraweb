@@ -401,7 +401,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" name="iAgree" id="iAgree" required>
                                         <label class="form-check-label text-secondary" for="iAgree">
-                                            I agree to the <a href="#!" class="link-primary text-decoration-none">terms and conditions</a>
+                                            I agree to the <a href="termsOfUse" target="_blank" class="link-primary text-decoration-none">terms and conditions</a>
                                         </label>
                                     </div>
                                 </div>              

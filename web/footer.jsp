@@ -15,10 +15,6 @@
                     <p class="text-secondary mb-0">Reselling Event Flower Platform</p>
                 </div>
                 <div class="col-lg-6">
-                    <div class="position-relative mx-auto">
-                        <input class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="number" placeholder="Your Email">
-                        <button type="submit" class="btn btn-primary border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;">Subscribe Now</button>
-                    </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="d-flex justify-content-end pt-3">
@@ -41,10 +37,9 @@
                 <div class="d-flex flex-column text-start footer-item">
                     <h4 class="text-light mb-3">Shop Info</h4>
                     <a class="btn-link" href="">About Us</a>
-                    <a class="btn-link" href="">Contact Us</a>
-                    <a class="btn-link" href="PrivacyPolicy.jsp">Privacy Policy</a>
-                    <a class="btn-link" href="">Terms & Condition</a> 
-                    <a class="btn-link" href="">FAQs & Help</a>
+                    <a class="btn-link" href="contactPage">Contact Us</a>
+                    <a class="btn-link" href="privacyPage">Privacy Policy</a>
+                    <a class="btn-link" href="mailto:flora.flower.platform@gmail.com">FAQs & Help</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
