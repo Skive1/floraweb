@@ -5,7 +5,7 @@
  */
 package florastore.servlet;
 
-import florastore.ManageEvent.TotalPriceDTO;
+import florastore.manageEvent2.TotalPriceDTO;
 import florastore.account.AccountDTO;
 import florastore.event.EventDAO;
 import florastore.event.EventDTO;
@@ -59,7 +59,7 @@ public class SellerEventManageServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         String account = null;
         AccountDTO dto = null;
-        
+
         String pageIsActive = request.getParameter("pageNo");
         String goBack = request.getParameter("pageBack");
         String goForward = request.getParameter("pageForward");
@@ -76,7 +76,7 @@ public class SellerEventManageServlet extends HttpServlet {
                 dto = (AccountDTO) session.getAttribute("USER");
                 if ("Seller".equals(dto.getRole())) {
                     url = (String) siteMap.get(MyAppConstants.SellerManagementFeatures.EVENT_LIST);
-                    
+
                     if (pageIsActive != null) {
                         pageIsActive = pageIsActive.trim();
                     }
@@ -102,7 +102,7 @@ public class SellerEventManageServlet extends HttpServlet {
                     } else {
                         session.setAttribute("currentPage", page);        //trường hợp chuyển từ trang 1 sang trang khác thì button sáng theo số được nhấn
                     }
-                    
+
                     EventDAO dao = new EventDAO();
                     List<EventDTO> events = dao.getEventByAccount(account);
 
@@ -113,14 +113,14 @@ public class SellerEventManageServlet extends HttpServlet {
                         session.setAttribute("currentPage", 1);
                         eventsForPage = service.getSevenEvent(events, range);
                     }
-                    
+
                     // Map to store order details for each order
                     Map<Integer, List<EventProductDTO>> allEventProducts = new HashMap<>();
                     for (int i = 0; i < events.size(); i++) {
                         List<EventProductDTO> products = dao.getAvailableEventFlower(events.get(i).getEventId());
                         allEventProducts.put(events.get(i).getEventId(), products);
                     }
-                    
+
                     session.setAttribute("PRODUCTS", allEventProducts);
                     session.setAttribute("EVENTS", eventsForPage);
 
@@ -130,7 +130,7 @@ public class SellerEventManageServlet extends HttpServlet {
                         pageSize = 1;
                     }
                     session.removeAttribute("pageSize");
-                    session.setAttribute("pageSize", pageSize);    
+                    session.setAttribute("pageSize", pageSize);
                 }
             } else if (session == null) {
                 url = MyAppConstants.SellerManagementFeatures.SESSION_PAGE;

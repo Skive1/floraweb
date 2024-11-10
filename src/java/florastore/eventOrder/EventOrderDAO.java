@@ -452,7 +452,7 @@ public class EventOrderDAO implements Serializable {
                 //2. Create SQL String
                 String sql = "Select COUNT(EventOrderId) as NumberOfOrder "
                         + "From EventOrder "
-                        + "Where AccountUsername = ? ";
+                        + "Where AccountUsername = ? AND Status <> N'Đã giao' AND Status <> N'Hủy'";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
                 stm.setString(1, username);
@@ -464,6 +464,44 @@ public class EventOrderDAO implements Serializable {
                     //get data from Result Set
                     int number = rs.getInt("NumberOfOrder");
                     result = number;
+                }//process each record in resultset  
+            }//connection has been available 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+
+    public boolean userCancelOrder(int orderId)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean result = false;
+        try {
+            //1. connect DB
+            con = DBHelper.getConnection();
+            if (con != null) {
+                //2. Create SQL String
+                String sql = "Update EventOrder "
+                        + "Set Status = N'Hủy' "
+                        + "Where EventOrderId = ? ";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, orderId);
+                //4. Execute Query
+                int affectedRows = stm.executeUpdate();
+                //5. process result
+                if (affectedRows > 0) {
+                    result = true;
                 }//process each record in resultset  
             }//connection has been available 
         } finally {

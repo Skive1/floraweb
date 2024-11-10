@@ -33,7 +33,68 @@
         <link rel="stylesheet" href="css/snackbar.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
+                        <style>
+            .custom-text {
+                color: #ffffff; 
+                background-color: #6c757d; 
+                padding: 10px 15px; 
+                border-radius: 5px; 
+                font-size: 1.2rem; 
+                font-weight: 600; 
+                text-align: center; 
+            }
 
+            .fruite-item {
+                display: flex; 
+                flex-direction: column; 
+                height: auto; 
+                border: 1px solid #ced4da; 
+            }
+
+            .fruite-img {
+                height: 300px; 
+                overflow: hidden; 
+            }
+
+            .fruite-img img {
+                width: 100%; 
+                height: 100%; 
+                object-fit: cover; 
+            }
+
+            .product-description {
+                flex-grow: 1; 
+                display: flex; 
+                flex-direction: column;
+                justify-content: space-between;  
+            }
+
+            .product-description h4 {
+                margin: 0;
+            }
+
+            .product-description p {
+                margin: 0; 
+                flex-grow: 1; 
+                display: flex; 
+                align-items: center; 
+                justify-content: flex-start; 
+                min-height: 60px; 
+            }
+
+            
+            .product-description p {
+                flex-grow: 1; 
+                max-height: 100px; 
+                overflow: hidden; 
+                text-overflow: ellipsis; 
+                white-space: nowrap; 
+            }           
+            .custom-orange-border {
+                border: 2px solid orange; 
+            }
+
+        </style>
     </head>
 
     <body>
@@ -51,10 +112,10 @@
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
                         <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="https://hcmuni.fpt.edu.vn/" class="text-white">FPT University, HCM</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="mailto:flora.flower.platform@gmail.com" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
-                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
+                        <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
                         <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
@@ -68,10 +129,10 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="home" class="nav-item nav-link ">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link">Event</a>
+                            <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
@@ -291,7 +352,7 @@
                                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
                                                             ${flower.eventProductType} 
                                                         </div>
-                                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                        <div class="p-4 custom-orange-border p-3 border-top-0 rounded-bottom">
                                                             <c:url var="urlRewriting" value="flowerDetail">
                                                                 <c:param name="productId" value="${flower.eventProductId}"/>
                                                                 <c:param name="eventId" value="${requestScope.EVENT_ID}"/>
@@ -299,7 +360,7 @@
                                                             <a href="${urlRewriting}">
                                                                 <h4>${flower.eventProductName}</h4>
                                                             </a>
-                                                            <p>${flower.eventProductDetail}</p>
+                                                                <p style="height: 50px">${flower.eventProductDetail}</p>
                                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                                 <p class="text-dark fs-5 fw-bold mb-0">
                                                                     <fmt:formatNumber value="${flower.eventProductPrice}" type="number" groupingUsed="true"/>đ

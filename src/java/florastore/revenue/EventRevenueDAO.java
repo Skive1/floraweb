@@ -55,14 +55,14 @@ public class EventRevenueDAO implements Serializable {
 //                        + "WHERE eo.Status = 'Đã giao' AND YEAR(OrderDate) = ? "
 //                        + "GROUP BY Month(Cast(eo.OrderDate as DATE))";
                 String sql = "SELECT "
-                        + "Month(Cast(eo.OrderDate as DATE)) AS [Month],"
+                        + "Month(Cast(eo.DeliveryDate as DATE)) AS [Month],"
                         + "SUM(eod.Quantity) AS TotalProductsSold, "
                         + "SUM(eod.Total) AS TotalRevenue "
                         + "FROM EventProduct ep "
                         + "JOIN EventOrderDetail eod ON ep.EPId = eod.EventProductID "
                         + "JOIN EventOrder eo ON eod.EventOrderId = eo.EventOrderId "
-                        + "WHERE eo.Status = N'Đã giao' AND YEAR(OrderDate) = ? "
-                        + "GROUP BY Month(Cast(eo.OrderDate as DATE));";
+                        + "WHERE eo.Status = N'Đã giao' AND YEAR(DeliveryDate) = ? "
+                        + "GROUP BY Month(Cast(eo.DeliveryDate as DATE));";
                 //2. Create stm obj
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, year);
@@ -104,7 +104,7 @@ public class EventRevenueDAO implements Serializable {
                         + "From EventProduct ep "
                         + "JOIN EventOrderDetail eod on ep.EPId = eod.EventProductID "
                         + "JOIN EventOrder eo on eod.EventOrderId = eo.EventOrderId "
-                        + "WHERE eo.Status = N'Đã giao' And Month(OrderDate) = ? And Year(OrderDate) = ? "
+                        + "WHERE eo.Status = N'Đã giao' And Month(DeliveryDate) = ? And Year(DeliveryDate) = ? "
                         + "GROUP BY ep.EPName, ep.EPId, eod.UnitPrice";
                 //2. Create stm obj
                 stm = con.prepareStatement(sql);
@@ -304,7 +304,7 @@ public class EventRevenueDAO implements Serializable {
 //            }
 //        }
 //
-//        return listWeeklyEvent;  // Return populated list
+//        return listWeeklyEvent;  
 //    }
     public ArrayList<EventRevenueDTO> loadTotalAmount(int year, int month, int from, int to, int day) throws SQLException, NamingException {
         ArrayList<EventRevenueDTO> listWeeklyRevenueEvent = new ArrayList<>();
@@ -334,7 +334,7 @@ public class EventRevenueDAO implements Serializable {
                             + "FROM EventProduct ep "
                             + "JOIN EventOrderDetail eod ON ep.EPId = eod.EventProductID "
                             + "JOIN EventOrder eo ON eod.EventOrderId = eo.EventOrderId "
-                            + "WHERE eo.Status = 'Đã giao' "
+                            + "WHERE eo.Status = N'Đã giao' "
                             + "AND YEAR(eo.OrderDate) = ? "
                             + "AND MONTH(eo.OrderDate) = ? "
                             + "AND DAY(eo.OrderDate) BETWEEN ? AND ? "

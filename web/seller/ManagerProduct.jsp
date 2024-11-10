@@ -177,7 +177,7 @@
                     </div>
                 </div>
             </div>
-            <a href="homePage"/><button type="button" class="btn btn-primary">BACK TO STORE</button></a>
+            <a href="home"/><button type="button" class="btn btn-primary">BACK TO STORE</button></a>
     </div>                                                       
 </body>
 </html>

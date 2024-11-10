@@ -58,10 +58,10 @@ public class RegisterServlet extends HttpServlet {
         //1.1 Regex Pattern
         String emailRegex = "^(?!.*\\s)[A-Za-z0-9_+-]+(\\.[A-Za-z0-9_+-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"; //email
         String passwordRegex = "^(?=.*\\d)(?=.*[A-Z])(?=.*[\\W_])(?!.*\\s)^\\S.*\\S$"; //password
-        String fullnameRegex = "^[a-zA-ZÀÁẢÃẠÂẤẦẨẪẬĂẰẮẲẴẶÈÉẺẪẸÊẾỀỂỄỆÌÍỈĨỊÒÓỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÙÚỦŨỤƯỨỪỬỮỰÝỲỶỸàáảãạâấầẩẫậăằắẳẵặèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựýỳỷỹ\\s]+$"; //full name
+        String fullnameRegex = "^[a-zA-ZÀÁẢÃẠÂẤẦẨẪẬĂẰẮẲẴẶÈÉẺẪẸÊẾỀỂỄỆÌÍỈĨỊÒÓỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÙÚỦŨỤƯỨỪỬỮỰÝỲỶỸàáảãạâấầẩẫậăằắẳẵặèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựýỳỷỹĐđ\\s]+$"; //full name
         String usernameRegex = "^[a-zA-Z][a-zA-Z0-9._-]+$"; //username
         String phoneRegex = "^(0[35789][0-9]{8})?$"; //phone
-        String streetRegex = "^(?!.*  )[a-zA-ZÀÁẢÃẠÂẤẦẨẪẬĂẰẮẲẴẶÈÉẺẪẸÊẾỀỂỄỆÌÍỈĨỊÒÓỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÙÚỦŨỤƯỨỪỬỮỰÝỲỶỸàáảãạâấầẩẫậăằắẳẵặèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựýỳỷỹ,/\\d ]*$"; //street
+        String streetRegex = "^(?!.*  )[a-zA-ZÀÁẢÃẠÂẤẦẨẪẬĂẰẮẲẴẶÈÉẺẪẸÊẾỀỂỄỆÌÍỈĨỊÒÓỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÙÚỦŨỤƯỨỪỬỮỰÝỲỶỸàáảãạâấầẩẫậăằắẳẵặèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựýỳỷỹĐđ,/\\d ]*$"; //street
         //1.2 Regex Process
         //1.2.1 Email
         Pattern emailPattern = Pattern.compile(emailRegex);
@@ -134,7 +134,8 @@ public class RegisterServlet extends HttpServlet {
                 boolean result = dao.createAccount(dto);
                 //4. process result
                 if (result) {
-                    url = (String) siteMap.get(MyAppConstants.RegisterFeatures.LOGIN_PAGE);
+                    url = MyAppConstants.RegisterFeatures.LOGIN_PAGE + "?status=success";
+                    response.sendRedirect(url);
                 }//creating account is successfully
             }//no error
         } catch (NamingException ex) {
@@ -153,8 +154,10 @@ public class RegisterServlet extends HttpServlet {
                 request.setAttribute("CREATE_ERRORS", errors);
             }
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            if (!response.isCommitted()) {
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            }
         }
     }
 

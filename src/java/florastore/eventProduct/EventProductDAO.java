@@ -378,6 +378,7 @@ public class EventProductDAO implements Serializable {
                 //2. Create SQL String
                 String sql = "Select TOP 7 EPId, EPName, EPType, EPCondition, EPDetail, Img, EPQuantity, EPPrice, EventEventId "
                         + "From EventProduct "
+                        + "WHERE isDel = 0 "
                         + "ORDER BY EPId desc";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
@@ -429,6 +430,7 @@ public class EventProductDAO implements Serializable {
                 //2. Create SQL String 
                 String sql = "Select TOP 1 EPId, EPName, EPType, EPCondition, EPDetail, Img, EPQuantity, EPPrice, EventEventId "
                         + "From EventProduct "
+                        + "WHERE isDel = 0 "
                         + "ORDER BY EPPrice asc";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);

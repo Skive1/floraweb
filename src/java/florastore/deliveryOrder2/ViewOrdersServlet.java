@@ -82,8 +82,8 @@ public class ViewOrdersServlet extends HttpServlet {
                     staffID = (int) session.getAttribute("Staff_ID");
                 }
                 DeliveryBalanceDAO walletDAO = new DeliveryBalanceDAO();
-                DeliveryBalanceDTO eWallet = walletDAO.getWalletInfo(staffID);
-                if (eWallet != null) {
+                String eWallet = walletDAO.checkEWalletExisted(staffID);
+                if ("TRUE".equals(eWallet)) {
                     session.setAttribute("EWALLET_ACTIVE", true);
                 } else {
                     session.setAttribute("EWALLET_ACTIVE", false);

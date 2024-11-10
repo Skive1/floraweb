@@ -37,6 +37,8 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <link href="Animation/orderstyle.css" rel="stylesheet">
+        <link href="loading/loadingStyle.css" rel="stylesheet">
         <!-- Template Stylesheet -->
         <link href="css/editbutton.css" rel="stylesheet">
         <link href="css/indicator.css" rel="stylesheet">
@@ -47,6 +49,12 @@
         <style>
             .red{
                 color: red
+            }
+            #submitBtn:disabled {
+                opacity: 1;
+                cursor: not-allowed;
+                background-color: #1c212e;
+                color: white;
             }
         </style>
         <script>
@@ -77,10 +85,10 @@
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
                         <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="https://hcmuni.fpt.edu.vn/" class="text-white">FPT University, HCM</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="mailto:flora.flower.platform@gmail.com" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
-                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
+                        <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
                         <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
@@ -94,10 +102,10 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="home" class="nav-item nav-link ">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link">Event</a>
+                            <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
@@ -219,7 +227,7 @@
         <div class="container-fluid py-5">
             <div class="container py-5">
                 <h1 class="mb-4">Thông tin thanh toán</h1>
-                <form action="checkouts" method="POST" id="checkoutForm" onsubmit="disableButton()">
+                <form action="checkouts" method="POST" id="checkoutForm">
                     <div class="row g-5">
                         <div class="col-md-12 col-lg-6 col-xl-6">
                             <div class="form-item">
@@ -524,7 +532,7 @@
                             <hr>
                             <label class="form-label my-3">Ghi chú</label>
                             <div class="form-item">
-                                <textarea name="note" rows="4" cols="50" class="form-control"></textarea>
+                                <textarea name="note" rows="4" cols="50" class="form-control" maxlength="255"></textarea>
                             </div>
                         </div>
                         <c:set var="ecart" value="${sessionScope.ECART}"/>
@@ -626,11 +634,48 @@
                                 </table>
                             </div>
                             <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                                <button id="submitBtn" type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-third" >Đặt hàng</button>
+                                <button id="submitBtn" class="order btn border-secondary py-3 px-4 text-uppercase w-100 text-third" onclick="disableButton()"><span class="default">Đặt hàng</span><span class="success">Hoàn tất<svg viewbox="0 0 12 10">
+                                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                        </svg></span>
+                                    <div class="box"></div>
+                                    <div class="truck">
+                                        <div class="back"></div>
+                                        <div class="front">
+                                            <div class="window"></div>
+                                        </div>
+                                        <div class="light top"></div>
+                                        <div class="light bottom"></div>
+                                    </div>
+                                    <div class="lines"></div>
+                                </button>
+                                <style>
+                                    #submitBtn:disabled {
+                                        opacity: 1;
+                                        cursor: not-allowed;
+                                        background-color: #1c212e;
+                                        color: white;
+                                    }
+                                </style>
                             </div>
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+        <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; text-align:center;">
+            <div class="load-6" style="margin-top: 20%; margin-left: 45%">
+                <div class="letter-holder">
+                    <div class="l-1 letter">L</div>
+                    <div class="l-2 letter">o</div>
+                    <div class="l-3 letter">a</div>
+                    <div class="l-4 letter">d</div>
+                    <div class="l-5 letter">i</div>
+                    <div class="l-6 letter">n</div>
+                    <div class="l-7 letter">g</div>
+                    <div class="l-8 letter">.</div>
+                    <div class="l-9 letter">.</div>
+                    <div class="l-10 letter">.</div>
+                </div>
             </div>
         </div>
         <!-- Checkout Page End -->
@@ -668,11 +713,23 @@
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
         <script src="https://kit.fontawesome.com/4cb3201524.js" crossorigin="anonymous"></script>
         <script>
-                    function disableButton() {
-                        document.getElementById('submitBtn').disabled = true;
-                    }
+                                    function disableButton() {
+                                        const submitButton = document.getElementById("submitBtn");
+                                        submitButton.disabled = true;
+                                        const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+                                        const overlay = document.getElementById("overlay");
+                                        overlay.style.display = "block";
+                                        if (paymentMethod === "COD") {
+                                            setTimeout(function () {
+                                                document.getElementById("checkoutForm").submit();
+                                            }, 1500);
+                                        } else {
+                                            document.getElementById("checkoutForm").submit();
+                                        }
+                                    }
         </script>
         <!-- Template Javascript -->
+        <script src="Animation/script.js"></script>
         <script src="js/notification.js"></script>
         <script src="js/newProduct.js"></script>
         <script src="js/main.js"></script>

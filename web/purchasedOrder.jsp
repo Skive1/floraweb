@@ -85,6 +85,21 @@
                 justify-content: center;
                 align-items: center;
             }
+            .close {
+            background-color: #dc3545; 
+            color: white; 
+            border: none;
+            border-radius: 15%; 
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .close:hover {
+            background-color: #c82333;
+            transform: scale(1.1); 
+        }
         </style>
     </head>
 
@@ -103,10 +118,10 @@
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
                         <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="https://hcmuni.fpt.edu.vn/" class="text-white">FPT University, HCM</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="mailto:flora.flower.platform@gmail.com" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
-                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
+                        <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
                         <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
@@ -307,13 +322,14 @@
                                                     <p class="mb-4 mt-4 total-price" style="text-align: center">Lấy tại sự kiện</p>
                                                 </c:if>
                                             </td>
-                                            <td>
+                                            <td style="text-align: center">
                                                 <c:if test="${pending.paid == true}">
                                                     <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Đã thanh toán</p>
                                                 </c:if>
                                                 <c:if test="${pending.paid == false}">
                                                     <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Chưa thanh toán</p>
                                                 </c:if>
+                                                <button class="btn border-secondary rounded-pill px-4 py-3" style="text-align: center; color: red" onclick="cancelOrder(${pending.eventOrderId}, event)">Hủy đơn</button>
                                             </td>
                                             <td>
                                                 <p class="mb-4 mt-4 price-per-unit" style="text-align: center; font-weight: bold"><fmt:formatNumber value="${pending.ammount}" type="number" groupingUsed="true"/>đ</p>
@@ -569,7 +585,13 @@
                                 </thead>
                                 <tbody>
                                     <c:forEach var="cancel" items="${requestScope.LIST_CANCEL}">
-                                        <tr>
+                                        <tr class="order-row " data-order-id="${cancel.eventOrderId}" 
+                                            data-order-cust="${cancel.fullname}" 
+                                            data-cust-phone="${cancel.phone}" 
+                                            data-cust-street="${cancel.street}"
+                                            data-cust-city="${cancel.city}"
+                                            data-cust-note="${cancel.note}"
+                                            data-order-event="${cancel.eventName}">
                                             <th scope="row">
                                                 <div class="d-flex align-items-center justify-content-center mt-4">
                                                     <p class="">#ORD-${cancel.eventOrderId}</p>
@@ -658,7 +680,6 @@
                                 </tr>
                             </thead>
                             <tbody id="modalProductList">
-                                <!-- Dữ liệu sản phẩm sẽ được thêm vào đây -->
                             </tbody>
                         </table>
                     </div>
@@ -749,8 +770,6 @@
                                                                 var city = $(this).data('cust-city');
                                                                 var note = $(this).data('cust-note');
                                                                 var eventName = $(this).data('order-event');
-
-                                                                // Hiển thị thông tin chung của đơn hàng trong modal
                                                                 $("#modalOrderId").text(orderId);
                                                                 $("#modalFullname").text(fulname);
                                                                 $("#modalPhone").text(phone);
@@ -758,20 +777,13 @@
                                                                 $("#modalCity").text(city);
                                                                 $("#modalNote").text(note);
                                                                 $("#modalEventName").text(eventName);
-
-                                                                // Gọi AJAX để lấy danh sách sản phẩm của đơn hàng
                                                                 $.ajax({
-                                                                    url: 'viewPurchasedOrderDetail', // Đường dẫn đến servlet
+                                                                    url: 'viewPurchasedOrderDetail',
                                                                     type: 'GET',
                                                                     data: {orderId: orderId},
                                                                     success: function (response) {
-                                                                        // Xóa dữ liệu cũ trước khi thêm mới
                                                                         $("#modalProductList").empty();
-
-                                                                        // Thêm HTML trả về từ servlet vào bảng
                                                                         $("#modalProductList").append(response);
-
-                                                                        // Hiển thị modal
                                                                         $('#orderDetailModal').modal('show');
                                                                     },
                                                                     error: function () {
@@ -803,13 +815,12 @@
                                                                     return;
                                                                 }
                                                                 $.ajax({
-                                                                    url: 'submitFeedback', // Đường dẫn đến servlet xử lý feedback
+                                                                    url: 'submitFeedback',
                                                                     type: 'POST',
                                                                     contentType: 'application/json',
                                                                     data: JSON.stringify({orderId: orderId, feedback: feedbackText, rating: starRating, staffId: deliveryId}),
                                                                     success: function (response) {
                                                                         if (response.success) {
-                                                                            // Hiển thị thông báo SweetAlert sau khi gửi feedback thành công
                                                                             Swal.fire({
                                                                                 icon: 'success',
                                                                                 title: 'Đã gửi!',
@@ -819,8 +830,8 @@
                                                                             });
                                                                             var button = document.getElementById('myButton-' + orderId);
                                                                             button.innerHTML = 'Đã đánh giá';
-                                                                            button.onclick = null;  // Không cần onclick sau khi đã thay đổi
-                                                                            button.disabled = true; // Vô hiệu hóa nút
+                                                                            button.onclick = null;
+                                                                            button.disabled = true;
                                                                             $('#feedbackText').val('');
                                                                             $('input[name="star"]').prop('checked', false);
                                                                             $('#feedbackModal').modal('hide');
@@ -853,9 +864,8 @@
         </script>
         <script>
             function handleButtonClick(orderId, deliveryId, event) {
-                // Gửi yêu cầu đến servlet để cập nhật trạng thái đã nhận hàng
-                event.stopPropagation(); // Ngăn sự kiện click của <a>
-                event.preventDefault();  // Ngăn chặn hành vi mặc định của thẻ <a>
+                event.stopPropagation();
+                event.preventDefault();
                 fetch('feedbackCreate', {
                     method: 'POST',
                     headers: {
@@ -866,11 +876,10 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                // Cập nhật giao diện sau khi nhận hàng thành công
                                 var button = document.getElementById('myButton-' + orderId);
                                 button.innerHTML = 'Đánh giá';
                                 button.onclick = function (e) {
-                                    openFeedbackModal(orderId, deliveryId, e); // Gán sự kiện mới để mở modal feedback
+                                    openFeedbackModal(orderId, deliveryId, e);
                                 };
                             }
                         }
@@ -880,11 +889,55 @@
                         });
             }
             function openFeedbackModal(orderId, deliveryId, event) {
-                event.stopPropagation(); // Ngăn sự kiện click của <a>
-                event.preventDefault();  // Ngăn chặn hành vi mặc định của thẻ <a>
-                $('#feedbackOrderId').val(orderId); // Gán orderId vào input ẩn
+                event.stopPropagation();
+                event.preventDefault();
+                $('#feedbackOrderId').val(orderId);
                 $('#deliveryId').val(deliveryId);
-                $('#feedbackModal').modal('show'); // Hiện modal
+                $('#feedbackModal').modal('show');
+            }
+            function cancelOrder(eventOrderId, event) {
+                event.stopPropagation();
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Bạn có chắc chắn muốn hủy đơn?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hủy đơn',
+                    cancelButtonText: 'Không'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'cancelUserOrder',
+                            type: 'POST',
+                            data: {eventOrderId: eventOrderId},
+                            success: function (response) {
+                                if (response.status === 'success') {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Hủy đơn thành công!',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then(() => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Có lỗi xảy ra',
+                                        text: 'Không thể hủy đơn hàng, vui lòng thử lại.'
+                                    });
+                                }
+                            },
+                            error: function () {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Có lỗi xảy ra',
+                                    text: 'Không thể kết nối đến server, vui lòng thử lại sau.'
+                                });
+                            }
+                        });
+                    }
+                });
             }
         </script>
         <!-- Template Javascript -->

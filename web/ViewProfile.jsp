@@ -12,9 +12,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <style>
     section {
-        background-image: url(img/ThousandFlower.jpg); /* Đường dẫn đến hình ảnh background */
-        background-size: cover; /* Để hình ảnh bao phủ toàn bộ phần main */
-        background-position: center; /* Để căn giữa hình ảnh */
+        background-image: url(img/ThousandFlower.jpg);
+        background-size: cover;
+        background-position: center;
     }
     .styled-link {
         text-decoration: none;
@@ -49,9 +49,9 @@
                                     <div class="text-center mb-4">
                                         <img src="img/floralogo.png" alt="Logo" width="360" >
                                     </div>
-                                    <h2 class="h4 text-center">My Profile</h2>
-                                    <h3 class="fs-6 fw-normal text-secondary text-center m-0">You can update your profile here</h3>
-                                    <h3 class="fs-6 fw-normal text-secondary text-center m-0">Full Name and Email cannot be edited</h3>
+                                    <h2 class="h4 text-center">Hồ sơ của tôi</h2>
+                                    <h3 class="fs-6 fw-normal text-secondary text-center m-0">Bạn có thể cập nhật hồ sơ của mình tại đây</h3>
+                                    <h3 class="fs-6 fw-normal text-secondary text-center m-0">Tên và Email không thể chỉnh sửa</h3>
                                 </div>
                             </div>
                         </div>
@@ -200,7 +200,7 @@
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" name="txtFullname" value="${sessionScope.USER_INFO.fullName}" id="fullName" placeholder="Full Name" readonly>
-                                        <label for="fullName" class="form-label">Full Name</label>
+                                        <label for="fullName" class="form-label">Họ và Tên</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -212,7 +212,7 @@
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" name="txtPhone" id="phone" value="${sessionScope.USER_INFO.phone}" placeholder="" >
-                                        <label for="phone" class="form-label">Phone</label>
+                                        <label for="phone" class="form-label">Số điện thoại</label>
                                         <div style="color: red">
                                             <c:if test="${not empty errors.phoneError}">
                                                 ${errors.phoneError}
@@ -223,7 +223,7 @@
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" name="txtStreet" id="street" value="${sessionScope.USER_INFO.street}" placeholder="" >
-                                        <label for="street" class="form-label">Street</label>
+                                        <label for="street" class="form-label">Địa chỉ</label>
                                         <div style="color: red">
                                             <c:if test="${not empty errors.streetError}">
                                                 ${errors.streetError}
@@ -492,11 +492,11 @@
                                                         selected="selected"
                                                     </c:if>>Yên Bái</option>
                                         </select>
-                                        <label for="city" class="form-label">City</label>
+                                        <label for="city" class="form-label">Thành phố</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <label class="form-label text-secondary">Gender:</label>
+                                    <label class="form-label text-secondary">Giới tính:</label>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" value="Nam" name="txtGender" id="male" required
                                                <c:if test="${sessionScope.USER_INFO.gender == 'Nam'}">
@@ -528,7 +528,7 @@
 
                                 <div class="col-12">
                                     <div class="d-grid">
-                                        <input type="submit" value="Save" class="btn bsb-btn-xl btn-primary" name="btAction" />
+                                        <input type="submit" value="Lưu" class="btn bsb-btn-xl btn-primary" name="btAction" />
                                     </div>
                                 </div>
                             </div>
@@ -545,10 +545,8 @@
         let confirmation = confirm("Are you sure you want to update your profile?");
 
         if (confirmation) {
-// If the user clicks "Yes", submit the form
             document.getElementById("updateForm").submit();
         } else {
-// If the user clicks "No", do nothing (cancel the update)
             return false;
         }
     }

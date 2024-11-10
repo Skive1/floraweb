@@ -44,21 +44,21 @@
         <link rel="icon" href="img/flora-favicon.png"/>
 
         <style>
-            /* Đảm bảo ghi đè toàn bộ kiểu mặc định của input readonly */
+     
             input[readonly] {
-                background-color: white !important;  /* Nền trắng */
-                pointer-events: none;                /* Ngăn thay đổi */
+                background-color: white !important; 
+                pointer-events: none;               
                 cursor: none;
             }
             .disabled-link {
-                pointer-events: none;  /* Disable click */
-                color: gray;           /* Change appearance */
-                text-decoration: none; /* Remove underline */
-                cursor: default;       /* Change cursor to default */
+                pointer-events: none;  
+                color: gray;          
+                text-decoration: none; 
+                cursor: default;       
             }
             #commentSection {
-                max-height: 300px; /* Chiều cao tối đa */
-                overflow-y: auto; /* Kích hoạt thanh cuộn theo chiều dọc */
+                max-height: 300px;
+                overflow-y: auto; 
             }
         </style>
     </head>
@@ -78,10 +78,10 @@
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
                         <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="https://hcmuni.fpt.edu.vn/" class="text-white">FPT University, HCM</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="mailto:flora.flower.platform@gmail.com" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
-                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
+                        <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
                         <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
@@ -95,10 +95,10 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
+                            <a href="home" class="nav-item nav-link ">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link">Event</a>
+                            <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">

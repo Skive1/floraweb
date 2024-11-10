@@ -41,12 +41,12 @@ public class EventSellerDAO implements Serializable {
             //1. Get connection
             con = DBHelper.getConnection();
             if (con != null) {
-                String sql = "Select TOP 5 Month(Cast(eo.OrderDate as DATE)) as [Month],ep.EPId, ep.EPName, eod.UnitPrice, SUM(eod.Quantity) as Sold, SUM(eod.Total) as TotalAmount "
+                String sql = "Select TOP 5 Month(Cast(eo.DeliveryDate as DATE)) as [Month],ep.EPId, ep.EPName, eod.UnitPrice, SUM(eod.Quantity) as Sold, SUM(eod.Total) as TotalAmount "
                         + "From EventProduct ep "
                         + "join EventOrderDetail eod on ep.EPId = eod.EventProductID "
                         + "join EventOrder eo on eod.EventOrderId = eo.EventOrderId "
-                        + "WHERE eo.Status = N'Đã giao' And Month(OrderDate) = ? And Year(OrderDate) = ? And EventEventId = ? "
-                        + "GROUP BY ep.EPName, ep.EPId, eod.UnitPrice, Month(Cast(eo.OrderDate as DATE)) "
+                        + "WHERE eo.Status = N'Đã giao' And Month(DeliveryDate) = ? And Year(DeliveryDate) = ? And EventEventId = ? "
+                        + "GROUP BY ep.EPName, ep.EPId, eod.UnitPrice, Month(Cast(eo.DeliveryDate as DATE)) "
                         + "ORDER BY Sold desc";
                 //2. Create stm obj
                 stm = con.prepareStatement(sql);

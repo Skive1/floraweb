@@ -39,7 +39,29 @@
         <link rel="stylesheet" href="alertPackage/alertCss.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
+        <style>
+            .fruite-item {
+                height: 450px;
+                display: flex; 
+                flex-direction: column; 
+                overflow: hidden; 
+            }
 
+            .fruite-img {
+                height: 300px; 
+                overflow: hidden; 
+            }
+
+            .fruite-img img {
+                width: 100%; 
+                height: 100%; 
+                object-fit: cover; 
+            }
+            .custom-orange-border {
+                border: 2px solid orange; 
+            }
+
+        </style>
     </head>
 
     <body>
@@ -57,10 +79,10 @@
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
                         <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="https://hcmuni.fpt.edu.vn/" class="text-white">FPT University, HCM</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="mailto:flora.flower.platform@gmail.com" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
-                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
+                        <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
                         <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
@@ -74,8 +96,8 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link active">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="home" class="nav-item nav-link ">Home</a>
+                            <a href="shoppingAction" class="nav-item nav-link active">Sản phẩm</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
@@ -197,7 +219,7 @@
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Fresh fruits shop</h1>
+                <h1 class="mb-4">ALL FRESH FLOWERS</h1>
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
@@ -248,101 +270,101 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <h4 class="mb-2">Price</h4>
-                                            <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
-                                            <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <h4>Additional</h4>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
-                                                <label for="Categories-1"> Organic</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
-                                                <label for="Categories-2"> Fresh</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
-                                                <label for="Categories-3"> Sales</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-4" name="Categories-1" value="Beverages">
-                                                <label for="Categories-4"> Discount</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-5" name="Categories-1" value="Beverages">
-                                                <label for="Categories-5"> Expired</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <h4 class="mb-3">Featured products</h4>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-1.jpg" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-2.jpg" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-3.jpg" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-center my-4">
-                                            <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-third w-100">Vew More</a>
-                                        </div>
-                                    </div>
+                                    <!--                                    <div class="col-lg-12">
+                                                                            <div class="mb-3">
+                                                                                <h4 class="mb-2">Price</h4>
+                                                                                <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
+                                                                                <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-12">
+                                                                            <div class="mb-3">
+                                                                                <h4>Additional</h4>
+                                                                                <div class="mb-2">
+                                                                                    <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
+                                                                                    <label for="Categories-1"> Organic</label>
+                                                                                </div>
+                                                                                <div class="mb-2">
+                                                                                    <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
+                                                                                    <label for="Categories-2"> Fresh</label>
+                                                                                </div>
+                                                                                <div class="mb-2">
+                                                                                    <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
+                                                                                    <label for="Categories-3"> Sales</label>
+                                                                                </div>
+                                                                                <div class="mb-2">
+                                                                                    <input type="radio" class="me-2" id="Categories-4" name="Categories-1" value="Beverages">
+                                                                                    <label for="Categories-4"> Discount</label>
+                                                                                </div>
+                                                                                <div class="mb-2">
+                                                                                    <input type="radio" class="me-2" id="Categories-5" name="Categories-1" value="Beverages">
+                                                                                    <label for="Categories-5"> Expired</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-12">
+                                                                            <h4 class="mb-3">Featured products</h4>
+                                                                            <div class="d-flex align-items-center justify-content-start">
+                                                                                <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                                                                    <img src="img/featur-1.jpg" class="img-fluid rounded" alt="">
+                                                                                </div>
+                                                                                <div>
+                                                                                    <h6 class="mb-2">Big Banana</h6>
+                                                                                    <div class="d-flex mb-2">
+                                                                                        <i class="fa fa-star text-secondary"></i>
+                                                                                        <i class="fa fa-star text-secondary"></i>
+                                                                                        <i class="fa fa-star text-secondary"></i>
+                                                                                        <i class="fa fa-star text-secondary"></i>
+                                                                                        <i class="fa fa-star"></i>
+                                                                                    </div>
+                                                                                    <div class="d-flex mb-2">
+                                                                                        <h5 class="fw-bold me-2">2.99 $</h5>
+                                                                                        <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="d-flex align-items-center justify-content-start">
+                                                                                <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                                                                    <img src="img/featur-2.jpg" class="img-fluid rounded" alt="">
+                                                                                </div>
+                                                                                <div>
+                                                                                    <h6 class="mb-2">Big Banana</h6>
+                                                                                    <div class="d-flex mb-2">
+                                                                                        <i class="fa fa-star text-secondary"></i>
+                                                                                        <i class="fa fa-star text-secondary"></i>
+                                                                                        <i class="fa fa-star text-secondary"></i>
+                                                                                        <i class="fa fa-star text-secondary"></i>
+                                                                                        <i class="fa fa-star"></i>
+                                                                                    </div>
+                                                                                    <div class="d-flex mb-2">
+                                                                                        <h5 class="fw-bold me-2">2.99 $</h5>
+                                                                                        <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="d-flex align-items-center justify-content-start">
+                                                                                <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                                                                    <img src="img/featur-3.jpg" class="img-fluid rounded" alt="">
+                                                                                </div>
+                                                                                <div>
+                                                                                    <h6 class="mb-2">Big Banana</h6>
+                                                                                    <div class="d-flex mb-2">
+                                                                                        <i class="fa fa-star text-secondary"></i>
+                                                                                        <i class="fa fa-star text-secondary"></i>
+                                                                                        <i class="fa fa-star text-secondary"></i>
+                                                                                        <i class="fa fa-star text-secondary"></i>
+                                                                                        <i class="fa fa-star"></i>
+                                                                                    </div>
+                                                                                    <div class="d-flex mb-2">
+                                                                                        <h5 class="fw-bold me-2">2.99 $</h5>
+                                                                                        <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="d-flex justify-content-center my-4">
+                                                                                <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-third w-100">Vew More</a>
+                                                                            </div>
+                                                                        </div>-->
                                     <div class="col-lg-12">
                                         <div class="position-relative">
                                             <img src="img/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
@@ -367,15 +389,15 @@
                                                     <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
                                                         ${product.productType} 
                                                     </div>
-                                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                    <div class="p-4 custom-orange-border p-3 border-top-0 rounded-bottom">
                                                         <c:url var="urlRewriting" value="productDetail">
                                                             <c:param name="productId" value="${product.productId}"/>
                                                             <c:param name="productType" value="${product.productType}"/>
                                                         </c:url>
                                                         <a href="${urlRewriting}">
-                                                            <h4>${product.productName}</h4>
+                                                            <h4 style="height: 50px">${product.productName}</h4>
                                                         </a>
-                                                        <p>${product.productDetail}</p>
+                                                        <p style="height: 50px">${product.productDetail}</p>
                                                         <div class="d-flex justify-content-between flex-lg-wrap">
                                                             <p class="text-dark fs-5 fw-bold mb-0">
                                                                 <fmt:formatNumber value="${product.productPrice}" type="number" groupingUsed="true"/>đ

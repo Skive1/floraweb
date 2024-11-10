@@ -60,35 +60,57 @@ public class deliveryIncomeServlet extends HttpServlet {
             HttpSession session = request.getSession(false);
             AccountDTO dto = (AccountDTO) session.getAttribute("USER");
             String username = dto.getUsername();
+            request.setAttribute("curYear", year);
             if (dto != null) {
                 DeliveryRevenueDAO dao = new DeliveryRevenueDAO();
                 String id = dao.loadIdByUserName(username);
 
                 dao.loadTotalRevenueByYear(id, year);
                 ArrayList<DeliveryRevenueDTO> listYear = dao.getlistTotal();
-                request.setAttribute("month1", listYear.get(0));
-                request.setAttribute("month2", listYear.get(1));
-                request.setAttribute("month3", listYear.get(2));
-                request.setAttribute("month4", listYear.get(3));
-                request.setAttribute("month5", listYear.get(4));
-                request.setAttribute("month6", listYear.get(5));
-                request.setAttribute("month7", listYear.get(6));
-                request.setAttribute("month8", listYear.get(7));
-                request.setAttribute("month9", listYear.get(8));
-                request.setAttribute("month10", listYear.get(9));
-                request.setAttribute("month11", listYear.get(10));
-                request.setAttribute("month12", listYear.get(11));
+                if (listYear.size() > 0 && listYear.get(0) != null) {
+                    request.setAttribute("month1", listYear.get(0));
+                }
+                if (listYear.size() > 1 && listYear.get(1) != null) {
+                    request.setAttribute("month2", listYear.get(1));
+                }
+                if (listYear.size() > 2 && listYear.get(2) != null) {
+                    request.setAttribute("month3", listYear.get(2));
+                }
+                if (listYear.size() > 3 && listYear.get(3) != null) {
+                    request.setAttribute("month4", listYear.get(3));
+                }
+                if (listYear.size() > 4 && listYear.get(4) != null) {
+                    request.setAttribute("month5", listYear.get(4));
+                }
+                if (listYear.size() > 5 && listYear.get(5) != null) {
+                    request.setAttribute("month6", listYear.get(5));
+                }
+                if (listYear.size() > 6 && listYear.get(6) != null) {
+                    request.setAttribute("month7", listYear.get(6));
+                }
+                if (listYear.size() > 7 && listYear.get(7) != null) {
+                    request.setAttribute("month8", listYear.get(7));
+                }
+                if (listYear.size() > 8 && listYear.get(8) != null) {
+                    request.setAttribute("month9", listYear.get(8));
+                }
+                if (listYear.size() > 9 && listYear.get(9) != null) {
+                    request.setAttribute("month10", listYear.get(9));
+                }
+                if (listYear.size() > 10 && listYear.get(10) != null) {
+                    request.setAttribute("month11", listYear.get(10));
+                }
+                if (listYear.size() > 11 && listYear.get(11) != null) {
+                    request.setAttribute("month12", listYear.get(11));
+                }
                 request.setAttribute("allMonth", listYear);
-                
                 dao.loadTotalOrderByYear(id, year);
                 ArrayList<DeliveryRevenueDTO> listOrder = dao.getlistOrder();
                 request.setAttribute("listOrder", listOrder);
-                request.setAttribute("curYear",year);        
-                
+
                 RatesDeliveryPersonDAO rateDao = new RatesDeliveryPersonDAO();
-//                rateDao.rateStarById(id);
                 ArrayList<RatesDeliveryPersonDTO> listRate = rateDao.getRateSummaryByStaffId(id);
-                request.setAttribute("listRating", listRate);           
+                request.setAttribute("listRating", listRate);
             }
         } catch (SQLException ex) {
             String msg = ex.getMessage();

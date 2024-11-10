@@ -153,7 +153,7 @@
                                                 <img id="product-image-preview" src="" alt="Preview" style="max-width: 100%; display: none;">
                                             </div>
                                         </div>
-                                        <a href="eventDetail?eventId=${requestScope.EVENT_ID}">Go to Event Detail</a>
+                                        <a href="viewSellerEvent">Go back</a>
                                     </div>
                                 </div>
                                 <c:if test="${not empty success.eventProductAddSuccess}">

@@ -55,8 +55,7 @@ public class MonthlyRevenueServlet extends HttpServlet {
         String monthStr = request.getParameter("month");
         String yearStr = request.getParameter("year");
         HttpSession session = request.getSession(false);
-        AccountDTO dto = (AccountDTO) session.getAttribute("USER");
-        String name = dto.getFullName();
+
         if (monthStr == null || monthStr.isEmpty()) {
             month = 10;
         } else {
@@ -69,46 +68,52 @@ public class MonthlyRevenueServlet extends HttpServlet {
             year = Integer.parseInt(yearStr);
         }
         try {
-            //1. Lấy id từ session Scope
-            revenueDAO dao = new revenueDAO();
-            //2. Call method
-            dao.loadAmountByMonth(month, year);
-            //3. Get list
-            ArrayList<revenueDTO> list = dao.getMonthList();
-
-            yearlyRevenueDAO yearDao = new yearlyRevenueDAO();
-            yearDao.loadTotalAmountOfAllMonthByYear(year);
-            ArrayList<yearlyRevenueDTO> listYear = yearDao.getAllMonthList();
-            //4. Lưu vào trong attribute
-            request.setAttribute("pro1", list.get(0));
-            request.setAttribute("pro2", list.get(1));
-            request.setAttribute("pro3", list.get(2));
-            request.setAttribute("pro4", list.get(3));
-            request.setAttribute("pro5", list.get(4));
-            request.setAttribute("MonthList", list);
-            //Attribute chứa tổng giá của 12 tháng
-
-            request.setAttribute("month1", listYear.get(0));
-            request.setAttribute("month2", listYear.get(1));
-            request.setAttribute("month3", listYear.get(2));
-            request.setAttribute("month4", listYear.get(3));
-            request.setAttribute("month5", listYear.get(4));
-            request.setAttribute("month6", listYear.get(5));
-            request.setAttribute("month7", listYear.get(6));
-            request.setAttribute("month8", listYear.get(7));
-            request.setAttribute("month9", listYear.get(8));
-            request.setAttribute("month10", listYear.get(9));
-            request.setAttribute("month11", listYear.get(10));
-            request.setAttribute("month12", listYear.get(11));
-            request.setAttribute("allMonth", listYear);
-            request.setAttribute("fullName", name);
+            AccountDTO dto = (AccountDTO) session.getAttribute("USER");
+            String name = dto.getFullName();
+            request.setAttribute("curYear", year);
             request.setAttribute("curMonth",month);
+            if (dto != null) {
+                //1. Lấy id từ session Scope
+                revenueDAO dao = new revenueDAO();
+                //2. Call method
+                dao.loadAmountByMonth(month, year);
+                //3. Get list
+                ArrayList<revenueDTO> list = dao.getMonthList();
+
+                yearlyRevenueDAO yearDao = new yearlyRevenueDAO();
+                yearDao.loadTotalAmountOfAllMonthByYear(year);
+                ArrayList<yearlyRevenueDTO> listYear = yearDao.getAllMonthList();
+                //4. Lưu vào trong attribute
+                request.setAttribute("pro1", list.get(0));
+                request.setAttribute("pro2", list.get(1));
+                request.setAttribute("pro3", list.get(2));
+                request.setAttribute("pro4", list.get(3));
+                request.setAttribute("pro5", list.get(4));
+                request.setAttribute("MonthList", list);
+                //Attribute chứa tổng giá của 12 tháng
+
+                request.setAttribute("month1", listYear.get(0));
+                request.setAttribute("month2", listYear.get(1));
+                request.setAttribute("month3", listYear.get(2));
+                request.setAttribute("month4", listYear.get(3));
+                request.setAttribute("month5", listYear.get(4));
+                request.setAttribute("month6", listYear.get(5));
+                request.setAttribute("month7", listYear.get(6));
+                request.setAttribute("month8", listYear.get(7));
+                request.setAttribute("month9", listYear.get(8));
+                request.setAttribute("month10", listYear.get(9));
+                request.setAttribute("month11", listYear.get(10));
+                request.setAttribute("month12", listYear.get(11));
+                request.setAttribute("allMonth", listYear);
+                request.setAttribute("fullName", name);
+                
+            }
         } catch (SQLException ex) {
             String msg = ex.getMessage();
             log("MonthlyRevenueServlet _ SQL: " + msg);
         } catch (NamingException ex) {
-             String msg = ex.getMessage();
-            log("MonthlyRevenueServlet _ SQL: " + msg);
+            String msg = ex.getMessage();
+            log("MonthlyRevenueServlet _ Naming: " + msg);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
