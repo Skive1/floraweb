@@ -335,7 +335,7 @@
                                                                 <input type="hidden" id="categories" name="categories"/>
                                                                 <a href="#" onclick="document.getElementById('categories').value = 'Other Flower';
                                                                         document.getElementById('categoriesForm').submit();"><i class="bi bi-flower1 me-2"></i>
-                                                                    Other type
+                                                                    Khác
                                                                 </a>
                                                                 <span>(<c:out value ="${sessionScope.otherType}"/>)</span>
                                                             </div>
