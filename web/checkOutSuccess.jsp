@@ -19,7 +19,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>Cảm ơn bạn đã mua hàng | Buy and sell on the website</title>
+        <title>Thank you for your purchase | Buy and sell on the website</title>
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
         <style>
@@ -58,30 +58,30 @@
                                 <div class="text-center order-details">
                                     <div class="d-flex justify-content-center mb-5 flex-column align-items-center"> 
                                         <span class="check1"><i class="fa fa-check"></i></span> 
-                                        <span class="font-weight-bold">Giao dịch thành công</span> 
-                                        <small class="mt-2">Cảm ơn ${sessionScope.CUST_NAME} đã mua hàng trên nền tảng chúng tôi</small> 
-                                        <p>Tình trạng: </p>
+                                        <span class="font-weight-bold">Transaction successful</span> 
+                                        <small class="mt-2">Thanks ${sessionScope.CUST_NAME} for purchasing on our platform.</small> 
+                                        <p>Status: </p>
                                         <c:if test="${sessionScope.PAYMENT_STATUS == true}">
-                                            <p class="green bold">Đã thanh toán</p>
+                                            <p class="green bold">Paid</p>
                                         </c:if>
                                         <c:if test="${sessionScope.PAYMENT_STATUS == false}">
-                                            <p class="red bold">Chưa thanh toán</p>
+                                            <p class="red bold">Unpaid</p>
                                         </c:if>
                                     </div> 
                                     <a href="home" class="text-decoration-none">
-                                        <button class="btn btn-success btn-block order-button">Tiếp tục mua sắm</button>
+                                        <button class="btn btn-success btn-block order-button">Continue shopping</button>
                                     </a>
                                 </div>
                                 <div class="text-center-content">
                                     <div class="admin-left-content-left">
-                                        <div class="admin-left-content-left-input">Số điện thoại liên hệ:<p>${sessionScope.CUST_PHONE}</p></div>
-                                        <div class="admin-left-content-left-input">Địa chỉ giao hàng:<p>${sessionScope.CUST_ADDRESS}, ${sessionScope.CUST_CITY}</p></div>
+                                        <div class="admin-left-content-left-input">Contact phone number:<p>${sessionScope.CUST_PHONE}</p></div>
+                                        <div class="admin-left-content-left-input">Delivery address:<p>${sessionScope.CUST_ADDRESS}, ${sessionScope.CUST_CITY}</p></div>
                                     </div>
                                     <div class="admin-left-content-right">
-                                        <div class="admin-left-content-right-input">Phương thức vận chuyển:<p><c:if test="${sessionScope.SHIPPING == 'Delivery'}">Giao hàng bởi Flora Delivery</c:if>
-                                                <c:if test="${sessionScope.SHIPPING == 'Pick Up'}">Lấy hàng tại điểm bán</c:if></p></div>
-                                        <div class="admin-left-content-right-input">Phương thức thanh toán:<p><c:if test="${sessionScope.CUST_PAYMENT == 'COD'}">Thanh toán khi nhận hàng</c:if>
-                                                <c:if test="${sessionScope.CUST_PAYMENT == 'ONLINE'}">Thanh toán trực tuyến</c:if></p></div>
+                                        <div class="admin-left-content-right-input">Shipping method:<p><c:if test="${sessionScope.SHIPPING == 'Delivery'}">Delivered by Flora Delivery</c:if>
+                                                <c:if test="${sessionScope.SHIPPING == 'Pick Up'}">Pick Up</c:if></p></div>
+                                        <div class="admin-left-content-right-input">Payment method:<p><c:if test="${sessionScope.CUST_PAYMENT == 'COD'}">Cash on Delivery</c:if>
+                                                <c:if test="${sessionScope.CUST_PAYMENT == 'ONLINE'}">Online Payment</c:if></p></div>
                                         </div>
                                     </div>
                                 </div>
@@ -89,11 +89,11 @@
                                     <div class="p-3 border-bottom">
                                         <!--                                        <div class="d-flex justify-content-between align-items-center"> <span><i class="fa fa-clock-o text-muted"></i></span> <span><i class="fa fa-refresh text-muted"></i> 2 Max Revisions</span> </div>-->
                                         <div class="mt-3">
-                                            <h6 class="mb-0">Bạn có thể coi chi tiết đơn hàng tại đây: </h6> <span class="d-block mb-0"><a href="purchasedOrder">Thông tin đơn hàng</a></span> 
+                                            <h6 class="mb-0">You can view order details here: </h6> <span class="d-block mb-0"><a href="purchasedOrder">Order information</a></span> 
                                         <c:set var="existedOrder" value="0"/>
                                         <c:forEach var="orderEvent" items="${sessionScope.EVENT_ORDER_ID_LIST}">   
                                             <c:if test="${existedOrder != orderEvent}">
-                                                <p style="margin-bottom: 0px">Mã đơn hàng: #ORD-${orderEvent}</p>
+                                                <p style="margin-bottom: 0px">Order ID: #ORD-${orderEvent}</p>
                                             </c:if>
                                             <c:set var="existedOrder" value="${orderEvent}"/>
                                         </c:forEach>
@@ -103,21 +103,21 @@
                                     <div class="admin-sidebar-content">
                                         <ul>
                                             <li>
-                                                <a href="#" data-toggle="collapse" class="admin-sidebar-content-detail">Thông tin chi tiết</a>
+                                                <a href="#" data-toggle="collapse" class="admin-sidebar-content-detail">Details</a>
                                                 <ul class="sub-menu">
                                                     <div class="admin-content-main-content-product-list">
                                                         <c:set var="bill" value="${sessionScope.ORDER_ITEMS}"/>
                                                         <c:forEach var="entry" items="${bill.items}">
                                                             <c:set var="eventName" value="${entry.key}"/>
                                                             <c:set var="eventItems" value="${entry.value}"/>
-                                                            <h5>Sự kiện: ${eventName}</h5>
+                                                            <h5>Event: ${eventName}</h5>
                                                             <table>
                                                                 <thead>
-                                                                <th>Sản phẩm</th>
-                                                                <th>Tên</th>
-                                                                <th>Giá</th>
-                                                                <th>Số lượng</th>
-                                                                <th>Thành tiền</th>                               
+                                                                <th>Product</th>
+                                                                <th>Name</th>
+                                                                <th>Unit Price</th>
+                                                                <th>Quantity</th>
+                                                                <th>Total Price</th>                               
                                                                 </thead>
                                                                 <tbody style="height: 100px;">
                                                                     <c:set var="totalEvent" value="0"/>
@@ -132,7 +132,7 @@
                                                                         </tr>
                                                                     </c:forEach>
                                                                     <tr>
-                                                                        <td style="font-weight: 700;" colspan="4">Tổng cộng:</td>
+                                                                        <td style="font-weight: 700;" colspan="4">Total Amount:</td>
                                                                         <td style="font-weight: 700;" ><fmt:formatNumber value="${totalEvent}" type="number" groupingUsed="true"/>đ</td>  
                                                                         <td></td>  
                                                                     </tr>                    

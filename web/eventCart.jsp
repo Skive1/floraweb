@@ -247,14 +247,14 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Product</th>
+                                        <th scope="col" style="padding-left: 17px">Product</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Unit Price</th>
                                         <th scope="col" style="
                                             padding-left: 25px;
                                             ">Quantity</th>
-                                        <th scope="col">Total amount</th>
-                                        <th scope="col" style="text-align: center">Operation</th>
+                                        <th scope="col">Total Price</th>
+                                        <th scope="col" style="text-align: center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -268,7 +268,7 @@
                                             <td>
                                                 <p class="mb-0 mt-4">${item.epName}</p>
                                             </td>
-                                            <td>
+                                            <td style="padding-left: 13px;">
                                                 <p class="mb-0 mt-4 price-per-unit"><fmt:formatNumber value="${item.unitPrice}" type="number" groupingUsed="true"/>đ</p>
                                             </td>
 
@@ -296,9 +296,7 @@
                                                         </form>
                                                     </div>
                                                 </td>
-                                                <td style="
-                                                    padding-left: 20px;
-                                                    ">
+                                                <td style="padding-left: 15px;">
                                                     <p class="mb-0 mt-4 total-price"><fmt:formatNumber value="${item.quantity * item.unitPrice}" type="number" groupingUsed="true"/>đ</p>
                                             </td>
                                             <td style="text-align: center">      
@@ -336,7 +334,7 @@
                                         <div class="p-4">
                                             <h1 class="display-6 mb-4">Event Cart <span class="fw-normal">Total</span></h1>
                                             <div class="d-flex justify-content-between mb-4">
-                                                <h5 class="mb-0 me-4">Total cost of goods:</h5>
+                                                <h5 class="mb-0 me-4">Total Amount:</h5>
                                                 <p class="mb-0"><c:if test="${not empty ecart || not empty ecart.items}"><fmt:formatNumber value="${sessionScope.ETOTAL}" type="number" groupingUsed="true"/>đ</c:if></p>
                                             </div>
                                             <div class="d-flex justify-content-between">
@@ -347,11 +345,11 @@
                                             </div>
                                         </div>
                                         <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                                            <h5 class="mb-0 ps-4 me-4">Total payment:</h5>
+                                            <h5 class="mb-0 ps-4 me-4">Total Payment:</h5>
                                             <p class="mb-0 pe-4"><c:if test="${not empty ecart || not empty ecart.items}"><fmt:formatNumber value="${sessionScope.ETOTAL}" type="number" groupingUsed="true"/>đ</c:if></p>
                                         <input type="hidden" name="total" value="${sessionScope.ETOTAL}"/>
                                     </div>
-                                    <button class="btn border-secondary rounded-pill px-4 py-3 text-third text-uppercase mb-4 ms-4" type="submit" <c:if test="${empty ecart || empty ecart.items}">disabled="disabled"</c:if>>Purchase</button>
+                                    <button class="btn border-secondary rounded-pill px-4 py-3 text-third text-uppercase mb-4 ms-4" type="submit" <c:if test="${empty ecart || empty ecart.items}">disabled="disabled"</c:if>>Check Out</button>
                                     </div>
                                 </form>
                             </div>

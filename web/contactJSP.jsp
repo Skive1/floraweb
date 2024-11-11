@@ -224,7 +224,7 @@
                             <div class="d-flex p-4 rounded mb-4 bg-white">
                                 <i class="fas fa-map-marker-alt fa-2x text-third me-4"></i>
                                 <div>
-                                    <h4>Địa chỉ</h4>
+                                    <h4>Address</h4>
                                     <p class="mb-2">Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh</p>
                                 </div>
                             </div>

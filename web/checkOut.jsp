@@ -226,7 +226,7 @@
         <!-- Checkout Page Start -->
         <div class="container-fluid py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Checkout information</h1>
+                <h1 class="mb-4">Checkout Information</h1>
                 <form action="checkouts" method="POST" id="checkoutForm">
                     <div class="row g-5">
                         <div class="col-md-12 col-lg-6 col-xl-6">
@@ -613,7 +613,7 @@
                                             <td class="py-5"></td>
                                             <td class="py-5">
                                                 <div class="py-2 border-bottom border-top">
-                                                    <p class="mb-0 text-dark"  style="text-align: center">10%</p>
+                                                    <p class="mb-0 text-dark"  style="text-align: center">0%</p>
                                                 </div>
                                             </td>
                                         </tr>
