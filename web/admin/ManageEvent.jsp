@@ -40,10 +40,10 @@
                             <li>
                                 <a href="" style="color: #131EAD"><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEvent" style="color: #131EAD">Event theo tháng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="weeklyBoard" style="color: #131EAD">Event theo tuần</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard" style="color: #131EAD">Sản phẩm theo tháng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="weeklyProductBoard" style="color: #131EAD">Sản phẩm theo tuần</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEvent" style="color: #131EAD">Event by month</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyBoard" style="color: #131EAD">Event by week</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard" style="color: #131EAD">Product by month</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyProductBoard" style="color: #131EAD">Product by week</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -85,12 +85,12 @@
                                 <table>
                                     <thead>
                                     <th>No</th>
-                                    <th>Chủ sở hữu</th>
-                                    <th>Tên sự kiện</th>
-                                    <th>Địa điểm</th>
-                                    <th>Thời gian</th>        
-                                    <th>Thông tin</th>
-                                    <th>Đóng sự kiện</th>
+                                    <th>Owner</th>
+                                    <th>Event name</th>
+                                    <th>Address</th>
+                                    <th>Time</th>        
+                                    <th>Information</th>
+                                    <th>Actions</th>
                                     </thead>
                                     <tbody style="height: 100px;">
                                         <c:set var="event" value="${requestScope.Event_List}"/>
@@ -103,13 +103,13 @@
                                                     <td>${eventList.eventLocation}, ${eventList.eventCity}</td>
                                                     <td>
                                                         <fmt:formatDate value="${eventList.startDate}" pattern="dd-MM-yyy HH:mm:ss" />
-                                                        đến
+                                                        to
                                                         <fmt:formatDate value="${eventList.endDate}" pattern="dd-MM-yyy HH:mm:ss" />
                                                     </td>
                                                     <td>
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" 
                                                                 data-target="#view${counter.count}" style="color: white">
-                                                            Xem
+                                                            View
                                                         </button>
                                                         <div class="modal fade" id="view${counter.count}" tabindex="-1" role="dialog" 
                                                              aria-labelledby="view${counter.count}" aria-hidden="true">
@@ -118,12 +118,12 @@
                                                                     <table>
                                                                         <thead>
                                                                         <th style="background-color: #007bff; color: white">No</th>
-                                                                        <th style="background-color: #007bff; color: white">Tên sản phẩm</th>
-                                                                        <th style="background-color: #007bff; color: white">Phân loại</th>
-                                                                        <th style="background-color: #007bff; color: white">Tình trạng</th>
-                                                                        <th style="background-color: #007bff; color: white">Thông tin thêm</th>
-                                                                        <th style="background-color: #007bff; color: white">Số lượng</th>        
-                                                                        <th style="background-color: #007bff; color: white">Đơn giá</th>
+                                                                        <th style="background-color: #007bff; color: white">Name</th>
+                                                                        <th style="background-color: #007bff; color: white">Type</th>
+                                                                        <th style="background-color: #007bff; color: white">Status</th>
+                                                                        <th style="background-color: #007bff; color: white">Description</th>
+                                                                        <th style="background-color: #007bff; color: white">Quantity</th>        
+                                                                        <th style="background-color: #007bff; color: white">Unit Price</th>
                                                                         </thead>
                                                                         <tbody style="height: 100px;">
                                                                             <c:set var="flowerList2" value="${requestScope.Flower_List}"/>
@@ -156,14 +156,14 @@
                                                                                 <c:if test="${eventList.eventId == total.eventId}">
                                                                                     <tr>
                                                                                         <td colspan="5"></td>
-                                                                                        <td style="font-weight: 700;">Tổng giá:</td>
+                                                                                        <td style="font-weight: 700;">Total Amount:</td>
                                                                                         <td style="font-weight: 700;" >${total.total}</td> 
                                                                                     </tr>
                                                                                 </c:if>
                                                                             </c:forEach>
                                                                         </tbody>
                                                                         <c:if test="${empty flowerList2}">
-                                                                            <a>Danh sách rỗng!</a>
+                                                                            <a>Empty List!</a>
                                                                         </c:if>
                                                                     </table>
                                                                 </div>
@@ -173,23 +173,23 @@
                                                     <td>  
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" 
                                                                 data-target="#exampleModal2${counter.count}" style="background-color: red">
-                                                            Đóng
+                                                            Close
                                                         </button>
                                                         <div class="modal fade" id="exampleModal2${counter.count}" tabindex="-1" role="dialog" 
                                                              aria-labelledby="exampleModalLabel2${counter.count}" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel2${counter.count}">Xác nhận đóng sự kiện: ${eventList.eventName}</h5>
+                                                                        <h5 class="modal-title" id="exampleModalLabel2${counter.count}">Confirm to close: ${eventList.eventName}</h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        Bạn có chắc chắn muốn đóng sự kiện này?
+                                                                        Are you sure you want to close this event?
                                                                         <br/>
                                                                         <a style="color: red; font-weight: bold">
-                                                                            Bạn không thể mở lại sau khi đóng
+                                                                           You cannot reopen it after closing it
                                                                         </a>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -199,10 +199,10 @@
                                                                                onclick="
                                                                                        document.getElementById('getEventID');
                                                                                        document.getElementById('getOrder${counter.count}').submit();">
-                                                                                Có
+                                                                                Yes
                                                                             </a>
                                                                         </form>
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>          
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>          
                                                                     </div>
                                                                 </div>
                                                             </div>

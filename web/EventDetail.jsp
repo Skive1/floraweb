@@ -129,8 +129,8 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link ">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
@@ -142,7 +142,8 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
+                                    <a href="deliveryIncome" class="nav-item nav-link">Revenue</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -239,11 +240,11 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Danh sách các loài hoa</h1>
+            <h1 class="text-center text-white display-6">Event Detail</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
                 <li class="breadcrumb-item"><a href="event">Event</a></li>
-                <li class="breadcrumb-item active text-white">Chi tiết sự kiện</li>
+                <li class="breadcrumb-item active text-white">Event Detail</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -252,7 +253,7 @@
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Tên sự kiện: ${requestScope.EVENT_NAME}</h1>
+                <h1 class="mb-4">Event: ${requestScope.EVENT_NAME}</h1>
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
@@ -383,14 +384,14 @@
                                                                     </c:if>
                                                                     <c:if test="${flower.eventProductQuantity == 0}">
                                                                         <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third" disabled="">
-                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Out of stock
                                                                         </button>
                                                                     </c:if>
                                                                 </c:if>
                                                                 <c:if test="${empty sessionScope.USER}">
                                                                     <c:if test="${flower.eventProductQuantity == 0}">
                                                                         <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third disabled-link">
-                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Out of stock
                                                                         </a>
                                                                     </c:if>
                                                                     <c:if test="${flower.eventProductQuantity > 0}">
@@ -455,7 +456,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>FPT Flora Rewind</a>, All right reserved.</span>
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Rewind</a>, All right reserved.</span>
                         </div>
                     </div>
                 </div>

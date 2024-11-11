@@ -12,7 +12,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Đơn hàng | Buy and sell on the website</title>
+        <title>Purchased Order | Buy and sell on the website</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -136,7 +136,7 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link active">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
@@ -148,7 +148,8 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
+                                    <a href="deliveryIncome" class="nav-item nav-link">Revenue</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -246,10 +247,10 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Đơn mua hàng của tôi</h1>
+            <h1 class="text-center text-white display-6">My purchased Order</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
-                <li class="breadcrumb-item active text-white">Đơn mua</li>
+                <li class="breadcrumb-item active text-white">My purchased Order</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -262,19 +263,19 @@
                     <div class="nav nav-tabs justify-content-center">
                         <button class="nav-link border-white border-bottom-0 active button-nav" type="button" role="tab"
                                 id="nav-pending-tab" data-bs-toggle="tab" data-bs-target="#nav-pending"
-                                aria-controls="nav-pending" aria-selected="false">Đang chờ</button>
+                                aria-controls="nav-pending" aria-selected="false">Pending</button>
                         <button class="nav-link border-white border-bottom-0 button-nav" type="button" role="tab"
                                 id="nav-verify-tab" data-bs-toggle="tab" data-bs-target="#nav-verify"
-                                aria-controls="nav-verify" aria-selected="false">Đã xác nhận</button>
+                                aria-controls="nav-verify" aria-selected="false">Verified</button>
                         <button class="nav-link border-white border-bottom-0 button-nav" type="button" role="tab"
                                 id="nav-ship-tab" data-bs-toggle="tab" data-bs-target="#nav-ship"
-                                aria-controls="nav-ship" aria-selected="false">Chờ giao hàng</button>
+                                aria-controls="nav-ship" aria-selected="false">Shipping</button>
                         <button class="nav-link border-white border-bottom-0 button-nav" type="button" role="tab"
                                 id="nav-done-tab" data-bs-toggle="tab" data-bs-target="#nav-done"
-                                aria-controls="nav-done" aria-selected="false">Đã giao</button>
+                                aria-controls="nav-done" aria-selected="false">Completed</button>
                         <button class="nav-link border-white border-bottom-0 button-nav" type="button" role="tab"
                                 id="nav-cancelled-tab" data-bs-toggle="tab" data-bs-target="#nav-cancelled"
-                                aria-controls="nav-cancelled" aria-selected="false">Đã hủy</button>
+                                aria-controls="nav-cancelled" aria-selected="false">Cancelled</button>
                     </div>                   
                 </nav>
                 <div class="tab-content mb-5">
@@ -282,12 +283,12 @@
                         <c:if test="${not empty requestScope.LIST_PENDING}">
                             <table class="table" style="border-radius: 10px; z-index: 1; background-color: #ffffff">
                                 <thead>
-                                <th style="text-align: center">Đơn hàng</th>
-                                <th style="text-align: center">Ngày đặt</th>
-                                <th style="text-align: center">Hình thức thanh toán</th>
-                                <th style="text-align: center">Hình thức vận chuyển</th>
-                                <th style="text-align: center">Thanh toán</th>
-                                <th style="text-align: center">Tổng tiền</th>
+                                <th style="text-align: center">Order ID</th>
+                                <th style="text-align: center">Order date</th>
+                                <th style="text-align: center">Payment method</th>
+                                <th style="text-align: center">Shipping method</th>
+                                <th style="text-align: center">Payment status</th>
+                                <th style="text-align: center">Total Amount</th>
                                 </thead>
                                 <tbody>
                                     <c:forEach var="pending" items="${requestScope.LIST_PENDING}">
@@ -308,28 +309,28 @@
                                             </td>
                                             <td>      
                                                 <c:if test="${pending.paymentOptions == 'ONLINE'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Chuyển khoản (VNPay)</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Online payment (VNPay)</p>
                                                 </c:if>
                                                 <c:if test="${pending.paymentOptions == 'COD'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Tiền mặt</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Cash On Delivery</p>
                                                 </c:if>
                                             </td>
                                             <td>
                                                 <c:if test="${pending.deliveryOptions == 'Delivery'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Giao hàng Flora</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Flora Delivery</p>
                                                 </c:if>
                                                 <c:if test="${pending.deliveryOptions == 'Pick Up'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Lấy tại sự kiện</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Pick up</p>
                                                 </c:if>
                                             </td>
                                             <td style="text-align: center">
                                                 <c:if test="${pending.paid == true}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Đã thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Paid</p>
                                                 </c:if>
                                                 <c:if test="${pending.paid == false}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Chưa thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Unpaid</p>
                                                 </c:if>
-                                                <button class="btn border-secondary rounded-pill px-4 py-3" style="text-align: center; color: red" onclick="cancelOrder(${pending.eventOrderId}, event)">Hủy đơn</button>
+                                                <button class="btn border-secondary rounded-pill px-4 py-3" style="text-align: center; color: red" onclick="cancelOrder(${pending.eventOrderId}, event)">Cancel Order</button>
                                             </td>
                                             <td>
                                                 <p class="mb-4 mt-4 price-per-unit" style="text-align: center; font-weight: bold"><fmt:formatNumber value="${pending.ammount}" type="number" groupingUsed="true"/>đ</p>
@@ -342,7 +343,7 @@
                         <c:if test="${empty requestScope.LIST_PENDING}">
                             <div class="background-img">
                                 <div class="non-order"></div>
-                                <h3 style="text-align: center">Chưa có đơn hàng</h3>
+                                <h3 style="text-align: center">No orders yet</h3>
                             </div>
                         </c:if>
                     </div>
@@ -350,12 +351,12 @@
                         <c:if test="${not empty requestScope.LIST_CONFIRM}">
                             <table class="table" style="border-radius: 10px; z-index: 1; background-color: #ffffff">
                                 <thead>
-                                <th style="text-align: center">Đơn hàng</th>
-                                <th style="text-align: center">Ngày đặt</th>
-                                <th style="text-align: center">Hình thức thanh toán</th>
-                                <th style="text-align: center">Hình thức vận chuyển</th>
-                                <th style="text-align: center">Thanh toán</th>
-                                <th style="text-align: center">Tổng tiền</th>
+                                <th style="text-align: center">Order ID</th>
+                                <th style="text-align: center">Order date</th>
+                                <th style="text-align: center">Payment method</th>
+                                <th style="text-align: center">Shipping method</th>
+                                <th style="text-align: center">Payment status</th>
+                                <th style="text-align: center">Total Amount</th>
                                 </thead>
                                 <tbody>
                                     <c:forEach var="confirm" items="${requestScope.LIST_CONFIRM}">
@@ -376,26 +377,26 @@
                                             </td>
                                             <td>      
                                                 <c:if test="${confirm.paymentOptions == 'ONLINE'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Chuyển khoản (VNPay)</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Online payemnt (VNPay)</p>
                                                 </c:if>
                                                 <c:if test="${confirm.paymentOptions == 'COD'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Tiền mặt</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Cash On Delivery</p>
                                                 </c:if>
                                             </td>
                                             <td>
                                                 <c:if test="${confirm.deliveryOptions == 'Delivery'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Giao hàng Flora</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Flora Delivery</p>
                                                 </c:if>
                                                 <c:if test="${confirm.deliveryOptions == 'Pick Up'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Lấy tại sự kiện</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Pick up</p>
                                                 </c:if>
                                             </td>
                                             <td>
                                                 <c:if test="${confirm.paid == true}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Đã thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Paid</p>
                                                 </c:if>
                                                 <c:if test="${confirm.paid == false}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Chưa thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Unpaid</p>
                                                 </c:if>
                                             </td>
                                             <td>
@@ -409,7 +410,7 @@
                         <c:if test="${empty requestScope.LIST_CONFIRM}">
                             <div class="background-img">
                                 <div class="non-order"></div>
-                                <h3 style="text-align: center">Chưa có đơn hàng</h3>
+                                <h3 style="text-align: center">No orders yet</h3>
                             </div>
                         </c:if>
                     </div>
@@ -417,12 +418,12 @@
                         <c:if test="${not empty requestScope.LIST_SHIPPING}">
                             <table class="table" style="border-radius: 10px; z-index: 1; background-color: #ffffff">
                                 <thead>
-                                <th style="text-align: center">Đơn hàng</th>
-                                <th style="text-align: center">Ngày đặt</th>
-                                <th style="text-align: center">Hình thức thanh toán</th>
-                                <th style="text-align: center">Hình thức vận chuyển</th>
-                                <th style="text-align: center">Thanh toán</th>
-                                <th style="text-align: center">Tổng tiền</th>
+                                <th style="text-align: center">Order ID</th>
+                                <th style="text-align: center">Order date</th>
+                                <th style="text-align: center">Payment method</th>
+                                <th style="text-align: center">Shipping method</th>
+                                <th style="text-align: center">Payment status</th>
+                                <th style="text-align: center">Total Amount</th>
                                 </thead>
                                 <tbody>
                                     <c:forEach var="shipping" items="${requestScope.LIST_SHIPPING}">
@@ -443,26 +444,26 @@
                                             </td>
                                             <td>      
                                                 <c:if test="${shipping.paymentOptions == 'ONLINE'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Chuyển khoản (VNPay)</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Online payemnt (VNPay)</p>
                                                 </c:if>
                                                 <c:if test="${shipping.paymentOptions == 'COD'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Tiền mặt</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Cash On Delivery</p>
                                                 </c:if>
                                             </td>
                                             <td>
                                                 <c:if test="${shipping.deliveryOptions == 'Delivery'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Giao hàng Flora</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Flora Delivery</p>
                                                 </c:if>
                                                 <c:if test="${shipping.deliveryOptions == 'Pick Up'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Lấy tại sự kiện</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Pick up</p>
                                                 </c:if>
                                             </td>
                                             <td>
                                                 <c:if test="${shipping.paid == true}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Đã thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Paid</p>
                                                 </c:if>
                                                 <c:if test="${shipping.paid == false}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Chưa thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Unpaid</p>
                                                 </c:if>
                                             </td>
                                             <td>
@@ -476,7 +477,7 @@
                         <c:if test="${empty requestScope.LIST_SHIPPING}">
                             <div class="background-img">
                                 <div class="non-order"></div>
-                                <h3 style="text-align: center">Chưa có đơn hàng</h3>
+                                <h3 style="text-align: center">No orders yet</h3>
                             </div>
                         </c:if>
                     </div>
@@ -484,13 +485,13 @@
                         <c:if test="${not empty requestScope.LIST_RECEIVE}">
                             <table class="table" style="border-radius: 10px; z-index: 1; background-color: #ffffff">
                                 <thead>
-                                <th style="text-align: center">Đơn hàng</th>
-                                <th style="text-align: center">Ngày đặt</th>
-                                <th style="text-align: center">Ngày nhận hàng</th>
-                                <th style="text-align: center">Hình thức thanh toán</th>
-                                <th style="text-align: center">Hình thức vận chuyển</th>
-                                <th style="text-align: center">Thanh toán</th>
-                                <th style="text-align: center">Tổng tiền</th>
+                                <th style="text-align: center">Order ID</th>
+                                <th style="text-align: center">Order date</th>
+                                <th style="text-align: center">Delivery date</th>
+                                <th style="text-align: center">Payment method</th>
+                                <th style="text-align: center">Shipping method</th>
+                                <th style="text-align: center">Payment status</th>
+                                <th style="text-align: center">Total Amount</th>
                                 </thead>
                                 <tbody>
                                     <c:forEach var="receive" items="${requestScope.LIST_RECEIVE}">
@@ -517,26 +518,26 @@
                                             </td>
                                             <td>      
                                                 <c:if test="${receive.paymentOptions == 'ONLINE'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Chuyển khoản (VNPay)</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Online payemnt (VNPay)</p>
                                                 </c:if>
                                                 <c:if test="${receive.paymentOptions == 'COD'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Tiền mặt</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Cash On Delivery</p>
                                                 </c:if>
                                             </td>
                                             <td>
                                                 <c:if test="${receive.deliveryOptions == 'Delivery'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Giao hàng Flora</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Flora Delivery</p>
                                                 </c:if>
                                                 <c:if test="${receive.deliveryOptions == 'Pick Up'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Lấy tại sự kiện</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Pick up</p>
                                                 </c:if>
                                             </td>
                                             <td style="text-align: center">
                                                 <c:if test="${receive.paid == true}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Đã thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Paid</p>
                                                 </c:if>
                                                 <c:if test="${receive.paid == false}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Chưa thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Unpaid</p>
                                                 </c:if>
                                                 <c:set var="result" value="NHANHANG"/> <!-- Khởi tạo với giá trị mặc định -->
                                                 <c:forEach var="feedbacks" items="${requestScope.LIST_CHECK_FEEDBACK}">
@@ -548,13 +549,13 @@
                                                     </c:if>
                                                 </c:forEach>
                                                 <c:if test="${result == 'NHANHANG'}">
-                                                    <button id="myButton-${receive.eventOrderId}" onclick="handleButtonClick(${receive.eventOrderId},${receive.deliveryId}, event)" class="btn border-secondary rounded-pill px-4 py-3 text-third" style="text-align: center" type="button">Nhận hàng</button>
+                                                    <button id="myButton-${receive.eventOrderId}" onclick="handleButtonClick(${receive.eventOrderId},${receive.deliveryId}, event)" class="btn border-secondary rounded-pill px-4 py-3 text-third" style="text-align: center" type="button">Receive Order</button>
                                                 </c:if>
                                                 <c:if test="${result == 'DANHGIA'}">
-                                                    <button id="myButton-${receive.eventOrderId}" class="btn border-secondary rounded-pill px-4 py-3 text-third" style="text-align: center" type="button"  onclick="openFeedbackModal(${receive.eventOrderId},${receive.deliveryId}, event)">Đánh giá</button>
+                                                    <button id="myButton-${receive.eventOrderId}" class="btn border-secondary rounded-pill px-4 py-3 text-third" style="text-align: center" type="button"  onclick="openFeedbackModal(${receive.eventOrderId},${receive.deliveryId}, event)">Rate Order</button>
                                                 </c:if>
                                                 <c:if test="${result == 'DADANHGIA'}">
-                                                    <button class="btn border-secondary rounded-pill px-4 py-3 text-third" style="text-align: center" type="button" disabled="">Đã đánh giá</button>
+                                                    <button class="btn border-secondary rounded-pill px-4 py-3 text-third" style="text-align: center" type="button" disabled="">Rated</button>
                                                 </c:if>
                                             </td>
                                             <td>
@@ -568,7 +569,7 @@
                         <c:if test="${empty requestScope.LIST_RECEIVE}">
                             <div class="background-img">
                                 <div class="non-order"></div>
-                                <h3 style="text-align: center">Chưa có đơn hàng</h3>
+                                <h3 style="text-align: center">No orders yet</h3>
                             </div>
                         </c:if>
                     </div>
@@ -576,12 +577,12 @@
                         <c:if test="${not empty requestScope.LIST_CANCEL}">
                             <table class="table" style="border-radius: 10px; z-index: 1; background-color: #ffffff">
                                 <thead>
-                                <th style="text-align: center">Đơn hàng</th>
-                                <th style="text-align: center">Ngày đặt</th>
-                                <th style="text-align: center">Hình thức thanh toán</th>
-                                <th style="text-align: center">Hình thức vận chuyển</th>
-                                <th style="text-align: center">Thanh toán</th>
-                                <th style="text-align: center">Tổng tiền</th>
+                                <th style="text-align: center">Order ID</th>
+                                <th style="text-align: center">Order date</th>
+                                <th style="text-align: center">Payment method</th>
+                                <th style="text-align: center">Shipping method</th>
+                                <th style="text-align: center">Payment status</th>
+                                <th style="text-align: center">Total Amount</th>
                                 </thead>
                                 <tbody>
                                     <c:forEach var="cancel" items="${requestScope.LIST_CANCEL}">
@@ -602,26 +603,26 @@
                                             </td>
                                             <td>      
                                                 <c:if test="${cancel.paymentOptions == 'ONLINE'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Chuyển khoản (VNPay)</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Online payemnt (VNPay)</p>
                                                 </c:if>
                                                 <c:if test="${cancel.paymentOptions == 'COD'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Tiền mặt</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Cash On Delivery</p>
                                                 </c:if>
                                             </td>
                                             <td>
                                                 <c:if test="${cancel.deliveryOptions == 'Delivery'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Giao hàng Flora</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Flora Delivery</p>
                                                 </c:if>
                                                 <c:if test="${cancel.deliveryOptions == 'Pick Up'}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Lấy tại sự kiện</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center">Pick up</p>
                                                 </c:if>
                                             </td>
                                             <td>
                                                 <c:if test="${cancel.paid == true}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Đã thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: #00FF00; font-weight: bold">Paid</p>
                                                 </c:if>
                                                 <c:if test="${cancel.paid == false}">
-                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Chưa thanh toán</p>
+                                                    <p class="mb-4 mt-4 total-price" style="text-align: center; color: red; font-weight: bold">Unpaid</p>
                                                 </c:if>
                                             </td>
                                             <td>
@@ -635,7 +636,7 @@
                         <c:if test="${empty requestScope.LIST_CANCEL}">
                             <div class="background-img">
                                 <div class="non-order"></div>
-                                <h3 style="text-align: center">Chưa có đơn hàng</h3>
+                                <h3 style="text-align: center">No orders yet</h3>
                             </div>
                         </c:if>
                     </div>
@@ -650,33 +651,31 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="orderDetailModalLabel">Chi tiết đơn hàng</h5>
+                        <h5 class="modal-title" id="orderDetailModalLabel">Order Details</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <!-- Thông tin chung của đơn hàng -->
                         <div id="orderSummary">
-                            <p>Mã đơn hàng: #ORD-<span id="modalOrderId"></span></p>
-                            <p>Người đặt hàng: <span id="modalFullname"></span></p>
-                            <p>Số điện thoại: <span id="modalPhone"></span></p>
-                            <p>Địa chỉ giao hàng: <span id="modalStreet"></span></p>
-                            <p>Thành phố: <span id="modalCity"></span></p>
-                            <p>Ghi chú: <span id="modalNote"></span></p>
+                            <p>Order ID: #ORD-<span id="modalOrderId"></span></p>
+                            <p>Customer: <span id="modalFullname"></span></p>
+                            <p>Phone: <span id="modalPhone"></span></p>
+                            <p>Delivery Address: <span id="modalStreet"></span></p>
+                            <p>City: <span id="modalCity"></span></p>
+                            <p>Note: <span id="modalNote"></span></p>
                         </div>
                         <hr>
-                        <!-- Chi tiết sản phẩm của đơn hàng -->
-                        <h3>Sự kiện: <span id="modalEventName"></span></h3>
-                        <h5>Danh sách sản phẩm</h5>
+                        <h3>Event: <span id="modalEventName"></span></h3>
+                        <h5>List of flowers</h5>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th style="text-align: center">Hình ảnh</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th style="text-align: center">Giá đơn vị</th>
-                                    <th style="text-align: center">Số lượng</th>
-                                    <th style="text-align: center">Tổng tiền</th>
+                                    <th style="text-align: center">Product</th>
+                                    <th>Name</th>
+                                    <th style="text-align: center">Unit Price</th>
+                                    <th style="text-align: center">Quantity</th>
+                                    <th style="text-align: center">Total Amount</th>
                                 </tr>
                             </thead>
                             <tbody id="modalProductList">
@@ -684,7 +683,7 @@
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -694,7 +693,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="feedbackModalLabel">Gửi Feedback</h5>
+                        <h5 class="modal-title" id="feedbackModalLabel">Send Feedback</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -702,9 +701,9 @@
                     <div class="modal-body">
                         <form id="feedbackForm">
                             <div class="form-group">
-                                <label for="feedbackText">Nội dung Feedback</label>
-                                <textarea class="form-control" id="feedbackText" rows="3" required></textarea>
-                                <label for="rateFeedback">Đánh giá dịch vụ giao hàng</label>
+                                <label for="feedbackText">Content of Feedback</label>
+                                <textarea class="form-control" id="feedbackText" rows="3" required maxlength="255"></textarea>
+                                <label for="rateFeedback">Delivery service review</label>
                                 <div class="stars" id="rateFeedback">
                                     <input class="star star-5" id="star-5" type="radio" name="star" value="5" />
                                     <label class="star star-5" for="star-5"></label>
@@ -723,8 +722,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn btn-primary" id="submitFeedback">Gửi Feedback</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="submitFeedback">Send Feedback</button>
                     </div>
                 </div>
             </div>
@@ -739,7 +738,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Rewind</a>, All right reserved.</span>
                     </div>
                 </div>
             </div>
@@ -787,7 +786,7 @@
                                                                         $('#orderDetailModal').modal('show');
                                                                     },
                                                                     error: function () {
-                                                                        alert("Không thể lấy dữ liệu sản phẩm.");
+                                                                        alert("Unable to get product data.");
                                                                     }
                                                                 });
                                                             });
@@ -801,16 +800,16 @@
                                                                 if (!starRating) {
                                                                     Swal.fire({
                                                                         icon: 'warning',
-                                                                        title: 'Chưa chọn đánh giá',
-                                                                        text: 'Vui lòng chọn số sao đánh giá!'
+                                                                        title: 'No rating selected yet',
+                                                                        text: 'Please select star rating!'
                                                                     });
                                                                     return;
                                                                 }
                                                                 if (feedbackText === "") {
                                                                     Swal.fire({
                                                                         icon: 'warning',
-                                                                        title: 'Chưa đánh giá',
-                                                                        text: 'Vui lòng hãy nhập vào ô đánh giá!'
+                                                                        title: 'Not rated yet',
+                                                                        text: 'Please enter your rating in the box!'
                                                                     });
                                                                     return;
                                                                 }
@@ -823,13 +822,13 @@
                                                                         if (response.success) {
                                                                             Swal.fire({
                                                                                 icon: 'success',
-                                                                                title: 'Đã gửi!',
-                                                                                text: 'Feedback của bạn đã được gửi thành công!',
+                                                                                title: 'Sent!',
+                                                                                text: 'Your feedback has been sent successfully!',
                                                                                 showConfirmButton: false,
                                                                                 timer: 1500
                                                                             });
                                                                             var button = document.getElementById('myButton-' + orderId);
-                                                                            button.innerHTML = 'Đã đánh giá';
+                                                                            button.innerHTML = 'Rated';
                                                                             button.onclick = null;
                                                                             button.disabled = true;
                                                                             $('#feedbackText').val('');
@@ -838,16 +837,16 @@
                                                                         } else {
                                                                             Swal.fire({
                                                                                 icon: 'error',
-                                                                                title: 'Lỗi',
-                                                                                text: 'Có lỗi xảy ra, vui lòng thử lại!'
+                                                                                title: 'Error',
+                                                                                text: 'An error occurred, please try again!'
                                                                             });
                                                                         }
                                                                     },
                                                                     error: function () {
                                                                         Swal.fire({
                                                                             icon: 'error',
-                                                                            title: 'Lỗi',
-                                                                            text: 'Không thể gửi feedback.'
+                                                                            title: 'Error',
+                                                                            text: 'Unable to send feedback.'
                                                                         });
                                                                     }
                                                                 });
@@ -877,7 +876,7 @@
                         .then(data => {
                             if (data.success) {
                                 var button = document.getElementById('myButton-' + orderId);
-                                button.innerHTML = 'Đánh giá';
+                                button.innerHTML = 'Rate';
                                 button.onclick = function (e) {
                                     openFeedbackModal(orderId, deliveryId, e);
                                 };
@@ -899,11 +898,11 @@
                 event.stopPropagation();
                 event.preventDefault();
                 Swal.fire({
-                    title: 'Bạn có chắc chắn muốn hủy đơn?',
+                    title: 'Are you sure you want to cancel the order?',
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Hủy đơn',
-                    cancelButtonText: 'Không'
+                    confirmButtonText: 'Cancel Order',
+                    cancelButtonText: 'No'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
@@ -914,7 +913,7 @@
                                 if (response.status === 'success') {
                                     Swal.fire({
                                         icon: 'success',
-                                        title: 'Hủy đơn thành công!',
+                                        title: 'Cancel order successfully!',
                                         showConfirmButton: false,
                                         timer: 1500
                                     }).then(() => {
@@ -923,16 +922,16 @@
                                 } else {
                                     Swal.fire({
                                         icon: 'error',
-                                        title: 'Có lỗi xảy ra',
-                                        text: 'Không thể hủy đơn hàng, vui lòng thử lại.'
+                                        title: 'An error occurred',
+                                        text: 'Unable to cancel order, please try again'
                                     });
                                 }
                             },
                             error: function () {
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'Có lỗi xảy ra',
-                                    text: 'Không thể kết nối đến server, vui lòng thử lại sau.'
+                                    title: 'An error occurred',
+                                    text: 'Unable to connect to server, please try again later'
                                 });
                             }
                         });

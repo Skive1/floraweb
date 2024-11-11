@@ -29,10 +29,10 @@
                         <li>
                             <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                             <ul class="sub-menu">
-                               <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event theo tháng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event theo tuần</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Sản phẩm theo tháng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="weeklyProductBoard">Sản phẩm theo tuần</a></li>
+                               <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event by month</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event by week</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Product by month</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyProductBoard">Product by week</a></li>
                             </ul>
                         </li>
                         <li>

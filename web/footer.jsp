@@ -31,59 +31,59 @@
             <div class="col-lg-3 col-md-6">
                 <div class="footer-item">
                     <h4 class="text-light mb-3">Why People Like us!</h4>
-                    <p class="mb-4">Chúng tôi là trung gian kết nối những người sở hữu hoa dư sau các sự kiện với những khách hàng có nhu cầu mua hoa với mức giá hợp lý. Đồng thời chúng tôi cũng tạo ra một nơi để các cá nhân, nông trại hoa hay là các cửa hàng hoa có thể buôn bán các loại hoa trên nền tảng để các quý khách hàng có thể dễ dàng kết nối tới và mua hàng</p>
+                    <p class="mb-4">We are an intermediary connecting people who have surplus flowers after events with customers who need to buy flowers at reasonable prices. At the same time, we also create a place for individuals, flower farms or flower shops to trade flowers on the platform so that customers can easily connect and buy.</p>
                 </div>
             </div>
             <c:if test="${not empty sessionScope.USER}">
                 <div class="col-lg-3 col-md-6">
                     <div class="d-flex flex-column text-start footer-item">
-                        <h4 class="text-light mb-3">Thông tin nền tảng</h4>
-                        <a class="btn-link" href="">Về chúng tôi</a>
-                        <a class="btn-link" href="contactPage">Liên lạc với chúng tôi</a>
-                        <a class="btn-link" href="privacyPage">Chính sách bảo mật</a>
-                        <a class="btn-link" href="termsOfUse">Điều khoản sử dụng</a>
+                        <h4 class="text-light mb-3">Our platform</h4>
+                        <a class="btn-link" href="https://github.com/Skive1/floraweb">About Us</a>
+                        <a class="btn-link" href="contactPage">Contact Us</a>
+                        <a class="btn-link" href="privacyPage">Privacy Policy</a>
+                        <a class="btn-link" href="termsOfUse">Terms of use</a>
                         <a class="btn-link" href="mailto:flora.flower.platform@gmail.com">FAQs & Help</a>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
                     <div class="d-flex flex-column text-start footer-item">
-                        <h4 class="text-light mb-3">Tài khoản</h4>
-                        <a class="btn-link" href="viewProfileAction">Hồ sơ của tôi</a>
-                        <a class="btn-link" href="eventCart">Giỏ hàng sự kiện</a>
-                        <a class="btn-link" href="cartPage">Giỏ hàng cho shop</a>
-                        <a class="btn-link" href="purchasedOrder">Lịch sử đơn hàng</a>
+                        <h4 class="text-light mb-3">Account</h4>
+                        <a class="btn-link" href="viewProfileAction">My profile</a>
+                        <a class="btn-link" href="eventCart">Event Cart</a>
+                        <a class="btn-link" href="cartPage">Shopping Cart</a>
+                        <a class="btn-link" href="purchasedOrder">Purchased Order</a>
                     </div>
                 </div>
             </c:if>
             <c:if test="${empty sessionScope.USER}">
                 <div class="col-lg-3 col-md-6">
                     <div class="d-flex flex-column text-start footer-item">
-                        <h4 class="text-light mb-3">Thông tin nền tảng</h4>
-                        <a class="btn-link" href="">Về chúng tôi</a>
-                        <a class="btn-link" href="contactPage">Liên lạc với chúng tôi</a>
-                        <a class="btn-link" href="privacyPage">Chính sách bảo mật</a>
-                        <a class="btn-link" href="termsOfUse">Điều khoản sử dụng</a>
+                        <h4 class="text-light mb-3">Our platform</h4>
+                        <a class="btn-link" href="https://github.com/Skive1/floraweb">About Us</a>
+                        <a class="btn-link" href="contactPage">Contact Us</a>
+                        <a class="btn-link" href="privacyPage">Privacy Policy</a>
+                        <a class="btn-link" href="termsOfUse">Terms of use</a>
                         <a class="btn-link" href="mailto:flora.flower.platform@gmail.com">FAQs & Help</a>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
                     <div class="d-flex flex-column text-start footer-item">
-                        <h4 class="text-light mb-3">Tài khoản</h4>
-                        <a class="btn-link" href="loginPage">Hồ sơ của tôi</a>
-                        <a class="btn-link" href="eventCart">Giỏ hàng sự kiện</a>
-                        <a class="btn-link" href="cartPage">Giỏ hàng cho shop</a>
-                        <a class="btn-link" href="loginPage">Lịch sử đơn hàng</a>
+                        <h4 class="text-light mb-3">Account</h4>
+                        <a class="btn-link" href="loginPage">My profile</a>
+                        <a class="btn-link" href="eventCart">Event Cart</a>
+                        <a class="btn-link" href="cartPage">Shopping Cart</a>
+                        <a class="btn-link" href="loginPage">Purchased Order</a>
                     </div>
                 </div>
             </c:if>
             <div class="col-lg-3 col-md-6">
                 <div class="footer-item">
-                    <h4 class="text-light mb-3">Liên lạc</h4>
-                    <p>Địa chỉ: Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh</p>
+                    <h4 class="text-light mb-3">Contact</h4>
+                    <p>Address: Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh</p>
                     <p>Email: flora.flower.platform@gmail.com</p>
-                    <p>Số điện thoại: +84 123 456 789</p>
+                    <p>Phone number: +84 123 456 789</p>
                     <p>Payment Accepted</p>
                     <img loading="lazy" decoding="async" width="52px" style="border-radius: 5px; box-sizing: border-box" src="https://cdn.brandfetch.io/vnpay.vn/fallback/lettermark/theme/dark/h/256/w/256/icon?c=1idQIUBzC_rD6DbYqZx" class="img-fluid" alt="">
                     <img loading="lazy" decoding="async" width="52px" height="52px" style="border-radius: 5px; box-sizing: border-box; background-color: #ffffff" src="https://down-vn.img.susercontent.com/file/2c46b83d84111ddc32cfd3b5995d9281" class="img-fluid" alt="">

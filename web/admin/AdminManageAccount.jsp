@@ -37,30 +37,30 @@
             }
     
             .alert {
-                background-color: #ffe5e5; /* Màu nền nhạt */
-                border: 1px solid #ffcccc; /* Đường viền màu đỏ nhạt */
-                border-radius: 5px; /* Bo góc */
-                padding: 15px; /* Khoảng cách bên trong */
-                display: flex; /* Sử dụng Flexbox để căn chỉnh nội dung */
-                flex-direction: column; /* Căn chỉnh theo cột */
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng đổ */
+                background-color: #ffe5e5; 
+                border: 1px solid #ffcccc;
+                border-radius: 5px; 
+                padding: 15px; 
+                display: flex; 
+                flex-direction: column; 
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             }
 
             .alert-text {
-                color: #d9534f; /* Màu chữ đỏ */
-                font-weight: bold; /* Chữ đậm */
-                display: flex; /* Sử dụng Flexbox để căn chỉnh biểu tượng */
-                align-items: center; /* Căn giữa theo chiều dọc */
+                color: #d9534f; 
+                font-weight: bold;
+                display: flex; 
+                align-items: center;
             }
 
             .warning-icon {
-                margin-left: 8px; /* Khoảng cách giữa văn bản và biểu tượng */
-                font-size: 20px; /* Kích thước biểu tượng */
+                margin-left: 8px;
+                font-size: 20px;
             }
 
             .alert-warning {
-                color: #856404; /* Màu chữ nhạt hơn cho cảnh báo */
-                margin-top: 5px; /* Khoảng cách giữa hai đoạn văn */
+                color: #856404;
+                margin-top: 5px;
             }
         </style>
     </head>
@@ -79,10 +79,10 @@
                             <li>
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event theo tháng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event theo tuần</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Sản phẩm theo tháng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="weeklyProductBoard">Sản phẩm theo tuần</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event by month</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event by week</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Product by month</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyProductBoard">Product by week</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -115,7 +115,7 @@
                     </div> 
                     <div class="admin-content-main">
                         <div class="admin-content-main-title">
-                            <h1>Danh sách tài khoản</h1>
+                            <h1>List of accounts</h1>
                         </div>
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
@@ -127,13 +127,13 @@
                                     <th>Username</th>
                                     <th>Fullname</th>
                                     <th>Role</th>
-                                    <th>Giới tính</th>
+                                    <th>Gender</th>
                                     <th>Email</th>
-                                    <th>Sđt</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Thành phố</th>
-                                    <th>Trạng thái</th>
-                                    <th colspan="2">Tùy chỉnh</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>City</th>
+                                    <th>Status</th>
+                                    <th colspan="2">Actions</th>
                                     </thead>
                                     <c:if test="${not empty result}">
                                         <tbody style="height: 100px;">
@@ -267,7 +267,7 @@
                 <div class="" role="document">
                     <div class="modal-content-alert">
                         <h5 class="modal-title-alert">${requestScope.SUCESS}</h5>
-                        <p>Tài khoản đã bị chặn</p>
+                        <p>Account is banned</p>
                         <button class="btn-secondary-alert">Ok</button>
                     </div>                     `
                 </div>
@@ -279,21 +279,21 @@
             <div class="modal-content">
                 <form action="" method="post" id="deleteForm">
                     <div class="modal-header">						
-                        <h4 class="modal-title">Delete Account</h4>
+                        <h4 class="modal-title">Ban Account</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">					
                         <p style="color: red; display: flex; align-items: center;">
-                            Bạn có chắc chắn muốn chặn tài khoản này
-                            <span class="warning-icon" aria-hidden="true" style="margin-left: 8px; font-size: 20px;">⚠️</span>
+                            Are you sure you want to ban this account?
+                            <span class="warning-icon" aria-hidden="true" style="margin-left: 8px; font-size: 20px;">⚠</span>
                         </p>
                         <p class="text-warning">
-                            <small>Hành động này không thể hoàn tác</small>
+                            <small>This action cannot be undone.</small>
                         </p>
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <input type="submit" class="btn btn-danger" value="Delete">
+                        <input type="submit" class="btn btn-danger" value="Ban">
                     </div>
                 </form>
             </div>
@@ -309,22 +309,18 @@
 <script src="alertPackage/alertJs.js"></script>
 <script>
     $(document).ready(function () {
-        // When the delete link is clicked
         $('.delete').click(function () {
-            // Retrieve the URL stored in the 'data-url' attribute
             var url = $(this).data('url');
-            // Set the form action attribute to the retrieved URL
             $('#deleteForm').attr('action', url);
         });
     });
     $(document).ready(function () {
         $(".updateForm").submit(function (event) {
-            event.preventDefault(); // Prevent normal submission
+            event.preventDefault();
 
             // Show SweetAlert message
             swal("Save successfully!", "You have edited account's info!", "success").then(() => {
-                // After the alert is shown, submit the form
-                this.submit(); // Proceed with the normal form submission
+                this.submit();
             });
         });
     });

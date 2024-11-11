@@ -378,22 +378,24 @@
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label text-secondary">Gender:</label>
-                                    <div class="form-check form-check-inline">
+                                    <div class="form-check form-check-inline" style="
+                                         margin-left: 9px;
+                                         ">
                                         <input class="form-check-input" type="radio" value="Nam" name="txtGender" id="male" required checked>
                                         <label class="form-check-label text-secondary" for="male">
-                                            Nam
+                                            Male
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" value="Nữ" name="txtGender" id="female" required>
                                         <label class="form-check-label text-secondary" for="female">
-                                            Nữ
+                                            Female
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" value="Ẩn" name="txtGender" id="hidden" required>
                                         <label class="form-check-label text-secondary" for="hidden">
-                                            Ẩn
+                                            Hidden
                                         </label>
                                     </div>
                                 </div>
