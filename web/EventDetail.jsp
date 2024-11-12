@@ -459,7 +459,7 @@
                     <div class="" role="document">
                         <div class="modal-content-alert">
                             <h5 class="modal-title-alert">${requestScope.INSUFFICIENT}</h5>
-                            <p>Vui lòng hãy chọn sản phẩm khác</p>
+                            <p>Please select another product</p>
                             <button class="btn-secondary-alert">Ok</button>
                         </div>                     `
                     </div>
