@@ -112,27 +112,27 @@
                             <p class="admin-p">Delivery</p>
                             <div class="admin-under-p" style="margin: 1px 5px 5px 5px">Flora Store Delivery</div>
                             <li>
-                                <a href="" style="color: #131EAD"><i class="ri-file-list-line"></i>Danh sách đơn hàng<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #131EAD"><i class="ri-file-list-line"></i>Order List<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" style="color: #131EAD"
-                                           href="delivererOrders">Nhận đơn hàng mới</a></li>
+                                           href="delivererOrders">Receive new orders</a></li>
                                     <li><a class="ri-arrow-right-s-fill" style="color: #131EAD"
-                                           href="viewOrdersForDelivery">Đơn hàng cần giao</a></li>
+                                           href="viewOrdersForDelivery">Orders to be delivered</a></li>
                                 </ul>   
                             </li>
                             <li>
-                                <a href="" style="color: #131EAD"><i class="bi bi-credit-card-fill"></i>Ví điện tử FLora<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #131EAD"><i class="bi bi-credit-card-fill"></i>E-wallet FLora<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <c:if test="${sessionScope.EWALLET_ACTIVE != true}">
                                         <li>
                                             <a class="ri-arrow-right-s-fill" style="color: #131EAD"
-                                               href="myWallet">Tạo tài khoản</a>
+                                               href="myWallet">Create E-wallett</a>
                                         </li>
                                     </c:if>
                                     <c:if  test="${sessionScope.EWALLET_ACTIVE == true}">
                                         <li>
                                             <a class="ri-arrow-right-s-fill" style="color: #131EAD"
-                                               href="eWallet">Tài khoản</a>
+                                               href="eWallet">E-wallet</a>
                                         </li>
                                     </c:if>
                                 </ul>  
@@ -154,7 +154,7 @@
                             <ul class="flex-box">
                                 <c:if test="${requestScope.FoundError2 != null}">
                                     <i>
-                                        Số dư tài khoản: 
+                                        Account balance: 
                                         <i style="color: red; font-weight: bold">
                                             <fmt:formatNumber value="${sessionScope.Staff_Balance}" pattern="#,###"/>
                                         </i>
@@ -162,7 +162,7 @@
                                 </c:if>
                                 <c:if test="${requestScope.FoundError2 == null}">
                                     <i>
-                                        Số dư tài khoản: 
+                                        Account balance: 
                                         <i style="font-weight: bold">
                                             <fmt:formatNumber value="${sessionScope.Staff_Balance}" pattern="#,###"/>
                                         </i>
@@ -179,20 +179,20 @@
                                 <li></li>
                                 <li class="flex-box">
                                     <img style="width: 50px" src="img/flora-favicon.png">
-                                     <p>${sessionScope.USER.fullName}<i></i></p>
+                                    <p>${sessionScope.USER.fullName}<i></i></p>
                                 </li>
                             </ul>
                         </div>
                     </div> 
                     <div class="admin-content-main">
                         <div class="admin-content-main-title">
-                            <h1 style="font-size: 36px">Tạo ví điện tử Flora:</h1>
+                            <h1 style="font-size: 36px">Create Flora e-wallet:</h1>
                         </div>
                         <div class="admin-content-main-content">
                             <div class="content-wrapper">
-                                <p class="info-text">Chào mừng bạn đến với hệ thống Flora Rewind! Hãy tạo ví điện tử để bắt đầu nhận hàng.</p>
+                                <p class="info-text">Welcome to Flora Rewind! Create an e-wallet to start receiving goods.</p>
                                 <a href="taotaikhoan">
-                                    <button class="deposit-btn">Tạo tài khoản</button>
+                                    <button class="deposit-btn">Create E-wallet</button>
                                 </a>
                             </div>
                         </div>

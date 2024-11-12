@@ -11,7 +11,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Fruitables - Vegetable Website Template</title>
+        <title>Flora Rewind - Privacy Policy</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -126,8 +126,8 @@
                         <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
-                        <a href="PrivacyPolicy.jsp" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+                        <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
+                        <a href="termsOfUse" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
                 </div>
@@ -141,7 +141,7 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link ">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link active">Contact</a>
@@ -153,7 +153,7 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -215,7 +215,7 @@
 
                                 <div class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
-                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60"><c:out value ="${sessionScope.USER.fullName}"/>
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
                                     </div>                         
@@ -254,7 +254,7 @@
             <h1 class="text-center text-white display-6">Privacy Policy</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
-               
+
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -263,39 +263,42 @@
         <!-- Content Start -->
         <div class="Privacy-Content">
             <section>
-                <h2 style="text-align:center">Chính Sách Bảo Mật</h2>
-                <p>Với Flora Store, bảo mật thông tin cá nhân của bạn là ưu tiên hàng đầu của chúng tôi. Chính sách này mô tả cách chúng tôi thu thập, sử dụng, và bảo vệ thông tin cá nhân của bạn.</p>
+                <h2 style="text-align:center">Privacy Policy</h2>
+                <p>At Flora Store, the security of your personal information is our top priority. This policy describes how we collect, use, and protect your personal information.</p>
 
-                <h3>1. Thông Tin Chúng Tôi Thu Thập</h3>
-                <p>Chúng tôi có thể thu thập thông tin cá nhân như:</p>
+                <h3>1. Information We Collect</h3>
+                <p>We may collect personal information such as:</p>
                 <ul>
-                    <li>Tên</li>
-                    <li>Địa chỉ email</li>
-                    <li>Số điện thoại</li>
-                    <li>Thông tin thanh toán</li>
-                    <li>Thông tin đặt hàng</li>
+                    <li>Name</li>
+                    <li>Email address</li>
+                    <li>Phone number</li>
+                    <li>Payment information</li>
+                    <li>Order information</li>
                 </ul>
 
-                <h3>2. Cách Chúng Tôi Sử Dụng Thông Tin</h3>
-                <p>Thông tin cá nhân của bạn có thể được sử dụng để:</p>
+                <h3>2. How We Use Information</h3>
+
+                <p>Your personal information may be used to:</p>
+
                 <ul>
-                    <li>Xử lý đơn hàng và cung cấp dịch vụ</li>
-                    <li>Gửi thông tin cập nhật về đơn hàng</li>
-                    <li>Gửi bản tin qua email và thông báo khuyến mãi</li>
-                    <li>Cải thiện dịch vụ và trải nghiệm khách hàng</li>
+                    <li>Process orders and provide services</li>
+                    <li>Send order updates</li>
+                    <li>Send email newsletters and promotional announcements</li>
+                    <li>Improve customer service and experience</li>
+
                 </ul>
 
-                <h3>3. Bảo Mật Thông Tin</h3>
-                <p>Chúng tôi sử dụng các biện pháp bảo mật thích hợp để bảo vệ thông tin cá nhân của bạn khỏi việc truy cập, sử dụng hoặc tiết lộ trái phép. Thông tin của bạn được lưu trữ trên hệ thống bảo mật và chỉ có nhân viên được ủy quyền mới có quyền truy cập.</p>
+                <h3>3. Information Security</h3>
+                <p>We use appropriate security measures to protect your personal information from unauthorized access, use or disclosure. Your information is stored on secure systems and is only accessible to authorized personnel.</p>
 
-                <h3>4. Chia Sẻ Thông Tin</h3>
-                <p>Chúng tôi không bán, trao đổi hay cho thuê thông tin cá nhân của bạn cho bên thứ ba. Thông tin của bạn chỉ được chia sẻ với các bên liên quan cần thiết để xử lý đơn hàng hoặc cung cấp dịch vụ mà bạn đã yêu cầu.</p>
+                <h3>4. Information Sharing</h3>
+                <p>We do not sell, trade or rent your personal information to third parties. Your information will only be shared with relevant parties who are necessary to process your order or provide the service you have requested.</p>
 
-                <h3>5. Quyền Của Bạn</h3>
-                <p>Bạn có quyền yêu cầu truy cập, chỉnh sửa hoặc xóa thông tin cá nhân của mình. Nếu bạn muốn thực hiện quyền này, vui lòng liên hệ với chúng tôi qua thông tin liên hệ dưới đây.</p>
+                <h3>5. Your Rights</h3>
+                <p>You have the right to request access to, correct or delete your personal information. If you would like to exercise this right, please contact us using the contact information below.</p>
 
-                <h3>6. Liên Hệ</h3>
-                <p>Nếu bạn có bất kỳ câu hỏi nào về chính sách bảo mật này, xin vui lòng liên hệ với chúng tôi qua email: <a href="mailto:flora.flower.platform@gmail.com">flora.flower.platform@gmail.com</a>.</p>
+                <h3>6. Contact</h3>
+                <p>If you have any questions about this privacy policy, please contact us by email: <a href="mailto:flora.flower.platform@gmail.com">flora.flower.platform@gmail.com</a>.</p>
             </section>
         </div>
         <!-- Content End -->
@@ -310,7 +313,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Store</a>, All right reserved.</span>
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Rewind</a>, All right reserved.</span>
                         </div>
                     </div>
                 </div>

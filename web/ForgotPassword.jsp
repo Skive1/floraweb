@@ -5,7 +5,7 @@
     <head>
         <meta charset='utf-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
-        <title>Verify Email</title>
+        <title>Flora Rewind | Forgot Password</title>
         <link rel="icon" href="img/flora-favicon.png"/>
         <link
             href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css'
@@ -61,26 +61,20 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-md-10">
                     <div class="forgot">
-                        <h2>Forgot your password?</h2>
-                        <p>Change your password in three easy steps. This will help you
-                            to secure your password!</p>
+                        <h2>Forgot Password?</h2>
+                        <p>Change your password in three easy steps. This will help keep your password secure!</p>
                         <ol class="list-unstyled">
-                            <li><span class="text-primary text-medium">1. </span>Enter
-                                your username below.</li>
-                            <li><span class="text-primary text-medium">2. </span>If
-                                your username matches an existing account 
-                                we will send a password reset email within a few minutes.</li>
-                            <li><span class="text-primary text-medium">3. </span>Enter the verified code on the 
-                                next page</li>
+                            <li><span class="text-primary text-medium">1. </span>Enter your account below.</li>
+                            <li><span class="text-primary text-medium">2. </span>If your username matches an existing account, we will send you a password reset email within minutes.</li>
+                            <li><span class="text-primary text-medium">3. </span>Enter the verification code on the next page</li>
                         </ol>
                     </div>
-                    <form class="card mt-4" action="forgotPasswordAction" method="POST">
+                    <form class="card mt-4" action="forgotPasswordAction" method="POST" id="form">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="email-for-pass">Enter your username</label> <input
+                                <label for="email-for-pass">Enter your account</label> <input
                                     class="form-control" type="text" name="txtUsername" id="email-for-pass" required><small
-                                    class="form-text text-muted">Enter the your username. Then we will
-                                    send a verified code to registered email.</small>
+                                    class="form-text text-muted">Enter your username. We will then send a verification code to your registered email.</small>
                             </div>
                             <div style="color: red">
                                 <c:set var="error" value="${requestScope.FORGOT_ERROR}"/>
@@ -91,11 +85,9 @@
 
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-success" type="submit" name="btAction">Get New
-                                Password</button>
+                            <button id="submitBtn" class="btn btn-success" name="btAction" onclick="disableButton()">Create new password</button>
                             <a href="loginPage">
-                                <button class="btn btn-danger" type="button">Back to
-                                    Login</button>
+                                <button class="btn btn-danger" type="button" id="login">Back to login page</button>
                             </a>
 
                         </div>
@@ -103,7 +95,7 @@
                     <div class="row">
                         <div class="col-12">
                             <hr class="mt-5 mb-4 border-secondary-subtle">
-                            <p class="m-0 text-secondary text-center">Yon don't have an account? <a href="registerPage" class="link-primary text-decoration-none">Sign up</a></p>
+                            <p class="m-0 text-secondary text-center">You do not have an account? <a href="registerPage" class="link-primary text-decoration-none">Sign Up</a></p>
                         </div>
                     </div>
                 </div>
@@ -111,8 +103,14 @@
         </div>
         <script type='text/javascript'
         src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js'></script>
-        <script type='text/javascript' src=''></script>
-        <script type='text/javascript' src=''></script>
-        <script type='text/Javascript'></script>
+        <script>
+                                function disableButton() {
+                                    const submitButton = document.getElementById("submitBtn");
+                                    submitButton.disabled = true;
+                                    const backLoginButton = document.getElementById("login");
+                                    backLoginButton.disabled = true;
+                                    document.getElementById("form").submit();
+                                }
+        </script>
     </body>
 </html>

@@ -116,7 +116,7 @@
                     </div>
                     <div class="top-link pe-2">
                         <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+                        <a href="termsOfUse" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
                 </div>
@@ -129,8 +129,8 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link ">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
@@ -142,7 +142,8 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
+                                    <a href="deliveryIncome" class="nav-item nav-link">Revenue</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -204,7 +205,7 @@
 
                                 <div class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
-                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60"><c:out value ="${sessionScope.USER.fullName}"/>
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
                                     </div>                         
@@ -252,7 +253,7 @@
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Tên sự kiện: ${requestScope.EVENT_NAME}</h1>
+                <h1 class="mb-4">Event: ${requestScope.EVENT_NAME}</h1>
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
@@ -298,7 +299,7 @@
 
                                                             </c:url>
                                                             <a href="${urlRewriting}" 
-                                                               <c:if test="${requestScope.CATEGORIES == category.eventProductCondition}">style="color: var(--bs-secondary)"</c:if>><i class="bi bi-flower3 me-2"></i>${category.eventProductCondition}</a>
+                                                               <c:if test="${requestScope.CATEGORIES == category.eventProductCondition}">style="color: var(--bs-secondary)"</c:if>><i class="bi bi-flower3 me-2"></i><c:out value ="${category.eventProductCondition}"/></a>
                                                             </div>
                                                         </li>
                                                 </c:forEach>
@@ -347,7 +348,7 @@
                                                     <input type="hidden" name="pageIndex" value="${currentPage}"/>
                                                     <div class="rounded position-relative fruite-item">
                                                         <div class="fruite-img">
-                                                            <img src="${flower.eventProductImg}" class="img-fluid w-100 rounded-top" alt="${flower.eventProductName}">
+                                                            <img src="${flower.eventProductImg}" class="img-fluid w-100 rounded-top" alt="<c:out value ="${flower.eventProductName}"/>">
                                                         </div>
                                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
                                                             ${flower.eventProductType} 
@@ -358,9 +359,9 @@
                                                                 <c:param name="eventId" value="${requestScope.EVENT_ID}"/>
                                                             </c:url>
                                                             <a href="${urlRewriting}">
-                                                                <h4>${flower.eventProductName}</h4>
+                                                                <h4><c:out value ="${flower.eventProductName}"/></h4>
                                                             </a>
-                                                                <p style="height: 50px">${flower.eventProductDetail}</p>
+                                                                <p style="height: 50px"><c:out value ="${flower.eventProductDetail}"/></p>
                                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                                 <p class="text-dark fs-5 fw-bold mb-0">
                                                                     <fmt:formatNumber value="${flower.eventProductPrice}" type="number" groupingUsed="true"/>đ
@@ -383,14 +384,14 @@
                                                                     </c:if>
                                                                     <c:if test="${flower.eventProductQuantity == 0}">
                                                                         <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third" disabled="">
-                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Out of stock
                                                                         </button>
                                                                     </c:if>
                                                                 </c:if>
                                                                 <c:if test="${empty sessionScope.USER}">
                                                                     <c:if test="${flower.eventProductQuantity == 0}">
                                                                         <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third disabled-link">
-                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Out of stock
                                                                         </a>
                                                                     </c:if>
                                                                     <c:if test="${flower.eventProductQuantity > 0}">
@@ -455,7 +456,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>FPT Flora Rewind</a>, All right reserved.</span>
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Rewind</a>, All right reserved.</span>
                         </div>
                     </div>
                 </div>

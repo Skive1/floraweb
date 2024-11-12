@@ -59,13 +59,13 @@ public class DepositMoneyServlet extends HttpServlet {
                         session.setAttribute("Staff_Balance", currentBalance + amount);
                         response.setContentType("application/json");
                         PrintWriter out = response.getWriter();
-                        out.print("{\"success\": true, \"message\": \"Nạp tiền thành công!\", \"newBalance\": " + (currentBalance + amount) + "}");
+                        out.print("{\"success\": true, \"message\": \"Deposit successful!\", \"newBalance\": " + (currentBalance + amount) + "}");
                         out.flush();
                     } else {
                         // Nếu không cập nhật được số dư
                         response.setContentType("application/json");
                         PrintWriter out = response.getWriter();
-                        out.print("{\"success\": false, \"message\": \"Nạp tiền thất bại.\"}");
+                        out.print("{\"success\": false, \"message\": \"Deposit failed.\"}");
                         out.flush();
                     }
                 } else {
@@ -76,13 +76,13 @@ public class DepositMoneyServlet extends HttpServlet {
             log("depositMoney _SQL_ " + ex.getMessage());
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
-            out.print("{\"success\": false, \"message\": \"Có lỗi xảy ra: " + ex.getMessage() + "\"}");
+            out.print("{\"success\": false, \"message\": \"An error occurred: " + ex.getMessage() + "\"}");
             out.flush();
         } catch (NamingException ex) {
             log("depositMoney _Naming_ " + ex.getMessage());
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
-            out.print("{\"success\": false, \"message\": \"Có lỗi xảy ra: " + ex.getMessage() + "\"}");
+            out.print("{\"success\": false, \"message\": \"An error occurred: " + ex.getMessage() + "\"}");
             out.flush();
         } finally {
         }

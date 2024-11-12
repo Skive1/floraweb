@@ -116,93 +116,286 @@
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
                                         <select class="form-control" name="txtCity" id="city">
-                                            <option value="unknown" selected>Chọn thành phố</option>
-                                            <option value="An Giang">An Giang</option>
-                                            <option value="Bà Rịa Vũng Tàu">Bà Rịa Vũng Tàu</option>
-                                            <option value="Bắc Giang">Bắc Giang</option>
-                                            <option value="Bắc Kạn">Bắc Kạn</option>
-                                            <option value="Bạc Liêu">Bạc Liêu</option>
-                                            <option value="Bắc Ninh">Bắc Ninh</option>
-                                            <option value="Bến Tre">Bến Tre</option>
-                                            <option value="Bình Định">Bình Định</option>
-                                            <option value="Bình Dương">Bình Dương</option>
-                                            <option value="Bình Phước">Bình Phước</option>
-                                            <option value="Bình Thuận">Bình Thuận</option>
-                                            <option value="Cà Mau">Cà Mau</option>
-                                            <option value="Cần Thơ">Cần Thơ</option>
-                                            <option value="Cao Bằng">Cao Bằng</option>
-                                            <option value="Đà Nẵng">Đà Nẵng</option>
-                                            <option value="Đắk Lắk">Đắk Lắk</option>
-                                            <option value="Đắk Nông">Đắk Nông</option>
-                                            <option value="Điện Biên">Điện Biên</option>
-                                            <option value="Đồng Nai">Đồng Nai</option>
-                                            <option value="Đồng Tháp">Đồng Tháp</option>
-                                            <option value="Gia Lai">Gia Lai</option>
-                                            <option value="Hà Giang">Hà Giang</option>
-                                            <option value="Hà Nam">Hà Nam</option>
-                                            <option value="Hà Nội">Hà Nội</option>
-                                            <option value="Hà Tĩnh">Hà Tĩnh</option>
-                                            <option value="Hải Dương">Hải Dương</option>
-                                            <option value="Hải Phòng">Hải Phòng</option>
-                                            <option value="Hậu Giang">Hậu Giang</option>
-                                            <option value="Hồ Chí Minh">Hồ Chí Minh</option>
-                                            <option value="Hòa Bình">Hòa Bình</option>
-                                            <option value="Hưng Yên">Hưng Yên</option>
-                                            <option value="Khánh Hòa">Khánh Hòa</option>
-                                            <option value="Kiên Giang">Kiên Giang</option>
-                                            <option value="Kon Tum">Kon Tum</option>
-                                            <option value="Lai Châu">Lai Châu</option>
-                                            <option value="Lâm Đồng">Lâm Đồng</option>
-                                            <option value="Lạng Sơn">Lạng Sơn</option>
-                                            <option value="Lào Cai">Lào Cai</option>
-                                            <option value="Long An">Long An</option>
-                                            <option value="Nam Định">Nam Định</option>
-                                            <option value="Nghệ An">Nghệ An</option>
-                                            <option value="Ninh Bình">Ninh Bình</option>
-                                            <option value="Ninh Thuận">Ninh Thuận</option>
-                                            <option value="Phú Thọ">Phú Thọ</option>
-                                            <option value="Phú Yên">Phú Yên</option>
-                                            <option value="Quảng Bình">Quảng Bình</option>
-                                            <option value="Quảng Nam">Quảng Nam</option>
-                                            <option value="Quảng Ngãi">Quảng Ngãi</option>
-                                            <option value="Quảng Ninh">Quảng Ninh</option>
-                                            <option value="Quảng Trị">Quảng Trị</option>
-                                            <option value="Sóc Trăng">Sóc Trăng</option>
-                                            <option value="Sơn La">Sơn La</option>
-                                            <option value="Tây Ninh">Tây Ninh</option>
-                                            <option value="Thái Bình">Thái Bình</option>
-                                            <option value="Thái Nguyên">Thái Nguyên</option>
-                                            <option value="Thanh Hóa">Thanh Hóa</option>
-                                            <option value="Thừa Thiên Huế">Thừa Thiên Huế</option>
-                                            <option value="Tiền Giang">Tiền Giang</option>
-                                            <option value="Trà Vinh">Trà Vinh</option>
-                                            <option value="Tuyên Quang">Tuyên Quang</option>
-                                            <option value="Vĩnh Long">Vĩnh Long</option>
-                                            <option value="Vĩnh Phúc">Vĩnh Phúc</option>
-                                            <option value="Yên Bái">Yên Bái</option>
-
+                                            <option value="An Giang"
+                                                    <c:if test="${param.txtCity == 'An Giang'}">
+                                                        selected="selected"
+                                                    </c:if>>An Giang</option>
+                                            <option value="Bà Rịa Vũng Tàu"
+                                                    <c:if test="${param.txtCity == 'Bà Rịa Vũng Tàu'}">
+                                                        selected="selected"
+                                                    </c:if>>Bà Rịa Vũng Tàu</option>
+                                            <option value="Bắc Giang"
+                                                    <c:if test="${param.txtCity == 'Bắc Giang'}">
+                                                        selected="selected"
+                                                    </c:if>>Bắc Giang</option>
+                                            <option value="Bắc Kạn"
+                                                    <c:if test="${param.txtCity == 'Bắc Kạn'}">
+                                                        selected="selected"
+                                                    </c:if>>Bắc Kạn</option>
+                                            <option value="Bạc Liêu"
+                                                    <c:if test="${param.txtCity == 'Bạc Liêu'}">
+                                                        selected="selected"
+                                                    </c:if>>Bạc Liêu</option>
+                                            <option value="Bắc Ninh"
+                                                    <c:if test="${param.txtCity == 'Bắc Ninh'}">
+                                                        selected="selected"
+                                                    </c:if>>Bắc Ninh</option>
+                                            <option value="Bến Tre"
+                                                    <c:if test="${param.txtCity == 'Bến Tre'}">
+                                                        selected="selected"
+                                                    </c:if>>Bến Tre</option>
+                                            <option value="Bình Định"
+                                                    <c:if test="${param.txtCity == 'Bình Định'}">
+                                                        selected="selected"
+                                                    </c:if>>Bình Định</option>
+                                            <option value="Bình Dương"
+                                                    <c:if test="${param.txtCity == 'Bình Dương'}">
+                                                        selected="selected"
+                                                    </c:if>>Bình Dương</option>
+                                            <option value="Bình Phước"
+                                                    <c:if test="${param.txtCity == 'Bình Phước'}">
+                                                        selected="selected"
+                                                    </c:if>>Bình Phước</option>
+                                            <option value="Bình Thuận"
+                                                    <c:if test="${param.txtCity == 'Bình Thuận'}">
+                                                        selected="selected"
+                                                    </c:if>>Bình Thuận</option>
+                                            <option value="Cà Mau"
+                                                    <c:if test="${param.txtCity == 'Cà Mau'}">
+                                                        selected="selected"
+                                                    </c:if>>Cà Mau</option>
+                                            <option value="Cần Thơ"
+                                                    <c:if test="${param.txtCity == 'Cần Thơ'}">
+                                                        selected="selected"
+                                                    </c:if>>Cần Thơ</option>
+                                            <option value="Cao Bằng"
+                                                    <c:if test="${param.txtCity == 'Cao Bằng'}">
+                                                        selected="selected"
+                                                    </c:if>>Cao Bằng</option>
+                                            <option value="Đà Nẵng"
+                                                    <c:if test="${param.txtCity == 'Đà Nẵng'}">
+                                                        selected="selected"
+                                                    </c:if>>Đà Nẵng</option>
+                                            <option value="Đắk Lắk"
+                                                    <c:if test="${param.txtCity == 'Đắk Lắk'}">
+                                                        selected="selected"
+                                                    </c:if>>Đắk Lắk</option>
+                                            <option value="Đắk Nông"
+                                                    <c:if test="${param.txtCity == 'Đắk Nông'}">
+                                                        selected="selected"
+                                                    </c:if>>Đắk Nông</option>
+                                            <option value="Điện Biên"
+                                                    <c:if test="${param.txtCity == 'Điện Biên'}">
+                                                        selected="selected"
+                                                    </c:if>>Điện Biên</option>
+                                            <option value="Đồng Nai"
+                                                    <c:if test="${param.txtCity == 'Đồng Nai'}">
+                                                        selected="selected"
+                                                    </c:if>>Đồng Nai</option>
+                                            <option value="Đồng Tháp"
+                                                    <c:if test="${param.txtCity == 'Đồng Tháp'}">
+                                                        selected="selected"
+                                                    </c:if>>Đồng Tháp</option>
+                                            <option value="Gia Lai"
+                                                    <c:if test="${param.txtCity == 'Gia Lai'}">
+                                                        selected="selected"
+                                                    </c:if>>Gia Lai</option>
+                                            <option value="Hà Giang"
+                                                    <c:if test="${param.txtCity == 'Hà Giang'}">
+                                                        selected="selected"
+                                                    </c:if>>Hà Giang</option>
+                                            <option value="Hà Nam"
+                                                    <c:if test="${param.txtCity == 'Hà Nam'}">
+                                                        selected="selected"
+                                                    </c:if>>Hà Nam</option>
+                                            <option value="Hà Nội"
+                                                    <c:if test="${param.txtCity == 'Hà Nội'}">
+                                                        selected="selected"
+                                                    </c:if>>Hà Nội</option>
+                                            <option value="Hà Tĩnh"
+                                                    <c:if test="${param.txtCity == 'Hà Tĩnh'}">
+                                                        selected="selected"
+                                                    </c:if>>Hà Tĩnh</option>
+                                            <option value="Hải Dương"
+                                                    <c:if test="${param.txtCity == 'Hải Dương'}">
+                                                        selected="selected"
+                                                    </c:if>>Hải Dương</option>
+                                            <option value="Hải Phòng"
+                                                    <c:if test="${param.txtCity == 'Hải Phòng'}">
+                                                        selected="selected"
+                                                    </c:if>>Hải Phòng</option>
+                                            <option value="Hậu Giang"
+                                                    <c:if test="${param.txtCity == 'Hậu Giang'}">
+                                                        selected="selected"
+                                                    </c:if>>Hậu Giang</option>
+                                            <option value="Hồ Chí Minh"
+                                                    <c:if test="${param.txtCity == 'Hồ Chí Minh'}">
+                                                        selected="selected"
+                                                    </c:if>>Hồ Chí Minh</option>
+                                            <option value="Hòa Bình"
+                                                    <c:if test="${param.txtCity == 'Hòa Bình'}">
+                                                        selected="selected"
+                                                    </c:if>>Hòa Bình</option>
+                                            <option value="Hưng Yên"
+                                                    <c:if test="${param.txtCity == 'Hưng Yên'}">
+                                                        selected="selected"
+                                                    </c:if>>Hưng Yên</option>
+                                            <option value="Khánh Hòa"
+                                                    <c:if test="${param.txtCity == 'Khánh Hòa'}">
+                                                        selected="selected"
+                                                    </c:if>>Khánh Hòa</option>
+                                            <option value="Kiên Giang"
+                                                    <c:if test="${param.txtCity == 'Kiên Giang'}">
+                                                        selected="selected"
+                                                    </c:if>>Kiên Giang</option>
+                                            <option value="Kon Tum"
+                                                    <c:if test="${param.txtCity == 'Kon Tum'}">
+                                                        selected="selected"
+                                                    </c:if>>Kon Tum</option>
+                                            <option value="Lai Châu"
+                                                    <c:if test="${param.txtCity == 'Lai Châu'}">
+                                                        selected="selected"
+                                                    </c:if>>Lai Châu</option>
+                                            <option value="Lâm Đồng"
+                                                    <c:if test="${param.txtCity == 'Lâm Đồng'}">
+                                                        selected="selected"
+                                                    </c:if>>Lâm Đồng</option>
+                                            <option value="Lạng Sơn"
+                                                    <c:if test="${param.txtCity == 'Lạng Sơn'}">
+                                                        selected="selected"
+                                                    </c:if>>Lạng Sơn</option>
+                                            <option value="Lào Cai"
+                                                    <c:if test="${param.txtCity == 'Lào Cai'}">
+                                                        selected="selected"
+                                                    </c:if>>Lào Cai</option>
+                                            <option value="Long An"
+                                                    <c:if test="${param.txtCity == 'Long An'}">
+                                                        selected="selected"
+                                                    </c:if>>Long An</option>
+                                            <option value="Nam Định"
+                                                    <c:if test="${param.txtCity == 'Nam Định'}">
+                                                        selected="selected"
+                                                    </c:if>>Nam Định</option>
+                                            <option value="Nghệ An"
+                                                    <c:if test="${param.txtCity == 'Nghệ An'}">
+                                                        selected="selected"
+                                                    </c:if>>Nghệ An</option>
+                                            <option value="Ninh Bình"
+                                                    <c:if test="${param.txtCity == 'Ninh Bình'}">
+                                                        selected="selected"
+                                                    </c:if>>Ninh Bình</option>
+                                            <option value="Ninh Thuận"
+                                                    <c:if test="${param.txtCity == 'Ninh Thuận'}">
+                                                        selected="selected"
+                                                    </c:if>>Ninh Thuận</option>
+                                            <option value="Phú Thọ"
+                                                    <c:if test="${param.txtCity == 'Phú Thọ'}">
+                                                        selected="selected"
+                                                    </c:if>>Phú Thọ</option>
+                                            <option value="Phú Yên"
+                                                    <c:if test="${param.txtCity == 'Phú Yên'}">
+                                                        selected="selected"
+                                                    </c:if>>Phú Yên</option>
+                                            <option value="Quảng Bình"
+                                                    <c:if test="${param.txtCity == 'Quảng Bình'}">
+                                                        selected="selected"
+                                                    </c:if>>Quảng Bình</option>
+                                            <option value="Quảng Nam"
+                                                    <c:if test="${param.txtCity == 'Quảng Nam'}">
+                                                        selected="selected"
+                                                    </c:if>>Quảng Nam</option>
+                                            <option value="Quảng Ngãi"
+                                                    <c:if test="${param.txtCity == 'Quảng Ngãi'}">
+                                                        selected="selected"
+                                                    </c:if>>Quảng Ngãi</option>
+                                            <option value="Quảng Ninh"
+                                                    <c:if test="${param.txtCity == 'Quảng Ninh'}">
+                                                        selected="selected"
+                                                    </c:if>>Quảng Ninh</option>
+                                            <option value="Quảng Trị"
+                                                    <c:if test="${param.txtCity == 'Quảng Trị'}">
+                                                        selected="selected"
+                                                    </c:if>>Quảng Trị</option>
+                                            <option value="Sóc Trăng"
+                                                    <c:if test="${param.txtCity == 'Sóc Trăng'}">
+                                                        selected="selected"
+                                                    </c:if>>Sóc Trăng</option>
+                                            <option value="Sơn La"
+                                                    <c:if test="${param.txtCity == 'Sơn La'}">
+                                                        selected="selected"
+                                                    </c:if>>Sơn La</option>
+                                            <option value="Tây Ninh"
+                                                    <c:if test="${param.txtCity == 'Tây Ninh'}">
+                                                        selected="selected"
+                                                    </c:if>>Tây Ninh</option>
+                                            <option value="Thái Bình"
+                                                    <c:if test="${param.txtCity == 'Thái Bình'}">
+                                                        selected="selected"
+                                                    </c:if>>Thái Bình</option>
+                                            <option value="Thái Nguyên"
+                                                    <c:if test="${param.txtCity == 'Thái Nguyên'}">
+                                                        selected="selected"
+                                                    </c:if>>Thái Nguyên</option>
+                                            <option value="Thanh Hóa"
+                                                    <c:if test="${param.txtCity == 'Thanh Hóa'}">
+                                                        selected="selected"
+                                                    </c:if>>Thanh Hóa</option>
+                                            <option value="Thủ Đức"
+                                                    <c:if test="${param.txtCity == 'Thủ Đức'}">
+                                                        selected="selected"
+                                                    </c:if>>Thủ Đức</option>
+                                            <option value="Thừa Thiên Huế"
+                                                    <c:if test="${param.txtCity == 'Thừa Thiên Huế'}">
+                                                        selected="selected"
+                                                    </c:if>>Thừa Thiên - Huế</option>
+                                            <option value="Tiền Giang"
+                                                    <c:if test="${param.txtCity == 'Tiền Giang'}">
+                                                        selected="selected"
+                                                    </c:if>>Tiền Giang</option>
+                                            <option value="Trà Vinh"
+                                                    <c:if test="${param.txtCity == 'Trà Vinh'}">
+                                                        selected="selected"
+                                                    </c:if>>Trà Vinh</option>
+                                            <option value="Tuyên Quang"
+                                                    <c:if test="${param.txtCity == 'Tuyên Quang'}">
+                                                        selected="selected"
+                                                    </c:if>>Tuyên Quang</option>
+                                            <option value="Vĩnh Long"
+                                                    <c:if test="${param.txtCity == 'Vĩnh Long'}">
+                                                        selected="selected"
+                                                    </c:if>>Vĩnh Long</option>
+                                            <option value="Vĩnh Phúc"
+                                                    <c:if test="${param.txtCity == 'Vĩnh Phúc'}">
+                                                        selected="selected"
+                                                    </c:if>>Vĩnh Phúc</option>
+                                            <option value="Yên Bái"
+                                                    <c:if test="${param.txtCity == 'Yên Bái'}">
+                                                        selected="selected"
+                                                    </c:if>>Yên Bái</option>
                                         </select>
                                         <label for="city" class="form-label">City</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label text-secondary">Gender:</label>
-                                    <div class="form-check form-check-inline">
+                                    <div class="form-check form-check-inline" style="
+                                         margin-left: 9px;
+                                         ">
                                         <input class="form-check-input" type="radio" value="Nam" name="txtGender" id="male" required checked>
                                         <label class="form-check-label text-secondary" for="male">
-                                            Nam
+                                            Male
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" value="Nữ" name="txtGender" id="female" required>
                                         <label class="form-check-label text-secondary" for="female">
-                                            Nữ
+                                            Female
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" value="Ẩn" name="txtGender" id="hidden" required>
                                         <label class="form-check-label text-secondary" for="hidden">
-                                            Ẩn
+                                            Hidden
                                         </label>
                                     </div>
                                 </div>
@@ -210,7 +403,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" name="iAgree" id="iAgree" required>
                                         <label class="form-check-label text-secondary" for="iAgree">
-                                            I agree to the <a href="#!" class="link-primary text-decoration-none">terms and conditions</a>
+                                            I agree to the <a href="termsOfUse" target="_blank" class="link-primary text-decoration-none">terms and conditions</a>
                                         </label>
                                     </div>
                                 </div>              

@@ -47,24 +47,18 @@ public class CheckNotificationsServlet extends HttpServlet {
         if (session != null) {
             username = (String) session.getAttribute("USERNAME");
         }
-        // Sử dụng Gson để chuyển đổi danh sách thông báo thành JSON
         Gson gson = new Gson();
-
         try (PrintWriter out = response.getWriter()) {
-            // Lấy tất cả các thông báo chưa đọc
             NotificationsDAO notificationDAO = new NotificationsDAO();
             List<NotificationsDTO> notifications = notificationDAO.getUnreadNotifications(username);
-            //Nếu có thông báo chưa đọc
             if (!notifications.isEmpty()) {
                 List<Integer> notificationIds = notifications.stream().map(NotificationsDTO::getId).collect(Collectors.toList());
-                // Đánh dấu là đã đọc sau khi lấy thông báo
                 notificationDAO.markAllAsRead(notificationIds);
-                // Gửi danh sách thông báo dưới dạng JSON
                 String jsonResponse = gson.toJson(notifications);
                 out.write(jsonResponse);
-                log("Phản hồi JSON: " + jsonResponse); // Ghi log phản hồi
+                log("Phản hồi JSON: " + jsonResponse);
             } else {
-                out.write("[]"); // Trả về mảng rỗng nếu không có thông báo
+                out.write("[]");
             }
             out.flush();
         } catch (SQLException ex) {

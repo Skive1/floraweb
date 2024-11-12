@@ -106,6 +106,7 @@
             font-weight: 500;
             position: relative;
             z-index: 10;
+            font-size: 15px;
         }
 
         svg {
@@ -218,8 +219,8 @@
 </head>
 <body>
     <div class="dropdown-menu m-0 bg-secondary rounded-0" style="left: 40px">
-        <a href="viewProfileAction" class="dropdown-item"><span class="button-text">Hồ sơ của tôi</span></a>
-        <a href="purchasedOrder" class="dropdown-item"><span class="button-text">Đơn hàng</span>
+        <a href="viewProfileAction" class="dropdown-item"><span class="button-text">My Profile</span></a>
+        <a href="purchasedOrder" class="dropdown-item"><span class="button-text">Order History</span>
             <c:if test="${not empty sessionScope.NUMBER_ORDER}">
                 <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: 44px;left: 127px;height: 23px;min-width: 23px;">${sessionScope.NUMBER_ORDER}</span>
             </c:if>
@@ -254,7 +255,7 @@
                 <path d="M93.4 86.3H58.6c-1.9 0-3.4-1.5-3.4-3.4V17.1c0-1.9 1.5-3.4 3.4-3.4h34.8c1.9 0 3.4 1.5 3.4 3.4v65.8c0 1.9-1.5 3.4-3.4 3.4z" />
                 <circle cx="66" cy="50" r="3.7" />
                 </svg>
-                <span class="button-text">Đăng xuất</span>
+                <span class="button-text">Sign Out</span>
             </button></a>
     </div>
     <script>

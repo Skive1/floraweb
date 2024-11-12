@@ -108,7 +108,7 @@
                     <div class="row content">
                         <div class="col-12">
                             <div class="mb-5">
-                                <h2 class="display-5 fw-bold text-center">Sign in</h2>
+                                <h2 class="display-5 fw-bold text-center">Sign In</h2>
                             </div>
                         </div>                        
                     </div>
@@ -158,7 +158,7 @@
                                                 <div class="d-grid">          
                                                     <input type="submit" class="btn btn-class" style="color: #ffffff; font-weight: bold" value="Login" name="btAction" />
                                                     <br/>
-                                                    <a class="btn btn-class" style="color: #ffffff; font-weight: bold; background-color: #28a745" href="registerPage">Or Sign Up</a>                                           
+                                                    <a class="btn btn-class" style="color: #ffffff; font-weight: bold; background-color: #28a745" href="registerPage">Sign Up</a>                                           
                                                 </div>
                                             </div>
                                         </div>
@@ -168,7 +168,7 @@
                                 <div class="col-12 col-lg-2 d-flex align-items-center justify-content-center gap-3 flex-lg-column">
                                     <div class="bg-dark h-100 d-none d-lg-block" style="width: 1px; background-color: rgba(0, 0, 0, 0.1);"></div>
                                     <div class="bg-dark w-100 d-lg-none" style="height: 1px; background-color: rgba(0, 0, 0, 0.1);"></div>
-                                    <div>or</div>
+                                    <div>Or</div>
                                     <div class="bg-dark h-100 d-none d-lg-block" style="width: 1px; background-color: rgba(0, 0, 0, 0.1);"></div>
                                     <div class="bg-dark w-100 d-lg-none" style="height: 1px; background-color: rgba(0, 0, 0, 0.1);"></div>
                                 </div>
@@ -189,7 +189,34 @@
                 </div>
             </section>
         </main>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+                                                        window.onload = function () {
+                                                            const urlParams = new URLSearchParams(window.location.search);
+                                                            if (urlParams.get('status') === 'success') {
+                                                                Swal.fire({
+                                                                    icon: 'success',
+                                                                    title: 'Đăng ký thành công!',
+                                                                    text: 'Bạn có thể đăng nhập ngay bây giờ.',
+                                                                    confirmButtonText: 'OK'
+                                                                });
 
+                                                                const newURL = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                                                                window.history.replaceState({}, document.title, newURL);
+                                                            }
+                                                            if (urlParams.get('recoveryStatus') === 'success') {
+                                                                Swal.fire({
+                                                                    icon: 'success',
+                                                                    title: 'Thay đổi password thành công!',
+                                                                    text: 'Bạn có thể đăng nhập ngay bây giờ.',
+                                                                    confirmButtonText: 'OK'
+                                                                });
+
+                                                                const newURL = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                                                                window.history.replaceState({}, document.title, newURL);
+                                                            }
+                                                        };
+        </script>
         <!-- Script JS -->
         <script src="js/javascript.js"></script>
         <!--$%analytics%$-->

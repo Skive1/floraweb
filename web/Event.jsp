@@ -61,7 +61,7 @@
                     </div>
                     <div class="top-link pe-2">
                         <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+                        <a href="termsOfUse" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
                 </div>
@@ -74,8 +74,8 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link ">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
@@ -87,7 +87,8 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
+                                    <a href="deliveryIncome" class="nav-item nav-link">Revenue</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -149,7 +150,7 @@
 
                                 <div class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
-                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60"><c:out value ="${sessionScope.USER.fullName}"/>
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
                                     </div>                         
@@ -196,13 +197,13 @@
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Event List:</h1>
+                <h1 class="mb-4">List of events:</h1>
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
                             <div class="col-xl-3">
                                 <div class="input-group w-100 mx-auto d-flex">
-                                    <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                                    <input oninput="searchEventByKeyword(this)" type="search" value="${keyword}" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
                                     <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
                                 </div>
                             </div>
@@ -213,7 +214,7 @@
                                 <div class="row g-4">
                                     <div class="col-lg-12">
                                         <div class="mb-3">
-                                            <h4>Categories</h4>
+                                            <h4 style="margin-top: 8px">Categories</h4>
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
                                                     <div class="d-flex justify-content-between fruite-name"> 
@@ -268,7 +269,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-9">
-                                    <div class="row g-4 justify-content-center">
+                                    <div class="row g-4 justify-content-center" id="eventList">
                                     <c:set var="event" value="${requestScope.EVENT_LIST}"/>
                                     <c:if test="${not empty event}">
                                         <c:forEach var="eventList" items="${requestScope.EVENT_LIST}">
@@ -279,17 +280,17 @@
                                                 <div class="col-md-12 col-lg-6 col-xl-12">
                                                     <div class="rounded position-relative fruite-item">
                                                         <div class="fruite-img">
-                                                            <img src="${eventList.eventImg}" class="img-fluid w-100 rounded-top" alt="${eventList.eventName}">
+                                                            <img src="${eventList.eventImg}" class="img-fluid w-100 rounded-top" alt="<c:out value ="${eventList.eventName}"/>">
                                                         </div>
                                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-                                                            Owner: ${eventList.eventOwner}
+                                                            Owner: <c:out value ="${eventList.eventOwner}"/>
                                                         </div>
                                                         <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                            <h4>${eventList.eventName}</h4>
-                                                            <p>Địa điểm: ${eventList.eventLocation}, ${eventList.eventCity}</p>
+                                                            <h4><c:out value ="${eventList.eventName}"/></h4>
+                                                            <p>Address: <c:out value ="${eventList.eventLocation}"/>, <c:out value ="${eventList.eventCity}"/></p>
                                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                                 <p class="text-dark fs-5 fw-bold mb-0">
-                                                                    Thời gian: <fmt:formatDate value="${eventList.startDate}" pattern="dd/MM/yyyy HH:mm" /> - <fmt:formatDate value="${eventList.endDate}" pattern="dd/MM/yyyy HH:mm" />
+                                                                    Time: <fmt:formatDate value="${eventList.startDate}" pattern="dd/MM/yyyy HH:mm" /> - <fmt:formatDate value="${eventList.endDate}" pattern="dd/MM/yyyy HH:mm" />
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -313,36 +314,54 @@
 
         <!-- Footer Start -->
         <jsp:include page="footer.jsp"></jsp:include>
-        <!-- Footer End -->
+            <!-- Footer End -->
 
-        <!-- Copyright Start -->
-        <div class="container-fluid copyright bg-dark py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+            <!-- Copyright Start -->
+            <div class="container-fluid copyright bg-dark py-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Rewind</a>, All right reserved.</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Copyright End -->
+            <!-- Copyright End -->
 
 
 
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
 
 
-        <!-- JavaScript Libraries -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/lightbox/js/lightbox.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+            <!-- JavaScript Libraries -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="lib/easing/easing.min.js"></script>
+            <script src="lib/waypoints/waypoints.min.js"></script>
+            <script src="lib/lightbox/js/lightbox.min.js"></script>
+            <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+            <script>
+                function searchEventByKeyword(param) {
+                    var txtSearch = param.value;
+                    $.ajax({
+                        url: "searchKeyWordEvent",
+                        type: "GET",
+                        data: {
+                            txt: txtSearch
+                        },
+                        success: function (data) {
+                            var row = document.getElementById("eventList");
+                            row.innerHTML = data;
+                        },
+                        error: function (xhr) {
 
-        <!-- Template Javascript -->
+                        }
+                    });
+                }
+            </script>
+            <!-- Template Javascript -->
         <c:if test="${not empty sessionScope.USER}">
             <script src="js/notification.js"></script>
         </c:if>

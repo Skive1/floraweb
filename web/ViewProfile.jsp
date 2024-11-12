@@ -12,9 +12,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <style>
     section {
-        background-image: url(img/ThousandFlower.jpg); /* Đường dẫn đến hình ảnh background */
-        background-size: cover; /* Để hình ảnh bao phủ toàn bộ phần main */
-        background-position: center; /* Để căn giữa hình ảnh */
+        background-image: url(img/ThousandFlower.jpg);
+        background-size: cover;
+        background-position: center;
     }
     .styled-link {
         text-decoration: none;
@@ -49,9 +49,9 @@
                                     <div class="text-center mb-4">
                                         <img src="img/floralogo.png" alt="Logo" width="360" >
                                     </div>
-                                    <h2 class="h4 text-center">My Profile</h2>
+                                    <h2 class="h4 text-center">My profile</h2>
                                     <h3 class="fs-6 fw-normal text-secondary text-center m-0">You can update your profile here</h3>
-                                    <h3 class="fs-6 fw-normal text-secondary text-center m-0">Full Name and Email cannot be edited</h3>
+                                    <h3 class="fs-6 fw-normal text-secondary text-center m-0">Full name and Email cannot be edited</h3>
                                 </div>
                             </div>
                         </div>
@@ -200,7 +200,7 @@
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" name="txtFullname" value="${sessionScope.USER_INFO.fullName}" id="fullName" placeholder="Full Name" readonly>
-                                        <label for="fullName" class="form-label">Full Name</label>
+                                        <label for="fullName" class="form-label">Full name</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -212,10 +212,10 @@
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" name="txtPhone" id="phone" value="${sessionScope.USER_INFO.phone}" placeholder="" >
-                                        <label for="phone" class="form-label">Phone</label>
+                                        <label for="phone" class="form-label">Phone number</label>
                                         <div style="color: red">
                                             <c:if test="${not empty errors.phoneError}">
-                                                ${errors.phoneError}
+                                                <c:out value ="${errors.phoneError}"/>
                                             </c:if>
                                         </div> 
                                     </div>
@@ -223,10 +223,10 @@
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" name="txtStreet" id="street" value="${sessionScope.USER_INFO.street}" placeholder="" >
-                                        <label for="street" class="form-label">Street</label>
+                                        <label for="street" class="form-label">Address</label>
                                         <div style="color: red">
                                             <c:if test="${not empty errors.streetError}">
-                                                ${errors.streetError}
+                                                <c:out value ="${errors.streetError}"/>
                                             </c:if>
                                         </div>                                        
                                     </div>
@@ -497,13 +497,15 @@
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label text-secondary">Gender:</label>
-                                    <div class="form-check form-check-inline">
+                                    <div class="form-check form-check-inline" style="
+                                         margin-left: 9px;
+                                         ">
                                         <input class="form-check-input" type="radio" value="Nam" name="txtGender" id="male" required
                                                <c:if test="${sessionScope.USER_INFO.gender == 'Nam'}">
                                                    checked="checked"
                                                </c:if> />
                                         <label class="form-check-label text-secondary" for="male">
-                                            Nam
+                                            Male
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -512,7 +514,7 @@
                                                    checked="checked"
                                                </c:if> />
                                         <label class="form-check-label text-secondary" for="female">
-                                            Nữ
+                                            Female
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -521,7 +523,7 @@
                                                    checked="checked"
                                                </c:if> />
                                         <label class="form-check-label text-secondary" for="hidden">
-                                            Ẩn
+                                            Hidden
                                         </label>
                                     </div>
                                 </div>
@@ -545,10 +547,8 @@
         let confirmation = confirm("Are you sure you want to update your profile?");
 
         if (confirmation) {
-// If the user clicks "Yes", submit the form
             document.getElementById("updateForm").submit();
         } else {
-// If the user clicks "No", do nothing (cancel the update)
             return false;
         }
     }

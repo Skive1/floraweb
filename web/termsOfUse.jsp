@@ -1,5 +1,5 @@
 <%-- 
-    Document   : contactJSP
+    Document   : termsOfUse
     Created on : Sep 22, 2024, 12:58:52 PM
     Author     : ADMIN
 --%>
@@ -11,7 +11,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Fruitables - Vegetable Website Template</title>
+        <title>Flora Rewind - Terms of use</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -40,6 +40,72 @@
         <link href="css/indicator.css" rel="stylesheet">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.8;
+                margin: 0;
+                padding: 0;
+                background-color: #f8f9fa;
+                color: #333;
+            }
+
+            .Privacy-Content {
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            h2 {
+                color: #007bff;
+                border-bottom: 2px solid #007bff;
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+            }
+
+            h3 {
+                color: #0056b3;
+                margin-top: 20px;
+                margin-bottom: 10px;
+            }
+
+            p {
+                margin: 15px 0;
+                text-align: justify;
+            }
+
+            ul {
+                margin-left: 20px;
+                margin-bottom: 15px;
+            }
+
+            footer {
+                text-align: center;
+                padding: 10px;
+                background-color: #007bff;
+                color: white;
+                position: relative;
+                bottom: 0;
+                width: 100%;
+            }
+
+            .copyright {
+                background-color: #343a40;
+                padding: 20px 0;
+            }
+
+            .copyright a {
+                color: white;
+                text-decoration: none;
+            }
+
+            .copyright a:hover {
+                text-decoration: underline;
+            }
+        </style>
     </head>
 
     <body>
@@ -57,7 +123,7 @@
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
                         <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="https://hcmuni.fpt.edu.vn/" class="text-white">FPT University, HCM</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="mailto:flora.flower.platform@gmail.com" class="text-white">flora.flower.platform@gmail.com</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
                         <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
@@ -74,10 +140,10 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link">Home</a>
+                            <a href="home" class="nav-item nav-link ">Home</a>
                             <a href="shoppingAction" class="nav-item nav-link">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link ">Event</a>
+                            <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link active">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
@@ -88,7 +154,6 @@
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
                                     <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
-                                    <a href="deliveryIncome" class="nav-item nav-link">Revenue</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -150,7 +215,7 @@
 
                                 <div class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
-                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60"><c:out value ="${sessionScope.USER.fullName}"/>
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
                                     </div>                         
@@ -186,68 +251,66 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Contact</h1>
+            <h1 class="text-center text-white display-6">Terms of use</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
-                <li class="breadcrumb-item active text-white">Contact</li>
+
             </ol>
         </div>
         <!-- Single Page Header End -->
 
 
-        <!-- Contact Start -->
-        <div class="container-fluid contact py-5">
-            <div class="container py-5">
-                <div class="p-5 bg-light rounded">
-                    <div class="row g-4">
-                        <div class="col-12">
-                            <div class="text-center mx-auto" style="max-width: 700px;">
-                                <h1 class="text-third">Get in touch</h1>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="h-100 rounded">
-                                <iframe class="rounded w-100" 
-                                        style="height: 400px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.609941531086!2d106.8073027107938!3d10.841132857951939!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752731176b07b1%3A0xb752b24b379bae5e!2sFPT%20University%20HCMC!5e0!3m2!1sen!2s!4v1728456284808!5m2!1sen!2s" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" 
-                                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                            </div>
-                        </div>
-                        <div class="col-lg-7">
-                            <form action="" class="">
-                                <input type="text" class="w-100 form-control border-0 py-3 mb-4" placeholder="Your Name">
-                                <input type="email" class="w-100 form-control border-0 py-3 mb-4" placeholder="Enter Your Email">
-                                <textarea class="w-100 form-control border-0 mb-4" rows="5" cols="10" placeholder="Your Message"></textarea>
-                                <button class="w-100 btn form-control border-secondary py-3 bg-white text-third " type="submit">Submit</button>
-                            </form>
-                        </div>
-                        <div class="col-lg-5">
-                            <div class="d-flex p-4 rounded mb-4 bg-white">
-                                <i class="fas fa-map-marker-alt fa-2x text-third me-4"></i>
-                                <div>
-                                    <h4>Address</h4>
-                                    <p class="mb-2">Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh</p>
-                                </div>
-                            </div>
-                            <div class="d-flex p-4 rounded mb-4 bg-white">
-                                <i class="fas fa-envelope fa-2x text-third me-4"></i>
-                                <div>
-                                    <h4>Mail Us</h4>
-                                    <p class="mb-2">flora.flower.platform@gmail.com</p>
-                                </div>
-                            </div>
-                            <div class="d-flex p-4 rounded bg-white">
-                                <i class="fa fa-phone-alt fa-2x text-third me-4"></i>
-                                <div>
-                                    <h4>Telephone</h4>
-                                    <p class="mb-2">(+84) 123 456 789</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Content Start -->
+        <div class="Privacy-Content">
+            <section>
+                <h2 style="text-align:center">Terms of use</h2>
+                <p>Welcome to Flora Rewind. By using this website, you agree to comply with the terms and conditions below. Please read them carefully before using our services.</p>
+
+                <h3>1. Introduction</h3>
+                <p>Flora Rewind is an online platform for reselling excess floral inventory from events with the goal of reducing flower waste. The site connects florists with surplus (post-event) flowers with buyers interested in low-cost floral products.</p>
+
+                <h3>2. Target user</h3>
+                <p>Flora Rewind provides services to four main user groups:</p>
+                <ul>
+                    <li>Sellers: post surplus flowers from events for sale.</li>
+                    <li>Customers: looking to buy flower products at discounted prices.</li>
+                    <li>Delivery personnel: Manage and execute deliveries for orders.</li>
+                    <li>Admin: website management and operation.</li>
+                </ul>
+
+                <h3>3. Registration and Account</h3>
+                <ul>
+                    <li>Each user must register a valid account to use Flora Rewind services.</li>
+                    <li>Users are responsible for keeping their login information confidential and may not share their account with others.</li>
+                    <li>Users must provide accurate personal information when registering an account. Any false declaration will result in account termination.</li>
+                </ul>
+
+                <h3>4. User Rights and Responsibilities</h3>
+                <ul>
+                    <li>The seller is responsible for the accuracy of the information about the product (flowers) and guarantees the quality of the product as described.</li>
+                    <li>Buyers should carefully check the information before placing an order. Flora Rewind is not responsible for the quality of the products provided by the seller.</li>
+                    <li>The delivery person is responsible for ensuring delivery on time and to the correct address.</li>
+                    <li>Administrators reserve the right to delete or edit content that violates the rules without prior notice.</li>
+                </ul>
+
+                <h3>5. Privacy Policy</h3>
+                <p>Privacy Policy Information: <a href="privacyPage">Click here for more details</a></p>
+
+                <h3>6. Terms of Use</h3>
+                <ul>
+                    <li>Users may not use Flora Rewind for the purpose of fraud, spreading false information, or violating the law.</li>
+                    <li>Prohibit the use of offensive language, harassment, or posting offensive content.</li>
+                    <li>Any violation will result in account suspension and may be handled according to the law.</li>
+                </ul>
+                
+                <h3>7. Legal Responsibility</h3>
+                <p>Flora Rewind is not responsible for any losses or disputes between sellers and buyers. We only provide a connection platform and do not guarantee the quality of third-party products or services.</p>
+
+                <h3>8. Contact</h3>
+                <p>If you have any questions about this privacy policy, please contact us by email: <a href="mailto:flora.flower.platform@gmail.com">flora.flower.platform@gmail.com</a>.</p>
+            </section>
         </div>
-        <!-- Contact End -->
+        <!-- Content End -->
 
 
         <!-- Footer Start -->

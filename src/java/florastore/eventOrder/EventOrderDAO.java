@@ -452,7 +452,7 @@ public class EventOrderDAO implements Serializable {
                 //2. Create SQL String
                 String sql = "Select COUNT(EventOrderId) as NumberOfOrder "
                         + "From EventOrder "
-                        + "Where AccountUsername = ? ";
+                        + "Where AccountUsername = ? AND Status <> N'Đã giao' AND Status <> N'Hủy'";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
                 stm.setString(1, username);
@@ -492,7 +492,7 @@ public class EventOrderDAO implements Serializable {
             if (con != null) {
                 //2. Create SQL String
                 String sql = "Update EventOrder "
-                        + "Set Status = 'Hủy' "
+                        + "Set Status = N'Hủy' "
                         + "Where EventOrderId = ? ";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
