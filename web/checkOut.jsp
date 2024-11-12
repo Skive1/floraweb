@@ -63,7 +63,7 @@
                 const url = "http://localhost:8084/FloraRewind/checkouts";
                 if (performance.navigation.type === performance.navigation.TYPE_BACK_FORWARD) {
                     if (url.includes(prevPage)) {
-                        window.location.href = "https://modern-hermit-touched.ngrok-free.app/FloraRewind/order";
+                        window.location.href = "http://localhost:8084/FloraRewind/order";
                     }
                 }
             };
