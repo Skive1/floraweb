@@ -233,7 +233,7 @@
                         <div class="col-md-12 col-lg-6 col-xl-6">
                             <div class="form-item">
                                 <label class="form-label my-3">Full name<sup class="red">*</sup></label>
-                                <input type="text" name="fullname" value="${sessionScope.USER.fullName}" id="fullname" class="form-control"  pattern=".*\S+.*"  title="Không được phép có khoảng trắng" required="">
+                                <input type="text" name="fullname" value="${sessionScope.USER.fullName}" id="fullname" class="form-control" maxlength="50"  pattern="^(?!\s*$)[a-zA-ZÀÁẢÃẠÂẤẦẨẪẬĂẰẮẲẴẶÈÉẺẪẸÊẾỀỂỄỆÌÍỈĨỊÒÓỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÙÚỦŨỤƯỨỪỬỮỰÝỲỶỸàáảãạâấầẩẫậăằắẳẵặèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựýỳỷỹĐđ\s]+$"  title="No blank, space only and special words" required="">
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Phone<sup class="red">*</sup></label>
@@ -241,7 +241,7 @@
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Address <sup class="red">*</sup></label>
-                                <input type="text" name="address" value="${sessionScope.USER.street}" id="address" class="form-control" pattern=".*\S+.*" title="Không được phép có khoảng trắng" required="">
+                                <input type="text" name="address" value="${sessionScope.USER.street}" id="address" maxlength="100" class="form-control" pattern="^(?!\s*$)" title="No blank and space only" required="">
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">City<sup class="red">*</sup></label>
@@ -709,6 +709,7 @@
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.14/dist/sweetalert2.all.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>
         <script src="lib/waypoints/waypoints.min.js"></script>
@@ -716,20 +717,43 @@
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
         <script src="https://kit.fontawesome.com/4cb3201524.js" crossorigin="anonymous"></script>
         <script>
-                                    function disableButton() {
-                                        const submitButton = document.getElementById("submitBtn");
-                                        submitButton.disabled = true;
-                                        const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-                                        const overlay = document.getElementById("overlay");
-                                        overlay.style.display = "block";
-                                        if (paymentMethod === "COD") {
-                                            setTimeout(function () {
-                                                document.getElementById("checkoutForm").submit();
-                                            }, 1500);
-                                        } else {
+                                function disableButton() {
+                                    const submitButton = document.getElementById("submitBtn");
+                                    submitButton.disabled = true;
+                                    const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+                                    const overlay = document.getElementById("overlay");
+                                    overlay.style.display = "block";
+
+                                    const form = document.getElementById("checkoutForm");
+                                    if (!validateForm(form)) {
+                                        overlay.style.display = "none";
+                                        submitButton.disabled = false;
+                                        return;
+                                    }
+
+                                    if (paymentMethod === "COD") {
+                                        setTimeout(function () {
                                             document.getElementById("checkoutForm").submit();
+                                        }, 1500);
+                                    } else {
+                                        document.getElementById("checkoutForm").submit();
+                                    }
+                                }
+
+                                function validateForm(form) {
+                                    const requiredFields = form.querySelectorAll("input[required], input[pattern], select[required]");
+                                    for (let field of requiredFields) {
+                                        if (!field.value.trim()) {
+                                            field.focus();
+                                            return false;
+                                        }
+                                        if (field.pattern && !new RegExp(field.pattern).test(field.value)) {
+                                            field.focus();
+                                            return false;
                                         }
                                     }
+                                    return true;
+                                }
         </script>
         <!-- Template Javascript -->
         <script src="Animation/script.js"></script>
