@@ -75,7 +75,7 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link active">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
@@ -87,7 +87,8 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
+                                    <a href="deliveryIncome" class="nav-item nav-link">Revenue</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -149,7 +150,7 @@
 
                                 <div class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
-                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60"><c:out value ="${sessionScope.USER.fullName}"/>
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
                                     </div>                         

@@ -11,7 +11,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Flora Rewind - Chính sách bảo mật</title>
+        <title>Flora Rewind - Terms of use</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -141,7 +141,7 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link ">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link active">Contact</a>
@@ -153,7 +153,7 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -251,10 +251,10 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Điều khoản sử dụng</h1>
+            <h1 class="text-center text-white display-6">Terms of use</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
-               
+
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -263,51 +263,51 @@
         <!-- Content Start -->
         <div class="Privacy-Content">
             <section>
-                <h2 style="text-align:center">Điều khoản sử dụng</h2>
-                <p>Chào mừng bạn đến với Flora Rewind. Khi sử dụng trang web này, bạn đồng ý tuân thủ các điều khoản và điều kiện dưới đây. Vui lòng đọc kỹ trước khi sử dụng dịch vụ của chúng tôi.</p>
+                <h2 style="text-align:center">Terms of use</h2>
+                <p>Welcome to Flora Rewind. By using this website, you agree to comply with the terms and conditions below. Please read them carefully before using our services.</p>
 
-                <h3>1. Giới thiệu</h3>
-                <p>Flora Rewind là một nền tảng trực tuyến dành cho việc tái bán hoa tồn kho từ các sự kiện với mục tiêu giảm thiểu lãng phí hoa. Trang web kết nối những người bán hoa dư thừa (sau sự kiện) với người mua quan tâm đến các sản phẩm hoa giá rẻ.</p>
+                <h3>1. Introduction</h3>
+                <p>Flora Rewind is an online platform for reselling excess floral inventory from events with the goal of reducing flower waste. The site connects florists with surplus (post-event) flowers with buyers interested in low-cost floral products.</p>
 
-                <h3>2. Đối tượng Người Dùng</h3>
-                <p>Flora Rewind cung cấp các dịch vụ cho bốn nhóm người dùng chính:</p>
+                <h3>2. Target user</h3>
+                <p>Flora Rewind provides services to four main user groups:</p>
                 <ul>
-                    <li>Người bán: đăng bán hoa dư thừa từ các sự kiện.</li>
-                    <li>Người mua: tìm mua các sản phẩm hoa với giá ưu đãi.</li>
-                    <li>Nhân viên giao hàng: quản lý và thực hiện giao hàng cho các đơn hàng.</li>
-                    <li>Quản trị viên: quản lý và điều hành trang web.</li>
+                    <li>Sellers: post surplus flowers from events for sale.</li>
+                    <li>Customers: looking to buy flower products at discounted prices.</li>
+                    <li>Delivery personnel: Manage and execute deliveries for orders.</li>
+                    <li>Admin: website management and operation.</li>
                 </ul>
 
-                <h3>3. Đăng Ký và Tài Khoản</h3>
+                <h3>3. Registration and Account</h3>
                 <ul>
-                    <li>Mỗi người dùng phải đăng ký tài khoản hợp lệ để sử dụng dịch vụ của Flora Rewind.</li>
-                    <li>Người dùng chịu trách nhiệm bảo mật thông tin đăng nhập và không được chia sẻ tài khoản với người khác.</li>
-                    <li>Người dùng phải cung cấp thông tin cá nhân chính xác khi đăng ký tài khoản. Mọi hành vi khai báo sai sẽ dẫn đến việc chấm dứt tài khoản.</li>
+                    <li>Each user must register a valid account to use Flora Rewind services.</li>
+                    <li>Users are responsible for keeping their login information confidential and may not share their account with others.</li>
+                    <li>Users must provide accurate personal information when registering an account. Any false declaration will result in account termination.</li>
                 </ul>
-                
-                <h3>4. Quyền và Trách Nhiệm của Người Dùng</h3>
-                <ul>
-                    <li>Người bán chịu trách nhiệm về tính chính xác của thông tin về sản phẩm (hoa) và đảm bảo chất lượng sản phẩm theo mô tả.</li>
-                    <li>Người mua cần kiểm tra kỹ thông tin trước khi đặt hàng. Flora Rewind không chịu trách nhiệm về chất lượng sản phẩm mà người bán cung cấp.</li>
-                    <li>Nhân viên giao hàng có trách nhiệm đảm bảo giao hàng đúng hẹn và theo đúng địa chỉ.</li>
-                    <li>Quản trị viên có quyền xóa hoặc chỉnh sửa nội dung vi phạm quy định mà không cần thông báo trước.</li>
-                </ul>
-                
-                <h3>5. Chính Sách Bảo Mật</h3>
-                <p>Thông tin về chính sách bảo mật: <a href="privacyPage">Ấn vào đây để biết thêm chi tiết</a></p>
 
-                <h3>6. Quy Định Sử Dụng</h3>
+                <h3>4. User Rights and Responsibilities</h3>
                 <ul>
-                    <li>Người dùng không được sử dụng Flora Rewind cho mục đích lừa đảo, phát tán thông tin sai sự thật, hoặc các hành vi vi phạm pháp luật.</li>
-                    <li>Cấm sử dụng ngôn từ xúc phạm, quấy rối, hoặc đăng nội dung phản cảm.</li>
-                    <li>Mọi vi phạm sẽ dẫn đến việc khóa tài khoản và có thể bị xử lý theo pháp luật.</li>
+                    <li>The seller is responsible for the accuracy of the information about the product (flowers) and guarantees the quality of the product as described.</li>
+                    <li>Buyers should carefully check the information before placing an order. Flora Rewind is not responsible for the quality of the products provided by the seller.</li>
+                    <li>The delivery person is responsible for ensuring delivery on time and to the correct address.</li>
+                    <li>Administrators reserve the right to delete or edit content that violates the rules without prior notice.</li>
+                </ul>
+
+                <h3>5. Privacy Policy</h3>
+                <p>Privacy Policy Information: <a href="privacyPage">Click here for more details</a></p>
+
+                <h3>6. Terms of Use</h3>
+                <ul>
+                    <li>Users may not use Flora Rewind for the purpose of fraud, spreading false information, or violating the law.</li>
+                    <li>Prohibit the use of offensive language, harassment, or posting offensive content.</li>
+                    <li>Any violation will result in account suspension and may be handled according to the law.</li>
                 </ul>
                 
-                <h3>7. Trách Nhiệm Pháp Lý</h3>
-                <p>Flora Rewind không chịu trách nhiệm về các tổn thất hoặc tranh chấp xảy ra giữa người bán và người mua. Chúng tôi chỉ cung cấp nền tảng kết nối và không cam kết về chất lượng sản phẩm hoặc dịch vụ của bên thứ ba.</p>
-                
-                <h3>8. Liên Hệ</h3>
-                <p>Nếu bạn có bất kỳ câu hỏi nào về chính sách bảo mật này, xin vui lòng liên hệ với chúng tôi qua email: <a href="mailto:flora.flower.platform@gmail.com">flora.flower.platform@gmail.com</a>.</p>
+                <h3>7. Legal Responsibility</h3>
+                <p>Flora Rewind is not responsible for any losses or disputes between sellers and buyers. We only provide a connection platform and do not guarantee the quality of third-party products or services.</p>
+
+                <h3>8. Contact</h3>
+                <p>If you have any questions about this privacy policy, please contact us by email: <a href="mailto:flora.flower.platform@gmail.com">flora.flower.platform@gmail.com</a>.</p>
             </section>
         </div>
         <!-- Content End -->
@@ -322,7 +322,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Store</a>, All right reserved.</span>
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Rewind</a>, All right reserved.</span>
                         </div>
                     </div>
                 </div>

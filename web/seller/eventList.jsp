@@ -33,26 +33,32 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <title>Seller | Add Event</title>
         <link rel="icon" href="img/flora-favicon.png"/>
-         <style>
-        .icon-button {
-            background-color: transparent;
-            color: green; 
-            border: none; 
-            cursor: pointer; 
-            font-size: 20px; 
-            padding: 0;
-            margin: 0; 
-            display: flex;
-            align-items: center; 
-            justify-content: center; 
-            height: 100%; 
-            width: 100%; 
-        }
-         .icon-button:hover {
-            opacity: 0.8;                 
-        }
-      
-    </style>
+        <style>
+            .add-icon, .delete-icon {
+               
+                border: none; 
+                background-color: white;
+                padding: 0px; 
+                cursor: pointer; 
+                font-size: 15px; 
+                margin: 0 2px; 
+                transition: opacity 0.2s; 
+            }
+
+            .add-icon {
+                background-color: white; 
+                 color: green; 
+            }
+
+            .delete-icon {
+                background-color: white; 
+                 color: red; 
+            }
+
+            .add-icon:hover, .delete-icon:hover {
+                opacity: 0.8; 
+            }
+        </style>
     </head>
     <body>
         <section class="admin">
@@ -197,7 +203,7 @@
                                                                                 <td>${product.eventProductQuantity}</td>
                                                                                 <td>
                                                                                     <form class="delete-product-form" data-product-id="${product.eventProductId}" data-event-id="${product.eventEventId}" style="display:inline;">
-                                                                                        <button type="button" class="delete-class">Xóa</button>
+                                                                                        <button type="submit" class="delete-icon">Xóa</button>
                                                                                     </form>
                                                                                 </td>
                                                                             </tr>
@@ -212,17 +218,21 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td style="display: flex">
-                                                    <form action="sellerUpdateEvent" method="POST" id="updateEvent${event.eventId}">
+                                                <td style="icon-cell">
+                                                    <form action="sellerUpdateEvent" method="POST" id="updateEvent${event.eventId}" style="display: inline;">
                                                         <input type="hidden" name="eventID" value="${event.eventId}" />
                                                         <!--                                                        <button type="submit" value="Chỉnh sửa" class="confirm-class" 
                                                                                                                         style="background-color: green; color: white">Chỉnh sửa</button>-->
-                                                        <button type="submit" class="icon-button">
-                                                            <i class="fas fa-pencil-alt"></i> 
+
+                                                        <!-- NOTE -->
+                                                        <button type="submit" class="add-icon">
+                                                            <i class="fas fa-plus"></i> 
                                                         </button>
                                                     </form>
                                                     <form action="updateEvent?eventId=${event.eventId}&accountUsername=${sessionScope.USER.username}&page=${currentPage}" method="post" style="display:inline;">                                                        
-                                                        <button type="submit" name="action" value="cancel" class="delete-class">Hủy</button>
+                                                        <button type="submit" name="action" value="cancel"  class="delete-icon">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
                                                     </form>
                                                 </td>
                                             </tr>

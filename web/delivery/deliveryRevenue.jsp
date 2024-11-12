@@ -16,7 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
-        <title>Doanh thu của Shipper</title>
+        <title>Revenue of Shipper</title>
         <style>
             body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
             header { background: #4CAF50; color: white; padding: 10px; text-align: center; }
@@ -104,14 +104,14 @@
     </head>
     <body>
         <header>
-            <h1>Doanh thu của ${sessionScope.USER.fullName}</h1>
+            <h1>Revenue of ${sessionScope.USER.fullName}</h1>
         </header>
 
         <div class="container">
             <form id="f1" method="get" action="deliveryIncome">
                 <div style="padding-left: 20px">
                     <select name="year" class="form-control" id="yearSelect" required>
-                        <option value="" disabled ${empty requestScope.curYear ? 'selected' : ''}>-- Chọn năm --</option>
+                        <option value="" disabled ${empty requestScope.curYear ? 'selected' : ''}>-- Select  --</option>
                         <c:forEach var="year" begin="2022" end="2024">
                             <option value="${year}" ${year == requestScope.curYear ? 'selected' : ''}>${year}</option>
                         </c:forEach>
@@ -125,15 +125,15 @@
         </div>
 
         <section>
-            <h2>Số đơn đã giao trong năm ${requestScope.curYear}</h2>
+            <h2>Number of orders delivered in ${requestScope.curYear}</h2>
             <c:if test="${empty listOrder}">
-                Không có đơn trong năm ${requestScope.curYear}
+                No orders ${requestScope.curYear}
             </c:if>
             <table>
                 <thead>
                     <tr>
-                        <th>Tháng</th>
-                        <th>Số đơn</th>
+                        <th>Months</th>
+                        <th>Orders</th>
                     </tr>  
                 </thead>
                 <tbody>
@@ -147,16 +147,16 @@
             </table>
 
             <div style="margin-top: 20px" class="rating">
-                <h2>Star Rating từ Khách hàng</h2>
+                <h2>Star Rating</h2>
                 <c:if test="${not empty requestScope.listRating}">
                     <c:forEach var="rating" items="${requestScope.listRating}">
-                        <p>Tổng số đánh giá: ${rating.totalRecords}</p>                      
+                        <p>Total reviews: ${rating.totalRecords}</p>                      
                         <c:set var="rate" value="${rating.totalRecords != 0 ? rating.totalRateStar / rating.totalRecords : 0}" />
                         <c:set var="fullStars" value="${Math.floor(rate)}" />
                         <c:set var="halfStar" value="${rate - fullStars}" />
                         <c:set var="emptyStars" value="${5 - fullStars - (halfStar >= 0.5 ? 1 : 0)}" />
                         <p>
-                            Đánh giá trung bình (<fmt:formatNumber value="${rate}" pattern="#0.00"/>/5):
+                            Average rating (<fmt:formatNumber value="${rate}" pattern="#0.00"/>/5):
                             <span class="stars">
                                 <c:forEach var="i" begin="1" end="${fullStars}">
                                     ★
@@ -173,7 +173,7 @@
                 </c:if>
             </div>
 
-            <h2>Biểu đồ thu nhập</h2>
+            <h2>Income chart</h2>
             <canvas id="revenueChart"></canvas>
         </section>
 
@@ -183,9 +183,9 @@
             const revenueChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                     datasets: [{
-                            label: 'Doanh thu (VNĐ)',
+                            label: 'Income (VNĐ)',
                             data: [
             ${requestScope.month1.total != null ? requestScope.month1.total : 0},
             ${requestScope.month2.total != null ? requestScope.month2.total : 0},

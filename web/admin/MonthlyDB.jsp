@@ -50,10 +50,10 @@
                             <li>
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event theo tháng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event theo tuần</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Sản phẩm theo tháng</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="weeklyProductBoard">Sản phẩm theo tuần</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEvent">Event by month</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyBoard">Event by week</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyBoard">Product by month</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="weeklyProductBoard">Product by week</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -94,7 +94,7 @@
                             <form id="f1" method="get" action="monthlyRevenue">
                                 <div style="padding-left: 20px">
                                     <select name="year" class="form-control" id="dropdownYear" style="width: 120px;" required>
-                                        <option value="" disabled ${empty requestScope.curYear ? 'selected' : ''}>-- Chọn năm --</option>
+                                        <option value="" disabled ${empty requestScope.curYear ? 'selected' : ''}>-- Choose year --</option>
                                         <c:forEach var="year" begin="2023" end="2024">
                                             <option value="${year}" ${year == requestScope.curYear ? 'selected' : ''}>${year}</option>
                                         </c:forEach>
@@ -106,7 +106,7 @@
                                                 <option selected="" disabled="">${requestScope.curMonth}</option>
                                             </c:when>
                                             <c:otherwise>
-                                                <option selected="" disabled="">-- Chọn tháng --</option>
+                                                <option selected="" disabled="">-- Choose month --</option>
                                             </c:otherwise>
                                         </c:choose>
                                         <c:forEach var="month" begin="1" end="12">
@@ -141,7 +141,7 @@
         data: {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             datasets: [{
-                    label: 'Biểu đồ doanh thu tổng của cả năm',
+                    label: 'Total revenue chart for the year',
                     data: [
     ${requestScope.month1.total != null ? requestScope.month1.total : 0},
     ${requestScope.month2.total != null ? requestScope.month2.total : 0},
@@ -187,7 +187,7 @@
         data: {
             labels: xValues,
             datasets: [{
-                    label: 'Biểu đồ Top 5 sản phẩm bán chạy theo tháng',
+                    label: 'Chart of Top 5 best-selling event products by month',
                     backgroundColor: barColors,
                     data: yValues,
                     borderColor: 'rgb(75, 192, 192)'

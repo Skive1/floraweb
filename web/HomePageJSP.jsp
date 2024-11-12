@@ -138,7 +138,7 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link active">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
@@ -150,8 +150,8 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
-                                    <a href="deliveryIncome" class="nav-item nav-link">Doanh Thu</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
+                                    <a href="deliveryIncome" class="nav-item nav-link">Revenue</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -304,7 +304,7 @@
                             </div>
                             <div class="featurs-content text-center">
                                 <h5>Free Shipping</h5>
-                                <p class="mb-0">Free on order over $300</p>
+                                <p class="mb-0">Free shipping for every order</p>
                             </div>
                         </div>
                     </div>
@@ -353,7 +353,7 @@
                 <div class="tab-class text-center">
                     <div class="row g-4" style="margin-bottom: 35px">
                         <div class="col-lg-4 text-start">
-                            <h1>Sản phẩm bán chạy:</h1>
+                            <h1>Best Seller Flowers:</h1>
                         </div>
                     </div>
                     <div class="tab-content">
@@ -393,7 +393,7 @@
                                                                     <fmt:formatNumber value="${flower.eventProductPrice}" type="number" groupingUsed="true"/>đ
                                                                 </p>
                                                                 <a href="${urlRewriting}" class="btn border border-secondary rounded-pill px-3 text-third">
-                                                                    <i class="fa fa-shopping-bag me-2 text-third"></i> Xem chi tiết
+                                                                    <i class="fa fa-shopping-bag me-2 text-third"></i> View details
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -454,7 +454,7 @@
         <!-- Vesitable Shop Start-->
         <div class="container-fluid vesitable py-5">
             <div class="container py-5">
-                <h1 class="mb-0">Sản phẩm mới:</h1>
+                <h1 class="mb-0">New Arrival Flowers:</h1>
                 <div class="owl-carousel vegetable-carousel justify-content-center">
                     <c:forEach items="${requestScope.NEW_ARRIVAL}" var="flower">
                         <form action="cartAddItem">
@@ -486,7 +486,7 @@
                                             <fmt:formatNumber value="${flower.eventProductPrice}" type="number" groupingUsed="true" />đ
                                         </p>
                                         <a href="${urlRewriting}" class="btn border border-secondary rounded-pill px-3 text-third">
-                                            <i class="fa fa-shopping-bag me-2 text-third"></i> Xem chi tiết
+                                            <i class="fa fa-shopping-bag me-2 text-third"></i> View details
                                         </a>
                                     </div>
                                 </div>
@@ -506,14 +506,14 @@
                     <c:set var="flower" value="${requestScope.CHEAPEST_FLOWER}"/>
                     <div class="col-lg-6">
                         <div class="py-4">
-                            <h1 class="display-2 text-white">Hoa rẻ nhất</h1>
+                            <h1 class="display-2 text-white">Cheapest Flowers:</h1>
                             <p class="fw-normal display-3 text-dark mb-4"><c:out value ="${flower.eventProductName}"/></p>
                             <p class="mb-4 text-dark display-6">Type: <c:out value ="${flower.eventProductType}"/></p>
                             <c:url var="urlRewriting" value="flowerDetail">
                                 <c:param name="productId" value="${flower.eventProductId}"/>
                                 <c:param name="eventId" value="${flower.eventEventId}"/>
                             </c:url>
-                            <a href="${urlRewriting}" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">Xem</a>
+                            <a href="${urlRewriting}" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">View</a>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -573,8 +573,8 @@
         <div class="container-fluid testimonial py-5">
             <div class="container py-5">
                 <div class="testimonial-header text-center">
-                    <h4 class="text-third">Thông tin</h4>
-                    <h1 class="display-5 mb-5 text-dark">Đội ngũ phát triển</h1>
+                    <h4 class="text-third">Information</h4>
+                    <h1 class="display-5 mb-5 text-dark">Development Team</h1>
                 </div>
                 <div class="owl-carousel testimonial-carousel">
                     <div class="testimonial-item img-border-radius bg-light rounded p-4">
@@ -692,7 +692,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Rewind</a>, All right reserved.</span>
                         </div>
                     </div>
                 </div>

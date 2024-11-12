@@ -38,27 +38,27 @@
                             <p class="admin-p">Delivery</p>
                             <div class="admin-under-p" style="margin: 1px 5px 5px 5px">Flora Store Delivery</div>
                             <li>
-                                <a href="" style="color: #131EAD"><i class="ri-file-list-line"></i>Danh sách đơn hàng<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #131EAD"><i class="ri-file-list-line"></i>Order List<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" style="color: #131EAD"
-                                           href="delivererOrders">Nhận đơn hàng mới</a></li>
+                                           href="delivererOrders">Receive new orders</a></li>
                                     <li><a class="ri-arrow-right-s-fill" style="color: #131EAD"
-                                           href="viewOrdersForDelivery">Đơn hàng cần giao</a></li>
+                                           href="viewOrdersForDelivery">Orders to be delivered</a></li>
                                 </ul>   
                             </li>
                             <li>
-                                <a href="" style="color: #131EAD"><i class="bi bi-credit-card-fill"></i>Ví điện tử Flora<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #131EAD"><i class="bi bi-credit-card-fill"></i>E-wallet Flora<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <c:if test="${sessionScope.EWALLET_ACTIVE != true}">
                                         <li>
                                             <a class="ri-arrow-right-s-fill" style="color: #131EAD"
-                                               href="myWallet">Tạo tài khoản</a>
+                                               href="myWallet">Create E-wallet</a>
                                         </li>
                                     </c:if>
                                     <c:if  test="${sessionScope.EWALLET_ACTIVE == true}">
                                         <li>
                                             <a class="ri-arrow-right-s-fill" style="color: #131EAD"
-                                               href="eWallet">Tài khoản</a>
+                                               href="eWallet">E-wallet</a>
                                         </li>
                                         </c:if>
                                 </ul>  
@@ -80,7 +80,7 @@
                             <ul class="flex-box">
                                 <c:if test="${requestScope.FoundError2 != null}">
                                     <i>
-                                        Số dư tài khoản: 
+                                        Account balance: 
                                         <i style="color: red; font-weight: bold">
                                             <fmt:formatNumber value="${sessionScope.Staff_Balance}" pattern="#,###"/>
                                         </i>
@@ -88,7 +88,7 @@
                                 </c:if>
                                 <c:if test="${requestScope.FoundError2 == null}">
                                     <i>
-                                        Số dư tài khoản: 
+                                        Account balance: 
                                         <i style="font-weight: bold">
                                             <fmt:formatNumber value="${sessionScope.Staff_Balance}" pattern="#,###"/>
                                         </i>
@@ -112,7 +112,7 @@
                     </div> 
                     <div class="admin-content-main">
                         <div class="admin-content-main-title">
-                            <h1 style="font-size: 36px">Danh sách đơn hàng chưa nhận:</h1>
+                            <h1 style="font-size: 36px">List of undelivered orders:</h1>
                         </div>
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
@@ -127,14 +127,14 @@
                                             <a style="color: red">&#8194;&#8201;${requestScope.FoundError2}</a>
                                         </c:if>  
                                         <thead>
-                                        <th>Mã đơn hàng</th>
-                                        <th>Tên người mua</th>
-                                        <th>Điện thoại</th>
-                                        <th>Địa chỉ</th> 
-                                        <th>Ghi chú</th>
-                                        <th>Chi tiết</th>
-                                        <th>Trạng thái</th>
-                                        <th>Tùy chỉnh</th>
+                                        <th>Order ID</th>
+                                        <th>Buyer's Name</th>
+                                        <th>Contact Phone</th>
+                                        <th>Address</th> 
+                                        <th>Note</th>
+                                        <th>Order Details</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
                                         </thead>
                                         <tbody>
                                             <c:forEach var="eventOrder" items="${requestScope.DELIVERY_LIST}" varStatus="counter">
@@ -156,7 +156,7 @@
                                                     <td>
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" 
                                                                 data-target="#view${counter.count}" style="color: white">
-                                                            Xem
+                                                            View
                                                         </button>
                                                         <div class="modal fade" id="view${counter.count}" tabindex="-1" role="dialog" 
                                                              aria-labelledby="view${counter.count}" aria-hidden="true">
@@ -165,13 +165,13 @@
                                                                     <table>
                                                                         <thead>
                                                                         <th style="background-color: #007bff; color: white">No</th>
-                                                                        <th style="background-color: #007bff; color: white">Tên mặt hàng</th>
-                                                                        <th style="background-color: #007bff; color: white">Ngày đặt</th>
-                                                                        <th style="background-color: #007bff; color: white">Phân loại</th>
-                                                                        <th style="background-color: #007bff; color: white">Tình trạng</th>
-                                                                        <th style="background-color: #007bff; color: white">Hình thức thanh toán</th>
-                                                                        <th style="background-color: #007bff; color: white">Số lượng</th>        
-                                                                        <th style="background-color: #007bff; color: white">Đơn giá</th>
+                                                                        <th style="background-color: #007bff; color: white">Item name</th>
+                                                                        <th style="background-color: #007bff; color: white">Order Date</th>
+                                                                        <th style="background-color: #007bff; color: white">Type</th>
+                                                                        <th style="background-color: #007bff; color: white">Condition</th>
+                                                                        <th style="background-color: #007bff; color: white">Payment method</th>
+                                                                        <th style="background-color: #007bff; color: white">Quantity</th>        
+                                                                        <th style="background-color: #007bff; color: white">Unit Price</th>
                                                                         </thead>
                                                                         <tbody style="height: 100px;">
                                                                             <c:set var="deliveryList" value="${requestScope.DELIVERY_INFO_LIST}"/>
@@ -202,19 +202,19 @@
                                                                                     <tr>
                                                                                         <c:if test="${eventOrder.isPaid == true}">
                                                                                             <td colspan="5"></td>
-                                                                                            <td style="font-weight: 700; color: green">Đơn hàng đã được thanh toán</td>
+                                                                                            <td style="font-weight: 700; color: green">Order has been paid</td>
                                                                                         </c:if>
                                                                                         <c:if test="${eventOrder.isPaid == false}">
                                                                                             <td colspan="6"></td>
                                                                                         </c:if>
-                                                                                        <td style="font-weight: 700;">Tổng giá:</td>
+                                                                                        <td style="font-weight: 700;">Total Amount:</td>
                                                                                         <td style="font-weight: 700;" >${total.total}</td> 
                                                                                     </tr>
                                                                                 </c:if>
                                                                             </c:forEach>
                                                                         </tbody>
                                                                         <c:if test="${empty deliveryList}">
-                                                                            <a>Danh sách rỗng!</a>
+                                                                            <a>Empty List!</a>
                                                                         </c:if>
                                                                     </table>
                                                                 </div>
@@ -223,30 +223,30 @@
                                                     </td>
                                                     <c:if test="${eventOrder.status == 'Chưa nhận' && eventOrder.deliveryStaffId == 0}">
                                                         <td style="color: orangered">
-                                                            Chưa nhận
+                                                            Not received
                                                         </td>
                                                     </c:if>
                                                     <c:if test="${eventOrder.status == 'Chưa nhận' && eventOrder.deliveryStaffId == 0}">
                                                         <td>
                                                             <button type="button" class="btn btn-primary" data-toggle="modal" 
                                                                     data-target="#exampleModal${counter.count}" style="background-color: green">
-                                                                Nhận đơn
+                                                                Receive
                                                             </button>
                                                             <div class="modal fade" id="exampleModal${counter.count}" tabindex="-1" role="dialog" 
                                                                  aria-labelledby="exampleModalLabel${counter.count}" aria-hidden="true">
                                                                 <div class="modal-dialog" role="document">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
-                                                                            <h5 class="modal-title" id="exampleModalLabel${counter.count}">Xác nhận nhận đơn hàng</h5>
+                                                                            <h5 class="modal-title" id="exampleModalLabel${counter.count}">Confirm receiving</h5>
                                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                                 <span aria-hidden="true">&times;</span>
                                                                             </button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            Bạn có chắc chắn muốn nhận đơn?
+                                                                            Are you sure you want to accept the order?
                                                                             <br/>
                                                                             <a style="color: red; font-weight: bold">
-                                                                                Bạn không thể hủy sau khi nhận
+                                                                                You cannot cancel after receiving
                                                                             </a>
                                                                         </div>
                                                                         <div class="modal-footer">
@@ -260,10 +260,10 @@
                                                                                            document.getElementById('getEventOrderAmount');
                                                                                            document.getElementById('infoBack');
                                                                                            document.getElementById('getOrder${counter.count}').submit();">
-                                                                                    Có
+                                                                                    Yes
                                                                                 </a>
                                                                             </form>
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>          
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>          
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -457,9 +457,9 @@
                                 </c:if>
                                 <c:if test="${empty event}">
                                     <a style="color: red">
-                                        &#8194;&#8204;Hiện tại không có đơn hàng nào khả dụng,&#32;
+                                        &#8194;&#8204;There are currently no orders available,&#32;
                                     </a>
-                                    <a href="delivererOrders">tải lại trang</a>
+                                    <a href="delivererOrders">reload page</a>
                                 </c:if>
                             </div>
                         </div>

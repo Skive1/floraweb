@@ -74,8 +74,8 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link ">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
@@ -87,7 +87,8 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
+                                    <a href="deliveryIncome" class="nav-item nav-link">Revenue</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -196,7 +197,7 @@
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Danh sách các sự kiện:</h1>
+                <h1 class="mb-4">List of events:</h1>
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
@@ -286,10 +287,10 @@
                                                         </div>
                                                         <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                             <h4><c:out value ="${eventList.eventName}"/></h4>
-                                                            <p>Địa điểm: <c:out value ="${eventList.eventLocation}"/>, <c:out value ="${eventList.eventCity}"/></p>
+                                                            <p>Address: <c:out value ="${eventList.eventLocation}"/>, <c:out value ="${eventList.eventCity}"/></p>
                                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                                 <p class="text-dark fs-5 fw-bold mb-0">
-                                                                    Thời gian: <fmt:formatDate value="${eventList.startDate}" pattern="dd/MM/yyyy HH:mm" /> - <fmt:formatDate value="${eventList.endDate}" pattern="dd/MM/yyyy HH:mm" />
+                                                                    Time: <fmt:formatDate value="${eventList.startDate}" pattern="dd/MM/yyyy HH:mm" /> - <fmt:formatDate value="${eventList.endDate}" pattern="dd/MM/yyyy HH:mm" />
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -320,7 +321,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Rewind</a>, All right reserved.</span>
                         </div>
                     </div>
                 </div>

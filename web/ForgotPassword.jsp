@@ -5,7 +5,7 @@
     <head>
         <meta charset='utf-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
-        <title>Verify Email</title>
+        <title>Flora Rewind | Forgot Password</title>
         <link rel="icon" href="img/flora-favicon.png"/>
         <link
             href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css'
@@ -61,20 +61,20 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-md-10">
                     <div class="forgot">
-                        <h2>Quên mật khẩu?</h2>
-                        <p>Thay đổi mật khẩu của bạn trong ba bước đơn giản. Điều này sẽ giúp bạn bảo mật mật khẩu của mình!</p>
+                        <h2>Forgot Password?</h2>
+                        <p>Change your password in three easy steps. This will help keep your password secure!</p>
                         <ol class="list-unstyled">
-                            <li><span class="text-primary text-medium">1. </span>Nhập tài khoản của bạn dưới.</li>
-                            <li><span class="text-primary text-medium">2. </span>Nếu tên người dùng của bạn khớp với tài khoản hiện có, chúng tôi sẽ gửi email đặt lại mật khẩu trong vòng vài phút.</li>
-                            <li><span class="text-primary text-medium">3. </span>Nhập mã xác minh ở trang tiếp theo</li>
+                            <li><span class="text-primary text-medium">1. </span>Enter your account below.</li>
+                            <li><span class="text-primary text-medium">2. </span>If your username matches an existing account, we will send you a password reset email within minutes.</li>
+                            <li><span class="text-primary text-medium">3. </span>Enter the verification code on the next page</li>
                         </ol>
                     </div>
                     <form class="card mt-4" action="forgotPasswordAction" method="POST" id="form">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="email-for-pass">Nhập tài khoản của bạn</label> <input
+                                <label for="email-for-pass">Enter your account</label> <input
                                     class="form-control" type="text" name="txtUsername" id="email-for-pass" required><small
-                                    class="form-text text-muted">Nhập tài khoản của bạn. Sau đó chúng tôi sẽ gửi mã xác minh tới email đã đăng ký.</small>
+                                    class="form-text text-muted">Enter your username. We will then send a verification code to your registered email.</small>
                             </div>
                             <div style="color: red">
                                 <c:set var="error" value="${requestScope.FORGOT_ERROR}"/>
@@ -85,9 +85,9 @@
 
                         </div>
                         <div class="card-footer">
-                            <button id="submitBtn" class="btn btn-success" name="btAction" onclick="disableButton()">Tạo mật khẩu mới</button>
+                            <button id="submitBtn" class="btn btn-success" name="btAction" onclick="disableButton()">Create new password</button>
                             <a href="loginPage">
-                                <button class="btn btn-danger" type="button" id="login">Trở về trang đăng nhập</button>
+                                <button class="btn btn-danger" type="button" id="login">Back to login page</button>
                             </a>
 
                         </div>
@@ -95,7 +95,7 @@
                     <div class="row">
                         <div class="col-12">
                             <hr class="mt-5 mb-4 border-secondary-subtle">
-                            <p class="m-0 text-secondary text-center">Bạn chưa có tài khoản? <a href="registerPage" class="link-primary text-decoration-none">Đăng ký</a></p>
+                            <p class="m-0 text-secondary text-center">You do not have an account? <a href="registerPage" class="link-primary text-decoration-none">Sign Up</a></p>
                         </div>
                     </div>
                 </div>
