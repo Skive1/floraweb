@@ -109,29 +109,29 @@
                             <p class="admin-p">Delivery</p>
                             <div class="admin-under-p" style="margin: 1px 5px 5px 5px">Flora Store Delivery</div>
                             <li>
-                                <a href="" style="color: #131EAD"><i class="ri-file-list-line"></i>Danh sách đơn hàng<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #131EAD"><i class="ri-file-list-line"></i>Order List<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" style="color: #131EAD"
-                                           href="delivererOrders">Nhận đơn hàng mới</a></li>
+                                           href="delivererOrders">Receive new orders</a></li>
                                     <li><a class="ri-arrow-right-s-fill" style="color: #131EAD"
-                                           href="viewOrdersForDelivery">Đơn hàng cần giao</a></li>
+                                           href="viewOrdersForDelivery">Orders to be delivered</a></li>
                                 </ul>   
                             </li>
                             <li>
-                                <a href="" style="color: #131EAD"><i class="bi bi-credit-card-fill"></i>Ví điện tử FLora<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #131EAD"><i class="bi bi-credit-card-fill"></i>E-wallet Flora<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <c:if test="${sessionScope.EWALLET_ACTIVE != true}">
                                         <li>
                                             <a class="ri-arrow-right-s-fill" style="color: #131EAD"
-                                               href="myWallet">Tạo tài khoản</a>
+                                               href="myWallet">Create E-wallet</a>
                                         </li>
                                     </c:if>
                                     <c:if  test="${sessionScope.EWALLET_ACTIVE == true}">
                                         <li>
                                             <a class="ri-arrow-right-s-fill" style="color: #131EAD"
-                                               href="eWallet">Tài khoản</a>
+                                               href="eWallet">E-wallet</a>
                                         </li>
-                                    </c:if>
+                                        </c:if>
                                 </ul>  
                             </li>
                         </ul>
@@ -151,7 +151,7 @@
                             <ul class="flex-box">
                                 <c:if test="${requestScope.FoundError2 != null}">
                                     <i>
-                                        Số dư tài khoản: 
+                                        Account balance: 
                                         <i style="color: red; font-weight: bold" id="staffBalance">
                                             <fmt:formatNumber value="${sessionScope.Staff_Balance}" pattern="#,###"/>
                                         </i>
@@ -159,7 +159,7 @@
                                 </c:if>
                                 <c:if test="${requestScope.FoundError2 == null}">
                                     <i>
-                                        Số dư tài khoản: 
+                                        Account balance: 
                                         <i style="font-weight: bold" id="staffBalance">
                                             <fmt:formatNumber value="${sessionScope.Staff_Balance}" pattern="#,###"/>
                                         </i>
@@ -183,20 +183,20 @@
                     </div> 
                     <div class="admin-content-main">
                         <div class="admin-content-main-title">
-                            <h1 style="font-size: 36px; margin-bottom: 20px; color: #343a40;">Quản lý ví điện tử Flora:</h1>
+                            <h1 style="font-size: 36px; margin-bottom: 20px; color: #343a40;">Flora e-wallet management:</h1>
                         </div>
                         <div class="admin-content-main-content">
                             <div class="content-wrapperd">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">Thông tin tài khoản</h5>
+                                        <h5 class="card-title">Account information</h5>
                                     </div>
                                     <div class="card-body">
                                         <h5 style="color: #6c757d; text-align: center">
-                                            Tài khoản: ${sessionScope.USERNAME}
+                                            Account: ${sessionScope.USERNAME}
                                         </h5>
                                         <div class="balance-info">
-                                            <h4 style="margin-bottom: 10px;">Số dư tài khoản:</h4>
+                                            <h4 style="margin-bottom: 10px;">Account balance:</h4>
                                             <div class="info-bank">
                                                 <h2 style="color: #28a745;" id="staffBalanceOther">
                                                     <fmt:formatNumber value="${sessionScope.Staff_Balance}" pattern="#,###"/>
@@ -209,8 +209,8 @@
                                     </div>
                                     <div class="card-footer text-center">
                                         <div class="button-group">
-                                            <button class="action-btn deposit-btn" data-toggle="modal" data-target="#transactionModal" onclick="setTransactionType('deposit')">Nạp tiền</button>
-                                            <button class="action-btn withdraw-btn" data-toggle="modal" data-target="#transactionModal" onclick="setTransactionType('withdraw')">Rút tiền</button>
+                                            <button class="action-btn deposit-btn" data-toggle="modal" data-target="#transactionModal" onclick="setTransactionType('deposit')">Deposit</button>
+                                            <button class="action-btn withdraw-btn" data-toggle="modal" data-target="#transactionModal" onclick="setTransactionType('withdraw')">Withdraw</button>
                                         </div>
                                     </div>
                                 </div>
@@ -224,7 +224,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="transactionModalLabel">Nạp/Rút tiền</h5>
+                            <h5 class="modal-title" id="transactionModalLabel">Deposit/Withdrawal</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -232,14 +232,14 @@
                         <div class="modal-body">
                             <form id="transactionForm">
                                 <div class="form-group">
-                                    <label for="amountInput">Số tiền:</label>
-                                    <input type="number" class="form-control" id="amountInput" placeholder="Nhập số tiền" required>
+                                    <label for="amountInput">Money:</label>
+                                    <input type="number" class="form-control" id="amountInput" placeholder="Enter money" required>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                            <button type="button" class="btn btn-primary" id="confirmButton">Xác nhận</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="confirmButton">Confirm</button>
                         </div>
                     </div>
                 </div>
@@ -273,8 +273,8 @@
 
                                                     if (!amount || isNaN(amount) || Number(amount) <= 0) {
                                                         Swal.fire({
-                                                            title: 'Lỗi!',
-                                                            text: 'Vui lòng nhập số tiền hợp lệ.',
+                                                            title: 'Error!',
+                                                            text: 'Please enter a valid amount.',
                                                             icon: 'warning',
                                                             confirmButtonText: 'OK'
                                                         });
@@ -288,8 +288,8 @@
                                                             success: function (response) {
                                                                 if (response.success) {
                                                                     Swal.fire({
-                                                                        title: 'Thành công!',
-                                                                        text: response.message + "\nSố dư mới: " + formatNumber(response.newBalance),
+                                                                        title: 'Success!',
+                                                                        text: response.message + "\nNew balance: " + formatNumber(response.newBalance),
                                                                         icon: 'success',
                                                                         confirmButtonText: 'OK'
                                                                     });
@@ -297,10 +297,9 @@
                                                                     document.getElementById('staffBalanceOther').innerText = formatNumber(response.newBalance);
                                                                     document.getElementById('amountInput').value = '';
                                                                 } else {
-                                                                    // Nếu server trả về không thành công
                                                                     Swal.fire({
-                                                                        title: 'Thông báo!',
-                                                                        text: response.message || 'Không có thông tin chi tiết.',
+                                                                        title: 'Notification!',
+                                                                        text: response.message || 'No details available.',
                                                                         icon: 'error',
                                                                         confirmButtonText: 'OK'
                                                                     });
@@ -308,8 +307,8 @@
                                                             },
                                                             error: function () {
                                                                 Swal.fire({
-                                                                    title: 'Lỗi!',
-                                                                    text: 'Có lỗi xảy ra khi nạp tiền.',
+                                                                    title: 'Error!',
+                                                                    text: 'An error occurred while depositing money.',
                                                                     icon: 'warning',
                                                                     confirmButtonText: 'OK'
                                                                 });
@@ -323,8 +322,8 @@
                                                             success: function (response) {
                                                                 if (response.success) {
                                                                     Swal.fire({
-                                                                        title: 'Thành công!',
-                                                                        text: response.message + "\nSố dư mới: " + formatNumber(response.newBalance),
+                                                                        title: 'Success!',
+                                                                        text: response.message + "\nNew balance: " + formatNumber(response.newBalance),
                                                                         icon: 'success',
                                                                         confirmButtonText: 'OK'
                                                                     });
@@ -332,10 +331,9 @@
                                                                     document.getElementById('staffBalanceOther').innerText = formatNumber(response.newBalance);
                                                                     document.getElementById('amountInput').value = '';
                                                                 } else {
-                                                                    // Nếu server trả về không thành công
                                                                     Swal.fire({
-                                                                        title: 'Thông báo!',
-                                                                        text: response.message || 'Không có thông tin chi tiết.',
+                                                                        title: 'Notification!',
+                                                                        text: response.message || 'No details available.',
                                                                         icon: 'error',
                                                                         confirmButtonText: 'OK'
                                                                     });
@@ -344,8 +342,8 @@
                                                             },
                                                             error: function () {
                                                                 Swal.fire({
-                                                                    title: 'Lỗi!',
-                                                                    text: 'Có lỗi xảy ra khi nạp tiền.',
+                                                                    title: 'Error!',
+                                                                    text: 'An error occurred while depositing money.',
                                                                     icon: 'warning',
                                                                     confirmButtonText: 'OK'
                                                                 });

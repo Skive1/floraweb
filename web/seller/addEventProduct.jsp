@@ -38,7 +38,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
-        <title>Admin</title>
+        <title>Seller | Event Management</title>
     </head>
     <body>
         <section class="admin">
@@ -56,26 +56,27 @@
                             <li>
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell">Sản phẩm theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell">Products by month</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href=""><i class="ri-file-list-line"></i>Quản lý sự kiện<i class="ri-add-circle-line"></i></a>
+                                <a href=""><i class="ri-file-list-line"></i>Event management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent">Event</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href=""><i class="ri-file-list-line"></i>Quản lý đơn hàng<i class="ri-add-circle-line"></i></a>
+                                <a href=""><i class="ri-file-list-line"></i>Order management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction">Đơn hàng chờ giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction">Đơn hàng đã giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction">Pending Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders">Shipping Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction">Completed Orders</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Feedback<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks">Xem feedback</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks">View feedback</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -102,7 +103,7 @@
                     </div> 
                     <div class="admin-content-main">
                         <div class="admin-content-main-title">
-                            <h1>Thêm sản phẩm</h1>
+                            <h1>Add Flower</h1>
                         </div>
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
@@ -114,12 +115,12 @@
                                     <div class="admin-content-main-content-left">
                                         <input type="hidden" name="accountUsername" value="${sessionScope.USER.username}" />
                                         <div class="admin-content-main-content-two-input">
-                                            <input name="name" maxlength="20" type="text" placeholder="Tên sản phẩm" required>
-                                            <input name="quantity" maxlength="3" type="text" placeholder="Số lượng">
+                                            <input name="name" maxlength="20" type="text" placeholder="Name" required>
+                                            <input name="quantity" maxlength="3" type="text" placeholder="Quantity">
                                         </div>
                                         <div class="admin-content-main-content-two-input">
-                                            <input name="epPrice" type="text" placeholder="Giá bán">
-                                            <input name="discount" type="text" placeholder="Giá giảm">
+                                            <input name="epPrice" type="text" placeholder="Unit Price">
+                                            <input name="discount" type="text" placeholder="Discount">
                                         </div>
                                         <c:if test="${not empty error.discountError}">
                                             <font color="red">
@@ -127,11 +128,11 @@
                                             </font>
                                         </c:if>
                                         <div class="admin-content-main-content-two-input">
-                                            <input name="detail" type="text" placeholder="Chi tiết">
-                                            <input name="condition" type="text" placeholder="Tình trạng">
+                                            <input name="detail" type="text" placeholder="Description">
+                                            <input name="condition" type="text" placeholder="Condition">
                                         </div>
                                         <div class="admin-content-main-content-two-input">
-                                            <input name="type" type="text" placeholder="Loại">
+                                            <input name="type" type="text" placeholder="Type">
                                             Choose Category <select name="ddlCategory">
                                                 <c:set var="categories" value="${sessionScope.CATEGORIES}"/>
                                                 <c:if test="${not empty categories}">
@@ -143,11 +144,11 @@
                                             </select><br/>
                                         </div>
 
-                                        <button type="submit" class="main-btn">Thêm sản phẩm</button>
+                                        <button type="submit" class="main-btn">Post flower</button>
                                     </div>
                                     <div class="admin-content-main-content-right">
                                         <div class="admin-content-main-content-right-img">
-                                            <label for="file">Ảnh sản phẩm</label>
+                                            <label for="file">Image</label>
                                             <input id="file" name="flowerImg" type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'images-show')">
                                             <div class="images-show">
                                                 <img id="product-image-preview" src="" alt="Preview" style="max-width: 100%; display: none;">

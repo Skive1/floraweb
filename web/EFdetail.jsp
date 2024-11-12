@@ -82,7 +82,7 @@
                     </div>
                     <div class="top-link pe-2">
                         <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+                        <a href="termsOfUse" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
                 </div>
@@ -95,8 +95,8 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link ">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
@@ -108,7 +108,8 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
+                                    <a href="deliveryIncome" class="nav-item nav-link">Revenue</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -205,12 +206,12 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Thông tin sản phẩm</h1>
+            <h1 class="text-center text-white display-6">Event Flower</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
                 <li class="breadcrumb-item"><a href="event">Event</a></li>
-                <li class="breadcrumb-item"><a href="eventDetail?eventId=${requestScope.EVENT_ID}">Chi tiết sự kiện</a></li>
-                <li class="breadcrumb-item active text-white">Chi tiết sản phẩm</li>
+                <li class="breadcrumb-item"><a href="eventDetail?eventId=${requestScope.EVENT_ID}">Event Detail</a></li>
+                <li class="breadcrumb-item active text-white">Event Flower</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -244,10 +245,10 @@
                                     </div>
                                     <p class="mb-4"><c:out value ="${detail.eventProductDetail}"/></p>
                                     <c:if test="${detail.eventProductQuantity == 0}">
-                                        <p class="mb-4">Số lượng: Hết hàng</p>
+                                        <p class="mb-4">Quantity: Out of stock</p>
                                     </c:if>
                                     <c:if test="${detail.eventProductQuantity > 0}">
-                                        <p class="mb-4">Số lượng: <c:out value ="${detail.eventProductQuantity}"/></p>
+                                        <p class="mb-4">Quantity: <c:out value ="${detail.eventProductQuantity}"/></p>
                                     </c:if>
                                     <div class="input-group quantity mb-5" style="width: 100px;">
                                         <div class="input-group-btn">
@@ -273,7 +274,7 @@
                                     <c:if test="${not empty sessionScope.USER}">
                                         <c:if test="${detail.eventProductQuantity == 0}">
                                             <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third" disabled="">
-                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Out of stock
                                             </button>
                                         </c:if>
                                         <c:if test="${detail.eventProductQuantity > 0}">
@@ -285,7 +286,7 @@
                                     <c:if test="${empty sessionScope.USER}">
                                         <c:if test="${detail.eventProductQuantity == 0}">
                                             <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third disabled-link">
-                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                <i class="fa fa-shopping-bag me-2 text-third"></i> Out of stock
                                             </a>
                                         </c:if>
                                         <c:if test="${detail.eventProductQuantity > 0}">
@@ -307,7 +308,7 @@
                                 <div class="tab-content mb-5">
                                     <div id="commentSection">
                                     </div>
-                                    <button id="loadMoreBtn" class="btn btn-secondary">Tải thêm bình luận</button>
+                                    <button id="loadMoreBtn" class="btn btn-secondary">Load more comments</button>
                                     <input type="hidden" id="currentPage" value="1">
                                     <input type="hidden" id="productId" value="${detail.eventProductId}">
                                     <input type="hidden" id="eventId" value="${EVENT_ID}">
@@ -357,7 +358,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Rewind</a>, All right reserved.</span>
                         </div>
                     </div>
                 </div>
@@ -369,7 +370,7 @@
                     <div class="" role="document">
                         <div class="modal-content-alert">
                             <h5 class="modal-title-alert">${requestScope.INSUFFICIENT}</h5>
-                            <p>Vui lòng hãy chọn sản phẩm khác</p>
+                            <p>Please select another product</p>
                             <button class="btn-secondary-alert">Ok</button>
                         </div>                     `
                     </div>
@@ -434,7 +435,7 @@
                             $('#comment').val('');
                         },
                         error: function () {
-                            alert('Có lỗi xảy ra khi gửi bình luận.');
+                            alert('An error occurred while submitting the comment.');
                         }
                     });
                 });
@@ -464,7 +465,7 @@
                             $('#currentPage').val(page);
                         },
                         error: function () {
-                            alert('Có lỗi xảy ra khi tải bình luận.');
+                            alert('An error occurred while submitting the comment.');
                         }
                     });
                 }

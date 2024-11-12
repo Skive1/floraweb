@@ -31,7 +31,7 @@
         <link rel="stylesheet" href="alertPackage/alertCss.css">
         <link href="css/indicator.css" rel="stylesheet">
         <!-- Template Stylesheet -->
-        <link rel="stylesheet" href="css/style.css">
+        <link href="css/style.css" rel="stylesheet">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
         <style>
@@ -44,6 +44,7 @@
                 font-weight: 600; 
                 text-align: center; 
             }
+
             .fruite-item {
                 display: flex; 
                 flex-direction: column; 
@@ -115,7 +116,7 @@
                         <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="mailto:flora.flower.platform@gmail.com" class="text-white">flora.flower.platform@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
-                        <a href="PrivacyPolicy.jsp" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
+                        <a href="privacyPage" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
                         <a href="termsOfUse" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
@@ -130,7 +131,7 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link ">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="shoppingAction" class="nav-item nav-link ">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link active">Shop</a>
                             <a href="event" class="nav-item nav-link">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
@@ -142,7 +143,8 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
+                                    <a href="deliveryIncome" class="nav-item nav-link">Revenue</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -335,7 +337,7 @@
                                                                 <input type="hidden" id="categories" name="categories"/>
                                                                 <a href="#" onclick="document.getElementById('categories').value = 'Other Flower';
                                                                         document.getElementById('categoriesForm').submit();"><i class="bi bi-flower1 me-2"></i>
-                                                                    Khác
+                                                                    Other type
                                                                 </a>
                                                                 <span>(<c:out value ="${sessionScope.otherType}"/>)</span>
                                                             </div>
@@ -475,14 +477,14 @@
                                                                 </c:if>
                                                                 <c:if test="${product.productQuantity == 0}">
                                                                     <button type="submit" name="btAction" value="Add to cart" class="btn border border-secondary rounded-pill px-3 text-third" disabled="">
-                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Out of stock
                                                                     </button>
                                                                 </c:if>
                                                             </c:if>
                                                             <c:if test="${empty sessionScope.USER}">
                                                                 <c:if test="${product.productQuantity == 0}">
                                                                     <a href="loginPage" class="btn border border-secondary rounded-pill px-3 text-third disabled-link">
-                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Hết hàng
+                                                                        <i class="fa fa-shopping-bag me-2 text-third"></i> Out of stock
                                                                     </a>
                                                                 </c:if>
                                                                 <c:if test="${product.productQuantity > 0}">
@@ -686,7 +688,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Store</a>, All right reserved.</span>
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Rewind</a>, All right reserved.</span>
                         </div>
                     </div>
                 </div>
@@ -699,7 +701,7 @@
                     <div class="" role="document">
                         <div class="modal-content-alert">
                             <h5 class="modal-title-alert">${requestScope.INSUFFICIENTSHOP}</h5>
-                            <p>Vui lòng hãy chọn sản phẩm khác</p>
+                            <p>Please select another product.</p>
                             <button class="btn-secondary-alert">Ok</button>
                         </div>                     `
                     </div>

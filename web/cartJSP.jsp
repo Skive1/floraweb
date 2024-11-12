@@ -12,7 +12,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Giỏ hàng | Buy and sell on the website</title>
+        <title>Cart | Buy and sell on the website</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -102,7 +102,7 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link ">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link active">Shop</a>
                             <a href="event" class="nav-item nav-link ">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
@@ -114,7 +114,8 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
+                                    <a href="deliveryIncome" class="nav-item nav-link">Revenue</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -212,11 +213,11 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Giỏ hàng</h1>
+            <h1 class="text-center text-white display-6">Cart</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
                 <li class="breadcrumb-item"><a href="shoppingAction">Shop</a></li>
-                <li class="breadcrumb-item active text-white">Giỏ hàng</li>
+                <li class="breadcrumb-item active text-white">Cart</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -235,12 +236,12 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Sản phẩm</th>
-                                        <th scope="col">Tên</th>
-                                        <th scope="col">Đơn Giá</th>
-                                        <th scope="col">Số lượng</th>
-                                        <th scope="col">Thành tiền</th>
-                                        <th scope="col">Thao tác</th>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Unit Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total Price</th>
+                                        <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -303,7 +304,7 @@
                     <c:if test="${empty cart || empty cart.items}">
                         <div class="background-img">
                             <div class="non-order"></div>
-                            <h5 style="text-align: center">Giỏ hàng của bạn đang trống</h5>
+                            <h5 style="text-align: center">Your shopping cart is empty</h5>
                         </div>
                     </c:if>
                 </div>
@@ -320,7 +321,7 @@
                                         <div class="p-4">
                                             <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
                                             <div class="d-flex justify-content-between mb-4">
-                                                <h5 class="mb-0 me-4">Tổng tiền hàng:</h5>
+                                                <h5 class="mb-0 me-4">Total Amount:</h5>
                                                 <p class="mb-0"><c:if test="${not empty cart || not empty cart.items}"><fmt:formatNumber value="${sessionScope.TOTAL}" type="number" groupingUsed="true"/>đ</c:if></p>
                                             </div>
                                             <div class="d-flex justify-content-between">
@@ -331,11 +332,11 @@
                                             </div>
                                         </div>
                                         <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                                            <h5 class="mb-0 ps-4 me-4">Tổng thanh toán:</h5>
+                                            <h5 class="mb-0 ps-4 me-4">Total Payment:</h5>
                                             <p class="mb-0 pe-4"><c:if test="${not empty cart || not empty cart.items}"><fmt:formatNumber value="${sessionScope.TOTAL}" type="number" groupingUsed="true"/>đ</c:if></p>
                                         <input type="hidden" name="totalShop" value="${sessionScope.TOTAL}"/>
                                     </div>
-                                    <button class="btn border-secondary rounded-pill px-4 py-3 text-third text-uppercase mb-4 ms-4" type="submit" <c:if test="${empty cart || empty cart.items}">disabled="disabled"</c:if>>Mua Hàng</button>
+                                    <button class="btn border-secondary rounded-pill px-4 py-3 text-third text-uppercase mb-4 ms-4" type="submit" <c:if test="${empty cart || empty cart.items}">disabled="disabled"</c:if>>Check out</button>
                                     </div>
                                 </form>
                             </div>
@@ -355,7 +356,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Store</a>, All right reserved.</span>
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Rewind</a>, All right reserved.</span>
                         </div>
                     </div>
                 </div>
@@ -367,7 +368,7 @@
                     <div class="" role="document">
                         <div class="modal-content-alert">
                             <h5 class="modal-title-alert">${requestScope.ERROR_QUANTITY}</h5>
-                            <p>Hãy điều chỉnh số lượng để phù hợp</p>
+                            <p>Please adjust the quantity to suit.</p>
                             <button class="btn-secondary-alert">Ok</button>
                         </div>                     `
                     </div>

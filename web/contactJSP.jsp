@@ -74,10 +74,10 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="home" class="nav-item nav-link ">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="home" class="nav-item nav-link">Home</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
-                            <a href="event" class="nav-item nav-link">Event</a>
+                            <a href="event" class="nav-item nav-link ">Event</a>
                             <a href="contactPage" class="nav-item nav-link active">Contact</a>
                             <!--        Session Management  -->
                             <c:if test="${not empty sessionScope.USER}">
@@ -87,7 +87,8 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
+                                    <a href="deliveryIncome" class="nav-item nav-link">Revenue</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -149,7 +150,7 @@
 
                                 <div class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" style="padding-left: 8px; padding-right: 0px">
-                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60">${sessionScope.USER.fullName}
+                                        <img src="img/avatar.png" alt="User Avatar" class="rounded-circle" width="60"><c:out value ="${sessionScope.USER.fullName}"/>
                                     </a>
                                     <jsp:include page="navUser.jsp"></jsp:include>
                                     </div>                         
@@ -223,7 +224,7 @@
                             <div class="d-flex p-4 rounded mb-4 bg-white">
                                 <i class="fas fa-map-marker-alt fa-2x text-third me-4"></i>
                                 <div>
-                                    <h4>Địa chỉ</h4>
+                                    <h4>Address</h4>
                                     <p class="mb-2">Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh</p>
                                 </div>
                             </div>
@@ -258,7 +259,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Store</a>, All right reserved.</span>
+                            <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Rewind</a>, All right reserved.</span>
                         </div>
                     </div>
                 </div>

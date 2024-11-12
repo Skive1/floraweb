@@ -12,7 +12,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Thanh toán | Buy and sell on the website</title>
+        <title>Check out | Buy and sell on the website</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -103,7 +103,7 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="home" class="nav-item nav-link ">Home</a>
-                            <a href="shoppingAction" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="shoppingAction" class="nav-item nav-link">Products</a>
                             <a href="searchAction?navbarShop=1" class="nav-item nav-link">Shop</a>
                             <a href="event" class="nav-item nav-link active">Event</a>
                             <a href="contactPage" class="nav-item nav-link">Contact</a>
@@ -115,7 +115,8 @@
                                 </c:if>
                                 <!--                Delivery Session-->
                                 <c:if test="${sessionScope.USER.role == 'Delivery'}">
-                                    <a href="delivererOrders" class="nav-item nav-link">Thông tin đơn hàng</a>
+                                    <a href="delivererOrders" class="nav-item nav-link">Delivery Management</a>
+                                    <a href="deliveryIncome" class="nav-item nav-link">Revenue</a>
                                 </c:if>
                                 <!--                Seller Session-->
                                 <c:if test="${sessionScope.USER.role == 'Seller'}">
@@ -213,11 +214,11 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Thanh toán</h1>
+            <h1 class="text-center text-white display-6">Check Out</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="home">Home</a></li>
-                <li class="breadcrumb-item"><a href="eventCart">Giỏ hàng</a></li>
-                <li class="breadcrumb-item active text-white">Thanh toán</li>
+                <li class="breadcrumb-item"><a href="eventCart">Event Cart</a></li>
+                <li class="breadcrumb-item active text-white">Check Out</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -226,26 +227,26 @@
         <!-- Checkout Page Start -->
         <div class="container-fluid py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Thông tin thanh toán</h1>
+                <h1 class="mb-4">Checkout Information</h1>
                 <form action="checkouts" method="POST" id="checkoutForm">
                     <div class="row g-5">
                         <div class="col-md-12 col-lg-6 col-xl-6">
                             <div class="form-item">
-                                <label class="form-label my-3">Họ và Tên<sup class="red">*</sup></label>
+                                <label class="form-label my-3">Full name<sup class="red">*</sup></label>
                                 <input type="text" name="fullname" value="${sessionScope.USER.fullName}" id="fullname" class="form-control"  pattern=".*\S+.*"  title="Không được phép có khoảng trắng" required="">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Số điện thoại<sup class="red">*</sup></label>
+                                <label class="form-label my-3">Phone<sup class="red">*</sup></label>
                                 <input type="tel" name="phone" value="${sessionScope.USER.phone}" id="phone" class="form-control" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required="">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Địa chỉ <sup class="red">*</sup></label>
+                                <label class="form-label my-3">Address <sup class="red">*</sup></label>
                                 <input type="text" name="address" value="${sessionScope.USER.street}" id="address" class="form-control" pattern=".*\S+.*" title="Không được phép có khoảng trắng" required="">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Thành phố<sup class="red">*</sup></label>
+                                <label class="form-label my-3">City<sup class="red">*</sup></label>
                                 <select class="form-control" name="city" id="city" style="background-color: #ffffff" required="">
-                                    <option value=""  selected disabled>Chọn thành phố</option>
+                                    <option value=""  selected disabled>Select city</option>
                                     <option value="An Giang"
                                             <c:if test="${sessionScope.USER.city == 'An Giang'}">
                                                 selected="selected"
@@ -506,31 +507,31 @@
                             </div>
 
                             <hr>
-                            <h3>Phương thức vận chuyển</h3>
+                            <h3>Shipping method</h3>
                             <div class="form-item">
                                 <label class="form-control radio-shipping" style="background-color: #ffffff">
                                     <input type="radio" name="shipping" value="Delivery" class="radio radio-inline" required="" checked="">
-                                    Giao hàng tận nơi
+                                    Delivery to your door
                                 </label>
                                 <label class="form-control radio-shipping" style="background-color: #ffffff">
                                     <input type="radio" name="shipping" value="Pick Up" class="radio radio-inline" required="">
-                                    Lấy tại điểm bán
+                                    Pick up at point of sale
                                 </label>
                             </div>
                             <hr>
-                            <h3>Phương thức thanh toán</h3>
+                            <h3>Payment method</h3>
                             <div class="form-item">
                                 <label class="form-control radio-shipping" style="background-color: #ffffff">
                                     <input type="radio" name="payment" value="COD" class="radio radio-inline" required="" checked="">
-                                    <i class="fa-solid fa-money-bill"></i> Thanh toán khi nhận hàng (COD)
+                                    <i class="fa-solid fa-money-bill"></i> Cash on Delivery (COD)
                                 </label>
                                 <label class="form-control radio-shipping" style="background-color: #ffffff">
                                     <input type="radio" name="payment" value="ONLINE" class="radio radio-inline" required="">
-                                    <i class="fa-solid fa-credit-card"></i> Thanh toán trực tuyến (VN Pay)
+                                    <i class="fa-solid fa-credit-card"></i> Online Payment (VN Pay)
                                 </label>
                             </div>
                             <hr>
-                            <label class="form-label my-3">Ghi chú</label>
+                            <label class="form-label my-3">Note</label>
                             <div class="form-item">
                                 <textarea name="note" rows="4" cols="50" class="form-control" maxlength="255"></textarea>
                             </div>
@@ -541,15 +542,15 @@
                                 <c:forEach var="entry" items="${ecart.items}">
                                     <c:set var="eventId" value="${entry.key}"/>
                                     <c:set var="eventItems" value="${entry.value}"/>
-                                    <h3>Sự kiện: ${eventId}</h3>
+                                    <h3>Event: ${eventId}</h3>
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Sản phẩm</th>
-                                                <th scope="col">Tên</th>
-                                                <th scope="col" style="text-align: center">Đơn giá</th>
-                                                <th scope="col" style="text-align: center">Số lượng</th>
-                                                <th scope="col" style="text-align: center">Thành tiền</th>
+                                                <th scope="col" style="text-align: center; padding-right: 20px">Product</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col" style="text-align: center">Unit price</th>
+                                                <th scope="col" style="text-align: center">Quantity</th>
+                                                <th scope="col" style="text-align: center">Total amount</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -563,7 +564,9 @@
                                                         </div>
                                                     </th>
                                                     <td class="py-5">${item.epName}</td>
-                                                    <td class="py-5"><fmt:formatNumber value="${item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
+                                                    <td style="
+                                                        padding-left: 16px;
+                                                        " class="py-5"><fmt:formatNumber value="${item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
                                                     <td class="py-5" style="text-align: center">${item.quantity}</td>
                                                     <td class="py-5" style="text-align: center"><fmt:formatNumber value="${item.quantity * item.unitPrice}" type="number" groupingUsed="true"/>đ</td>
                                                 </tr>      
@@ -572,7 +575,7 @@
                                                 <th scope="row">
                                                 </th>
                                                 <td class="py-5">
-                                                    <p class="mb-0 text-dark py-3">Tổng số tiền:</p>
+                                                    <p class="mb-0 text-dark py-3">Total amount:</p>
                                                 </td>
                                                 <td class="py-5"></td>
                                                 <td class="py-5"></td>
@@ -591,7 +594,7 @@
                                             <th scope="row">
                                             </th>
                                             <td class="py-5">
-                                                <p class="mb-0 text-dark py-3">Tổng tiền hàng:</p>
+                                                <p class="mb-0 text-dark py-3">Total cost of goods:</p>
                                             </td>
                                             <td class="py-5"></td>
                                             <td class="py-5"></td>
@@ -611,7 +614,7 @@
                                             <td class="py-5"></td>
                                             <td class="py-5">
                                                 <div class="py-2 border-bottom border-top">
-                                                    <p class="mb-0 text-dark"  style="text-align: center">10%</p>
+                                                    <p class="mb-0 text-dark"  style="text-align: center">0%</p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -619,7 +622,7 @@
                                             <th scope="row">
                                             </th>
                                             <td class="py-5">
-                                                <h3 class="mb-0 text-dark text-uppercase py-3">Tổng thanh toán:</h3>
+                                                <h3 class="mb-0 text-dark text-uppercase py-3">Total payment:</h3>
                                             </td>
                                             <td class="py-5"></td>
                                             <td class="py-5"></td>
@@ -634,7 +637,7 @@
                                 </table>
                             </div>
                             <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                                <button id="submitBtn" class="order btn border-secondary py-3 px-4 text-uppercase w-100 text-third" onclick="disableButton()"><span class="default">Đặt hàng</span><span class="success">Hoàn tất<svg viewbox="0 0 12 10">
+                                <button id="submitBtn" class="order btn border-secondary py-3 px-4 text-uppercase w-100 text-third" onclick="disableButton()"><span class="default">Place Order</span><span class="success">Completed<svg viewbox="0 0 12 10">
                                         <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
                                         </svg></span>
                                     <div class="box"></div>
@@ -690,7 +693,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Store</a>, All right reserved.</span>
+                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Flora Rewind</a>, All right reserved.</span>
                     </div>
                 </div>
             </div>

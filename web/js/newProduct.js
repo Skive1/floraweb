@@ -50,7 +50,7 @@ function fetchNewEvents() {
                     updateNotificationIndicator(false);
                     const noEventMessage = document.createElement("div");
                     noEventMessage.classList.add("no-event-message");
-                    noEventMessage.textContent = "Không có sự kiện mới.";
+                    noEventMessage.textContent = "No incoming events.";
                     notificationBox.appendChild(noEventMessage);
                 }
 
