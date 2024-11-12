@@ -492,7 +492,7 @@ public class EventOrderDAO implements Serializable {
             if (con != null) {
                 //2. Create SQL String
                 String sql = "Update EventOrder "
-                        + "Set Status = N'Hủy' "
+                        + "Set Status = 'Hủy' "
                         + "Where EventOrderId = ? ";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);

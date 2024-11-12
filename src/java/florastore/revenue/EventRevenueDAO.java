@@ -54,7 +54,10 @@ public class EventRevenueDAO implements Serializable {
 //                        + "JOIN EventOrder eo ON eod.EventOrderId = eo.EventOrderId "
 //                        + "WHERE eo.Status = 'Đã giao' AND YEAR(OrderDate) = ? "
 //                        + "GROUP BY Month(Cast(eo.OrderDate as DATE))";
-                String sql = "SELECT Month(Cast(eo.DeliveryDate as DATE)) AS [Month],SUM(eod.Quantity) AS TotalProductsSold, SUM(eod.Total) AS TotalRevenue "
+                String sql = "SELECT "
+                        + "Month(Cast(eo.DeliveryDate as DATE)) AS [Month],"
+                        + "SUM(eod.Quantity) AS TotalProductsSold, "
+                        + "SUM(eod.Total) AS TotalRevenue "
                         + "FROM EventProduct ep "
                         + "JOIN EventOrderDetail eod ON ep.EPId = eod.EventProductID "
                         + "JOIN EventOrder eo ON eod.EventOrderId = eo.EventOrderId "
