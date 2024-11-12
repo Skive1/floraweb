@@ -11,6 +11,17 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/GitHubSWP/floraweb/web/seller/sellerUpdateEvent.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/seller/feedbackForSeller.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/revenue/EventSellerDAO.java</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/seller/Seller.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/css/manager.css</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/seller/eventList.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/seller/sellerDBEvent.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/seller/addEventProduct.jsp</file>
+            <file>file:/D:/GitHubSWP/floraweb/src/java/florastore/servlet/monthlySellerServlet.java</file>
+            <file>file:/D:/GitHubSWP/floraweb/web/seller/ManagerProduct.jsp</file>
+        </group>
     </open-files>
 </project-private>
