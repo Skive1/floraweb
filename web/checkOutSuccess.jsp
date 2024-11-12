@@ -103,7 +103,7 @@
                                     <div class="admin-sidebar-content">
                                         <ul>
                                             <li>
-                                                <a href="#" data-toggle="collapse" class="admin-sidebar-content-detail">Details</a>
+                                                <a href="#" data-toggle="collapse" class="admin-sidebar-content-detail">Order Details</a>
                                                 <ul class="sub-menu">
                                                     <div class="admin-content-main-content-product-list">
                                                         <c:set var="bill" value="${sessionScope.ORDER_ITEMS}"/>

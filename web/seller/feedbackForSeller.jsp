@@ -33,7 +33,7 @@
                 font-size: 15px;
                 word-wrap: break-word;
                 word-break: normal;
-                max-width: 100px; /* Điều chỉnh độ rộng theo ý muốn */
+                max-width: 100px;
             }
         </style>
     </head>
@@ -122,7 +122,7 @@
                                                     <td>
                                                         ${dto.fullname}
                                                     </td>
-                                                    <td> 
+                                                    <td style="word-wrap: break-word;"> 
                                                         <c:out value ="${dto.feedback}"/>
                                                     </td>
                                                 </tr>
