@@ -58,7 +58,7 @@
                                 <div class="text-center order-details">
                                     <div class="d-flex justify-content-center mb-5 flex-column align-items-center"> 
                                         <span class="check1"><i class="fa fa-check"></i></span> 
-                                        <span class="font-weight-bold">Giao dịch thành công</span> 
+                                        <span class="font-weight-bold">Transaction successful</span> 
                                         <small class="mt-2">Thanks ${sessionScope.CUST_NAME_SHOP} for purchasing on our platform.</small> 
                                         <p>Status: </p>
                                         <c:if test="${sessionScope.PAYMENT_STATUS_SHOP == true}">
@@ -106,11 +106,11 @@
                                                             <h5>Shop: ${storeName}</h5>
                                                             <table>
                                                                 <thead>
-                                                                <th>Sản phẩm</th>
-                                                                <th>Tên</th>
-                                                                <th>Giá</th>
-                                                                <th>Số lượng</th>
-                                                                <th>Thành tiền</th>                               
+                                                                <th>Product</th>
+                                                                <th>Name</th>
+                                                                <th>Unit Price</th>
+                                                                <th>Quantity</th>
+                                                                <th>Total Price</th>                               
                                                                 </thead>
                                                                 <tbody style="height: 100px;">
                                                                     <c:set var="totalShop" value="0"/>
@@ -125,7 +125,7 @@
                                                                         </tr>
                                                                     </c:forEach>
                                                                     <tr>
-                                                                        <td style="font-weight: 700;" colspan="4">Tổng cộng:</td>
+                                                                        <td style="font-weight: 700;" colspan="4">Total amount:</td>
                                                                         <td style="font-weight: 700;" ><fmt:formatNumber value="${totalShop}" type="number" groupingUsed="true"/>đ</td>  
                                                                         <td></td>  
                                                                     </tr>                    

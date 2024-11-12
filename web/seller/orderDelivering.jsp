@@ -23,7 +23,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="icon" href="img/flora-favicon.png"/>
-        <title>Delivery</title>
+        <title>Seller | Shipping Order</title>
     </head>
     <body>
         <section class="admin">
@@ -40,27 +40,27 @@
                             <li>
                                 <a href="" style="color: #337AB7"><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell" style="color: #337AB7">Sản phẩm theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell" style="color: #337AB7">Products by month</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Quản lý sự kiện<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Event management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent" style="color: #337AB7">Event</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Quản lý đơn hàng<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Order management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction" style="color: #337AB7">Đơn hàng chờ giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders" style="color: #337AB7">Đơn hàng đang giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction" style="color: #337AB7">Đơn hàng đã giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction" style="color: #337AB7">Pending Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders" style="color: #337AB7">Shipping Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction" style="color: #337AB7">Completed Orders</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Feedback<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks" style="color: #337AB7">Xem feedback</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks" style="color: #337AB7">View feedback</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -89,7 +89,7 @@
                     </div> 
                     <div class="admin-content-main">
                         <div class="admin-content-main-title">
-                            <h1 style="font-size: 36px">Danh sách đơn hàng đang giao:</h1>
+                            <h1 style="font-size: 36px">Shipping Order List:</h1>
                         </div>
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
@@ -104,14 +104,14 @@
                                             <a style="color: red">&#8194;&#8201;${requestScope.FoundError2}</a>
                                         </c:if>  
                                         <thead>
-                                        <th>Mã đơn hàng</th>
-                                        <th>Tên người mua</th>
-                                        <th>Điện thoại</th>
-                                        <th>Địa chỉ</th> 
-                                        <th>Ghi chú</th>
-                                        <th>Chi tiết</th>
-                                        <th>Trạng thái</th>
-                                        <th>Tùy chỉnh</th>
+                                        <th>Order ID</th>
+                                        <th>Buyer's name</th>
+                                        <th>Phone</th>
+                                        <th>Address</th> 
+                                        <th>Note</th>
+                                        <th>Details</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
                                         </thead>
                                         <tbody>
                                             <c:forEach var="eventOrder" items="${requestScope.DELIVERY_LIST}" varStatus="counter">
@@ -133,7 +133,7 @@
                                                     <td>
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" 
                                                                 data-target="#view${counter.count}" style="color: white">
-                                                            Xem
+                                                            View
                                                         </button>
                                                         <div class="modal fade" id="view${counter.count}" tabindex="-1" role="dialog" 
                                                              aria-labelledby="view${counter.count}" aria-hidden="true">
@@ -142,13 +142,13 @@
                                                                     <table>
                                                                         <thead>
                                                                         <th style="background-color: #007bff; color: white">No</th>
-                                                                        <th style="background-color: #007bff; color: white">Tên mặt hàng</th>
-                                                                        <th style="background-color: #007bff; color: white">Ngày đặt</th>
-                                                                        <th style="background-color: #007bff; color: white">Phân loại</th>
-                                                                        <th style="background-color: #007bff; color: white">Tình trạng</th>
-                                                                        <th style="background-color: #007bff; color: white">Hình thức thanh toán</th>
-                                                                        <th style="background-color: #007bff; color: white">Số lượng</th>        
-                                                                        <th style="background-color: #007bff; color: white">Đơn giá</th>
+                                                                        <th style="background-color: #007bff; color: white">Name</th>
+                                                                        <th style="background-color: #007bff; color: white">Start date</th>
+                                                                        <th style="background-color: #007bff; color: white">Type</th>
+                                                                        <th style="background-color: #007bff; color: white">Condition</th>
+                                                                        <th style="background-color: #007bff; color: white">Payment method</th>
+                                                                        <th style="background-color: #007bff; color: white">Quantity</th>        
+                                                                        <th style="background-color: #007bff; color: white">Unit Price</th>
                                                                         </thead>
                                                                         <tbody style="height: 100px;">
                                                                             <c:set var="deliveryList" value="${requestScope.DELIVERY_INFO_LIST}"/>
@@ -179,19 +179,19 @@
                                                                                     <tr>
                                                                                         <c:if test="${eventOrder.isPaid == true}">
                                                                                             <td colspan="5"></td>
-                                                                                            <td style="font-weight: 700; color: green">Đơn hàng đã được thanh toán</td>
+                                                                                            <td style="font-weight: 700; color: green">Paid</td>
                                                                                         </c:if>
                                                                                         <c:if test="${eventOrder.isPaid == false}">
                                                                                             <td colspan="6"></td>
                                                                                         </c:if>
-                                                                                        <td style="font-weight: 700;">Tổng giá:</td>
+                                                                                        <td style="font-weight: 700;">Total amount:</td>
                                                                                         <td style="font-weight: 700;" >${total.total}</td> 
                                                                                     </tr>
                                                                                 </c:if>
                                                                             </c:forEach>
                                                                         </tbody>
                                                                         <c:if test="${empty deliveryList}">
-                                                                            <a>Danh sách rỗng!</a>
+                                                                            <a>Empty List!</a>
                                                                         </c:if>
                                                                     </table>
                                                                 </div>
@@ -200,34 +200,34 @@
                                                     </td>
                                                     <c:if test="${eventOrder.status == 'Chưa nhận' && eventOrder.deliveryStaffId == 0}">
                                                         <td style="color: orangered">
-                                                            Chưa nhận
+                                                            Not received 
                                                         </td>
                                                     </c:if>
                                                     <c:if test="${eventOrder.status == 'Chưa nhận' && eventOrder.deliveryStaffId != 0}">
                                                         <td style="color: green">
-                                                            Đã nhận
+                                                            Received
                                                         </td>
                                                     </c:if>
                                                     <td>
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" 
                                                                 data-target="#exampleModal${counter.count}" style="background-color: red">
-                                                            Hủy
+                                                            Cancel
                                                         </button>
                                                         <div class="modal fade" id="exampleModal${counter.count}" tabindex="-1" role="dialog" 
                                                              aria-labelledby="exampleModalLabel${counter.count}" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel${counter.count}">Xác nhận nhận đơn hàng</h5>
+                                                                        <h5 class="modal-title" id="exampleModalLabel${counter.count}">Order Cancellation</h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        Bạn có chắc chắn muốn hủy đơn?
+                                                                        Are you sure you want to cancel your order?
                                                                         <br/>
                                                                         <a style="color: red; font-weight: bold">
-                                                                            Bạn không thể hoàn tác sau khi hủy
+                                                                            You cannot undo after canceling.
                                                                         </a>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -239,10 +239,10 @@
                                                                                        document.getElementById('getEventOrderID');
                                                                                        document.getElementById('infoBack');
                                                                                        document.getElementById('getOrder${counter.count}').submit();">
-                                                                                Có
+                                                                                Yes
                                                                             </a>
                                                                         </form>
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>          
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>          
                                                                     </div>
                                                                 </div>
                                                             </div>
