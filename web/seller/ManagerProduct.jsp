@@ -149,11 +149,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Price</label>
-                                        <input name="priceAdd" type="number" maxlength="10" oninput="this.value = Math.max(0, Math.min(this.value, 9999999999))" class="form-control" required>
+                                        <input name="priceAdd" type="number" maxlength="10" oninput="this.value = Math.max(10000, Math.min(this.value, 9999999999))" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Quantity</label>
-                                        <input type="number" name="quantityAdd" maxlength="4" oninput="this.value = Math.max(0, Math.min(this.value, 9999))" class="form-control" required>
+                                        <input type="number" name="quantityAdd" maxlength="4" oninput="this.value = Math.max(1, Math.min(this.value, 9999))" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Image Link</label>
