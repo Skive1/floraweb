@@ -203,7 +203,7 @@
                                                                                 <td>${product.eventProductQuantity}</td>
                                                                                 <td>
                                                                                     <form class="delete-product-form" data-product-id="${product.eventProductId}" data-event-id="${product.eventEventId}" style="display:inline;">
-                                                                                        <button type="submit" class="delete-icon">Xóa</button>
+                                                                                        <button type="button" class="delete-icon delete-class">Xóa</button>
                                                                                     </form>
                                                                                 </td>
                                                                             </tr>
