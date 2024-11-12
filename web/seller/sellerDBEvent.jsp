@@ -147,7 +147,7 @@
                     <div class="admin-content-main">
                         <h1 style="text-align: center;">Dashboard</h1>                    
                         <h3 class="mb-0 text-center">
-                            <strong style="color: green">Doanh thu các sản phẩm trong event theo tháng </strong>
+                            <strong style="color: green">Monthly Event Revenue</strong>
 
                             <form id="f1" method="get" action="monthlyEventSell">
 
@@ -159,7 +159,7 @@
                                     </select>
 
                                     <select name="year" class="form-control" id="dropdownYear" style="width: 120px;">
-                                        <option value="" disabled ${empty requestScope.curYear ? 'selected' : ''}>-- Chọn năm --</option>
+                                        <option value="" disabled ${empty requestScope.curYear ? 'selected' : ''}>-- Choose year --</option>
                                         <c:forEach var="year" begin="2023" end="2024">
                                             <option value="${year}" ${year == requestScope.curYear ? 'selected' : ''}>${year}</option>
                                         </c:forEach>
@@ -171,7 +171,7 @@
                                                 <option selected="" disabled="">${requestScope.curMonth}</option>
                                             </c:when>
                                             <c:otherwise>
-                                                <option selected="" disabled="">-- Chọn tháng --</option>
+                                                <option selected="" disabled="">-- Choose month --</option>
                                             </c:otherwise>
                                         </c:choose>
                                         <c:forEach var="month" begin="1" end="12">
@@ -189,7 +189,7 @@
                         </div>
                         <c:if test="${not empty MonthList}">
                             <div class="col-sm-6">
-                                <a id="addProductButton" href="#addProductModal"  class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Xem chi tiết</span></a>
+                                <a id="addProductButton" href="#addProductModal"  class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>View detail</span></a>
                             </div>
                         </c:if>                
                         <div id="addProductModal" class="modal fade">
@@ -197,7 +197,7 @@
                                 <div class="modal-content">
 
                                     <div class="modal-header">						
-                                        <h4 class="modal-title">Thông tin chi tiết</h4>
+                                        <h4 class="modal-title">Event Flowers Revenue</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     </div>
                                     <div class="modal-body">                                     
@@ -249,7 +249,13 @@
 <script>
     var xValues = ["${requestScope.pro1.name}", "${requestScope.pro2.name}", "${requestScope.pro3.name}", "${requestScope.pro4.name}", "${requestScope.pro5.name}"];
 //    var xValues = [1, 2, 3, 4, 5];
-    var yValues = [${requestScope.pro1.total}, ${requestScope.pro2.total}, ${requestScope.pro3.total}, ${requestScope.pro4.total}, ${requestScope.pro5.total}];
+     var yValues = [
+        ${requestScope.pro1.total != null ? requestScope.pro1.total : 0},
+        ${requestScope.pro2.total != null ? requestScope.pro2.total : 0},
+        ${requestScope.pro3.total != null ? requestScope.pro3.total : 0},
+        ${requestScope.pro4.total != null ? requestScope.pro4.total : 0},
+        ${requestScope.pro5.total != null ? requestScope.pro5.total : 0}
+    ];
     var barColors = ["red", "green", "blue", "orange", "brown"];
 
     new Chart("myBarChart", {
