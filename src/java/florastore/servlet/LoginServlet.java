@@ -106,7 +106,7 @@ public class LoginServlet extends HttpServlet {
                     } else {
                         url = (String) siteMap.get(MyAppConstants.LoginFeatures.INVALID_PAGE);
                         foundErr = true;
-                        error.setLoginErr("Tài khoản của bạn đã bị hạn chế");
+                        error.setLoginErr("Your account is banned");
                     }
                     if (foundErr) {
                         request.setAttribute("LOGIN_ERROR", error);
