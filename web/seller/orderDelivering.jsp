@@ -119,7 +119,7 @@
                                                     <td style="font-weight: bold">#ORD-${eventOrder.eventOrderId}</td>
                                                     <td>${eventOrder.fullname}</td>
                                                     <td>${eventOrder.phone}</td>
-                                                    <td>${eventOrder.street}, ${eventOrder.city}</td>
+                                                    <td style="word-wrap: break-word; width: 400px;">${eventOrder.street}, ${eventOrder.city}</td>
                                                     <c:if test="${not empty eventOrder.note}">
                                                         <td style="color: #9f191f">
                                                             ${eventOrder.note}

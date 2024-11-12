@@ -162,7 +162,7 @@
 
                                     <select name="year" class="form-control" id="dropdownYear" style="width: 120px;">
 
-                                        <option value="" disabled ${empty requestScope.curYear ? 'selected' : ''}>-- Choose year --</option>
+                                        <option value="" disabled ${empty requestScope.curYear ? 'selected' : ''}>-- Year --</option>
 
                                         <c:forEach var="year" begin="2023" end="2024">
                                             <option value="${year}" ${year == requestScope.curYear ? 'selected' : ''}>${year}</option>
@@ -175,7 +175,7 @@
                                                 <option selected="" disabled="">${requestScope.curMonth}</option>
                                             </c:when>
                                             <c:otherwise>
-                                                <option selected="" disabled="">-- Choose month --</option>
+                                                <option selected="" disabled="">-- Month --</option>
                                             </c:otherwise>
                                         </c:choose>
                                         <c:forEach var="month" begin="1" end="12">

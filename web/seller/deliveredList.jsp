@@ -122,7 +122,7 @@
                                                 <td style="font-weight: bold">#ORD-${delivered.eventOrderId}</td>
                                                 <td>${delivered.fullname}</td>
                                                 <td>${delivered.phone}</td>
-                                                <td>${delivered.street}</td>
+                                                <td style="word-wrap: break-word; width: 400px;">${delivered.street}, ${delivered.city}</td>
                                                 <td>
                                                     <c:if test="${not empty order.note}">
                                                         ${order.note}
