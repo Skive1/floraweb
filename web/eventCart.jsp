@@ -12,7 +12,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Giỏ hàng | Buy and sell on the website</title>
+        <title>Event cart | Buy and sell on the website</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -381,7 +381,7 @@
                     <div class="" role="document">
                         <div class="modal-content-alert">
                             <h5 class="modal-title-alert">${requestScope.ERROR_QUANTITY}</h5>
-                            <p>Hãy điều chỉnh số lượng để phù hợp</p>
+                            <p>Please adjust the quantity to suit.</p>
                             <button class="btn-secondary-alert">Ok</button>
                         </div>                     `
                     </div>

@@ -33,7 +33,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="icon" href="img/flora-favicon.png"/>
-        <title>Đơn hàng đã giao</title>
+        <title>Seller | Delivered Order</title>
     </head>
     <body>
         <section class="admin">
@@ -50,27 +50,27 @@
                             <li>
                                 <a href="" style="color: #337AB7"><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell" style="color: #337AB7">Sản phẩm theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell" style="color: #337AB7">Products by month</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Quản lý sự kiện<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Event management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent" style="color: #337AB7">Event</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Quản lý đơn hàng<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Order management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction" style="color: #337AB7">Đơn hàng chờ giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders" style="color: #337AB7">Đơn hàng đang giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction" style="color: #337AB7">Đơn hàng đã giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction" style="color: #337AB7">Pending Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders" style="color: #337AB7">Shipping Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction" style="color: #337AB7">Completed Orders</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Feedback<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks" style="color: #337AB7">Xem feedback</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks" style="color: #337AB7">View feedback</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -99,7 +99,7 @@
                     </div> 
                     <div class="admin-content-main">
                         <div class="admin-content-main-title">
-                            <h1>Danh sách đơn hàng</h1>
+                            <h1>Completed Order List</h1>
                         </div>
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
@@ -107,13 +107,13 @@
                                 <table id="orderTable">
                                     <thead>
                                         <tr>
-                                            <th>Mã đơn hàng</th>
-                                            <th>Tên người mua</th>
-                                            <th>Điện thoại</th>
-                                            <th>Địa chỉ</th>
-                                            <th>Ghi chú</th>
-                                            <th>Chi tiết</th>
-                                            <th>Trạng thái</th>
+                                            <th>Order ID</th>
+                                            <th>Buyer's name</th>
+                                            <th>Phone</th>
+                                            <th>Address</th>
+                                            <th>Note</th>
+                                            <th>Details</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -143,14 +143,14 @@
                                                                 <table>
                                                                     <thead>
                                                                         <tr>
-                                                                            <th style="background-color: #007bff; color: white">STT</th>
-                                                                            <th style="background-color: #007bff; color: white">Tên sản phẩm</th>
-                                                                            <th style="background-color: #007bff; color: white">Ngày đặt</th>
-                                                                            <th style="background-color: #007bff; color: white">Ngày giao</th>
-                                                                            <th style="background-color: #007bff; color: white">Phương thức vận chuyển</th>
-                                                                            <th style="background-color: #007bff; color: white">Số lượng</th>
-                                                                            <th style="background-color: #007bff; color: white">Đơn giá</th>
-                                                                            <th style="background-color: #007bff; color: white">Giảm giá</th>
+                                                                            <th style="background-color: #007bff; color: white">No</th>
+                                                                            <th style="background-color: #007bff; color: white">Name</th>
+                                                                            <th style="background-color: #007bff; color: white">Order date</th>
+                                                                            <th style="background-color: #007bff; color: white">Delivered date</th>
+                                                                            <th style="background-color: #007bff; color: white">Shipping method</th>
+                                                                            <th style="background-color: #007bff; color: white">Quantity</th>
+                                                                            <th style="background-color: #007bff; color: white">Unit Price</th>
+                                                                            <th style="background-color: #007bff; color: white">Discount</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -163,12 +163,12 @@
                                                                                 <td>
                                                                                     <c:if test="${delivered.deliveryOption == 'Delivery'}">
                                                                                         <a style="color: #28a745">
-                                                                                            Giao hàng tận nơi
+                                                                                            Delivery by Flora
                                                                                         </a>
                                                                                     </c:if>
                                                                                     <c:if test="${delivered.deliveryOption == 'Pick Up'}">
                                                                                         <a style="color: red">
-                                                                                            Nhận tại cửa hàng
+                                                                                            Pick Up
                                                                                         </a>
                                                                                     </c:if>
                                                                                 </td>
@@ -186,12 +186,12 @@
                                                                                 <tr>
                                                                                     <c:if test="${delivered.isPaid == true}">
                                                                                         <td colspan="5"></td>
-                                                                                        <td style="font-weight: 700; color: green">Đơn hàng đã được thanh toán</td>
+                                                                                        <td style="font-weight: 700; color: green">Paid</td>
                                                                                     </c:if>
                                                                                     <c:if test="${delivered.isPaid == false}">
                                                                                         <td colspan="6"></td>
                                                                                     </c:if>
-                                                                                    <td style="font-weight: 700;">Tổng giá:</td>
+                                                                                    <td style="font-weight: 700;">Total amount:</td>
                                                                                     <td style="font-weight: 700;" >${total.total}</td> 
                                                                                 </tr>
                                                                             </c:if>

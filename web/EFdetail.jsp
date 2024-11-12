@@ -370,7 +370,7 @@
                     <div class="" role="document">
                         <div class="modal-content-alert">
                             <h5 class="modal-title-alert">${requestScope.INSUFFICIENT}</h5>
-                            <p>Vui lòng hãy chọn sản phẩm khác</p>
+                            <p>Please select another product</p>
                             <button class="btn-secondary-alert">Ok</button>
                         </div>                     `
                     </div>
@@ -435,7 +435,7 @@
                             $('#comment').val('');
                         },
                         error: function () {
-                            alert('Có lỗi xảy ra khi gửi bình luận.');
+                            alert('An error occurred while submitting the comment.');
                         }
                     });
                 });
@@ -465,7 +465,7 @@
                             $('#currentPage').val(page);
                         },
                         error: function () {
-                            alert('Có lỗi xảy ra khi tải bình luận.');
+                            alert('An error occurred while submitting the comment.');
                         }
                     });
                 }

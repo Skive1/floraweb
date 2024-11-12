@@ -90,7 +90,7 @@
                 min-height: 60px; 
             }
 
-            
+
             .product-description p {
                 flex-grow: 1; 
                 max-height: 100px; 
@@ -260,10 +260,6 @@
                             <h1 class="mb-5 display-3 text-primary text-shadow">Hi, <c:out value ="${sessionScope.USER.fullName}"/></h1>
                             <h1 class="mb-5 display-3 text-primary text-shadow">Welcome to Flora</h1>
                         </c:if>                     
-                        <div class="position-relative mx-auto">
-                            <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill" type="number" placeholder="Search">
-                            <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-100" style="top: 0; right: 25%;">Submit Now</button>
-                        </div>
                     </div>
                     <div class="col-md-12 col-lg-5">
                         <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
@@ -570,7 +566,7 @@
 
 
         <!-- Tastimonial Start -->
-        <div class="container-fluid testimonial py-5">
+        <div class="container-fluid testimonial py-5" id="aboutUs">
             <div class="container py-5">
                 <div class="testimonial-header text-center">
                     <h4 class="text-third">Information</h4>
@@ -724,6 +720,11 @@
                     showConfirmButton: false,
                     timer: 1500
                 });
+                
+                window.onload = function (){
+                    const newURL = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                    window.history.replaceState({}, document.title, newURL);
+                };
             </script>
         </c:if>
         <c:if test="${not empty sessionScope.USER}">
