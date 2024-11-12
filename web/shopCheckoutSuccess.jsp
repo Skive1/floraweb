@@ -103,7 +103,7 @@
                                                         <c:forEach var="entry" items="${bill.items}">
                                                             <c:set var="shopName" value="${entry.key}"/>
                                                             <c:set var="shopItems" value="${entry.value}"/>
-                                                            <h5>Event: ${shopName}</h5>
+                                                            <h5>Shop: ${shopName}</h5>
                                                             <table>
                                                                 <thead>
                                                                 <th>Product</th>

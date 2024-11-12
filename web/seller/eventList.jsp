@@ -31,7 +31,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <title>Seller | Add Event</title>
+        <title>Seller | Event Management</title>
         <link rel="icon" href="img/flora-favicon.png"/>
         <style>
             .add-icon, .delete-icon {
@@ -76,27 +76,27 @@
                             <li>
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell">Sản phẩm theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell">Products by month</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href=""><i class="ri-file-list-line"></i>Quản lý sự kiện<i class="ri-add-circle-line"></i></a>
+                                <a href=""><i class="ri-file-list-line"></i>Event management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent">Event</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href=""><i class="ri-file-list-line"></i>Quản lý đơn hàng<i class="ri-add-circle-line"></i></a>
+                                <a href=""><i class="ri-file-list-line"></i>Order management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction">Đơn hàng chờ giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders">Đơn hàng đang giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction">Đơn hàng đã giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction">Pending Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders">Shipping Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction">Completed Orders</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Feedback<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks">Xem feedback</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks">View feedback</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -122,7 +122,7 @@
                     </div> 
                     <div class="admin-content-main">
                         <div class="admin-content-main-title" style="display: flex; justify-content: space-between; align-items: baseline;">
-                            <h1 style="margin: 0;">Danh sách sự kiện</h1>
+                            <h1 style="margin: 0;">Event List</h1>
                             <a href="addEventPage" style="text-decoration: none;">
                                 <button class="btn btn-primary" style="padding: 10px 20px; font-size: 16px;">Add More Event</button>
                             </a>
@@ -134,15 +134,15 @@
                                 <table id="orderTable">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Tên sự kiện</th>
-                                            <th>Địa điểm</th>
-                                            <th>Thành phố</th>
-                                            <th>Ngày bắt đầu</th>
-                                            <th>Ngày kết thúc</th>
-                                            <th>Trạng thái</th>
-                                            <th>Xem sản phẩm</th>
-                                            <th>Tùy chỉnh</th>
+                                            <th>No</th>
+                                            <th>Event</th>
+                                            <th>Address</th>
+                                            <th>City</th>
+                                            <th>Start date</th>
+                                            <th>End date</th>
+                                            <th>Status</th>
+                                            <th>View</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -170,7 +170,7 @@
                                                 <td>
                                                     <button type="button" class="btn btn-primary" data-toggle="modal" 
                                                             data-target="#view${counter.count}" style="color: white">
-                                                        Xem
+                                                        View
                                                     </button>
                                                     <div class="modal fade" id="view${counter.count}" tabindex="-1" role="dialog" 
                                                          aria-labelledby="view${counter.count}" aria-hidden="true">
@@ -180,14 +180,14 @@
                                                                     <thead>
                                                                         <tr>
                                                                             <th style="background-color: #007bff; color: white">ID</th>
-                                                                            <th style="background-color: #007bff; color: white">Ảnh</th>
-                                                                            <th style="background-color: #007bff; color: white">Tên sản phẩm</th>
-                                                                            <th style="background-color: #007bff; color: white">Loại</th>
-                                                                            <th style="background-color: #007bff; color: white">Tình trạng</th>
-                                                                            <th style="background-color: #007bff; color: white">Chi tiết</th>
-                                                                            <th style="background-color: #007bff; color: white">Đơn giá</th>
-                                                                            <th style="background-color: #007bff; color: white">Số lượng</th>
-                                                                            <th style="background-color: #007bff; color: white">Tùy chỉnh</th>
+                                                                            <th style="background-color: #007bff; color: white">Image</th>
+                                                                            <th style="background-color: #007bff; color: white">Name</th>
+                                                                            <th style="background-color: #007bff; color: white">Type</th>
+                                                                            <th style="background-color: #007bff; color: white">Condition</th>
+                                                                            <th style="background-color: #007bff; color: white">Description</th>
+                                                                            <th style="background-color: #007bff; color: white">Price</th>
+                                                                            <th style="background-color: #007bff; color: white">Quantity</th>
+                                                                            <th style="background-color: #007bff; color: white">Actions</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -203,7 +203,7 @@
                                                                                 <td>${product.eventProductQuantity}</td>
                                                                                 <td>
                                                                                     <form class="delete-product-form" data-product-id="${product.eventProductId}" data-event-id="${product.eventEventId}" style="display:inline;">
-                                                                                        <button type="button" class="delete-icon delete-class">Xóa</button>
+                                                                                        <button type="button" class="delete-icon delete-class">Delete</button>
                                                                                     </form>
                                                                                 </td>
                                                                             </tr>
