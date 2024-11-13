@@ -38,7 +38,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
-        <title>Admin</title>
+        <title>Seller | Event Management</title>
     </head>
     <body>
         <section class="admin">
@@ -56,26 +56,27 @@
                             <li>
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell">Sản phẩm theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell">Products by month</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href=""><i class="ri-file-list-line"></i>Quản lý sự kiện<i class="ri-add-circle-line"></i></a>
+                                <a href=""><i class="ri-file-list-line"></i>Event management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent">Event</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href=""><i class="ri-file-list-line"></i>Quản lý đơn hàng<i class="ri-add-circle-line"></i></a>
+                                <a href=""><i class="ri-file-list-line"></i>Event management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction">Đơn hàng chờ giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction">Đơn hàng đã giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction">Pending Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders">Shipping Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction">Completed Orders</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Feedback<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks">Xem feedback</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks">View feedback</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -104,7 +105,7 @@
                     </div> 
                     <div class="admin-content-main">
                         <div class="admin-content-main-title">
-                            <h1>Thêm event</h1>
+                            <h1>Add event</h1>
                         </div>
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
@@ -123,23 +124,23 @@
                                             </c:if>
                                         </div>
                                         <div class="admin-content-main-content-textarea1">
-                                            <textarea class="" name="eventDescription" maxlength="30" id="editor1" placeholder="Mô tả sự kiện theo thứ tự địa điểm, thành phố"></textarea>
+                                            <textarea class="" name="eventDescription" maxlength="30" id="editor1" placeholder="Address"></textarea>
                                         </div>
                                         <div class="admin-content-main-content-two-input">
-                                            <label for="startDate">Ngày bắt đầu sự kiện:</label>
-                                            <input name="startDate" id="startDate" type="datetime-local" placeholder="Ngày bắt đầu">
+                                            <label for="startDate">Start Date:</label>
+                                            <input name="startDate" id="startDate" type="datetime-local" placeholder="Start date">
                                         </div>
                                         <div class="admin-content-main-content-two-input">
-                                            <label for="endDate">Ngày kết thúc sự kiện:</label>
-                                            <input name="endDate" id="endDate" type="datetime-local" placeholder="Ngày kết thúc">
+                                            <label for="endDate">End Date:</label>
+                                            <input name="endDate" id="endDate" type="datetime-local" placeholder="End date">
                                         </div>
 
-                                        <button type="submit" class="main-btn">Thêm sự kiện</button>
+                                        <button type="submit" class="main-btn">Post event</button>
                                     </div>
 
                                     <div class="admin-content-main-content-right">
                                         <div class="admin-content-main-content-right-img">
-                                            <label for="file">Ảnh sự kiện</label>
+                                            <label for="file">Image</label>
                                             <input id="file" name="eventImg" type="file" class="hidden" accept="image/*" onchange="previewEventImage(event, 'image-show')">
                                             <div class="image-show">
                                                 <img id="event-image-preview" src="" alt="Preview" style="max-width: 100%; display: none;">

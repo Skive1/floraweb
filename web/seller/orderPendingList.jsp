@@ -34,7 +34,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
-        <title>Đơn hàng chờ giao</title>
+        <title>Seller | Pending Order</title>
     </head>
     <body>
         <section class="admin">
@@ -52,27 +52,27 @@
                             <li>
                                 <a href="" style="color: #337AB7"><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell" style="color: #337AB7">Sản phẩm theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell" style="color: #337AB7">Products by month</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Quản lý sự kiện<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Event management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent" style="color: #337AB7">Event</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Quản lý đơn hàng<i class="ri-add-circle-line"></i></a>
+                                <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Order management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction" style="color: #337AB7">Đơn hàng chờ giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders" style="color: #337AB7">Đơn hàng đang giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction" style="color: #337AB7">Đơn hàng đã giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction">Pending Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders">Shipping Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction">Completed Orders</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="" style="color: #337AB7"><i class="ri-file-list-line"></i>Feedback<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks" style="color: #337AB7">Xem feedback</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks" style="color: #337AB7">View feedback</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -101,7 +101,7 @@
                     </div> 
                     <div class="admin-content-main">
                         <div class="admin-content-main-title">
-                            <h1>Danh sách đơn hàng</h1>
+                            <h1>Order List</h1>
                         </div>
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
@@ -109,14 +109,14 @@
                                 <table id="orderTable">
                                     <thead>
                                         <tr>
-                                            <th>Mã Đơn Hàng</th>
-                                            <th>Tên người mua</th>
-                                            <th>Điện thoại</th>
-                                            <th>Địa chỉ</th>
-                                            <th>Ghi chú</th>
-                                            <th>Chi tiết</th>
-                                            <th>Trạng thái</th>
-                                            <th>Tùy chỉnh</th>
+                                            <th>Order ID</th>
+                                            <th>Buyer's name</th>
+                                            <th>Phone</th>
+                                            <th>Address</th>
+                                            <th>Note</th>
+                                            <th>Details</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -139,7 +139,7 @@
                                                 <td>
                                                     <button type="button" class="btn btn-primary" data-toggle="modal" 
                                                             data-target="#view${counter.count}" style="color: white">
-                                                        Xem
+                                                        View
                                                     </button>
                                                     <div class="modal fade" id="view${counter.count}" tabindex="-1" role="dialog" 
                                                          aria-labelledby="view${counter.count}" aria-hidden="true">
@@ -148,13 +148,13 @@
                                                                 <table>
                                                                     <thead>
                                                                         <tr>
-                                                                            <th style="background-color: #007bff; color: white">STT</th>
-                                                                            <th style="background-color: #007bff; color: white">Tên sản phẩm</th>
-                                                                            <th style="background-color: #007bff; color: white">Ngày đặt</th>
-                                                                            <th style="background-color: #007bff; color: white">Phương thức vận chuyển</th>
-                                                                            <th style="background-color: #007bff; color: white">Số lượng</th>
-                                                                            <th style="background-color: #007bff; color: white">Đơn giá</th>
-                                                                            <th style="background-color: #007bff; color: white">Giảm giá</th>
+                                                                            <th style="background-color: #007bff; color: white">No</th>
+                                                                            <th style="background-color: #007bff; color: white">Name</th>
+                                                                            <th style="background-color: #007bff; color: white">Order date</th>
+                                                                            <th style="background-color: #007bff; color: white">Shipping method</th>
+                                                                            <th style="background-color: #007bff; color: white">Quantity</th>
+                                                                            <th style="background-color: #007bff; color: white">Unit Price</th>
+                                                                            <th style="background-color: #007bff; color: white">Discount</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -166,12 +166,12 @@
                                                                                 <td>
                                                                                     <c:if test="${order.deliveryOption == 'Delivery'}">
                                                                                         <a style="color: #28a745">
-                                                                                            Giao hàng tận nơi
+                                                                                            Delivery by Flora
                                                                                         </a>
                                                                                     </c:if>
                                                                                     <c:if test="${order.deliveryOption == 'Pick Up'}">
                                                                                         <a style="color: red">
-                                                                                            Nhận tại cửa hàng
+                                                                                            Pick Up
                                                                                         </a>
                                                                                     </c:if>
                                                                                 </td>
@@ -189,12 +189,12 @@
                                                                                 <tr>
                                                                                     <c:if test="${order.isPaid == true}">
                                                                                         <td colspan="4"></td>
-                                                                                        <td style="font-weight: 700; color: green">Đơn hàng đã được thanh toán</td>
+                                                                                        <td style="font-weight: 700; color: green">Paid</td>
                                                                                     </c:if>
                                                                                     <c:if test="${order.isPaid == false}">
                                                                                         <td colspan="5"></td>
                                                                                     </c:if>
-                                                                                    <td style="font-weight: 700;">Tổng giá:</td>
+                                                                                    <td style="font-weight: 700;">Total amount:</td>
                                                                                     <td style="font-weight: 700;" >${total.total}</td> 
                                                                                 </tr>
                                                                             </c:if>
@@ -211,22 +211,22 @@
                                                 <td>
                                                     <button type="button" class="btn btn-primary" data-toggle="modal" 
                                                             data-target="#exampleModal${order.eventOrderId}" style="background-color: green">
-                                                        Xác nhận
+                                                        Confirm
                                                     </button>
                                                     <div class="modal fade" id="exampleModal${order.eventOrderId}" tabindex="-1" role="dialog" 
                                                          aria-labelledby="exampleModalLabel${order.eventOrderId}" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel${counter.count}">Xác nhận nhận đơn hàng</h5>
+                                                                    <h5 class="modal-title" id="exampleModalLabel${counter.count}">Confirm order</h5>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    Bạn có chắc chắn muốn chuyển đơn cho đơn vị giao hàng?
+                                                                    Are you sure you want to transfer the order to the shipping unit?
                                                                     <br/>
-                                                                    <span style="color: red; font-weight: bold">Bạn không thể hoàn tác sau khi xác nhận</span>
+                                                                    <span style="color: red; font-weight: bold">You cannot undo after confirmation.</span>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <form id="getOrder${order.eventOrderId}" action="updateOrder" method="POST">
@@ -237,33 +237,33 @@
                                                                         <input type="hidden" name="page" value="${currentPage}"/>
                                                                         <input type="hidden" name="action" value="confirm"/>
                                                                         <button type="submit" class="btn btn-secondary" style="background-color: green;">
-                                                                            Có
+                                                                            Yes
                                                                         </button>
                                                                     </form>
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>          
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>          
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div> 
                                                     <button type="submit" class="btn btn-primary" data-toggle="modal" value="cancel"
                                                             data-target="#modal${order.eventOrderId}" style="background-color: red">
-                                                        Hủy
+                                                        Cancel
                                                     </button>
                                                     <div class="modal fade" id="modal${order.eventOrderId}" tabindex="-1" role="dialog" 
                                                          aria-labelledby="modalLabel${order.eventOrderId}" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="modalLabel${order.eventOrderId}">Xác nhận nhận đơn hàng</h5>
+                                                                    <h5 class="modal-title" id="modalLabel${order.eventOrderId}">Order Cancellation</h5>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    Bạn có chắc chắn muốn hủy đơn?
+                                                                    Are you sure you want to cancel your order?
                                                                     <br/>
                                                                     <a style="color: red; font-weight: bold">
-                                                                        Bạn không thể hoàn tác sau khi xác nhận
+                                                                        You cannot undo after confirmation.
                                                                     </a>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -283,10 +283,10 @@
                                                                                    document.getElementById('action');
                                                                                    document.getElementById('deliveryOpt');
                                                                                    document.getElementById('cancelOrder${order.eventOrderId}').submit();">
-                                                                            Có
+                                                                            Yes
                                                                         </a>
                                                                     </form>
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>          
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>          
                                                                 </div>
                                                             </div>
                                                         </div>

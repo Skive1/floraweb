@@ -30,7 +30,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
-        <title>Seller - Monthly Event DashBoard</title>
+        <title>Seller | Monthly Event DashBoard</title>
     </head>
     <style>
         #myChart, #myBarChart {
@@ -100,27 +100,27 @@
                             <li>
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell">Sản phẩm theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell">Products by month</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href=""><i class="ri-file-list-line"></i>Quản lý sự kiện<i class="ri-add-circle-line"></i></a>
+                                <a href=""><i class="ri-file-list-line"></i>Event management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent">Event</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href=""><i class="ri-file-list-line"></i>Quản lý đơn hàng<i class="ri-add-circle-line"></i></a>
+                                <a href=""><i class="ri-file-list-line"></i>Order management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction">Đơn hàng chờ giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders">Đơn hàng đang giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction">Đơn hàng đã giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction">Pending Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders">Shipping Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction">Completed Orders</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Feedback<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks">Xem feedback</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks">View feedback</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -147,7 +147,9 @@
                     <div class="admin-content-main">
                         <h1 style="text-align: center;">Dashboard</h1>                    
                         <h3 class="mb-0 text-center">
-                            <strong style="color: green">Monthly Event Revenue</strong>
+
+                            <strong style="color: green">Revenue from event products by month</strong>
+
 
                             <form id="f1" method="get" action="monthlyEventSell">
 
@@ -159,7 +161,9 @@
                                     </select>
 
                                     <select name="year" class="form-control" id="dropdownYear" style="width: 120px;">
+
                                         <option value="" disabled ${empty requestScope.curYear ? 'selected' : ''}>-- Choose year --</option>
+
                                         <c:forEach var="year" begin="2023" end="2024">
                                             <option value="${year}" ${year == requestScope.curYear ? 'selected' : ''}>${year}</option>
                                         </c:forEach>
@@ -263,7 +267,7 @@
         data: {
             labels: xValues,
             datasets: [{
-                    label: 'Biểu đồ Top 5 sản phẩm bán chạy theo tháng',
+                    label: 'Chart of Top 5 best-selling products by month',
                     backgroundColor: barColors,
                     data: yValues,
                     borderColor: 'rgb(75, 192, 192)'

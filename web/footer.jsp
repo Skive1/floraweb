@@ -38,7 +38,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="d-flex flex-column text-start footer-item">
                         <h4 class="text-light mb-3">Our platform</h4>
-                        <a class="btn-link" href="https://github.com/Skive1/floraweb">About Us</a>
+                        <a class="btn-link" href="home#aboutUs" onclick="setTimeout(removeHashUrl, 0);">About Us</a>
                         <a class="btn-link" href="contactPage">Contact Us</a>
                         <a class="btn-link" href="privacyPage">Privacy Policy</a>
                         <a class="btn-link" href="termsOfUse">Terms of use</a>

@@ -33,7 +33,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
         <!-- FavIcon -->
         <link rel="icon" href="img/flora-favicon.png"/>
-        <title>Chỉnh sửa sự kiện</title>
+        <title>Seller | Event Management</title>
     </head>
     <body>
         <section class="admin">
@@ -51,27 +51,27 @@
                             <li>
                                 <a href=""><i class="ri-dashboard-fill"></i>Dashboard<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell">Sản phẩm theo tháng</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="monthlyEventSell">Products by month</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href=""><i class="ri-file-list-line"></i>Quản lý sự kiện<i class="ri-add-circle-line"></i></a>
+                                <a href=""><i class="ri-file-list-line"></i>Event management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
                                     <li><a class="ri-arrow-right-s-fill" href="viewSellerEvent">Event</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href=""><i class="ri-file-list-line"></i>Quản lý đơn hàng<i class="ri-add-circle-line"></i></a>
+                                <a href=""><i class="ri-file-list-line"></i>Order management<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction">Đơn hàng chờ giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders">Đơn hàng đang giao</a></li>
-                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction">Đơn hàng đã giao</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewOrderAction">Pending Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="sellerViewOrders">Shipping Orders</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewDeliveredAction">Completed Orders</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href=""><i class="ri-file-list-line"></i>Feedback<i class="ri-add-circle-line"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks">Xem feedback</a></li>
+                                    <li><a class="ri-arrow-right-s-fill" href="viewFeedbacks">View feedback</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -100,7 +100,7 @@
                     </div> 
                     <div class="admin-content-main">
                         <div class="admin-content-main-title">
-                            <h1>Chỉnh sửa sự kiện</h1>
+                            <h1>Update Event</h1>
                         </div>
                         <div class="admin-content-main-content">
                             <!-- Nội dung ở đây -->
@@ -112,7 +112,7 @@
                                     <div class="admin-content-main-content-left">
                                         <input type="hidden" name="accountUsername" value="${sessionScope.USER.username}" />
                                         <div class="admin-content-main-content-two-input">
-                                            <input name="eventName" type="text" maxlength="20" placeholder="Tên sự kiện" 
+                                            <input name="eventName" type="text" maxlength="20" placeholder="Event name" 
                                                    required value="${sessionScope.eventToManage.eventName}">
                                             <c:if test="${not empty error.eventNameError}">
                                                 <font color="red">
@@ -122,19 +122,19 @@
                                         </div>
                                         <div class="admin-content-main-content-textarea1">
                                             <textarea class="" name="eventDescription" maxlength="30" id="editor1"
-                                                      placeholder="Mô tả sự kiện theo thứ tự địa điểm, thành phố">
+                                                      placeholder="Address">
                                                 ${sessionScope.eventToManage.eventLocation}, ${sessionScope.eventToManage.eventCity}
                                             </textarea>
                                         </div>
                                         <div class="admin-content-main-content-two-input">
-                                            <label for="startDate">Ngày bắt đầu sự kiện:</label> 
+                                            <label for="startDate">Start Date:</label> 
                                             <input name="startDate" id="startDate" type="datetime-local" 
-                                                   placeholder="Ngày bắt đầu" value="${sessionScope.eventToManage.startDate}">
+                                                   placeholder="Start Date" value="${sessionScope.eventToManage.startDate}">
                                         </div>
                                         <div class="admin-content-main-content-two-input">
-                                            <label for="endDate">Ngày kết thúc sự kiện:</label>
+                                            <label for="endDate">End Date:</label>
                                             <input name="endDate" id="endDate" type="datetime-local" 
-                                                   placeholder="Ngày kết thúc" value="${sessionScope.eventToManage.endDate}">
+                                                   placeholder="End Date" value="${sessionScope.eventToManage.endDate}">
                                         </div>
                                         <c:if test="${requestScope.Error != null}">
                                             <br>
@@ -143,12 +143,12 @@
                                             </a>
                                             <br>
                                         </c:if>
-                                        <button type="submit" class="main-btn">Sửa sự kiện</button>
+                                        <button type="submit" class="main-btn">Update event</button>
                                     </div>
 
                                     <div class="admin-content-main-content-right">
                                         <div class="admin-content-main-content-right-img">
-                                            <label for="file">Ảnh sự kiện</label>
+                                            <label for="file">Image</label>
 
                                             <input id="file" name="eventImg" type="file" class="hidden" accept="image/*"
                                                    onchange="previewEventImage(event)">
