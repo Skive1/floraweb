@@ -116,11 +116,11 @@
                                         <input type="hidden" name="accountUsername" value="${sessionScope.USER.username}" />
                                         <div class="admin-content-main-content-two-input">
                                             <input name="name" maxlength="20" type="text" placeholder="Name" required>
-                                            <input name="quantity" maxlength="3" type="text" placeholder="Quantity">
+                                            <input name="quantity" maxlength="3" type="number" oninput="this.value = Math.max(1, Math.min(this.value, 9999))" placeholder="Quantity" required="">
                                         </div>
                                         <div class="admin-content-main-content-two-input">
-                                            <input name="epPrice" type="text" placeholder="Unit Price">
-                                            <input name="discount" type="text" placeholder="Discount">
+                                            <input name="epPrice" type="number" oninput="this.value = Math.max(10000, Math.min(this.value, 99999999))"  placeholder="Unit Price" required="">
+                                            <input name="discount" type="number" placeholder="Discount">
                                         </div>
                                         <c:if test="${not empty error.discountError}">
                                             <font color="red">

@@ -60,10 +60,10 @@
         <script>
             window.onload = function () {
                 const prevPage = sessionStorage.getItem('prevPage');
-                const url = "https://epic-blatantly-pig.ngrok-free.app/FloraRewind/checkouts";
+                const url = "http://localhost:8084/FloraRewind/checkouts";
                 if (performance.navigation.type === performance.navigation.TYPE_BACK_FORWARD) {
                     if (url.includes(prevPage)) {
-                        window.location.href = "https://epic-blatantly-pig.ngrok-free.app/FloraRewind/order";
+                        window.location.href = "http://localhost:8084/FloraRewind/order";
                     }
                 }
             };
