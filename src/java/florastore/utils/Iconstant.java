@@ -14,7 +14,7 @@ public class Iconstant {
 
     public static final String GOOGLE_CLIENT_SECRET = "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";
 
-    public static final String GOOGLE_REDIRECT_URI = "http://localhost:8084/FloraRewind/loginAction";
+    public static final String GOOGLE_REDIRECT_URI = "https://epic-blatantly-pig.ngrok-free.app/FloraRewind/loginAction";
 
     public static final String GOOGLE_GRANT_TYPE = "authorization_code";
 
