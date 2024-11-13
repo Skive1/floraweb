@@ -220,7 +220,7 @@ public class EventFeedbackDAO implements Serializable {
                         + "join EventOrder eo on efb.EventOrderId = eo.EventOrderId "
                         + "join [Event] e on eo.EventId = e.EventId " 
                         + "Where e.AccountUsername = ? "
-                        + "Order by efb.EventOrderId "
+                        + "Order by efb.EventOrderId DESC "
                         + "OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql);
